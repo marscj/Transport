@@ -1,0 +1,58 @@
+version: '3'
+services:
+
+  db:
+    container_name: postgres
+    image: postgres
+    hostname: db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+  
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    restart: always
+    volumes:
+      - redisdata:/data
+
+  nginx:
+    container_name: nginx
+    build: 
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d/:rw
+      - ./frontend/dist:/frontend/dist/
+      - ./admin/dist:/admin/dist/
+      - static_volume:/backend/static
+      - media_volume:/backend/media
+    depends_on:
+      - backend
+
+  backend:
+      container_name: backend
+      build: ./backend
+      restart: always
+      volumes:
+        - .:/backend
+        - static_volume:/backend/static
+        - media_volume:/backend/media
+      links:
+        - db
+        - redis
+      depends_on:
+        - db
+        - redis
+
+volumes:
+  pgdata:
+  redisdata:
+  static_volume:
+  media_volume:
