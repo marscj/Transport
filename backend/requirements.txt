@@ -1,0 +1,4 @@
+django
+casbin
+djangorestframework
+djangorestframework-jwt
