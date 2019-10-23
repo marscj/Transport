@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     
     # 'app.faq',
     # 'app.account',
-    # 'app.custom_user'
+    'app.custom_user'
 ]
 
 MIDDLEWARE = [
@@ -64,6 +64,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+
+AUTH_USER_MODEL = 'custom_user.CustomUser'
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
