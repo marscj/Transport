@@ -47,10 +47,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     
-    # 'app.faq',
-    # 'app.account',
     'app.user',
     'app.organization',
+    'app.faq',
     'app.site'
 ]
 
