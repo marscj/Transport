@@ -1,4 +1,4 @@
-import axios from "../../../axios/index.js.js"
+import axios from "../../../axios/index.js"
 import store from "../../../../store/store.js"
 
 // Token Refresh
