@@ -7,7 +7,7 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-import axios from "../../http/axios/index.js"
+import { axios } from '@/utils/request'
 
 export default {
   SET_BEARER(state, accessToken) {

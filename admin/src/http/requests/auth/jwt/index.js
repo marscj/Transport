@@ -1,4 +1,4 @@
-import axios from "../../../axios/index.js"
+import { axios } from '@/utils/request'
 import store from "../../../../store/store.js"
 
 // Token Refresh
@@ -45,9 +45,9 @@ export default {
     })
   },
   login(email, pwd) {
-    return axios.post("api/rest-auth/login", {email: email, password: pwd})
+    return axios.post("rest-auth/login", {email: email, password: pwd})
   },
   registerUser(name, email, pwd) {
-    return axios.post("api/rest-auth/register", {displayName: name, email: email, password: pwd})
+    return axios.post("rest-auth/register", {displayName: name, email: email, password: pwd})
   },
 }

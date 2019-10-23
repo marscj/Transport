@@ -1,7 +1,5 @@
-import Vue from 'vue'
-
 import axios from 'axios'
-import VueAxios from './axios'
+import { VueAxios } from './axios'
 
 // 创建 axios 实例
 const service = axios.create({
