@@ -44,13 +44,13 @@ INSTALLED_APPS = [
     
     'rest_auth',
     'rest_auth.registration',
-
     'allauth',
     'allauth.account',
     
     # 'app.faq',
     # 'app.account',
-    'app.custom_user'
+    'app.custom_user',
+    'app.organization'
 ]
 
 MIDDLEWARE = [
@@ -116,10 +116,10 @@ STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'media')
 
+SITE_ID = 1
 
 REST_SESSION_LOGIN = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
