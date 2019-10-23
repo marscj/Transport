@@ -108,7 +108,7 @@ const mutations = {
 
     // Get Data localStorage
     let userInfo = JSON.parse(localStorage.getItem("userInfo")) || state.AppActiveUser
-
+    console.log(payload , '====')
     for (const property of Object.keys(payload)) {
 
       if (payload[property] != null) {

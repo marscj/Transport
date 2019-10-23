@@ -398,9 +398,7 @@ export default {
 
           // Update data in localStorage
           localStorage.setItem("accessToken", response.data.accessToken)
-          commit('UPDATE_USER_INFO', response.data.userData, {
-            root: true
-          })
+          commit('UPDATE_USER_INFO', response.data.userData)
 
           resolve(response)
         })
