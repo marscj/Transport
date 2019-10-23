@@ -19,8 +19,11 @@
                 </div>
 
                 <vs-tabs>
-                  <vs-tab label="JWT">
-                    <login-jwt></login-jwt>
+                  <vs-tab label="User">
+                    <login-user-name></login-user-name>
+                  </vs-tab>
+                  <vs-tab label="Email">
+                    <login-email></login-email>
                   </vs-tab>
                 </vs-tabs>
               </div>
@@ -34,11 +37,13 @@
 
 
 <script>
-import LoginJwt from "./LoginJWT.vue"
+import LoginUserName from "./LoginUserName.vue"
+import LoginEmail from "./LoginEmail.vue"
 
 export default {
   components: {
-    LoginJwt,
+    LoginUserName,
+    LoginEmail
   }
 }
 </script>

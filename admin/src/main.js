@@ -18,6 +18,10 @@ import 'vuesax/dist/vuesax.css'; // Vuesax
 Vue.use(Vuesax)
 
 
+// // VeeValidate
+// import VeeValidate from 'vee-validate';
+// Vue.use(VeeValidate);
+
 // Theme Configurations
 import '../themeConfig.js'
 
@@ -43,7 +47,9 @@ import store from './store/store'
 
 
 // Vuejs - Vue wrapper for hammerjs
-import { VueHammer } from 'vue2-hammer'
+import {
+  VueHammer
+} from 'vue2-hammer'
 Vue.use(VueHammer)
 
 
@@ -55,17 +61,33 @@ import 'prismjs/themes/prism-tomorrow.css'
 // Feather font icon
 require('./assets/css/iconfont.css')
 
-import VeeValidate from 'vee-validate';
-Vue.use(VeeValidate);
 // Vue select css
 // Note: In latest version you have to add it separately
-// import 'vue-select/dist/vue-select.css';
+import 'vue-select/dist/vue-select.css';
 
 
 Vue.config.productionTip = false
 
+import {
+  ValidationProvider,
+  ValidationObserver,
+  extend
+} from 'vee-validate';
+import {
+  required
+} from 'vee-validate/dist/rules';
+
+extend('required', {
+  ...required,
+  message: 'The {_field_} field is required'
+});
+
 new Vue({
-    router,
-    store,
-    render: h => h(App)
+  components: {
+    ValidationProvider,
+    ValidationObserver
+  },
+  router,
+  store,
+  render: h => h(App),
 }).$mount('#app')

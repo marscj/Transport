@@ -138,6 +138,7 @@ REST_USE_JWT = True
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
+    'LOGIN_SERIALIZER': 'app.user.serializers.LoginSerializer',
 }
 
 AUTHENTICATION_BACKENDS = (

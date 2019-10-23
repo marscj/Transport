@@ -365,7 +365,7 @@ export default {
         },
         logout() {
             // This is just for demo Purpose. If user clicks on logout -> redirect
-            this.$router.push('/pages/login').catch(() => {})
+            this.$router.push({name: 'login'}).catch(() => {})
         },
         outside: function() {
             this.showBookmarkPagesDropdown = false

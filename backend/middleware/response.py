@@ -8,7 +8,10 @@ class ResponseMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        response.data = {
-            'result': response.data
-        }
+
+        if response and hasattr(response, 'data'):
+            response.data = {
+                'result': response.data
+            }
+            print(response, response.data)
         return response
