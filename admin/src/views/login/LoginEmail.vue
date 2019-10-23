@@ -112,8 +112,8 @@ export default {
         });
     },
     registerUser() {
-      if (!this.checkLogin()) return;
-      this.$router.push("/pages/register").catch(() => {});
+      // if (!this.checkLogin()) return;
+      this.$router.push({name: 'register'}).catch(() => {});
     },
   }
 };

@@ -37,9 +37,33 @@ const router = new Router({
           component: () => import('@/views/login/Login.vue')
         },
         {
-          path: '/pages/error-404',
+          path: '/register',
+          name: 'register',
+          component: () => import('@/views/register/Register.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/forgot-password',
+          name: 'forgot-password',
+          component: () => import('@/views/register/ForgotPassword.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/reset-password',
+          name: 'reset-password',
+          component: () => import('@/views/register/ResetPassword.vue'),
+          meta: {
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/error-404',
           name: 'page-error-404',
-          component: () => import('@/views/pages/Error404.vue')
+          component: () => import('@/views/Error404.vue')
         },
       ]
     },
