@@ -49,8 +49,9 @@ INSTALLED_APPS = [
     
     # 'app.faq',
     # 'app.account',
-    'app.custom_user',
-    'app.organization'
+    'app.user',
+    'app.organization',
+    'app.site'
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
-AUTH_USER_MODEL = 'custom_user.CustomUser'
+AUTH_USER_MODEL = 'user.CustomUser'
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
@@ -135,7 +136,7 @@ REST_FRAMEWORK = {
 REST_USE_JWT = True
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'app.custom_user.serializers.UserDetailSerializer',
+    'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
 }
 
 AUTHENTICATION_BACKENDS = (
