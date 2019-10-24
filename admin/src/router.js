@@ -34,11 +34,11 @@ const router = new Router({
                 url: '/'
               },
               {
-                title: 'dashboard',
+                title: 'Dashboard',
                 url: '/dashboard'
               },
               {
-                title: 'analytics',
+                title: 'Analytics',
                 active: true
               },
             ],
@@ -46,11 +46,59 @@ const router = new Router({
           }
         },
         {
-          path: '/users',
-          redirect: '/users/list'
+          path: '/business',
+          redirect: '/business/orders'
         },
         {
-          path: '/users/list',
+          path: '/business/orders',
+          name: 'orders',
+          component: () => import('./views/order/Page.vue'),
+          meta: {
+            rule: 'admin',
+            breadcrumb: [{
+              title: 'Home',
+              url: '/'
+            },
+            {
+              title: 'Business',
+              url: '/business'
+            },
+            {
+              title: 'Orders',
+              active: true
+            },
+          ],
+          pageTitle: 'Order List',
+          }
+        },
+        {
+          path: '/business/reservations',
+          name: 'reservations',
+          component: () => import('./views/reservation/Page.vue'),
+          meta: {
+            rule: 'admin',
+            breadcrumb: [{
+              title: 'Home',
+              url: '/'
+            },
+            {
+              title: 'Business',
+              url: '/business'
+            },
+            {
+              title: 'Reservations',
+              active: true
+            },
+          ],
+          pageTitle: 'Reservation List',
+          }
+        },
+        {
+          path: '/authorization',
+          redirect: '/authorization/users'
+        },
+        {
+          path: '/authorization/users',
           name: 'users',
           component: () => import('./views/Page2.vue'),
           meta: {
@@ -60,15 +108,41 @@ const router = new Router({
               url: '/'
             },
             {
-              title: 'users',
-              url: '/users'
+              title: 'Authorization',
+              url: '/authorization'
             },
             {
-              title: 'userlist',
+              title: 'Users',
               active: true
             },
           ],
-          pageTitle: 'Users',
+          pageTitle: 'User List',
+          }
+        },
+        {
+          path: '/setting',
+          redirect: '/setting/sites'
+        },
+        {
+          path: '/setting/sites',
+          name: 'sites',
+          component: () => import('./views/setting/Page.vue'),
+          meta: {
+            rule: 'admin',
+            breadcrumb: [{
+              title: 'Home',
+              url: '/'
+            },
+            {
+              title: 'Setting',
+              url: '/setting'
+            },
+            {
+              title: 'Sites',
+              active: true
+            },
+          ],
+          pageTitle: 'Site List',
           }
         },
       ],

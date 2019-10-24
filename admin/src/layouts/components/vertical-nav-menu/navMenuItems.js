@@ -33,18 +33,41 @@ export default [{
     }]
   },
   {
-    header: "Management",
+    header: "Business",
     items: [{
-      url: "/users",
+        url: '/business/orders',
+        name: "Orders",
+        slug: "orders",
+        i18n: "Orders",
+        icon: "UserIcon"
+      },
+      {
+        url: '/business/reservations',
+        name: "Reservations",
+        slug: "reservations",
+        i18n: "Reservations",
+        icon: "UserIcon"
+      },
+    ]
+  },
+  {
+    header: "Authorizations",
+    items: [{
+      url: '/authorization/users',
       name: "Users",
       slug: "users",
-      icon: "UserIcon",
-      submenu: [{
-        url: '/users/list',
-        name: "UserList",
-        slug: "userlist",
-        i18n: "UserList",
-      }]
+      i18n: "Users",
+      icon: "UserIcon"
+    }]
+  },
+  {
+    header: "Settings",
+    items: [{
+      url: '/setting/sites',
+      name: "Sites",
+      slug: "sites",
+      i18n: "Sites",
+      icon: 'GlobeIcon'
     }]
   },
 ]
