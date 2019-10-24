@@ -17,7 +17,7 @@
     <v-nav-menu
       :navMenuItems = "navMenuItems"
       :logo         = "navMenuLogo"
-      title         = "Vuexy"
+      title         = "Ubang"
       parent        = ".layout--main" />
 
     <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
