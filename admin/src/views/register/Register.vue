@@ -35,7 +35,7 @@ export default {
 
 <style lang="scss">
 .register-tabs-container {
-  min-height: 450px;
+  min-height: 520px;
 
   .con-tab {
     padding-bottom: 23px;

@@ -63,10 +63,8 @@ export default {
       return true;
     },
     loginJWT() {
-      if (!this.checkLogin()) return;
-
-      // Loading
       this.$vs.loading();
+      this.$refs.observer.reset()
 
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,

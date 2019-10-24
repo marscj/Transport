@@ -69,7 +69,6 @@ class LoginSerializer(serializers.Serializer):
         if email and password:
             user = self.authenticate(email=email, password=password)
         elif username and password:
-            print(username, '====')
             user = self.authenticate(username=username, password=password)
         else:
             msg = _('Must include either "username" or "email".')
@@ -126,7 +125,7 @@ class LoginSerializer(serializers.Serializer):
                 email_address = user.emailaddress_set.get(email=user.email)
                 if not email_address.verified:
                     msg =_('E-mail is not verified.')
-                    raise serializers.ValidationError({'username': msg, 'email': msg})
+                    raise serializers.ValidationError({'email': msg})
 
         attrs['user'] = user
         return attrs

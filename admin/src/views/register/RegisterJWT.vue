@@ -93,6 +93,9 @@ export default {
       return true;
     },
     registerUserJWt() {
+      this.$vs.loading();
+      this.$refs.observer.reset()
+      
       const payload = {
         first_name: this.first_name,
         last_name: this.last_name,
@@ -101,7 +104,22 @@ export default {
         password2: this.password2,
         notify: this.$vs.notify
       };
-      this.$store.dispatch("auth/registerUserJWT", payload);
+      
+      this.$store
+        .dispatch("auth/registerUserJWT", payload)
+        .catch(error => {
+          this.$vs.notify({
+            title: "Error",
+            text: error.message,
+            iconPack: "feather",
+            icon: "icon-alert-circle",
+            color: "danger"
+          });
+          this.$refs.observer.setErrors(error.response.data);
+        })
+        .finally(() => {
+          this.$vs.loading.close();
+        });
     }
   }
 };

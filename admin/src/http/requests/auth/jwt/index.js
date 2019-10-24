@@ -5,6 +5,6 @@ export default {
     return axios.post("rest-auth/login/", payload)
   },
   registerUser(payload) {
-    return axios.post("rest-auth/register/", payload)
+    return axios.post("rest-auth/registration/", payload)
   },
 }

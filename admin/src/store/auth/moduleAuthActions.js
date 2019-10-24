@@ -372,18 +372,18 @@ export default {
 
       jwt.registerUser(payload)
         .then(response => {
-          // Redirect User
-          router.push(router.currentRoute.query.to || '/')
+          if (response.data.token) {
+            router.push(router.currentRoute.query.to || '/')
 
-          // Update data in localStorage
-          localStorage.setItem("accessToken", response.data.token)
+            // Update data in localStorage
+            localStorage.setItem("accessToken", response.data.token)
 
-          // Update user details
-          commit('UPDATE_USER_INFO', response.data.user)
+            // Update user details
+            commit('UPDATE_USER_INFO', response.data.user)
 
-          // Set bearer token in axios
-          commit("SET_BEARER", response.data.token)
-
+            // Set bearer token in axios
+            commit("SET_BEARER", response.data.token)
+          }
           resolve(response)
         })
         .catch(error => {

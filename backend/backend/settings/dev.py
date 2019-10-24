@@ -19,3 +19,5 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1), 
     'JWT_AUTH_COOKIE': 'Access-Token',
 }
+
+AUTH_PASSWORD_VALIDATORS = []
