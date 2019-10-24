@@ -68,25 +68,21 @@ import 'vue-select/dist/vue-select.css';
 
 Vue.config.productionTip = false
 
-import {
-  ValidationProvider,
-  ValidationObserver,
-  extend
-} from 'vee-validate';
-import {
-  required
-} from 'vee-validate/dist/rules';
+// import {
+//   ValidationProvider,
+//   ValidationObserver,
+//   extend
+// } from 'vee-validate';
+// import {
+//   required
+// } from 'vee-validate/dist/rules';
 
-extend('required', {
-  ...required,
-  message: 'The {_field_} field is required'
-});
+// extend('required', {
+//   ...required, email, 
+//   message: 'The {_field_} field is required'
+// });
 
 new Vue({
-  components: {
-    ValidationProvider,
-    ValidationObserver
-  },
   router,
   store,
   render: h => h(App),

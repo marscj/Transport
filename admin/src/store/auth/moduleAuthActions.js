@@ -339,7 +339,7 @@ export default {
   }, payload) {
 
     return new Promise((resolve, reject) => {
-      jwt.login(payload.userDetails.email, payload.userDetails.password)
+      jwt.login(payload)
         .then(response => {
 
           // If there's user data in response

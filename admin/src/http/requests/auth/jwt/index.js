@@ -44,10 +44,10 @@ export default {
       return Promise.reject(error)
     })
   },
-  login(email, pwd) {
-    return axios.post("rest-auth/login/", {email: email, password: pwd})
+  login(payload) {
+    return axios.post("rest-auth/login/", payload)
   },
-  registerUser(name, email, pwd) {
-    return axios.post("rest-auth/register/", {displayName: name, email: email, password: pwd})
+  registerUser(payload) {
+    return axios.post("rest-auth/register/", payload)
   },
 }
