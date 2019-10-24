@@ -39,8 +39,8 @@ class LoginSerializer(serializers.Serializer):
         if email and password:
             user = self.authenticate(email=email, password=password)
         else:
-            msg = _('Must include "email" and "password".')
-            raise exceptions.ValidationError(msg)
+            msg = _('Must include "email" .')
+            raise exceptions.ValidationError({'emial': msg})
 
         return user
 
@@ -50,8 +50,8 @@ class LoginSerializer(serializers.Serializer):
         if username and password:
             user = self.authenticate(username=username, password=password)
         else:
-            msg = _('Must include "username" and "password".')
-            raise exceptions.ValidationError(msg)
+            msg = _('Must include "username".')
+            raise exceptions.ValidationError({'username': msg})
 
         return user
 
@@ -63,8 +63,8 @@ class LoginSerializer(serializers.Serializer):
         elif username and password:
             user = self.authenticate(username=username, password=password)
         else:
-            msg = _('Must include either "username" or "email" and "password".')
-            raise exceptions.ValidationError(msg)
+            msg = _('Must include either "username" or "email".')
+            raise exceptions.ValidationError({'username': msg, 'email': msg})
 
         return user
 
@@ -105,7 +105,7 @@ class LoginSerializer(serializers.Serializer):
         if user:
             if not user.is_active:
                 msg = _('User account is disabled.')
-                raise exceptions.ValidationError(msg)
+                raise exceptions.ValidationError({'username': msg, 'email': msg})
         else:
             msg = _('Unable to log in with provided credentials.')
             raise exceptions.ValidationError({'password': msg})
@@ -116,7 +116,8 @@ class LoginSerializer(serializers.Serializer):
             if app_settings.EMAIL_VERIFICATION == app_settings.EmailVerificationMethod.MANDATORY:
                 email_address = user.emailaddress_set.get(email=user.email)
                 if not email_address.verified:
-                    raise serializers.ValidationError(_('E-mail is not verified.'))
+                    msg =_('E-mail is not verified.')
+                    raise serializers.ValidationError({'username': msg, 'email': msg})
 
         attrs['user'] = user
         return attrs

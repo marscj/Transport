@@ -14,7 +14,7 @@
         <span>{{ errors[0] }}</span>
       </ValidationProvider>
 
-      <ValidationProvider rules="required|max:16|min:8" v-slot="{ errors }">
+      <ValidationProvider name="password" rules="required|max:16|min:8" v-slot="{ errors }">
         <vs-input
           data-vv-validate-on="blur"
           type="password"
@@ -25,6 +25,10 @@
           v-model="password"
           class="w-full mt-6"
         />
+        <span>{{ errors[0] }}</span>
+      </ValidationProvider>
+
+      <ValidationProvider name="non_field_errors" v-slot="{ errors }">
         <span>{{ errors[0] }}</span>
       </ValidationProvider>
     </ValidationObserver>
@@ -82,17 +86,16 @@ export default {
 
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,
-        username: this.username,
+        // username: this.username,
         password: this.password
       };
 
       this.$store
         .dispatch("auth/loginJWT", payload)
-        .then(() => {
-          this.$vs.loading.close();
+        .then((data) => {
+          console.log(data)
         })
         .catch(error => {
-          this.$vs.loading.close();
           this.$vs.notify({
             title: "Error",
             text: error.message,
@@ -101,7 +104,9 @@ export default {
             color: "danger"
           });
           this.$refs.observer.setErrors(error.response.data);
-        });
+        }).finally(() => {
+          this.$vs.loading.close();
+        });;
     },
     registerUser() {
       // if (!this.checkLogin()) return;
