@@ -18,14 +18,7 @@
                   <p>Welcome back, please login to your account.</p>
                 </div>
 
-                <vs-tabs>
-                  <vs-tab label="User">
-                    <login-user-name></login-user-name>
-                  </vs-tab>
-                  <vs-tab label="Email">
-                    <login-email></login-email>
-                  </vs-tab>
-                </vs-tabs>
+                <login-email></login-email>
               </div>
             </div>
           </div>
@@ -50,7 +43,7 @@ export default {
 
 <style lang="scss">
 .login-tabs-container {
-  min-height: 505px;
+  min-height: 400px;
 
   .con-tab {
     padding-bottom: 14px;

@@ -66,7 +66,7 @@ export default {
 
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,
-        // email: this.email,
+        email: this.email,
         password: this.password
       };
 
