@@ -342,9 +342,7 @@ export default {
             localStorage.setItem("accessToken", response.data.token)
 
             // Update user details
-            commit('UPDATE_USER_INFO', response.data.user, {
-              root: true
-            })
+            commit('UPDATE_USER_INFO', response.data.user)
 
             // Set bearer token in axios
             commit("SET_BEARER", response.data.token)
@@ -362,34 +360,29 @@ export default {
         })
     })
   },
-  registerUserJWT({
-    commit
-  }, payload) {
-
-    const {
-      displayName,
-      email,
-      password,
-      confirmPassword
-    } = payload.userDetails
-
+  
+  registerUserJWT({ commit }, payload) {
     return new Promise((resolve, reject) => {
 
-      // Check confirm password
-      if (password !== confirmPassword) {
+      if (payload.password1 !== payload.password2) {
         reject({
           message: "Password doesn't match. Please try again."
         })
       }
 
-      jwt.registerUser(displayName, email, password)
+      jwt.registerUser(payload)
         .then(response => {
           // Redirect User
           router.push(router.currentRoute.query.to || '/')
 
           // Update data in localStorage
-          localStorage.setItem("accessToken", response.data.accessToken)
-          commit('UPDATE_USER_INFO', response.data.userData)
+          localStorage.setItem("accessToken", response.data.token)
+
+          // Update user details
+          commit('UPDATE_USER_INFO', response.data.user)
+
+          // Set bearer token in axios
+          commit("SET_BEARER", response.data.token)
 
           resolve(response)
         })

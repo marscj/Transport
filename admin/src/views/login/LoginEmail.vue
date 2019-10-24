@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ValidationObserver ref="observer" v-slot="{ validate, dirty }">
-      <ValidationProvider name="email" rules="email|required" v-slot="{ errors }">
+    <validation-observer ref="observer" v-slot="{ validate, dirty }">
+      <validation-provider name="email" rules="email|required" v-slot="{ errors }">
         <vs-input
           data-vv-validate-on="blur"
           icon-no-border
@@ -12,9 +12,9 @@
           class="w-full"
         />
         <span>{{ errors[0] }}</span>
-      </ValidationProvider>
+      </validation-provider>
 
-      <ValidationProvider name="password" rules="required|max:16|min:8" v-slot="{ errors }">
+      <validation-provider name="password" rules="required|max:16|min:8" v-slot="{ errors }">
         <vs-input
           data-vv-validate-on="blur"
           type="password"
@@ -26,8 +26,12 @@
           class="w-full mt-6"
         />
         <span>{{ errors[0] }}</span>
-      </ValidationProvider>
-    </ValidationObserver>
+      </validation-provider>
+
+      <validation-provider name="non_field_errors" v-slot="{ errors }">
+        <span>{{ errors[0] }}</span>
+      </validation-provider>
+    </validation-observer>
 
     <div class="flex flex-wrap justify-between my-5">
       <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
@@ -71,7 +75,8 @@ export default {
       };
 
       this.$store
-        .dispatch("auth/loginJWT", payload).catch(error => {
+        .dispatch("auth/loginJWT", payload)
+        .catch(error => {
           this.$vs.notify({
             title: "Error",
             text: error.message,

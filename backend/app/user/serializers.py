@@ -132,6 +132,8 @@ class LoginSerializer(serializers.Serializer):
         return attrs
 
 class RegisterSerializer(serializers.Serializer):
+    first_name = serializers.CharField(max_length=30)
+    last_name = serializers.CharField(max_length=150)
     username = serializers.CharField(
         max_length=get_username_max_length(),
         min_length=allauth_settings.USERNAME_MIN_LENGTH,
