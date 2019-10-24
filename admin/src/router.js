@@ -17,8 +17,39 @@ const router = new Router({
       component: () => import('./layouts/main/Main.vue'),
       children: [{
           path: '/',
-          name: 'home',
-          component: () => import('./views/Home.vue')
+          redirect: '/dashboard/analytics'
+        },
+        {
+          path: '/dashboard/analytics',
+          name: 'analytics',
+          component: () => import('./views/Home.vue'),
+          // meta: {
+          //   rule: 'editor',
+          //   breadcrumb: [{
+          //       title: 'Home',
+          //       url: '/'
+          //     },
+          //     {
+          //       title: 'Dashboard',
+          //       url: '/',
+          //       active: true
+          //     },
+          //     {
+          //       title: 'Analytics',
+          //       url: '/',
+          //       active: true
+          //     },
+          //   ],
+          //   pageTitle: 'Analytics',
+          // }
+        },
+        {
+          path: '/dashboard/ecommerce',
+          name: 'ecommerce',
+          component: () => import('./views/Home.vue'),
+          meta: {
+            rule: 'admin'
+          }
         },
         {
           path: '/page2',
@@ -27,7 +58,6 @@ const router = new Router({
         },
       ],
     },
-
     {
       path: '',
       component: () => import('@/layouts/full-page/FullPage.vue'),
@@ -69,7 +99,7 @@ const router = new Router({
     },
     {
       path: '*',
-      redirect: '/pages/error-404'
+      redirect: '/error-404'
     }
   ],
 })

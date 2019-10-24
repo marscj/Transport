@@ -43,7 +43,7 @@ import router from './router'
 
 
 // Vuex Store
-import store from './store/store'
+import store from './store/'
 
 
 // Vuejs - Vue wrapper for hammerjs

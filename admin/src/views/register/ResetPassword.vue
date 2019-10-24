@@ -35,7 +35,7 @@
                 <div class="flex flex-wrap justify-between flex-col-reverse sm:flex-row">
                   <vs-button
                     type="border"
-                    to="/pages/login"
+                    :to="{name: 'login'}"
                     class="w-full sm:w-auto mb-8 sm:mb-auto mt-3 sm:mt-auto"
                   >Go Back To Login</vs-button>
                   <vs-button class="w-full sm:w-auto">Reset</vs-button>

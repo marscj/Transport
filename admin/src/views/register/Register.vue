@@ -13,11 +13,7 @@
                   <h4 class="mb-4">Create Account</h4>
                   <p>Fill the below form to create a new account.</p>
                 </div>
-                <vs-tabs>
-                  <vs-tab label="JWT">
-                    <register-jwt></register-jwt>
-                  </vs-tab>
-                </vs-tabs>
+                <register-jwt></register-jwt>
               </div>
             </div>
           </div>

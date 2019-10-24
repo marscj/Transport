@@ -1,7 +1,6 @@
 <template>
   <div class="clearfix">
     <vs-input
-      v-validate="'required|alpha_dash|min:3'"
       data-vv-validate-on="blur"
       label-placeholder="Name"
       name="displayName"
@@ -11,7 +10,6 @@
     />
 
     <vs-input
-      v-validate="'required|email'"
       data-vv-validate-on="blur"
       name="email"
       type="email"
@@ -25,7 +23,6 @@
       ref="password"
       type="password"
       data-vv-validate-on="blur"
-      v-validate="'required|min:6|max:10'"
       name="password"
       label-placeholder="Password"
       placeholder="Password"
@@ -35,7 +32,6 @@
 
     <vs-input
       type="password"
-      v-validate="'min:6|max:10|confirmed:password'"
       data-vv-validate-on="blur"
       data-vv-as="password"
       name="confirm_password"
@@ -46,7 +42,7 @@
     />
 
     <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
-    <vs-button type="border" to="/pages/login" class="mt-6">Login</vs-button>
+    <vs-button type="border" :to="{name: 'login'}" class="mt-6">Login</vs-button>
     <vs-button class="float-right mt-6" @click="registerUserJWt" :disabled="!validateForm">Register</vs-button>
   </div>
 </template>

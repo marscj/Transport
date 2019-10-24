@@ -56,22 +56,6 @@ export default {
   },
   methods: {
     checkLogin() {
-      // If user is already logged in notify
-      // if (this.$store.state.auth.isUserLoggedIn()) {
-
-      //   // Close animation if passed as payload
-      //   // this.$vs.loading.close()
-
-      //   this.$vs.notify({
-      //     title: 'Login Attempt',
-      //     text: 'You are already logged in!',
-      //     iconPack: 'feather',
-      //     icon: 'icon-alert-circle',
-      //     color: 'warning'
-      //   })
-
-      //   return false
-      // }
       return true;
     },
     loginJWT() {
@@ -87,11 +71,7 @@ export default {
       };
 
       this.$store
-        .dispatch("auth/loginJWT", payload)
-        .then(data => {
-          console.log(data);
-        })
-        .catch(error => {
+        .dispatch("auth/loginJWT", payload).catch(error => {
           this.$vs.notify({
             title: "Error",
             text: error.message,
@@ -106,7 +86,6 @@ export default {
         });
     },
     registerUser() {
-      // if (!this.checkLogin()) return;
       this.$router.push({ name: "register" }).catch(() => {});
     }
   }

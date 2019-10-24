@@ -60,42 +60,19 @@ export default {
   },
   methods: {
     checkLogin() {
-      // If user is already logged in notify
-      // if (this.$store.state.auth.isUserLoggedIn()) {
-
-      //   // Close animation if passed as payload
-      //   // this.$vs.loading.close()
-
-      //   this.$vs.notify({
-      //     title: 'Login Attempt',
-      //     text: 'You are already logged in!',
-      //     iconPack: 'feather',
-      //     icon: 'icon-alert-circle',
-      //     color: 'warning'
-      //   })
-
-      //   return false
-      // }
       return true;
     },
     loginJWT() {
-      if (!this.checkLogin()) return;
-
-      // Loading
       this.$vs.loading();
 
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,
-        // username: this.username,
+        username: this.username,
         password: this.password
       };
 
       this.$store
-        .dispatch("auth/loginJWT", payload)
-        .then((data) => {
-          console.log(data)
-        })
-        .catch(error => {
+        .dispatch("auth/loginJWT", payload).catch(error => {
           this.$vs.notify({
             title: "Error",
             text: error.message,
@@ -106,10 +83,9 @@ export default {
           this.$refs.observer.setErrors(error.response.data);
         }).finally(() => {
           this.$vs.loading.close();
-        });;
+        });
     },
     registerUser() {
-      // if (!this.checkLogin()) return;
       this.$router.push({ name: "register" }).catch(() => {});
     }
   }
