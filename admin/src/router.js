@@ -26,7 +26,7 @@ const router = new Router({
         {
           path: '/dashboard/analytics',
           name: 'analytics',
-          component: () => import('./views/Home.vue'),
+          component: () => import('./views/dashboard/analytics/Page.vue'),
           meta: {
             rule: 'editor',
             breadcrumb: [{
@@ -52,45 +52,93 @@ const router = new Router({
         {
           path: '/business/orders',
           name: 'orders',
-          component: () => import('./views/order/Page.vue'),
+          component: () => import('./views/business/order/Page.vue'),
           meta: {
             rule: 'admin',
             breadcrumb: [{
-              title: 'Home',
-              url: '/'
-            },
-            {
-              title: 'Business',
-              url: '/business'
-            },
-            {
-              title: 'Orders',
-              active: true
-            },
-          ],
-          pageTitle: 'Order List',
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Business',
+                url: '/business'
+              },
+              {
+                title: 'Orders',
+                active: true
+              },
+            ],
+            pageTitle: 'Order List',
           }
         },
         {
           path: '/business/reservations',
           name: 'reservations',
-          component: () => import('./views/reservation/Page.vue'),
+          component: () => import('./views/business/reservation/Page.vue'),
           meta: {
             rule: 'admin',
             breadcrumb: [{
-              title: 'Home',
-              url: '/'
-            },
-            {
-              title: 'Business',
-              url: '/business'
-            },
-            {
-              title: 'Reservations',
-              active: true
-            },
-          ],
-          pageTitle: 'Reservation List',
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Business',
+                url: '/business'
+              },
+              {
+                title: 'Reservations',
+                active: true
+              },
+            ],
+            pageTitle: 'Reservation List',
+          }
+        },
+        {
+          path: '/resource',
+          redirect: '/resource/drivers'
+        },
+        {
+          path: '/resource/drivers',
+          name: 'drivers',
+          component: () => import('./views/resource/driver/Page.vue'),
+          meta: {
+            rule: 'admin',
+            breadcrumb: [{
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Resource',
+                url: '/resource'
+              },
+              {
+                title: 'Drivers',
+                active: true
+              },
+            ],
+            pageTitle: 'Driver List',
+          }
+        },
+        {
+          path: '/resource/vehicles',
+          name: 'vehicles',
+          component: () => import('./views/resource/vehicle/Page.vue'),
+          meta: {
+            rule: 'admin',
+            breadcrumb: [{
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Resource',
+                url: '/resource'
+              },
+              {
+                title: 'Vehicles',
+                active: true
+              },
+            ],
+            pageTitle: 'Vehicle List',
           }
         },
         {
@@ -100,23 +148,23 @@ const router = new Router({
         {
           path: '/authorization/users',
           name: 'users',
-          component: () => import('./views/Page2.vue'),
+          component: () => import('./views/authorization/user/Page.vue'),
           meta: {
             rule: 'editor',
             breadcrumb: [{
-              title: 'Home',
-              url: '/'
-            },
-            {
-              title: 'Authorization',
-              url: '/authorization'
-            },
-            {
-              title: 'Users',
-              active: true
-            },
-          ],
-          pageTitle: 'User List',
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Authorization',
+                url: '/authorization'
+              },
+              {
+                title: 'Users',
+                active: true
+              },
+            ],
+            pageTitle: 'User List',
           }
         },
         {
@@ -126,23 +174,45 @@ const router = new Router({
         {
           path: '/setting/sites',
           name: 'sites',
-          component: () => import('./views/setting/Page.vue'),
+          component: () => import('./views/setting/site/Page.vue'),
           meta: {
             rule: 'admin',
             breadcrumb: [{
-              title: 'Home',
-              url: '/'
-            },
-            {
-              title: 'Setting',
-              url: '/setting'
-            },
-            {
-              title: 'Sites',
-              active: true
-            },
-          ],
-          pageTitle: 'Site List',
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Setting',
+                url: '/setting'
+              },
+              {
+                title: 'Sites',
+                active: true
+              },
+            ],
+            pageTitle: 'Site List',
+          }
+        },
+        {
+          path: '/setting/faqs',
+          name: 'faqs',
+          component: () => import('./views/setting/faq/Page.vue'),
+          meta: {
+            rule: 'admin',
+            breadcrumb: [{
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Setting',
+                url: '/setting'
+              },
+              {
+                title: 'FAQS',
+                active: true
+              },
+            ],
+            pageTitle: 'FAQ List',
           }
         },
       ],
