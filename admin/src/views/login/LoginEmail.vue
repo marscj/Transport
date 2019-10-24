@@ -1,7 +1,7 @@
 <template>
   <div>
     <ValidationObserver ref="observer" v-slot="{ validate, dirty }">
-      <ValidationProvider name="email" rules="required" v-slot="{ errors }">
+      <ValidationProvider name="email" rules="email" v-slot="{ errors }">
         <vs-input
           data-vv-validate-on="blur"
           icon-no-border
@@ -31,7 +31,7 @@
 
     <div class="flex flex-wrap justify-between my-5">
       <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-      <router-link to="/pages/forgot-password">Forgot Password?</router-link>
+      <router-link :to="{name: 'forgot-password'}">Forgot Password?</router-link>
     </div>
     <div class="flex flex-wrap justify-between mb-3">
       <vs-button type="border" @click="registerUser">Register</vs-button>

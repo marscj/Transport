@@ -9,7 +9,6 @@
       v-model="displayName"
       class="w-full"
     />
-    <span class="text-danger text-sm">{{ errors.first('displayName') }}</span>
 
     <vs-input
       v-validate="'required|email'"
@@ -21,7 +20,6 @@
       v-model="email"
       class="w-full mt-6"
     />
-    <span class="text-danger text-sm">{{ errors.first('email') }}</span>
 
     <vs-input
       ref="password"
@@ -34,7 +32,6 @@
       v-model="password"
       class="w-full mt-6"
     />
-    <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
     <vs-input
       type="password"
@@ -47,7 +44,6 @@
       v-model="confirm_password"
       class="w-full mt-6"
     />
-    <span class="text-danger text-sm">{{ errors.first('confirm_password') }}</span>
 
     <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
     <vs-button type="border" to="/pages/login" class="mt-6">Login</vs-button>
@@ -69,7 +65,6 @@ export default {
   computed: {
     validateForm() {
       return (
-        !this.errors.any() &&
         this.displayName != "" &&
         this.email != "" &&
         this.password != "" &&

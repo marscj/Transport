@@ -22,7 +22,7 @@
                 />
                 <vs-button
                   type="border"
-                  to="/pages/login"
+                  :to="{name: 'login'}"
                   class="px-4 w-full md:w-auto"
                 >Back To Login</vs-button>
                 <vs-button
