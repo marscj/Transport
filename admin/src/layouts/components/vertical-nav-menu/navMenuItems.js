@@ -19,17 +19,32 @@
 ==========================================================================================*/
 
 
-export default [
-  {
-    url: "/",
-    name: "Home",
-    slug: "home",
+export default [{
+    url: "/dashboard",
+    name: "Dashboard",
+    tagColor: "warning",
     icon: "HomeIcon",
+    i18n: "Dashboard",
+    submenu: [{
+      url: '/dashboard/analytics',
+      name: "Analytics",
+      slug: "analytics",
+      i18n: "Analytics",
+    }]
   },
   {
-    url: "/page2",
-    name: "Page 2",
-    slug: "page2",
-    icon: "FileIcon",
+    header: "Management",
+    items: [{
+      url: "/users",
+      name: "Users",
+      slug: "users",
+      icon: "UserIcon",
+      submenu: [{
+        url: '/users/list',
+        name: "UserList",
+        slug: "userlist",
+        i18n: "UserList",
+      }]
+    }]
   },
 ]

@@ -20,41 +20,56 @@ const router = new Router({
           redirect: '/dashboard/analytics'
         },
         {
+          path: '/dashboard',
+          redirect: '/dashboard/analytics'
+        },
+        {
           path: '/dashboard/analytics',
           name: 'analytics',
           component: () => import('./views/Home.vue'),
-          // meta: {
-          //   rule: 'editor',
-          //   breadcrumb: [{
-          //       title: 'Home',
-          //       url: '/'
-          //     },
-          //     {
-          //       title: 'Dashboard',
-          //       url: '/',
-          //       active: true
-          //     },
-          //     {
-          //       title: 'Analytics',
-          //       url: '/',
-          //       active: true
-          //     },
-          //   ],
-          //   pageTitle: 'Analytics',
-          // }
-        },
-        {
-          path: '/dashboard/ecommerce',
-          name: 'ecommerce',
-          component: () => import('./views/Home.vue'),
           meta: {
-            rule: 'admin'
+            rule: 'editor',
+            breadcrumb: [{
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'dashboard',
+                url: '/dashboard'
+              },
+              {
+                title: 'analytics',
+                active: true
+              },
+            ],
+            pageTitle: 'Analytics',
           }
         },
         {
-          path: '/page2',
-          name: 'page-2',
-          component: () => import('./views/Page2.vue')
+          path: '/users',
+          redirect: '/users/list'
+        },
+        {
+          path: '/users/list',
+          name: 'users',
+          component: () => import('./views/Page2.vue'),
+          meta: {
+            rule: 'editor',
+            breadcrumb: [{
+              title: 'Home',
+              url: '/'
+            },
+            {
+              title: 'users',
+              url: '/users'
+            },
+            {
+              title: 'userlist',
+              active: true
+            },
+          ],
+          pageTitle: 'Users',
+          }
         },
       ],
     },
