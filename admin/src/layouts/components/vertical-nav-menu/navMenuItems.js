@@ -46,7 +46,7 @@ export default [{
         name: "Reservations",
         slug: "reservations",
         i18n: "Reservations",
-        icon: "UserIcon"
+        icon: "BookOpenIcon"
       },
     ]
   },
@@ -64,7 +64,8 @@ export default [{
         name: "Vehicles",
         slug: "vehicles",
         i18n: "Vehicles",
-        icon: "UserIcon"
+        icon: "directions_car",
+        featherIcon: false,
       },
     ]
   },
@@ -75,7 +76,7 @@ export default [{
       name: "Users",
       slug: "users",
       i18n: "Users",
-      icon: "UserIcon"
+      icon: "UsersIcon"
     }]
   },
   {
@@ -92,8 +93,7 @@ export default [{
         name: "FAQS",
         slug: "faqs",
         i18n: "FAQS",
-        icon: 'mood',
-        featherIcon: false,
+        icon: 'HelpCircleIcon',
       }
     ]
   },
