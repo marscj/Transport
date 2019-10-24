@@ -57,15 +57,12 @@ export default [{
         name: "Drivers",
         slug: "drivers",
         i18n: "Drivers",
-        icon: "UserIcon"
       },
       {
         url: '/resource/vehicles',
         name: "Vehicles",
         slug: "vehicles",
         i18n: "Vehicles",
-        icon: "directions_car",
-        featherIcon: false,
       },
     ]
   },
@@ -77,6 +74,12 @@ export default [{
       slug: "users",
       i18n: "Users",
       icon: "UsersIcon"
+    }, {
+      url: '/authorization/roles',
+      name: "Roles",
+      slug: "roles",
+      i18n: "Roles",
+      icon: "UserCheckIcon"
     }]
   },
   {

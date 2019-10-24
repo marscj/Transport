@@ -46,12 +46,12 @@
           </vs-dropdown>
         </div>
 
-        <div class="bookmark-container">
+        <!-- <div class="bookmark-container">
           <feather-icon icon="StarIcon" :svgClasses="['stoke-current text-warning', {'text-white': navbarColor != '#fff'}]" class="cursor-pointer p-2" @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown" />
                     <div v-click-outside="outside" class="absolute bookmark-list w-1/3 xl:w-1/4 mt-4" v-if="showBookmarkPagesDropdown">
           <vx-auto-suggest :autoFocus="true" :data="navbarSearchAndPinList" @selected="selected" @actionClicked="actionClicked" inputClassses="w-full" show-action show-pinned background-overlay></vx-auto-suggest>
           </div>
-        </div>
+        </div> -->
       </template>
 
 
@@ -77,7 +77,7 @@
       <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search mr-4"></feather-icon>
 
       <!-- NOTIFICATIONS -->
-      <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
+      <!-- <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
         <feather-icon icon="BellIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="unreadNotifications.length"></feather-icon>
         <vs-dropdown-menu class="notification-dropdown dropdown-custom vx-navbar-dropdown">
 
@@ -120,7 +120,7 @@
                         <span>View All Notifications</span>
                     </div>
         </vs-dropdown-menu>
-      </vs-dropdown>
+      </vs-dropdown> -->
 
       <!-- USER META -->
       <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.displayName">

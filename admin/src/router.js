@@ -168,6 +168,28 @@ const router = new Router({
           }
         },
         {
+          path: '/authorization/roles',
+          name: 'roles',
+          component: () => import('./views/authorization/role/Page.vue'),
+          meta: {
+            rule: 'editor',
+            breadcrumb: [{
+                title: 'Home',
+                url: '/'
+              },
+              {
+                title: 'Authorization',
+                url: '/authorization'
+              },
+              {
+                title: 'Roles',
+                active: true
+              },
+            ],
+            pageTitle: 'Role List',
+          }
+        },
+        {
           path: '/setting',
           redirect: '/setting/sites'
         },
