@@ -28,10 +28,10 @@ export default [{
   {
     header: "Resource",
     items: [{
-        url: '/resource/drivers',
-        name: "Drivers",
-        slug: "drivers",
-        i18n: "Drivers",
+        url: '/resource/staffs',
+        name: "Staffs",
+        slug: "staffs",
+        i18n: "Staffs",
       },
       {
         url: '/resource/vehicles',

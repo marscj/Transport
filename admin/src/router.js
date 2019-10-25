@@ -95,12 +95,12 @@ const router = new Router({
         },
         {
           path: '/resource',
-          redirect: '/resource/drivers'
+          redirect: '/resource/staffs'
         },
         {
-          path: '/resource/drivers',
-          name: 'drivers',
-          component: () => import('./views/resource/driver/Page.vue'),
+          path: '/resource/staffs',
+          name: 'staffs',
+          component: () => import('./views/resource/staff/Page.vue'),
           meta: {
             rule: 'admin',
             breadcrumb: [{
@@ -112,11 +112,11 @@ const router = new Router({
                 url: '/resource'
               },
               {
-                title: 'Drivers',
+                title: 'Staffs',
                 active: true
               },
             ],
-            pageTitle: 'Driver List',
+            pageTitle: 'Staff List',
           }
         },
         {
