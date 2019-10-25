@@ -251,29 +251,25 @@ const router = new Router({
           path: '/register',
           name: 'register',
           component: () => import('@/views/register/Register.vue'),
-          meta: {
-            rule: 'editor'
-          }
         },
         {
           path: '/forgot-password',
           name: 'forgot-password',
           component: () => import('@/views/register/ForgotPassword.vue'),
-          meta: {
-            rule: 'editor'
-          }
         },
         {
           path: '/reset-password',
           name: 'reset-password',
           component: () => import('@/views/register/ResetPassword.vue'),
-          meta: {
-            rule: 'editor'
-          }
+        },
+        {
+          path: '/verify-email',
+          name: 'verify-email',
+          component: () => import('@/views/register/VerifyEmail.vue'),
         },
         {
           path: '/error-404',
-          name: 'page-error-404',
+          name: 'error-404',
           component: () => import('@/views/Error404.vue')
         },
       ]
