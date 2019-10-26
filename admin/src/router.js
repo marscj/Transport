@@ -263,7 +263,7 @@ const router = new Router({
           component: () => import('@/views/register/ResetPassword.vue'),
         },
         {
-          path: '/verify-email',
+          path: '/rest-auth/registration/account-confirm-email',
           name: 'verify-email',
           component: () => import('@/views/register/VerifyEmail.vue'),
         },

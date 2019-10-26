@@ -1,3 +1,3 @@
 <template>
-	<h4>This is Driver Page.</h4>
+	<h4>This is Staff Page.</h4>
 </template>
