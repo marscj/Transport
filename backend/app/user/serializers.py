@@ -16,7 +16,7 @@ except ImportError:
 
 UserModel = get_user_model()
 
-class Permission(serializers.ModelSerializer):
+class PermissionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Permission
@@ -24,15 +24,24 @@ class Permission(serializers.ModelSerializer):
 
 class GroupSerializer(serializers.ModelSerializer):
     
+    permissions = PermissionSerializer(many=True)
     class Meta:
         model = Group
         fields = '__all__'
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
+    groups = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, write_only=True, many=True, queryset=Group.objects.all())
+
+    displayName = serializers.SerializerMethodField()
     class Meta:
         model = UserModel
         fields = '__all__'
+
+    def get_displayName(self, obj):
+        if obj.get_full_name():
+            return obj.get_full_name
+        return obj.username
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)

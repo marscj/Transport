@@ -15,8 +15,8 @@ export default new AclCreate({
   router,
   acceptLocalRules: true,
   globalRules: {
-    admin: new AclRule("admin").generate(),
-    editor: new AclRule("editor").or("admin").generate(),
+    admin: new AclRule("admin").or("editor").or("public").generate(),
+    editor: new AclRule("editor").or("public").generate(),
     public: new AclRule("public").generate(),
   }
 })

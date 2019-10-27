@@ -1,5 +1,6 @@
 import jwt from "@/http/requests/auth/jwt/index.js"
 import router from '@/router'
+import acl from '@/acl/acl'
 
 export default {
   // JWT
@@ -73,9 +74,12 @@ export default {
       localStorage.removeItem("accessToken")
     }
 
-    // Change role on logout. Same value as initialRole of acj.js
-    this.$acl.change('public')
-    localStorage.removeItem('userInfo')
-    this.$router.push('/login').catch(() => {})
+    if(localStorage.getItem("userInfo")) {
+      localStorage.removeItem('userInfo')
+    }
+
+    acl.change('public')
+    
+    router.push('/login').catch(() => {})
   }
 }
