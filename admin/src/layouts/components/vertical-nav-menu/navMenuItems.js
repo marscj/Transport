@@ -5,6 +5,7 @@ export default [{
       name: "Analytics",
       slug: "analytics",
       i18n: "Analytics",
+      icon: "HomeIcon"
     }]
   },
   {
@@ -32,12 +33,14 @@ export default [{
         name: "Staffs",
         slug: "staffs",
         i18n: "Staffs",
+        icon: "UserCheckIcon"
       },
       {
         url: '/resource/vehicles',
         name: "Vehicles",
         slug: "vehicles",
         i18n: "Vehicles",
+        icon: "TruckIcon"
       },
     ]
   },
@@ -54,7 +57,7 @@ export default [{
       name: "Roles",
       slug: "roles",
       i18n: "Roles",
-      icon: "UserCheckIcon"
+      icon: "UserPlusIcon"
     }]
   },
   {
