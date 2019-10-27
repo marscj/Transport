@@ -1,3 +1,14 @@
+<!-- =========================================================================================
+  File Name: TheNavbar.vue
+  Description: Navbar component
+  Component Name: TheNavbar
+  ----------------------------------------------------------------------------------------
+  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+  Author: Pixinvent
+  Author URL: http://www.themeforest.net/user/pixinvent
+========================================================================================== -->
+
+
 <template>
 <div class="relative">
   <div class="vx-navbar-wrapper" :class="classObj">
@@ -35,38 +46,105 @@
           </vs-dropdown>
         </div>
 
-        <!-- <div class="bookmark-container">
+        <div class="bookmark-container">
           <feather-icon icon="StarIcon" :svgClasses="['stoke-current text-warning', {'text-white': navbarColor != '#fff'}]" class="cursor-pointer p-2" @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown" />
                     <div v-click-outside="outside" class="absolute bookmark-list w-1/3 xl:w-1/4 mt-4" v-if="showBookmarkPagesDropdown">
           <vx-auto-suggest :autoFocus="true" :data="navbarSearchAndPinList" @selected="selected" @actionClicked="actionClicked" inputClassses="w-full" show-action show-pinned background-overlay></vx-auto-suggest>
           </div>
-        </div> -->
+        </div>
       </template>
 
 
       <vs-spacer />
 
-      <!-- SEARCHBAR -->
-      <div class="search-full-container w-full h-full absolute left-0" :class="{'flex': showFullSearch}" v-show="showFullSearch">
-          <vx-auto-suggest
-            class="w-full"
-            inputClassses="w-full vs-input-no-border vs-input-no-shdow-focus"
-            :autoFocus="showFullSearch"
-            :data="navbarSearchAndPinList"
-            icon="SearchIcon"
-            placeholder="Search..."
-            ref="navbarSearch"
-            @closeSearchbar="showFullSearch = false"
-            @selected="selected"
-            background-overlay />
-          <div class="absolute right-0 h-full z-50">
-              <feather-icon icon="XIcon" class="px-4 cursor-pointer h-full close-search-icon" @click="showFullSearch = false"></feather-icon>
-          </div>
-      </div>
-      <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search mr-4"></feather-icon>
+      <!-- I18N -->
+      <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
+        <span class="cursor-pointer flex items-center i18n-locale">
+          <img class="h-4 w-5" :src="i18n_locale_img" :alt="$i18n.locale" />
+          <span class="hidden sm:block ml-2">{{ getCurrentLocaleData.lang }}</span>
+        </span>
+        <vs-dropdown-menu class="w-48 i18n-dropdown vx-navbar-dropdown">
+          <vs-dropdown-item @click="updateLocale('en')"><img class="h-4 w-5 mr-2" src="@/assets/images/flags/en.png" alt="en" /> &nbsp;English</vs-dropdown-item>
+          <vs-dropdown-item @click="updateLocale('fr')"><img class="h-4 w-5 mr-2" src="@/assets/images/flags/fr.png" alt="fr" /> &nbsp;French</vs-dropdown-item>
+          <vs-dropdown-item @click="updateLocale('de')"><img class="h-4 w-5 mr-2" src="@/assets/images/flags/de.png" alt="de" /> &nbsp;German</vs-dropdown-item>
+          <vs-dropdown-item @click="updateLocale('pt')"><img class="h-4 w-5 mr-2" src="@/assets/images/flags/pt.png" alt="pt" /> &nbsp;Portuguese</vs-dropdown-item>
+        </vs-dropdown-menu>
+      </vs-dropdown>
+
+            <!-- SEARCHBAR -->
+            <div class="search-full-container w-full h-full absolute left-0" :class="{'flex': showFullSearch}" v-show="showFullSearch">
+                <vx-auto-suggest
+                  class="w-full"
+                  inputClassses="w-full vs-input-no-border vs-input-no-shdow-focus"
+                  :autoFocus="showFullSearch"
+                  :data="navbarSearchAndPinList"
+                  icon="SearchIcon"
+                  placeholder="Search..."
+                  ref="navbarSearch"
+                  @closeSearchbar="showFullSearch = false"
+                  @selected="selected"
+                  background-overlay />
+                <div class="absolute right-0 h-full z-50">
+                    <feather-icon icon="XIcon" class="px-4 cursor-pointer h-full close-search-icon" @click="showFullSearch = false"></feather-icon>
+                </div>
+            </div>
+            <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search ml-4"></feather-icon>
+
+            <!-- CART DROPDOWN -->
+            <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
+                <feather-icon icon="ShoppingCartIcon" class="cursor-pointer ml-4 mr-6 mt-1" :badge="cartItems.length"></feather-icon>
+                <vs-dropdown-menu class="cart-dropdown vx-navbar-dropdown" :class="{'dropdown-custom': cartItems.length}">
+
+                    <!-- IF CART HAVE ITEMS: HEADER -->
+                    <template v-if="cartItems.length">
+                        <div class="notification-header text-center p-5 bg-primary text-white">
+                            <h3 class="text-white">{{ cartItems.length }} Item<span v-show="cartItems.length > 1">s</span></h3>
+                            <p class="opacity-75">In Your Cart</p>
+                        </div>
+
+                        <!-- CART ITEMS -->
+                        <VuePerfectScrollbar ref="mainSidebarPs" class="scroll-area--cart-items-dropdowm p-0 mb-10" :settings="settings">
+                        <ul class="bordered-items">
+                            <li v-for="item in cartItems" :key="item.objectID" class="vx-row no-gutter cart-item cursor-pointer">
+
+                                <!-- IMG COL -->
+                                <div class="vx-col w-1/5 item-img-container bg-white flex items-center justify-center">
+                                    <img :src="item.image" alt="item" class="cart-dropdown-item-img p-4">
+                                </div>
+
+                                <!-- INFO COL -->
+                                <div class="vx-col w-4/5 pr-4 pl-2 py-4 flex flex-col justify-center">
+                                    <span class="font-medium block cart-item-title truncate">{{ item.name }}</span>
+                                    <small class="truncate mb-2">{{ item.description }}</small>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium">{{ item.quantity }} <small>x</small> ${{ item.price }}</span>
+                                        <feather-icon icon="XIcon" svgClasses="h-4 w-4 cursor-pointer text-danger" class="hover:text-danger" @click.stop="removeItemFromCart(item)" />
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        </VuePerfectScrollbar>
+                        <div
+                            class=" checkout-footer fixed bottom-0 rounded-b-lg text-primary font-semibold w-full p-2 text-center border border-b-0 border-l-0 border-r-0 border-solid d-theme-border-grey-light cursor-pointer"
+                            @click="$router.push('/apps/eCommerce/checkout').catch(() => {})">
+
+                            <span class="flex items-center justify-center">
+                              <feather-icon icon="ShoppingCartIcon" svgClasses="h-4 w-4"></feather-icon>
+                              <span class="ml-2">Checkout</span>
+                            </span>
+
+                        </div>
+                    </template>
+
+                    <!-- IF CART IS EMPTY -->
+                    <template v-else>
+                        <p class="p-4">Your Cart Is Empty.</p>
+                    </template>
+                </vs-dropdown-menu>
+            </vs-dropdown>
 
       <!-- NOTIFICATIONS -->
-      <!-- <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
+      <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
         <feather-icon icon="BellIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="unreadNotifications.length"></feather-icon>
         <vs-dropdown-menu class="notification-dropdown dropdown-custom vx-navbar-dropdown">
 
@@ -109,7 +187,7 @@
                         <span>View All Notifications</span>
                     </div>
         </vs-dropdown-menu>
-      </vs-dropdown> -->
+      </vs-dropdown>
 
       <!-- USER META -->
       <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.displayName">
@@ -137,7 +215,35 @@
                 <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
                 <span class="ml-2">Profile</span>
               </li>
-              
+              <li
+                class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                @click="$router.push('/apps/email').catch(() => {})">
+
+                <feather-icon icon="MailIcon" svgClasses="w-4 h-4" />
+                <span class="ml-2">Inbox</span>
+              </li>
+              <li
+                class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                @click="$router.push('/apps/todo').catch(() => {})">
+
+                <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" />
+                <span class="ml-2">Tasks</span>
+              </li>
+              <li
+                class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                @click="$router.push('/apps/chat').catch(() => {})">
+
+                <feather-icon icon="MessageSquareIcon" svgClasses="w-4 h-4" />
+                <span class="ml-2">Chat</span>
+              </li>
+              <li
+                class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                @click="$router.push('/apps/eCommerce/wish-list').catch(() => {})">
+
+                <feather-icon icon="HeartIcon" svgClasses="w-4 h-4" />
+                <span class="ml-2">Wish List</span>
+              </li>
+
               <vs-divider class="m-1"></vs-divider>
 
               <li
@@ -157,6 +263,8 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import VxAutoSuggest from '@/components/vx-auto-suggest/VxAutoSuggest.vue';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import draggable from 'vuedraggable'
@@ -213,6 +321,18 @@ export default {
             else if (this.verticalNavMenuWidth) return "navbar-full"
         },
 
+        // I18N
+        getCurrentLocaleData() {
+            const locale = this.$i18n.locale;
+            if (locale == "en") return { flag: "us", lang: 'English' }
+            else if (locale == "pt") return { flag: "br", lang: 'Portuguese' }
+            else if (locale == "fr") return { flag: "fr", lang: 'French' }
+            else if (locale == "de") return { flag: "de", lang: 'German' }
+        },
+        i18n_locale_img() {
+          return require(`@/assets/images/flags/${this.$i18n.locale}.png`)
+        },
+
         // BOOKMARK & SEARCH
         data() {
             return this.$store.state.navbarSearchAndPinList;
@@ -237,6 +357,11 @@ export default {
             }
         },
 
+        // CART DROPDOWN
+        cartItems() {
+            return this.$store.state.eCommerce.cartItems.slice().reverse();
+        },
+
         // PROFILE
         activeUserInfo() {
           return this.$store.state.AppActiveUser
@@ -249,6 +374,9 @@ export default {
         }
     },
     methods: {
+        updateLocale(locale) {
+            this.$i18n.locale = locale;
+        },
         showSidebar() {
             this.$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', true);
         },
@@ -301,11 +429,38 @@ export default {
             return 'Just Now'
         },
         logout() {
+
+            // if user is logged in via auth0
+            if (this.$auth.profile) this.$auth.logOut();
+
+            // if user is logged in via firebase
+            const firebaseCurrentUser = firebase.auth().currentUser
+
+            if (firebaseCurrentUser) {
+                firebase.auth().signOut().then(() => {
+                    this.$router.push('/pages/login').catch(() => {})
+                })
+            }
+            // If JWT login
+            if(localStorage.getItem("accessToken")) {
+              localStorage.removeItem("accessToken")
+              this.$router.push('/pages/login').catch(() => {})
+            }
+
+            // Change role on logout. Same value as initialRole of acj.js
+            this.$acl.change('admin')
+            localStorage.removeItem('userInfo')
+
             // This is just for demo Purpose. If user clicks on logout -> redirect
-            this.$router.push({name: 'login'}).catch(() => {})
+            this.$router.push('/pages/login').catch(() => {})
         },
         outside: function() {
             this.showBookmarkPagesDropdown = false
+        },
+
+        // CART DROPDOWN
+        removeItemFromCart(item) {
+            this.$store.dispatch('eCommerce/toggleItemInCart', item)
         },
 
         // Method for creating dummy notification time

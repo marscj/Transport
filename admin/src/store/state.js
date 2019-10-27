@@ -21,7 +21,7 @@ const userDefaults = {
 // /////////////////////////////////////////////
 
 const state = {
-  AppActiveUser: userDefaults,
+  AppActiveUser: null,
   bodyOverlay: false,
   isVerticalNavMenuActive: true,
   mainLayoutType: themeConfig.mainLayoutType || "vertical",

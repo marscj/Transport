@@ -1,5 +1,17 @@
+<!-- =========================================================================================
+    File Name: Main.vue
+    Description: Main layout
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: Pixinvent
+    Author URL: http://www.themeforest.net/user/pixinvent
+========================================================================================== -->
+
+
 <template>
   <div class="layout--main" :class="[layoutTypeClass, navbarClasses, footerClasses, {'app-page': isAppPage}]">
+
+    <vx-tour :steps="steps" v-if="!disableThemeTour && (windowWidth >= 1200 && mainLayoutType === 'vertical')" />
 
     <the-customizer
       v-if                    = "!disableCustomizer"
@@ -17,7 +29,7 @@
     <v-nav-menu
       :navMenuItems = "navMenuItems"
       :logo         = "navMenuLogo"
-      title         = "Ubang"
+      title         = "Vuexy"
       parent        = ".layout--main" />
 
     <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
@@ -70,6 +82,33 @@
                 <!-- BREADCRUMB -->
                 <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route" />
 
+                <!-- DROPDOWN -->
+                <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
+                  <vs-button radius icon="icon-settings" icon-pack="feather" />
+
+                  <vs-dropdown-menu class="w-32">
+                    <vs-dropdown-item>
+                      <div @click="$router.push('/pages/profile').catch(() => {})" class="flex items-center">
+                        <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Profile</span>
+                      </div>
+                    </vs-dropdown-item>
+                    <vs-dropdown-item>
+                      <div @click="$router.push('/apps/todo').catch(() => {})" class="flex items-center">
+                        <feather-icon icon="CheckSquareIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Tasks</span>
+                      </div>
+                    </vs-dropdown-item>
+                    <vs-dropdown-item>
+                      <div @click="$router.push('/apps/email').catch(() => {})" class="flex items-center">
+                        <feather-icon icon="MailIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Inbox</span>
+                      </div>
+                    </vs-dropdown-item>
+                  </vs-dropdown-menu>
+
+                </vs-dropdown>
+
               </div>
             </transition>
 
@@ -103,6 +142,8 @@ import TheFooter           from '@/layouts/components/TheFooter.vue'
 import themeConfig         from '@/../themeConfig.js'
 import VNavMenu            from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
 
+const VxTour = () => import('@/components/VxTour.vue')
+
 export default {
   components: {
     BackToTop,
@@ -111,7 +152,8 @@ export default {
     TheFooter,
     TheNavbarHorizontal,
     TheNavbarVertical,
-    VNavMenu
+    VNavMenu,
+    VxTour
   },
   data() {
     return {
@@ -126,6 +168,30 @@ export default {
       navMenuLogo       : require('@/assets/images/logo/logo.png'),
       routerTransition  : themeConfig.routerTransition || 'none',
       routeTitle        : this.$route.meta.pageTitle,
+      steps: [{
+          target  : '#btnVNavMenuMinToggler',
+          content : 'Toggle Collapse Sidebar.'
+        },
+        {
+          target  : '.vx-navbar__starred-pages',
+          content : 'Create your own bookmarks. You can also re-arrange them using drag & drop.'
+        },
+        {
+          target  : '.i18n-locale',
+          content : 'You can change language from here.'
+        },
+        {
+          target  : '.navbar-fuzzy-search',
+          content : 'Try fuzzy search to visit pages in flash.'
+        },
+        {
+          target  : '.customizer-btn',
+          content : 'Customize template based your preference',
+          params  : {
+            placement: 'left'
+          }
+        },
+      ],
     }
   },
   watch: {
