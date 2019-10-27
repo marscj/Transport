@@ -300,30 +300,20 @@ router.afterEach(() => {
 })
 
 router.beforeEach((to, from, next) => {
-  firebase.auth().onAuthStateChanged(() => {
-      const firebaseCurrentUser = firebase.auth().currentUser
-
+  if (localStorage.getItem("accessToken")) {
       if (
-          to.path === "/pages/login" ||
-          to.path === "/pages/forgot-password" ||
-          to.path === "/pages/error-404" ||
-          to.path === "/pages/error-500" ||
-          to.path === "/pages/register" ||
-          to.path === "/callback" ||
-          to.path === "/pages/comingsoon" ||
-          (auth.isAuthenticated() || firebaseCurrentUser)
+          to.path === "/login" ||
+          to.path === "/forgot-password" ||
+          to.path === "/error-404" ||
+          to.path === "/error-500" ||
+          to.path === "/register" ||
+          to.path === "/not-authorized"
       ) {
           return next();
       }
-
-      if(to.meta.authRequired) {
-        if (!(auth.isAuthenticated() || firebaseCurrentUser)) {
-          router.push({ path: '/login', query: { to: to.path } })
-        }
-      }
-      return next()
-  });
-
+  } else {
+    return next({path: '/login', query: { to: to.path }})
+  }
 });
 
 export default router
