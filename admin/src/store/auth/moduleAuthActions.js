@@ -15,7 +15,8 @@ export default {
 
             // Set accessToken
             localStorage.setItem("accessToken", response.data.token)
-
+            
+            console.log(response.data.user, '=====')
             // Update user details
             commit('UPDATE_USER_INFO', response.data.user)
 
