@@ -272,6 +272,16 @@ const router = new Router({
           name: 'error-404',
           component: () => import('@/views/Error404.vue')
         },
+        {
+          path: '/error-500',
+          name: 'error-500',
+          component: () => import('@/views/Error500.vue'),
+        },
+        {
+          path: '/not-authorized',
+          name: 'not-authorized',
+          component: () => import('@/views/NotAuthorized.vue'),
+        },
       ]
     },
     {
@@ -288,5 +298,32 @@ router.afterEach(() => {
     appLoading.style.display = "none";
   }
 })
+
+router.beforeEach((to, from, next) => {
+  firebase.auth().onAuthStateChanged(() => {
+      const firebaseCurrentUser = firebase.auth().currentUser
+
+      if (
+          to.path === "/pages/login" ||
+          to.path === "/pages/forgot-password" ||
+          to.path === "/pages/error-404" ||
+          to.path === "/pages/error-500" ||
+          to.path === "/pages/register" ||
+          to.path === "/callback" ||
+          to.path === "/pages/comingsoon" ||
+          (auth.isAuthenticated() || firebaseCurrentUser)
+      ) {
+          return next();
+      }
+
+      if(to.meta.authRequired) {
+        if (!(auth.isAuthenticated() || firebaseCurrentUser)) {
+          router.push({ path: '/login', query: { to: to.path } })
+        }
+      }
+      return next()
+  });
+
+});
 
 export default router
