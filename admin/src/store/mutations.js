@@ -88,17 +88,10 @@ const mutations = {
     state.scrollY = val
   },
 
-
-  // /////////////////////////////////////////////
-  // User/Account
-  // /////////////////////////////////////////////
-
-  // Updates user info in state and localstorage
   UPDATE_USER_INFO(state, payload) {
 
     // Get Data localStorage
     let userInfo = JSON.parse(localStorage.getItem("userInfo")) || state.AppActiveUser
-    console.log(payload , '====')
     for (const property of Object.keys(payload)) {
 
       if (payload[property] != null) {
@@ -108,8 +101,6 @@ const mutations = {
         // Update key in localStorage
         userInfo[property] = payload[property]
       }
-
-
     }
     // Store data in localStorage
     localStorage.setItem("userInfo", JSON.stringify(userInfo))

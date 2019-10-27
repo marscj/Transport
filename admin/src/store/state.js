@@ -2,11 +2,6 @@ import navbarSearchAndPinList from "@/layouts/components/navbar/navbarSearchAndP
 import themeConfig from "@/../themeConfig.js"
 import colors from "@/../themeConfig.js"
 
-
-// /////////////////////////////////////////////
-// Variables
-// /////////////////////////////////////////////
-
 const userDefaults = {
   uid: 0, // From Auth
   displayName: "John Doe", // From Auth
@@ -15,10 +10,6 @@ const userDefaults = {
   status: "online",
   userRole: "admin"
 }
-
-// /////////////////////////////////////////////
-// State
-// /////////////////////////////////////////////
 
 const state = {
   AppActiveUser: null,

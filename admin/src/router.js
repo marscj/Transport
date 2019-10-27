@@ -245,42 +245,50 @@ const router = new Router({
       children: [{
           path: '/login',
           name: 'login',
-          component: () => import('@/views/login/Login.vue')
+          component: () => import('@/views/login/Login.vue'),
+          meta: { rule: 'public'}
         },
         {
           path: '/register',
           name: 'register',
           component: () => import('@/views/register/Register.vue'),
+          meta: { rule: 'public'}
         },
         {
           path: '/forgot-password',
           name: 'forgot-password',
           component: () => import('@/views/register/ForgotPassword.vue'),
+          meta: { rule: 'public'}
         },
         {
           path: '/reset-password',
           name: 'reset-password',
           component: () => import('@/views/register/ResetPassword.vue'),
+          meta: { rule: 'public'}
         },
         {
           path: '/rest-auth/registration/account-confirm-email',
           name: 'verify-email',
           component: () => import('@/views/register/VerifyEmail.vue'),
+          meta: { rule: 'public'}
         },
         {
           path: '/error-404',
           name: 'error-404',
-          component: () => import('@/views/Error404.vue')
+          component: () => import('@/views/Error404.vue'),
+          meta: { rule: 'public'}
         },
         {
           path: '/error-500',
           name: 'error-500',
           component: () => import('@/views/Error500.vue'),
+          meta: { rule: 'public'}
         },
         {
           path: '/not-authorized',
           name: 'not-authorized',
           component: () => import('@/views/NotAuthorized.vue'),
+          meta: { rule: 'public'}
         },
       ]
     },
@@ -300,17 +308,17 @@ router.afterEach(() => {
 })
 
 router.beforeEach((to, from, next) => {
-  if (localStorage.getItem("accessToken")) {
-      if (
-          to.path === "/login" ||
-          to.path === "/forgot-password" ||
-          to.path === "/error-404" ||
-          to.path === "/error-500" ||
-          to.path === "/register" ||
-          to.path === "/not-authorized"
-      ) {
-          return next();
-      }
+  
+  if (
+    to.path === "/login" ||
+    to.path === "/forgot-password" ||
+    to.path === "/error-404" ||
+    to.path === "/error-500" ||
+    to.path === "/register" ||
+    to.path === "/not-authorized" ||
+    localStorage.getItem("accessToken")
+  ) {
+    return next();
   } else {
     return next({path: '/login', query: { to: to.path }})
   }
