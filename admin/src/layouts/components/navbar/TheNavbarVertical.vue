@@ -334,13 +334,13 @@ export default {
 
         // PROFILE
         activeUserInfo() {
-          return this.$store.state.AppActiveUser
+          return this.$store.state.user
         },
         user_displayName() {
             return this.activeUserInfo.displayName
         },
         activeUserImg() {
-            return this.$store.state.AppActiveUser.photoURL;
+            return this.$store.state.user.photoURL;
         }
     },
     methods: {

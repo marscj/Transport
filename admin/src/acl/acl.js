@@ -6,9 +6,6 @@ Vue.use(AclInstaller)
 
 let initialRole = 'public';
 
-// let userInfo = JSON.parse(localStorage.getItem("userInfo"))
-// if(userInfo && userInfo.userRole) initialRole = userInfo.userRole
-
 export default new AclCreate({
   initial: initialRole,
   notfound: "/not-authorized",

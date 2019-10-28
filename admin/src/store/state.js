@@ -47,7 +47,7 @@ const getUserInfo = () => {
 }
 
 const state = {
-  AppActiveUser: getUserInfo(),
+  user: getUserInfo(),
   bodyOverlay: false,
   isVerticalNavMenuActive: true,
   mainLayoutType: themeConfig.mainLayoutType || "vertical",
