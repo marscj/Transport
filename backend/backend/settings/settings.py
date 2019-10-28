@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_jwt',
+    'rest_framework_extensions',
     
     'rest_auth',
     'rest_auth.registration',
@@ -48,7 +49,6 @@ INSTALLED_APPS = [
     'allauth.account',
     
     'app.user',
-    'app.organization',
     'app.faq',
     'app.site'
 ]
@@ -128,9 +128,11 @@ REST_SESSION_LOGIN = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

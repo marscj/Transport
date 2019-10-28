@@ -18,7 +18,8 @@
                   <p>Welcome back, please login to your account.</p>
                 </div>
 
-                <login-email></login-email>
+                <!-- <login-email></login-email> -->
+                <login-user-name > </login-user-name>
               </div>
             </div>
           </div>
@@ -31,12 +32,12 @@
 
 <script>
 import LoginUserName from "./LoginUserName.vue"
-import LoginEmail from "./LoginEmail.vue"
+// import LoginEmail from "./LoginEmail.vue"
 
 export default {
   components: {
     LoginUserName,
-    LoginEmail
+    // LoginEmail
   }
 }
 </script>
