@@ -1,13 +1,17 @@
+from django.utils.deprecation import MiddlewareMixin
+from django.http.response import JsonResponse, HttpResponse
 
-from django.http import HttpResponse
+class ResponseMiddleware(MiddlewareMixin):
 
-class ResponseMiddleware:
+    def process_request(self, request):
+        if hasattr(request, 'data'):
+            print(request, request.data)
+        print(request)
 
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
+    def process_response(self, request, response):
         if response and hasattr(response, 'data'):
-            print(response.data)
-        return response
+            data = {
+                'result': response.data
+            }
+
+        return JsonResponse(data, status=response.status_code)

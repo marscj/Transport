@@ -7,4 +7,6 @@ urlpatterns = [
     
     # url(r'^account/', include('allauth.urls')),
     url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
+
+    url(r'^api/', include('app.user.urls')),
 ]
