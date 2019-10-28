@@ -3,6 +3,7 @@ from rest_framework import serializers, exceptions
 from django.conf import settings
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.utils.translation import ugettext_lazy as _
 
@@ -14,9 +15,18 @@ try:
 except ImportError:
     raise ImportError("allauth needs to be added to INSTALLED_APPS.")
 
-UserModel = get_user_model()
+from .models import CustomUser 
+
+class ContentTypeSerializer(serializers.ModelSerializer):
+
+    
+    class Meta:
+        model = ContentType
+        fields = '__all__'
 
 class PermissionSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeSerializer(many=False)
 
     class Meta:
         model = Permission
@@ -24,23 +34,23 @@ class PermissionSerializer(serializers.ModelSerializer):
 
 class GroupSerializer(serializers.ModelSerializer):
     
-    permissions = PermissionSerializer(many=True)
+    permissions = PermissionSerializer(many=True, read_only=True)
     class Meta:
         model = Group
         fields = '__all__'
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
-    groups = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, write_only=True, many=True, queryset=Group.objects.all())
+    groups = GroupSerializer(source='name', read_only=True, many=True)
 
     displayName = serializers.SerializerMethodField()
     class Meta:
-        model = UserModel
+        model = CustomUser
         fields = '__all__'
 
     def get_displayName(self, obj):
         if obj.get_full_name():
-            return obj.get_full_name
+            return obj.get_full_name()
         return obj.username
 
 class LoginSerializer(serializers.Serializer):
@@ -112,8 +122,8 @@ class LoginSerializer(serializers.Serializer):
             # Authentication without using allauth
             if email:
                 try:
-                    username = UserModel.objects.get(email__iexact=email).get_username()
-                except UserModel.DoesNotExist:
+                    username = CustomUser.objects.get(email__iexact=email).get_username()
+                except CustomUser.DoesNotExist:
                     pass
 
             if username:
@@ -161,7 +171,7 @@ class RegisterSerializer(serializers.Serializer):
         if allauth_settings.UNIQUE_EMAIL:
             if email and email_address_exists(email):
                 msg = _("A user is already registered with this e-mail address.")
-                raise serializers.ValidationError({'email': msg})
+                raise serializers.ValidationError(msg)
         return email
 
     def validate_password1(self, password):
@@ -170,7 +180,7 @@ class RegisterSerializer(serializers.Serializer):
     def validate(self, data):
         if data['password1'] != data['password2']:
             msg = _("The two password fields didn't match.")
-            raise serializers.ValidationError({'password': msg})
+            raise serializers.ValidationError({'password2': msg})
         return data
 
     def custom_signup(self, request, user):
@@ -179,8 +189,10 @@ class RegisterSerializer(serializers.Serializer):
     def get_cleaned_data(self):
         return {
             'username': self.validated_data.get('username', ''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
             'password1': self.validated_data.get('password1', ''),
-            'email': self.validated_data.get('email', '')
+            'email': self.validated_data.get('email', ''),
         }
 
     def save(self, request):

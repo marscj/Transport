@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix">
     <validation-observer ref="observer" v-slot="{ validate, dirty }">
-      <div class="vx-row">
+      <!-- <div class="vx-row">
         <div class="vx-col sm:w-1/2 w-full mb-2">
           <validation-provider name="first_name" rules="required" v-slot="{ errors }">
             <vs-input class="w-full" label-placeholder="First Name" v-model="first_name" />
@@ -14,9 +14,21 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
         </div>
-      </div>
+      </div> -->
 
-      <validation-provider name="email" rules="email|required" v-slot="{ errors }">
+      <validation-provider name="username" rules="required|max:16|min:5" v-slot="{ errors }">
+        <vs-input
+          data-vv-validate-on="blur"
+          icon-no-border
+          icon="icon icon-user"
+          icon-pack="feather"
+          label="Username"
+          v-model="username"
+          class="w-full"
+        />
+        <span>{{ errors[0] }}</span>
+      </validation-provider>
+      <!-- <validation-provider name="email" rules="email|required" v-slot="{ errors }">
         <vs-input
           data-vv-validate-on="blur"
           name="email"
@@ -27,7 +39,7 @@
           class="w-full mt-6"
         />
         <span>{{ errors[0] }}</span>
-      </validation-provider>
+      </validation-provider> -->
 
       <validation-provider name="password1" rules="required|max:16|min:8" v-slot="{ errors }">
         <vs-input
@@ -68,9 +80,10 @@
 export default {
   data() {
     return {
-      first_name: "",
-      last_name: "",
-      email: "",
+      // first_name: "",
+      // last_name: "",
+      // email: "",
+      username: "",
       password1: "",
       password2: "",
       isTermsConditionAccepted: true
@@ -79,9 +92,10 @@ export default {
   computed: {
     validateForm() {
       return (
-        this.first_name != "" &&
-        this.last_name != "" &&
-        this.email != "" &&
+        // this.first_name != "" &&
+        // this.last_name != "" &&
+        // this.email != "" &&
+        this.username != ""  &&
         this.password1 != "" &&
         this.password2 != "" &&
         this.isTermsConditionAccepted === true
@@ -97,9 +111,10 @@ export default {
       this.$refs.observer.reset()
       
       const payload = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        email: this.email,
+        // first_name: this.first_name,
+        // last_name: this.last_name,
+        // email: this.email,
+        username: this.username,
         password1: this.password1,
         password2: this.password2,
         notify: this.$vs.notify
