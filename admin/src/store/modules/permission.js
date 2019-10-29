@@ -69,7 +69,7 @@ const permission = {
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
-    }
+    },
   }
 }
 

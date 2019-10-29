@@ -71,23 +71,29 @@ export default {
         password: this.password
       };
 
-      this.$store
-        .dispatch("auth/loginJWT", payload)
-        .catch(error => {
-          this.$vs.notify({
-            title: "Error",
-            text: error.message,
-            iconPack: "feather",
-            icon: "icon-alert-circle",
-            color: "danger"
-          });
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data);
-          }
-        })
-        .finally(() => {
-          this.$vs.loading.close();
-        });
+      this.$store.dispatch("GenerateRoutes", null).then(res => {
+        console.log(res)
+      })
+
+      this.$store.dispatch("Login", payload)
+      // .then(res => {
+      //   console.log(res)
+      // })
+      // .catch(error => {
+      //   this.$vs.notify({
+      //     title: "Error",
+      //     text: error.message,
+      //     iconPack: "feather",
+      //     icon: "icon-alert-circle",
+      //     color: "danger"
+      //   });
+      //   if (error.response) {
+      //     this.$refs.observer.setErrors(error.response.data);
+      //   }
+      // })
+      // .finally(() => {
+      //   this.$vs.loading.close();
+      // });
     },
     registerUser() {
       this.$router.push({ name: "register" }).catch(() => {});

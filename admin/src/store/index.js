@@ -12,13 +12,13 @@ import permission from './modules/permission'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    permission,
+    auth
+  },
   getters,
   mutations,
   state,
   actions,
-  modules: {
-    auth,
-    permission
-  },
   strict: process.env.NODE_ENV !== 'production'
 })

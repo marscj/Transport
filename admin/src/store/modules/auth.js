@@ -2,40 +2,36 @@ import jwt from "@/http/requests/auth/jwt/index.js"
 import router from '@/router'
 import acl from '@/acl/acl'
 
-export default {
+const auth = {
   namespaced: true,
   state: {
     token: '',
-    user: {}
+    user: {
+      name: '',
+      photoURL: '',
+      groups: []
+    }
   },
   mutations: {
     SET_TOKEN: (state, token) => {
-      state.token = token
+      state.token = token;
     },
 
     SET_USER: (state, user) => {
-      state.user = user
+      state.user.name = user.name;
+      state.user.photoURL = user.photoURL;
+      state.user.groups = user.groups;
     },
   },
   actions: {
-    // JWT
-    loginJWT({
-      commit
-    }, payload) {
+    Login({ commit }, payload) {
       return new Promise((resolve, reject) => {
         jwt.login(payload)
           .then(res => {
-            // If there's user data in response
             const { result } = res;
-
             if (result.token) {
-              // Navigate User to homepage
               // router.push(router.currentRoute.query.to || '/')
-
-              // Set accessToken
               localStorage.setItem("accessToken", result.token)
-
-              // Update user details
               commit('SET_USER', result.user)
 
               resolve(res)
@@ -44,7 +40,6 @@ export default {
                 message: "Wrong Email or Password"
               })
             }
-
           })
           .catch(error => {
             reject(error)
@@ -68,14 +63,31 @@ export default {
 
             if (result.token) {
               router.push(router.currentRoute.query.to || '/')
-
-              // Update data in localStorage
               localStorage.setItem("accessToken", result.token)
-
-              // Update user details
               commit('SET_USER', result.user)
             }
             resolve(res)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+
+    getUserInfo({ commit }) {
+      return new Promise((resolve, reject) => {
+        jwt.info()
+          .then(res => {
+            const { result } = res;
+
+            if (result.token) {
+              commit('SET_USER', result.user)
+              resolve(res)
+            } else {
+              reject({
+                message: "Wrong Email or Password"
+              })
+            }
           })
           .catch(error => {
             reject(error)
@@ -94,3 +106,5 @@ export default {
     }
   }
 }
+
+export default auth
