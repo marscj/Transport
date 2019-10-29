@@ -21,7 +21,7 @@ function addSubscriber(callback) {
 }
 
 service.interceptors.response.use(function (response) {
-  return response
+  return response.data
 }, function (error) {
   // const { config, response: { status } } = error
   const { config, response } = error

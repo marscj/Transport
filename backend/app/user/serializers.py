@@ -41,7 +41,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
-    # groups = GroupSerializer(source='name', read_only=True, many=True)
+    groups = GroupSerializer(read_only=True, many=True)
 
     displayName = serializers.SerializerMethodField()
 
@@ -56,10 +56,8 @@ class UserDetailSerializer(serializers.ModelSerializer):
         return obj.username
 
     # def get_role(self, obj):
-    #     role = obj.groups.all()[0]
-        
-    #     if role:
-    #         return role.name
+    #     print(obj.groups.all().values('name'))
+        # return Group.objects.values('name')
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)

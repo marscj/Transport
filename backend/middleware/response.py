@@ -1,6 +1,8 @@
 from django.utils.deprecation import MiddlewareMixin
 from django.http.response import JsonResponse, HttpResponse
 
+import json
+
 class ResponseMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
@@ -13,5 +15,4 @@ class ResponseMiddleware(MiddlewareMixin):
             data = {
                 'result': response.data
             }
-
         return JsonResponse(data, status=response.status_code)
