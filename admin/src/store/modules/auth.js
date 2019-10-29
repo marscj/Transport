@@ -1,6 +1,5 @@
 import jwt from "@/http/requests/auth/jwt/index.js"
 import router from '@/router'
-import acl from '@/acl/acl'
 
 const auth = {
   state: {
@@ -21,15 +20,19 @@ const auth = {
     },
   },
   actions: {
-    loginJWT({ commit }, payload) {
+    loginJWT({ commit, dispatch }, payload) {
       return new Promise((resolve, reject) => {
         jwt.login(payload)
           .then(res => {
             const { result } = res;
             if (result.token) {
-              // router.push(router.currentRoute.query.to || '/')
               localStorage.setItem("accessToken", result.token)
+
               commit('SET_USER', result.user)
+
+              dispatch("GenerateRoutes", result.user.roles)
+
+              router.push(router.currentRoute.query.to || '/')
 
               resolve(res)
             } else {
@@ -96,9 +99,6 @@ const auth = {
       if (localStorage.getItem("accessToken")) {
         localStorage.removeItem("accessToken")
       }
-
-      acl.change('public')
-
       router.push('/login').catch(() => {})
     }
   }

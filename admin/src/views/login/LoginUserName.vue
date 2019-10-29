@@ -73,12 +73,6 @@ export default {
 
       this.$store
         .dispatch("loginJWT", payload)
-        .then(res => {
-          const { result } = res;
-          this.$store.dispatch("GenerateRoutes", result.user.roles).then(res => {
-            this.$router.addRoutes(this.$store.state.permission.addRouters)
-          })
-        })
         .catch(error => {
           this.$vs.notify({
             title: "Error",
