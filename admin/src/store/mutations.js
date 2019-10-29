@@ -1,12 +1,5 @@
 const mutations = {
 
-
-  // /////////////////////////////////////////////
-  // COMPONENTS
-  // /////////////////////////////////////////////
-
-  // Vertical NavMenu
-
   TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE(state, value) {
     state.isVerticalNavMenuActive = value
   },
@@ -22,9 +15,6 @@ const mutations = {
   UPDATE_VERTICAL_NAV_MENU_WIDTH(state, width) {
     state.verticalNavMenuWidth = width
   },
-
-
-  // VxAutoSuggest
 
   UPDATE_STARRED_PAGE(state, payload) {
 
@@ -67,11 +57,6 @@ const mutations = {
     }
   },
 
-
-  // ////////////////////////////////////////////
-  // UI
-  // ////////////////////////////////////////////
-
   TOGGLE_CONTENT_OVERLAY(state, val) {
     state.bodyOverlay = val
   },
@@ -92,7 +77,9 @@ const mutations = {
 
     // Get Data localStorage
     let userInfo = JSON.parse(localStorage.getItem("userInfo")) || state.user
-    
+
+    console.log(userInfo)
+
     for (const property of Object.keys(payload)) {
 
       if (payload[property] != null) {
@@ -101,9 +88,11 @@ const mutations = {
 
         // Update key in localStorage
         userInfo[property] = payload[property]
+
+        console.log(payload[property])
       }
     }
-    
+
     // Store data in localStorage
     localStorage.setItem("userInfo", JSON.stringify(userInfo))
   },

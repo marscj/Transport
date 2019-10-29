@@ -1,4 +1,6 @@
-import { axios } from '@/utils/request'
+import {
+  axios
+} from '@/utils/request'
 import jwt from "@/http/requests/auth/jwt/index.js"
 import router from '@/router'
 import acl from '@/acl/acl'
@@ -22,23 +24,24 @@ export default {
     }, payload) {
       return new Promise((resolve, reject) => {
         jwt.login(payload)
-          .then(response => {
-            console.log(response)
+          .then(res => {
             // If there's user data in response
-            if (response.data.token) {
+            const { result } = res;
+
+            if (result.token) {
               // Navigate User to homepage
               router.push(router.currentRoute.query.to || '/')
 
               // Set accessToken
-              localStorage.setItem("accessToken", response.data.token)
+              localStorage.setItem("accessToken", result.token)
 
               // Update user details
-              commit('UPDATE_USER_INFO', response.data.user)
+              commit('UPDATE_USER_INFO', result.user)
 
               // Set bearer token in axios
-              commit("SET_BEARER", response.data.token)
+              commit("SET_BEARER", result.token)
 
-              resolve(response)
+              resolve(res)
             } else {
               reject({
                 message: "Wrong Email or Password"
@@ -52,11 +55,9 @@ export default {
       })
     },
 
-    registerUserJWT({
-      commit
-    }, payload) {
+    registerUserJWT({ commit }, payload) {
       return new Promise((resolve, reject) => {
-
+        
         if (payload.password1 !== payload.password2) {
           reject({
             message: "Password doesn't match. Please try again."
@@ -64,20 +65,23 @@ export default {
         }
 
         jwt.registerUser(payload)
-          .then(response => {
-            if (response.data.token) {
+          .then(res => {
+
+            const { result } = res;
+
+            if (result.token) {
               router.push(router.currentRoute.query.to || '/')
 
               // Update data in localStorage
-              localStorage.setItem("accessToken", response.data.token)
+              localStorage.setItem("accessToken", result.token)
 
               // Update user details
-              commit('UPDATE_USER_INFO', response.data.user)
+              commit('UPDATE_USER_INFO', result.user)
 
               // Set bearer token in axios
-              commit("SET_BEARER", response.data.token)
+              commit("SET_BEARER", result.token)
             }
-            resolve(response)
+            resolve(res)
           })
           .catch(error => {
             reject(error)
