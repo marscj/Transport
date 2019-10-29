@@ -15,4 +15,5 @@ class ResponseMiddleware(MiddlewareMixin):
             data = {
                 'result': response.data
             }
-        return JsonResponse(data, status=response.status_code)
+            return JsonResponse(data, status=response.status_code)
+        return response

@@ -19,7 +19,6 @@ from .models import CustomUser
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
-    
     class Meta:
         model = ContentType
         fields = '__all__'
@@ -34,30 +33,24 @@ class PermissionSerializer(serializers.ModelSerializer):
 
 class GroupSerializer(serializers.ModelSerializer):
     
-    permissions = PermissionSerializer(many=True, read_only=True)
+    permissions = serializers.SerializerMethodField()
+    
     class Meta:
         model = Group
         fields = '__all__'
+
+    def get_permissions(self, obj):
+        query = obj.permissions.filter(content_type__model__in=['customuser', 'site'])
+        serializer =  PermissionSerializer(instance=query, many=True, context=self.context)
+        return serializer.data
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
     groups = GroupSerializer(read_only=True, many=True)
 
-    displayName = serializers.SerializerMethodField()
-
-    # role = serializers.SerializerMethodField()
     class Meta:
         model = CustomUser
         fields = '__all__'
-
-    def get_displayName(self, obj):
-        if obj.get_full_name():
-            return obj.get_full_name()
-        return obj.username
-
-    # def get_role(self, obj):
-    #     print(obj.groups.all().values('name'))
-        # return Group.objects.values('name')
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)

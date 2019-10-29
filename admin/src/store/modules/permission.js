@@ -1,4 +1,7 @@
-import { asyncRouterMap, constantRouterMap } from '@/router/config'
+import {
+  asyncRouterMap,
+  constantRouterMap
+} from '@/router/config'
 
 /**
  * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -7,12 +10,11 @@ import { asyncRouterMap, constantRouterMap } from '@/router/config'
  * @param route
  * @returns {boolean}
  */
-function hasPermission (permission, route) {
+function hasPermission(permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
-      console.log(permission, '+++++++')
-      flag = route.meta.permission.includes(permission[i])
+      flag = route.meta.permission.includes(permission[i].content_type.model)
       if (flag) {
         return true
       }
@@ -38,10 +40,18 @@ function hasRole(roles, route) {
   }
 }
 
-function filterAsyncRouter (routerMap, groups) {
-  console.log(groups, '_____')
+function filterGroup(groups) {
+  if (groups) {
+    return groups.reduce((f1, f2) => f1.concat(f2.permissions), []).filter(f => {
+      return f.codename.includes('view_')
+    })
+  }
+  return []
+}
+
+function filterAsyncRouter(routerMap, groups) {
   const accessedRouters = routerMap.filter(route => {
-    if (groups.permissions && hasPermission(groups.permissions, route)) {
+    if (hasPermission(groups, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, groups)
       }
@@ -49,7 +59,6 @@ function filterAsyncRouter (routerMap, groups) {
     }
     return false
   })
-  console.log('accessedRouters = ',accessedRouters)
   return accessedRouters
 }
 
@@ -65,9 +74,10 @@ const permission = {
     }
   },
   actions: {
-    GenerateRoutes ({ commit }, groups) {
+    GenerateRoutes({ commit }, groups) {
       return new Promise(resolve => {
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, groups)
+        const _groups = filterGroup(groups)
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, _groups)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
