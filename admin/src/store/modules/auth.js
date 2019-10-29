@@ -8,7 +8,7 @@ const auth = {
     user: {
       name: '',
       photoURL: '',
-      groups: []
+      roles: []
     }
   },
   mutations: {

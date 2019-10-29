@@ -75,7 +75,7 @@ export default {
         .dispatch("loginJWT", payload)
         .then(res => {
           const { result } = res;
-          this.$store.dispatch("GenerateRoutes", result.user.groups).then(res => {
+          this.$store.dispatch("GenerateRoutes", result.user.roles).then(res => {
             this.$router.addRoutes(this.$store.state.permission.addRouters)
           })
         })

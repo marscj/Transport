@@ -46,11 +46,18 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
-    groups = GroupSerializer(read_only=True, many=True)
+    roles = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = (
+            'id', 'username', 'roles'
+        )
+
+    def get_roles(self, obj):
+        query = obj.groups.all()
+        serializer = GroupSerializer(instance=query, many=True, context=self.context)
+        return serializers.data
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)
