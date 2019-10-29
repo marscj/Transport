@@ -130,7 +130,9 @@ export default {
             icon: "icon-alert-circle",
             color: "danger"
           });
-          this.$refs.observer.setErrors(error.response.data);
+          if(error.response) {
+            this.$refs.observer.setErrors(error.response.data);
+          }
         })
         .finally(() => {
           this.$vs.loading.close();

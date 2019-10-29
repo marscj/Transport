@@ -72,30 +72,6 @@ const mutations = {
   UPDATE_WINDOW_SCROLL_Y(state, val) {
     state.scrollY = val
   },
-
-  UPDATE_USER_INFO(state, payload) {
-
-    // Get Data localStorage
-    let userInfo = JSON.parse(localStorage.getItem("userInfo")) || state.user
-
-    console.log(userInfo)
-
-    for (const property of Object.keys(payload)) {
-
-      if (payload[property] != null) {
-        // If some of user property is null - user default property defined in state.user
-        state.user[property] = payload[property]
-
-        // Update key in localStorage
-        userInfo[property] = payload[property]
-
-        console.log(payload[property])
-      }
-    }
-
-    // Store data in localStorage
-    localStorage.setItem("userInfo", JSON.stringify(userInfo))
-  },
 }
 
 export default mutations

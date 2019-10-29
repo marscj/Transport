@@ -1,6 +1,3 @@
-import {
-  axios
-} from '@/utils/request'
 import jwt from "@/http/requests/auth/jwt/index.js"
 import router from '@/router'
 import acl from '@/acl/acl'
@@ -8,14 +5,17 @@ import acl from '@/acl/acl'
 export default {
   namespaced: true,
   state: {
-    isUserLoggedIn: () => {
-      return localStorage.getItem('userInfo')
-    },
+    token: '',
+    user: {}
   },
   mutations: {
-    SET_BEARER(state, accessToken) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken
-    }
+    SET_TOKEN: (state, token) => {
+      state.token = token
+    },
+
+    SET_USER: (state, user) => {
+      state.user = user
+    },
   },
   actions: {
     // JWT
@@ -30,16 +30,13 @@ export default {
 
             if (result.token) {
               // Navigate User to homepage
-              router.push(router.currentRoute.query.to || '/')
+              // router.push(router.currentRoute.query.to || '/')
 
               // Set accessToken
               localStorage.setItem("accessToken", result.token)
 
               // Update user details
-              commit('UPDATE_USER_INFO', result.user)
-
-              // Set bearer token in axios
-              commit("SET_BEARER", result.token)
+              commit('SET_USER', result.user)
 
               resolve(res)
             } else {
@@ -76,10 +73,7 @@ export default {
               localStorage.setItem("accessToken", result.token)
 
               // Update user details
-              commit('UPDATE_USER_INFO', result.user)
-
-              // Set bearer token in axios
-              commit("SET_BEARER", result.token)
+              commit('SET_USER', result.user)
             }
             resolve(res)
           })
@@ -92,10 +86,6 @@ export default {
     logout() {
       if (localStorage.getItem("accessToken")) {
         localStorage.removeItem("accessToken")
-      }
-
-      if (localStorage.getItem("userInfo")) {
-        localStorage.removeItem('userInfo')
       }
 
       acl.change('public')

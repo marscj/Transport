@@ -72,7 +72,8 @@ export default {
       };
 
       this.$store
-        .dispatch("auth/loginJWT", payload).catch(error => {
+        .dispatch("auth/loginJWT", payload)
+        .catch(error => {
           this.$vs.notify({
             title: "Error",
             text: error.message,
@@ -80,8 +81,11 @@ export default {
             icon: "icon-alert-circle",
             color: "danger"
           });
-          this.$refs.observer.setErrors(error.response.data);
-        }).finally(() => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data);
+          }
+        })
+        .finally(() => {
           this.$vs.loading.close();
         });
     },
