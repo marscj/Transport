@@ -1,9 +1,4 @@
 const actions = {
-
-  // /////////////////////////////////////////////
-  // COMPONENTS
-  // /////////////////////////////////////////////
-
   // Vertical NavMenu
   updateVerticalNavMenuWidth({
     commit
@@ -30,24 +25,17 @@ const actions = {
     commit('ARRANGE_STARRED_PAGES_MORE', list)
   },
 
-  // /////////////////////////////////////////////
-  // UI
-  // /////////////////////////////////////////////
-
   toggleContentOverlay({
     commit
   }) {
     commit('TOGGLE_CONTENT_OVERLAY')
   },
+
   updateTheme({
     commit
   }, val) {
     commit('UPDATE_THEME', val)
   },
-
-  // /////////////////////////////////////////////
-  // User/Account
-  // /////////////////////////////////////////////
 
   updateUserInfo({
     commit

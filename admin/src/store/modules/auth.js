@@ -3,7 +3,6 @@ import router from '@/router'
 import acl from '@/acl/acl'
 
 const auth = {
-  namespaced: true,
   state: {
     token: '',
     user: {
@@ -18,13 +17,11 @@ const auth = {
     },
 
     SET_USER: (state, user) => {
-      state.user.name = user.name;
-      state.user.photoURL = user.photoURL;
-      state.user.groups = user.groups;
+      state.user = user
     },
   },
   actions: {
-    Login({ commit }, payload) {
+    loginJWT({ commit }, payload) {
       return new Promise((resolve, reject) => {
         jwt.login(payload)
           .then(res => {
@@ -47,7 +44,7 @@ const auth = {
       })
     },
 
-    registerUserJWT({ commit }, payload) {
+    registerJWT({ commit }, payload) {
       return new Promise((resolve, reject) => {
         
         if (payload.password1 !== payload.password2) {
@@ -74,7 +71,7 @@ const auth = {
       })
     },
 
-    getUserInfo({ commit }) {
+    getInfo({ commit }) {
       return new Promise((resolve, reject) => {
         jwt.info()
           .then(res => {

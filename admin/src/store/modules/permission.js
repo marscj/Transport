@@ -11,6 +11,7 @@ function hasPermission (permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
+      console.log(permission, '+++++++')
       flag = route.meta.permission.includes(permission[i])
       if (flag) {
         return true
@@ -37,16 +38,18 @@ function hasRole(roles, route) {
   }
 }
 
-function filterAsyncRouter (routerMap, roles) {
+function filterAsyncRouter (routerMap, groups) {
+  console.log(groups, '_____')
   const accessedRouters = routerMap.filter(route => {
-    if (hasPermission(roles.permissionList, route)) {
+    if (groups.permissions && hasPermission(groups.permissions, route)) {
       if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, roles)
+        route.children = filterAsyncRouter(route.children, groups)
       }
       return true
     }
     return false
   })
+  console.log('accessedRouters = ',accessedRouters)
   return accessedRouters
 }
 
@@ -62,10 +65,9 @@ const permission = {
     }
   },
   actions: {
-    GenerateRoutes ({ commit }, data) {
+    GenerateRoutes ({ commit }, groups) {
       return new Promise(resolve => {
-        const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, groups)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
