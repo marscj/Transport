@@ -39,7 +39,7 @@
     </div>
     <div class="flex flex-wrap justify-between mb-3">
       <vs-button type="border" @click="registerUser">Register</vs-button>
-      <vs-button :disabled="!validateForm" @click="loginJWT">Login</vs-button>
+      <vs-button :disabled="!validateForm" @click="login">Login</vs-button>
     </div>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
     checkLogin() {
       return true;
     },
-    loginJWT() {
+    login() {
       this.$vs.loading();
       this.$refs.observer.reset()
 
@@ -73,7 +73,7 @@ export default {
       };
 
       this.$store
-        .dispatch("auth/loginJWT", payload)
+        .dispatch("login", payload)
         .catch(error => {
           this.$vs.notify({
             title: "Error",

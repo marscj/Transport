@@ -72,7 +72,7 @@
 
     <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
     <vs-button type="border" :to="{name: 'login'}" class="mt-6">Login</vs-button>
-    <vs-button class="float-right mt-6" @click="registerUserJWt" :disabled="!validateForm">Register</vs-button>
+    <vs-button class="float-right mt-6" @click="register" :disabled="!validateForm">Register</vs-button>
   </div>
 </template>
 
@@ -106,7 +106,7 @@ export default {
     checkLogin() {
       return true;
     },
-    registerUserJWt() {
+    register() {
       this.$vs.loading();
       this.$refs.observer.reset()
       
@@ -121,7 +121,7 @@ export default {
       };
       
       this.$store
-        .dispatch("auth/registerUserJWT", payload)
+        .dispatch("register", payload)
         .catch(error => {
           this.$vs.notify({
             title: "Error",

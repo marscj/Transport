@@ -1,5 +1,5 @@
-import jwt from "@/http/requests/auth/jwt/index.js"
-import router from '@/router'
+import { login, info, register} from "@/http/requests/auth"
+import router from '@/router' 
 
 const auth = {
   state: {
@@ -31,23 +31,15 @@ const auth = {
     }
   },
   actions: {
-    loginJWT({ commit, dispatch }, payload) {
+    login({ commit }, payload) {
       return new Promise((resolve, reject) => {
-        jwt.login(payload)
+        login(payload)
           .then(res => {
             const { result } = res;
             if (result.token) {
-              localStorage.setItem("accessToken", result.token)
-
-              commit('SET_ID', result.user.id)
-
               commit('SET_TOKEN', result.token)
-
-              commit('SET_ID', result.user.id)
-
-              commit('SET_ROLES', result.user.roles)
-
-              dispatch("GenerateRoutes", result.user.roles)
+ 
+              localStorage.setItem("accessToken", result.token)
 
               router.push(router.currentRoute.query.to || '/')
 
@@ -64,7 +56,7 @@ const auth = {
       })
     },
 
-    registerJWT({ commit }, payload) {
+    register({ commit }, payload) {
       return new Promise((resolve, reject) => {
         
         if (payload.password1 !== payload.password2) {
@@ -73,7 +65,7 @@ const auth = {
           })
         }
 
-        jwt.registerUser(payload)
+        register(payload)
           .then(res => {
 
             const { result } = res;
@@ -88,17 +80,17 @@ const auth = {
           .catch(error => {
             reject(error)
           })
-      })
+      }) 
     },
 
     getInfo({ commit }) {
       return new Promise((resolve, reject) => {
-        jwt.info()
+        info()
           .then(res => {
             const { result } = res;
-
             if (result.token) {
-              commit('SET_USER', result.user)
+              commit('SET_ID', result.id)
+              commit('SET_ROLES', result.roles)
               resolve(res)
             } else {
               reject({
