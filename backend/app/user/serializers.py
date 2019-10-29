@@ -57,7 +57,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
     def get_roles(self, obj):
         query = obj.groups.all()
         serializer = GroupSerializer(instance=query, many=True, context=self.context)
-        return serializers.data
+        return serializer.data
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)
