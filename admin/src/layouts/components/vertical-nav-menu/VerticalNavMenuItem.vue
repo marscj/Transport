@@ -53,8 +53,9 @@ export default {
   },
   computed: {
     canSee() {
-      this.$acl.check(this.$store.state.user.role)
-      return this.to ? this.$acl.check(this.$router.match(this.to).meta.rule) : true
+      return true
+      // this.$acl.check(this.$store.state.user.role)
+      // return this.to ? this.$acl.check(this.$router.match(this.to).meta.rule) : true
     },
     activeLink() {
       return ((this.to == this.$route.path) || (this.$route.meta.parent == this.slug) && this.to) ? true : false
