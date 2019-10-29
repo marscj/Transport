@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { constantRouterMap } from './config'
+import store from '@/store'
+import { constantRouterMap, defaultRoutePath } from './config'
+import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 
 Vue.use(Router)
 
@@ -25,18 +27,47 @@ router.afterEach(() => {
 })
 
 router.beforeEach((to, from, next) => {
-  if (
-    to.path === "/login" ||
-    to.path === "/forgot-password" ||
-    to.path === "/error-404" ||
-    to.path === "/error-500" ||
-    to.path === "/register" ||
-    to.path === "/not-authorized" ||
-    localStorage.getItem("accessToken")
-  ) {
-    return next();
+  to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
+
+  if(localStorage.getItem("accessToken")) {
+    if (to.path === '/login') {
+      next({ path: defaultRoutePath })
+    } else {
+      if (store.getters.roles) {
+        store.dispatch('getInfo').then(res => {
+          const roles = res.result && res.result.role
+          store.dispatch('GenerateRoutes', { roles }).then(() => {
+            router.addRoutes(store.getters.addRouters)
+            const redirect = decodeURIComponent(from.query.redirect || to.path)
+            if (to.path === redirect) {
+              next({ ...to, replace: true })
+            } else {
+              next({ path: redirect })
+            }
+          })
+        })
+        .catch(() => {
+          store.dispatch('logout').then(() => {
+            next({ path: '/login', query: { redirect: to.fullPath } })
+          })
+        })
+      }
+    }
   } else {
-    return next({path: '/login', query: { to: to.path }})
+    var whiteList = constantRouterMap.filter(f => {
+      if(f.children) {
+        return f.children.filter(f1 => {
+          return f1.name === to.name
+        })
+      }
+      return f.name === to.name
+    })
+
+    if(whiteList) {
+      next()
+    } else {
+      next({ path: '/login', query: { redirect: to.fullPath } })
+    }
   }
 });
 

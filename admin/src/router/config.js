@@ -1,21 +1,23 @@
+export const defaultRoutePath = '/dashboard/analytics'
+
 export const asyncRouterMap = [{
   path: '',
   component: () => import('@/layouts/main/Main.vue'),
   children: [{
       path: '/',
-      redirect: '/dashboard/analytics',
+      redirect: defaultRoutePath,
       meta: {
         permission: ['admin'],
       }
     },
     {
       path: '/dashboard',
-      redirect: '/dashboard/analytics',
+      redirect: defaultRoutePath,
       meta: {
         permission: ['admin'],
       },
       children: [{
-        path: '/dashboard/analytics',
+        path: defaultRoutePath,
         name: 'analytics',
         component: () => import('@/views/dashboard/analytics/Page.vue'),
         meta: {
