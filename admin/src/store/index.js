@@ -6,7 +6,8 @@ import getters from "./getters"
 import mutations from "./mutations"
 import actions from "./actions"
 
-import {auth, permission} from './modules'
+import auth from './modules/auth'
+import permission from './modules/permission'
 
 Vue.use(Vuex)
 
