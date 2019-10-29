@@ -1,6 +1,7 @@
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
 
 from .serializers import UserDetailSerializer
 from .models import CustomUser
@@ -10,5 +11,6 @@ class UserView(ModelViewSet):
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def info(self, request):
+        print(request.user, '====')
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)

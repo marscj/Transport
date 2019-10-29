@@ -1,13 +1,13 @@
-import { login, info, register} from "@/http/requests/auth"
+import { login, info, register} from "@/http/requests/auth/index.js"
 import router from '@/router' 
-
+  
 const auth = {
   state: {
     id: '',
     token: '',
     name: '',
     photoURL: '',
-    roles: []
+    roles: [] 
   },
   mutations: {
     SET_ID: (state, id) => {

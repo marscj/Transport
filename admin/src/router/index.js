@@ -28,7 +28,6 @@ router.afterEach(() => {
 
 router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
-
   if(localStorage.getItem("accessToken")) {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
@@ -57,13 +56,13 @@ router.beforeEach((to, from, next) => {
     var whiteList = constantRouterMap.filter(f => {
       if(f.children) {
         return f.children.filter(f1 => {
-          return f1.name === to.name
-        })
+          return f1.path === to.path
+        }).length
       }
-      return f.name === to.name
+      return false
     })
 
-    if(whiteList) {
+    if(whiteList && whiteList.length) {
       next()
     } else {
       next({ path: '/login', query: { redirect: to.fullPath } })
