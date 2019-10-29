@@ -3,21 +3,32 @@ import router from '@/router'
 
 const auth = {
   state: {
+    id: '',
     token: '',
-    user: {
-      name: '',
-      photoURL: '',
-      roles: []
-    }
+    name: '',
+    photoURL: '',
+    roles: []
   },
   mutations: {
+    SET_ID: (state, id) => {
+      state.id = id
+    },
+
     SET_TOKEN: (state, token) => {
       state.token = token;
     },
 
-    SET_USER: (state, user) => {
-      state.user = user
+    SET_NAME: (state, name) => {
+      state.name = name
     },
+
+    SET_PHOTO: (state, url) => {
+      state.photoURL = url
+    },
+
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
+    }
   },
   actions: {
     loginJWT({ commit, dispatch }, payload) {
@@ -28,7 +39,13 @@ const auth = {
             if (result.token) {
               localStorage.setItem("accessToken", result.token)
 
-              commit('SET_USER', result.user)
+              commit('SET_ID', result.user.id)
+
+              commit('SET_TOKEN', result.token)
+
+              commit('SET_ID', result.user.id)
+
+              commit('SET_ROLES', result.user.roles)
 
               dispatch("GenerateRoutes", result.user.roles)
 
