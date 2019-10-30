@@ -11,6 +11,5 @@ class UserView(ModelViewSet):
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def info(self, request):
-        print(request.user, '====')
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)

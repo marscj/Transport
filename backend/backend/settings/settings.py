@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'rest_framework_jwt',
     'rest_framework_extensions',
     
@@ -54,7 +54,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middleware.response.ResponseMiddleware',
+
+    'middleware.response.ResponseMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -118,11 +118,6 @@ STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'media')
 
-SITE_ID = 1
-
-REST_SESSION_LOGIN = True
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 # ACCOUNT_EMAIL_SUBJECT_PREFIX = 'UBang '
 # ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
@@ -132,16 +127,15 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
-
+SITE_ID = 1
+REST_USE_JWT = True
+REST_SESSION_LOGIN = False
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     )
 }
-
-REST_USE_JWT = True
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
@@ -149,14 +143,15 @@ REST_AUTH_SERIALIZERS = {
     'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
 }
 
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
-# }
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
+}
 
 AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_USE_TLS = True

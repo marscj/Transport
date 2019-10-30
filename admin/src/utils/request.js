@@ -49,15 +49,17 @@ service.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
-service.interceptors.request.use(config => {
-  const token = localStorage.getItem('accessToken')
-  console.log('token -= ', token)
-  if (token) {
-    // config.headers['Access-Token'] = token
-    config.headers['Authorization'] = 'Bearer ' + token
-  }
-  return config
-})
+// service.interceptors.request.use(config => {
+//   const token = localStorage.getItem('accessToken')
+//   console.log('token =' + token)
+//   if (token) {
+//     // config.headers['Authorization'] = 'JWT ' + token
+//     // config.headers['Access-Token'] = token
+//     // config.headers['Authorization'] = 'Bearer ' + token
+//     // config.headers['Authorization'] = 'Token ' + token
+//   }
+//   return config
+// })
 
 const installer = {
   vm: {},

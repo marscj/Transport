@@ -23,7 +23,7 @@ DATABASES = {
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
-    'JWT_AUTH_COOKIE': 'Access-Token',
+    # 'JWT_AUTH_COOKIE': 'Access-Token',
 }
 
 LOGGING = {
