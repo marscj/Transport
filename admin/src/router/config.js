@@ -1,7 +1,7 @@
 export const defaultRoutePath = '/dashboard/analytics'
 
 export const asyncRouterMap = [{
-  path: '/',
+  path: '',
   component: () => import('@/layouts/main/Main.vue'),
   children: [
     {
@@ -246,6 +246,7 @@ export const asyncRouterMap = [{
 
 export const constantRouterMap = [{
     path: '',
+    redirect: '/dashboard',
     component: () => import('@/layouts/full-page/FullPage.vue'),
     children: [{
         path: '/login',

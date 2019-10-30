@@ -27,21 +27,16 @@ router.afterEach(() => {
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('111111', document.cookie)
-
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
-  if(localStorage.getItem("Access-Token")) {
+  console.log(to.path, from.path)
+  if(localStorage.getItem("accessToken")) {
     if (to.path === '/login') {
-      console.log('2222')
       next({ path: defaultRoutePath })
     } else {
-      console.log('33333')
-      if (store.getters.roles && store.getters.roles.length) {
-        console.log('4444')
+      if (store.getters.roles.length == 0) {
         store.dispatch('getInfo').then(res => {
-          console.log('5555')
-          const roles = res.result && res.result.role
-          store.dispatch('GenerateRoutes', { roles }).then(() => {
+          const roles = res.roles
+          store.dispatch('GenerateRoutes', roles).then(() => {
             router.addRoutes(store.getters.addRouters)
             const redirect = decodeURIComponent(from.query.redirect || to.path)
             if (to.path === redirect) {
@@ -51,15 +46,16 @@ router.beforeEach((to, from, next) => {
             }
           })
         })
-        .catch(() => {
+        .catch((e) => {
           store.dispatch('logout').then(() => {
             next({ path: '/login', query: { redirect: to.fullPath } })
           })
         })
+      } else {
+        next()
       }
     }
   } else {
-    console.log('66666')
     var whiteList = constantRouterMap.filter(f => {
       if(f.children) {
         return f.children.filter(f1 => {
@@ -70,10 +66,8 @@ router.beforeEach((to, from, next) => {
     })
 
     if(whiteList && whiteList.length) {
-      console.log('77777')
       next()
     } else {
-      console.log('88888', to.fullPath)
       next({ path: '/login', query: { redirect: to.fullPath } })
     }
   }

@@ -39,8 +39,9 @@ const auth = {
             if (res.token) {
               commit('SET_TOKEN', res.token)
  
-              // localStorage.setItem("accessToken", data.token)
-
+              localStorage.setItem("accessToken", res.token)
+              
+              console.log(router.currentRoute.query.to, '-----')
               router.push(router.currentRoute.query.to || '/')
 
               resolve(res)
@@ -67,13 +68,13 @@ const auth = {
 
         register(payload)
           .then(res => {
-
-            const { result } = res;
-
-            if (result.token) {
+            if (res.token) {
+              
+              commit('SET_TOKEN', res.token)
+ 
+              localStorage.setItem("accessToken", res.token)
+                
               router.push(router.currentRoute.query.to || '/')
-              localStorage.setItem("accessToken", result.token)
-              commit('SET_USER', result.user)
             }
             resolve(res)
           })
@@ -87,17 +88,8 @@ const auth = {
       return new Promise((resolve, reject) => {
         info()
           .then(res => {
-            const { result } = res;
-            console.log(res)
-            // if (result.token) {
-            //   commit('SET_ID', result.id)
-            //   commit('SET_ROLES', result.roles)
-            //   resolve(res)
-            // } else {
-            //   reject({
-            //     message: "Wrong Email or Password"
-            //   })
-            // }
+            commit('SET_ID', res.id)
+            commit('SET_ROLES', res.roles)
             resolve(res)
           })
           .catch(error => {
