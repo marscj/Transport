@@ -28,7 +28,6 @@ router.afterEach(() => {
 
 router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
-  console.log(to.path, from.path)
   if(localStorage.getItem("accessToken")) {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
@@ -64,6 +63,8 @@ router.beforeEach((to, from, next) => {
       }
       return false
     })
+
+    console.log(whiteList)
 
     if(whiteList && whiteList.length) {
       next()

@@ -41,8 +41,7 @@ const auth = {
  
               localStorage.setItem("accessToken", res.token)
               
-              console.log(router.currentRoute.query.to, '-----')
-              router.push(router.currentRoute.query.to || '/')
+              router.push('/')
 
               resolve(res)
             } else {
@@ -69,12 +68,8 @@ const auth = {
         register(payload)
           .then(res => {
             if (res.token) {
-              
               commit('SET_TOKEN', res.token)
- 
               localStorage.setItem("accessToken", res.token)
-                
-              router.push(router.currentRoute.query.to || '/')
             }
             resolve(res)
           })

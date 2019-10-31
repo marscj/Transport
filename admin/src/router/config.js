@@ -1,50 +1,50 @@
 export const defaultRoutePath = '/dashboard/analytics'
 
 export const asyncRouterMap = [{
-  path: '',
+  path: '/',
+  redirect: '/dashboard',
   component: () => import('@/layouts/main/Main.vue'),
-  children: [
-    {
+  children: [{
       path: '/dashboard',
       redirect: defaultRoutePath,
       meta: {
-        permission: ['admin'],
+        permission: ['customuser'],
       },
-      children: [{
-        path: defaultRoutePath,
-        name: 'analytics',
-        component: () => import('@/views/dashboard/analytics/Page.vue'),
-        meta: {
-          permission: ['admin'],
-          breadcrumb: [{
-              title: 'Home',
-              url: '/'
-            },
-            {
-              title: 'Dashboard',
-              url: '/dashboard'
-            },
-            {
-              title: 'Analytics',
-              active: true
-            },
-          ],
-          pageTitle: 'Analytics',
-        }
-      }, ]
+    },
+    {
+      path: defaultRoutePath,
+      name: 'analytics',
+      component: () => import('@/views/dashboard/analytics/Page.vue'),
+      meta: {
+        permission: ['customuser'],
+        breadcrumb: [{
+            title: 'Home',
+            url: '/'
+          },
+          {
+            title: 'Dashboard',
+            url: '/dashboard'
+          },
+          {
+            title: 'Analytics',
+            active: true
+          },
+        ],
+        pageTitle: 'Analytics',
+      }
     },
     {
       path: '/business',
       redirect: '/business/orders',
       meta: {
-        permission: ['admin'],
+        permission: ['customuser'],
       },
       children: [{
           path: '/business/orders',
           name: 'orders',
           component: () => import('@/views/business/order/Page.vue'),
           meta: {
-            permission: ['admin'],
+            permission: ['customuser'],
             breadcrumb: [{
                 title: 'Home',
                 url: '/'
@@ -66,7 +66,7 @@ export const asyncRouterMap = [{
           name: 'reservations',
           component: () => import('@/views/business/reservation/Page.vue'),
           meta: {
-            permission: ['admin'],
+            permission: ['customuser'],
             breadcrumb: [{
                 title: 'Home',
                 url: '/'
@@ -89,14 +89,14 @@ export const asyncRouterMap = [{
       path: '/resource',
       redirect: '/resource/staffs',
       meta: {
-        permission: ['admin'],
+        permission: ['customuser'],
       },
       children: [{
           path: '/resource/staffs',
           name: 'staffs',
           component: () => import('@/views/resource/staff/Page.vue'),
           meta: {
-            permission: ['admin'],
+            permission: ['customuser'],
             breadcrumb: [{
                 title: 'Home',
                 url: '/'
@@ -118,7 +118,7 @@ export const asyncRouterMap = [{
           name: 'vehicles',
           component: () => import('@/views/resource/vehicle/Page.vue'),
           meta: {
-            permission: ['admin'],
+            permission: ['customuser'],
             breadcrumb: [{
                 title: 'Home',
                 url: '/'
@@ -170,7 +170,7 @@ export const asyncRouterMap = [{
           name: 'roles',
           component: () => import('@/views/authorization/role/Page.vue'),
           meta: {
-            permission: ['admin'],
+            permission: ['customuser'],
             breadcrumb: [{
                 title: 'Home',
                 url: '/'
@@ -200,7 +200,7 @@ export const asyncRouterMap = [{
           name: 'sites',
           component: () => import('@/views/setting/site/Page.vue'),
           meta: {
-            permission: ['admin'],
+            permission: ['customuser'],
             breadcrumb: [{
                 title: 'Home',
                 url: '/'
@@ -222,7 +222,7 @@ export const asyncRouterMap = [{
           name: 'faqs',
           component: () => import('@/views/setting/faq/Page.vue'),
           meta: {
-            permission: ['admin'],
+            permission: ['customuser'],
             breadcrumb: [{
                 title: 'Home',
                 url: '/'
@@ -245,10 +245,18 @@ export const asyncRouterMap = [{
 }]
 
 export const constantRouterMap = [{
-    path: '',
+    path: '/',
     redirect: '/dashboard',
     component: () => import('@/layouts/full-page/FullPage.vue'),
     children: [{
+        path: '/home',
+        name: 'home',
+        component: () => import('@/views/Home.vue'),
+        meta: {
+          rule: 'public'
+        }
+      },
+      {
         path: '/login',
         name: 'login',
         component: () => import('@/views/login/Login.vue'),
