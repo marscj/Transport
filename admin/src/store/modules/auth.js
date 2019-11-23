@@ -35,7 +35,6 @@ const auth = {
       return new Promise((resolve, reject) => {
         login(payload)
           .then(res => {
-            const { data } = res;
             if (res.token) {
               commit('SET_TOKEN', res.token)
  

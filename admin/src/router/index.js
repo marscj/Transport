@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import { constantRouterMap, defaultRoutePath } from './config'
+import { constantRouterMap, asyncRouterMap, defaultRoutePath } from './config'
 import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 
 Vue.use(Router)
@@ -28,6 +28,7 @@ router.afterEach(() => {
 
 router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
+  console.log(from.path, to.path)
   if(localStorage.getItem("accessToken")) {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
@@ -36,6 +37,7 @@ router.beforeEach((to, from, next) => {
         store.dispatch('getInfo').then(res => {
           const roles = res.roles
           store.dispatch('GenerateRoutes', roles).then(() => {
+            // console.log(store.getters.addRouters)
             router.addRoutes(store.getters.addRouters)
             const redirect = decodeURIComponent(from.query.redirect || to.path)
             if (to.path === redirect) {
@@ -45,7 +47,7 @@ router.beforeEach((to, from, next) => {
             }
           })
         })
-        .catch((e) => {
+        .catch(() => {
           store.dispatch('logout').then(() => {
             next({ path: '/login', query: { redirect: to.fullPath } })
           })
@@ -64,11 +66,12 @@ router.beforeEach((to, from, next) => {
       return false
     })
 
-    console.log(whiteList)
-
+    console.log('111')
     if(whiteList && whiteList.length) {
+      console.log('222')
       next()
     } else {
+      console.log('3333')
       next({ path: '/login', query: { redirect: to.fullPath } })
     }
   }
