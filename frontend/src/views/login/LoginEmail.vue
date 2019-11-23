@@ -64,7 +64,7 @@ export default {
     },
     login() {
       this.$vs.loading();
-      this.$refs.observer.reset()
+      this.$refs.observer.reset();
 
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,
@@ -82,7 +82,7 @@ export default {
             icon: "icon-alert-circle",
             color: "danger"
           });
-          if(error.response) {
+          if (error.response) {
             this.$refs.observer.setErrors(error.response.data);
           }
         })
@@ -91,7 +91,17 @@ export default {
         });
     },
     registerUser() {
-      this.$router.push({ name: "register" }).catch(() => {});
+      // this.$router.push({ name: "register", query: {email: true}}).catch(() => {});
+      this.$router.push({
+        name: "register",
+        query: {
+          query: this.$base64.encode(
+            JSON.stringify({
+              email: true,
+            })
+          )
+        }
+      });
     }
   }
 };

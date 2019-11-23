@@ -13,7 +13,13 @@
                   <h4 class="mb-4">Create Account</h4>
                   <p>Fill the below form to create a new account.</p>
                 </div>
-                <register-jwt></register-jwt>
+
+                <template v-if="JSON.parse(this.$base64.decode(this.$route.query.query)).email">
+                  <register-email />
+                </template>
+                <template v-else>
+                  <register-username />
+                </template>
               </div>
             </div>
           </div>
@@ -24,12 +30,14 @@
 </template>
 
 <script>
-import RegisterJwt from "./RegisterJWT.vue";
+import RegisterEmail from "./RegisterEmail.vue";
+import RegisterUsername from "./RegisterUsername.vue";
 
 export default {
   components: {
-    RegisterJwt,
-  }
+    RegisterEmail,
+    RegisterUsername
+  },
 };
 </script>
 

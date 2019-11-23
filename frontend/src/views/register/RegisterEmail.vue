@@ -16,19 +16,7 @@
         </div>
       </div> -->
 
-      <validation-provider name="username" rules="required|max:16|min:5" v-slot="{ errors }">
-        <vs-input
-          data-vv-validate-on="blur"
-          icon-no-border
-          icon="icon icon-user"
-          icon-pack="feather"
-          label="Username"
-          v-model="username"
-          class="w-full"
-        />
-        <span>{{ errors[0] }}</span>
-      </validation-provider>
-      <!-- <validation-provider name="email" rules="email|required" v-slot="{ errors }">
+      <validation-provider name="email" rules="email|required" v-slot="{ errors }">
         <vs-input
           data-vv-validate-on="blur"
           name="email"
@@ -39,7 +27,7 @@
           class="w-full mt-6"
         />
         <span>{{ errors[0] }}</span>
-      </validation-provider> -->
+      </validation-provider>
 
       <validation-provider name="password1" rules="required|max:16|min:8" v-slot="{ errors }">
         <vs-input
@@ -82,8 +70,7 @@ export default {
     return {
       // first_name: "",
       // last_name: "",
-      // email: "",
-      username: "",
+      email: "",
       password1: "",
       password2: "",
       isTermsConditionAccepted: true
@@ -94,8 +81,7 @@ export default {
       return (
         // this.first_name != "" &&
         // this.last_name != "" &&
-        // this.email != "" &&
-        this.username != ""  &&
+        this.email != ""  &&
         this.password1 != "" &&
         this.password2 != "" &&
         this.isTermsConditionAccepted === true
@@ -113,8 +99,7 @@ export default {
       const payload = {
         // first_name: this.first_name,
         // last_name: this.last_name,
-        // email: this.email,
-        username: this.username,
+        email: this.email,
         password1: this.password1,
         password2: this.password2,
         notify: this.$vs.notify
