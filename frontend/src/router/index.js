@@ -29,7 +29,7 @@ router.afterEach(() => {
 router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
   console.log('form =', from.path, ',', 'to =', to.path)
-  if(localStorage.getItem("accessToken")) {
+  if(Vue.ls.get("accessToken")) {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
     } else {

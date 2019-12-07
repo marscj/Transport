@@ -71,7 +71,7 @@ const auth = {
             const { result } = res;
             if (result.token) {
               commit('SET_TOKEN', result.token)
-              localStorage.setItem("accessToken", result.token)
+              Vue.ls.set("accessToken", result.token)
             }
             resolve(res)
           })
@@ -97,8 +97,8 @@ const auth = {
     },
 
     logout() {
-      if (localStorage.getItem("accessToken")) {
-        localStorage.removeItem("accessToken")
+      if (Vue.ls.get("accessToken")) {
+        Vue.ls.remove("accessToken")
       }
       router.push('/login').catch(() => {})
     }
