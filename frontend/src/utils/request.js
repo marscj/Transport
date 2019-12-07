@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import axios from 'axios'
 import { VueAxios } from './axios'
 import store from '@/store'
@@ -8,49 +9,19 @@ const service = axios.create({
   timeout: 10000, // 请求超时时间
 })
 
-// Token Refresh
-let isAlreadyFetchingAccessToken = false
-let subscribers = []
-
-function onAccessTokenFetched(access_token) {
-  subscribers = subscribers.filter(callback => callback(access_token))
-}
-
-function addSubscriber(callback) {
-  subscribers.push(callback)
-}
-
 service.interceptors.response.use(function (response) {
   return response.data
 }, function (error) {
-  // const { config, response: { status } } = error
-  const { config, response } = error
-  const originalRequest = config
+  const { response } = error
 
-  // if (status === 401) {
   if (response && response.status === 401) {
-    if (!isAlreadyFetchingAccessToken) {
-      isAlreadyFetchingAccessToken = true
-      store.dispatch("auth/fetchAccessToken")
-        .then((access_token) => {
-          isAlreadyFetchingAccessToken = false
-          onAccessTokenFetched(access_token)
-        })
-    }
-
-    const retryOriginalRequest = new Promise((resolve) => {
-      addSubscriber(access_token => {
-        originalRequest.headers.Authorization = 'Bearer ' + access_token
-        resolve(axios(originalRequest))
-      })
-    })
-    return retryOriginalRequest
+    store.dispatch('logout');
   }
   return Promise.reject(error)
 })
 
 service.interceptors.request.use(config => {
-  const token = localStorage.getItem('accessToken')
+  const token = Vue.ls.get('accessToken')
   if (token) {
     config.headers['Authorization'] = 'JWT ' + token
   }

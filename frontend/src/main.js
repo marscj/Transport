@@ -48,6 +48,13 @@ import 'vue-select/dist/vue-select.css';
 import Base64 from './base64.js'
 Vue.prototype.$base64 = Base64;
 
+import Storage from 'vue-ls';
+Vue.use(Storage, {
+  namespace: 'vuejs__', // key prefix
+  name: 'ls', // name variable Vue.[ls] or this.[$ls],
+  storage: 'local', // storage name session, local, memory
+});
+
 Vue.config.productionTip = false
 
 new Vue({

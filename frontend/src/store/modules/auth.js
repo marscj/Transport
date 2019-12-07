@@ -35,8 +35,7 @@ const auth = {
       return new Promise((resolve, reject) => {
         login(payload)
           .then(res => {
-            console.log(res, '----')
-            const result = { res }
+            const { result } = res;
 
             if (result.token) {
               commit('SET_TOKEN', res.token)
@@ -44,7 +43,6 @@ const auth = {
               localStorage.setItem("accessToken", res.token)
               
               router.push('/')
-
               resolve(res)
             } else {
               reject({
@@ -69,9 +67,10 @@ const auth = {
 
         register(payload)
           .then(res => {
-            if (res.token) {
-              commit('SET_TOKEN', res.token)
-              localStorage.setItem("accessToken", res.token)
+            const { result } = res;
+            if (result.token) {
+              commit('SET_TOKEN', result.token)
+              localStorage.setItem("accessToken", result.token)
             }
             resolve(res)
           })
@@ -85,8 +84,9 @@ const auth = {
       return new Promise((resolve, reject) => {
         info()
           .then(res => {
-            commit('SET_ID', res.id)
-            commit('SET_ROLES', res.roles)
+            const { result } = res;
+            commit('SET_ID', result.id)
+            commit('SET_ROLES', result.roles)
             resolve(res)
           })
           .catch(error => {
