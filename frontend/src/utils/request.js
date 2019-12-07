@@ -22,6 +22,7 @@ service.interceptors.response.use(function (response) {
 
 service.interceptors.request.use(config => {
   const token = Vue.ls.get('accessToken')
+  console.log('token=', token)
   if (token) {
     config.headers['Authorization'] = 'JWT ' + token
   }

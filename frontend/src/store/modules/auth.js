@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { login, info, register} from "@/http/requests/auth/index.js"
 import router from '@/router' 
   
@@ -38,9 +39,9 @@ const auth = {
             const { result } = res;
 
             if (result.token) {
+              
+              Vue.ls.set('accessToken', result.token, 30 * 24 * 60 * 60 * 1000)
               commit('SET_TOKEN', res.token)
- 
-              localStorage.setItem("accessToken", res.token)
               
               router.push('/')
               resolve(res)
