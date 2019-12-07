@@ -259,6 +259,9 @@ export const asyncRouterMap = [{
 // }]
 
 export const constantRouterMap = [{
+  path: '*2',
+  redirect: '/error-404'
+},{
     path: '/',
     redirect: '/login',
     component: () => import('@/layouts/full-page/FullPage.vue'),
@@ -311,6 +314,10 @@ export const constantRouterMap = [{
   },
   {
     path: '*',
+    redirect: '/error-404'
+  },
+  {
+    path: '*1',
     redirect: '/error-404'
   },
 ]

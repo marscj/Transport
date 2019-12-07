@@ -56,14 +56,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    var whiteList = constantRouterMap.filter(f => {
-      if(f.children) {
-        return f.children.filter(f1 => {
-          return f1.path === to.path
-        }).length
-      }
-      return false
-    })
+    var whiteList = filterWhilteList(constantRouterMap, to)
 
     if(whiteList && whiteList.length) {
       next()
@@ -72,5 +65,11 @@ router.beforeEach((to, from, next) => {
     }
   }
 });
+
+function filterWhilteList(list, to) {
+  return list.reduce((f, item) => item.children ? f.concat(item.children) : f.concat(item), []).filter(f => {
+    return f.path.includes(to.path)
+  });
+}
 
 export default router
