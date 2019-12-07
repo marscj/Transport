@@ -35,7 +35,10 @@ const auth = {
       return new Promise((resolve, reject) => {
         login(payload)
           .then(res => {
-            if (res.token) {
+            console.log(res, '----')
+            const result = { res }
+
+            if (result.token) {
               commit('SET_TOKEN', res.token)
  
               localStorage.setItem("accessToken", res.token)

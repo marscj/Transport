@@ -134,7 +134,10 @@ REST_SESSION_LOGIN = False
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    )
+    ),
+    'DEFAULT_RENDERER_CLASSES': [
+        'middleware.response.CustomJSONRenderer',
+    ] 
 }
 
 REST_AUTH_SERIALIZERS = {

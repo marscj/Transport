@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
     } else {
-      if (store.getters.roles.length == 0) {
+      if (store.getters.roles && store.getters.roles.length == 0) {
         store.dispatch('getInfo').then(res => {
           const roles = res.roles
           store.dispatch('GenerateRoutes', roles).then(() => {
@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     var whiteList = filterWhilteList(constantRouterMap, to)
-
+    console.log(whiteList)
     if(whiteList && whiteList.length) {
       next()
     } else {

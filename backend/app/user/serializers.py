@@ -50,6 +50,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
+        resource_name = 'contact' 
         fields = (
             'id', 'username', 'roles'
         )
