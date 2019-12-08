@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import axios from 'axios'
-import { VueAxios } from './axios'
+import {
+  VueAxios
+} from './axios'
 import store from '@/store'
 
 // 创建 axios 实例
@@ -31,7 +33,7 @@ service.interceptors.request.use(config => {
 
 const installer = {
   vm: {},
-  install (Vue) {
+  install(Vue) {
     Vue.use(VueAxios, service)
   }
 }

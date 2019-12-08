@@ -39,11 +39,8 @@ const auth = {
             const { result } = res;
 
             if (result.token) {
-              
-              Vue.ls.set('accessToken', result.token, 30 * 24 * 60 * 60 * 1000)
-              commit('SET_TOKEN', res.token)
-              
-              router.push('/')
+              Vue.ls.set('accessToken', result.token)
+              commit('SET_TOKEN', result.token)
               resolve(res)
             } else {
               reject({
@@ -96,10 +93,9 @@ const auth = {
       })
     },
 
-    logout() {
-      if (Vue.ls.get("accessToken")) {
-        Vue.ls.remove("accessToken")
-      }
+    logout({ commit }) {
+      commit('SET_TOKEN', '')
+      Vue.ls.remove("accessToken")
       router.push('/login').catch(() => {})
     }
   }

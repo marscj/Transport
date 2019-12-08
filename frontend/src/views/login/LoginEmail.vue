@@ -73,7 +73,9 @@ export default {
       };
 
       this.$store
-        .dispatch("login", payload)
+        .dispatch("login", payload).then(res => {
+          this.$router.push('/')
+        })
         .catch(error => {
           this.$vs.notify({
             title: "Error",

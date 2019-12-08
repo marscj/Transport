@@ -27,17 +27,18 @@ router.afterEach(() => {
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('from=', from.path, 'to=', to.path)
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
-  console.log('form =', from.path, ',', 'to =', to.path)
   if(Vue.ls.get("accessToken")) {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
     } else {
-      if (store.getters.roles && store.getters.roles.length == 0) {
+      if (store.getters.roles.length === 0) {
         store.dispatch('getInfo').then(res => {
           const roles = res.roles
           store.dispatch('GenerateRoutes', roles).then(() => {
             router.addRoutes(store.getters.addRouters)
+            console.log(store.getters.addRouters)
             const redirect = decodeURIComponent(from.query.redirect || to.path)
             if (to.path === redirect) {
               next({ ...to, replace: true })
@@ -57,7 +58,6 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     var whiteList = filterWhilteList(constantRouterMap, to)
-    console.log(whiteList)
     if(whiteList && whiteList.length) {
       next()
     } else {
