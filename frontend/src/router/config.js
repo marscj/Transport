@@ -258,7 +258,7 @@ export const asyncRouterMap = [{
     },
     children: [{
       path: '/admin/analytics',
-      name: '/analytics',
+      name: 'analytics',
       component: () => import('@/views/dashboard/analytics/Page.vue'),
       meta: {
         name: 'Analytics',
@@ -267,8 +267,8 @@ export const asyncRouterMap = [{
         i18n: 'Analytics',
         icon: 'HomeIcon',
         breadcrumb: [{
-            title: 'Home',
-            url: '/'
+            title: 'Dashboard',
+            url: '/admin/analytics'
           },
           {
             title: 'Analytics',
@@ -296,8 +296,8 @@ export const asyncRouterMap = [{
         i18n: 'Order',
         icon: 'FileTextIcon',
         breadcrumb: [{
-            title: 'Home',
-            url: '/'
+            title: 'Order',
+            url: '/admin/orders'
           },
           {
             title: 'Order',
@@ -325,11 +325,11 @@ export const asyncRouterMap = [{
           i18n: 'User',
           icon: 'UsersIcon',
           breadcrumb: [{
-              title: 'Home',
-              url: '/'
+              title: 'User',
+              url: '/admin/users'
             },
             {
-              title: 'Order',
+              title: 'Users',
               active: true
             }
           ],
@@ -346,11 +346,62 @@ export const asyncRouterMap = [{
           i18n: 'Role',
           icon: 'UserPlusIcon',
           breadcrumb: [{
-              title: 'Home',
-              url: '/'
+              title: 'Role',
+              url: '/admin/roles'
             },
             {
               title: 'Role',
+              active: true
+            }
+          ],
+        }
+      },
+    ]
+  },
+  {
+    path: '/admin/source',
+    redirect: '/admin/staffs',
+    component: () => import('@/layouts/main/Main.vue'),
+    meta: {
+      header: 'Source',
+    },
+    children: [{
+        path: '/admin/staffs',
+        name: 'staf',
+        component: () => import('@/views/resource/staff/Page.vue'),
+        meta: {
+          name: 'Staff',
+          url: '/admin/staffs',
+          slug: 'staff',
+          i18n: 'Staff',
+          icon: 'UserCheckIcon',
+          breadcrumb: [{
+              title: 'Source',
+              url: '/admin/staffs'
+            },
+            {
+              title: 'Staff',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/vehicles',
+        name: 'vehicles',
+        component: () => import('@/views/resource/vehicle/Page.vue'),
+        meta: {
+          name: 'Vehicle',
+          url: '/admin/vehicles',
+          slug: 'vehicle',
+          i18n: 'Vehicle',
+          icon: 'TruckIcon',
+          breadcrumb: [{
+              title: 'Source',
+              url: '/admin/vehicles'
+            },
+            {
+              title: 'Vehicle',
               active: true
             }
           ],

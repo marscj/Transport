@@ -4,6 +4,10 @@ export default {
 	Dashboard: 'Dashboard',
 	Order: 'Order',
 	Analytics: 'Analytics',
-	Business: 'Business'
+	User: 'User',
+	Role: 'Role',
+	Source: 'Source',
+	Staff: 'Staff',
+	Vehicle: 'Vehicle'
   }
 }
