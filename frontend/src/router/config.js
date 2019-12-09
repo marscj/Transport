@@ -298,9 +298,5 @@ export const constantRouterMap = [{
   {
     path: '*',
     redirect: '/error-404'
-  },
-  {
-    path: '*1',
-    redirect: '/error-404'
-  },
+  }
 ]
