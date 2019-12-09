@@ -145,17 +145,18 @@ export default {
     isGroupActive() {
       return (item) => {
         const path        = this.$route.fullPath
-        const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
         let open          = false
+        const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
 
         let func = (item) => {
-          if (item.submenu) {
-            item.submenu.forEach((item) => {
-              if (item.url && (path === item.url || routeParent === item.slug)) { open = true }
-              else if (item.submenu) { func(item) }
+          if (item.children) {
+            item.children.forEach((item) => {
+              if ((path == item.meta.url || routeParent == item.meta.slug) && item.meta.url) { open = true}
+              else if (item.children) { func(item) }
             })
           }
         }
+
         func(item)
         return open
       }
