@@ -15,7 +15,7 @@
     :class = "[
       {'vs-sidebar-group-open'            : openItems        },
       {'vs-sidebar-group-active'          : open             },
-      {'disabled-item pointer-events-none': group.isDisabled }
+      {'disabled-item pointer-events-none': group.meta.isDisabled }
     ]"
     @mouseover = "mouseover"
     @mouseout  = "mouseout">
@@ -26,15 +26,15 @@
 
           <!-- Group Icon -->
           <feather-icon
-            v-if        = "group.icon  || (this.groupIndex > Math.floor(this.groupIndex))"
-            :icon       = "group.icon  || 'CircleIcon'"
+            v-if        = "group.meta.icon  || (this.groupIndex > Math.floor(this.groupIndex))"
+            :icon       = "group.meta.icon  || 'CircleIcon'"
             :svgClasses = "{ 'w-3 h-3' : this.groupIndex % 1 != 0 }" />
 
           <!-- Group Name -->
-          <span v-show="!verticalNavMenuItemsMin" class="truncate mr-3 select-none">{{ $t(group.i18n) || group.name }}</span>
+          <span v-show="!verticalNavMenuItemsMin" class="truncate mr-3 select-none">{{ $t(group.meta.i18n) || group.meta.name }}</span>
 
           <!-- Group Tag -->
-          <vs-chip class="ml-auto mr-4" :color="group.tagColor" v-if="group.tag && !verticalNavMenuItemsMin">{{ group.tag }}</vs-chip>
+          <vs-chip class="ml-auto mr-4" :color="group.meta.tagColor" v-if="group.meta.tag && !verticalNavMenuItemsMin">{{ group.meta.tag }}</vs-chip>
         </span>
 
         <!-- Group Collapse Icon -->
@@ -45,17 +45,17 @@
           svg-classes= "w-4 h-4" />
 
         <!-- Group Tooltip -->
-        <span class="vs-sidebar--tooltip">{{ $t(group.i18n) || group.name }}</span>
+        <span class="vs-sidebar--tooltip">{{ $t(group.meta.i18n) || group.meta.name }}</span>
       </div>
       <!-- /Group Label -->
 
       <!-- Group Items -->
       <ul ref="items" :style="styleItems" class="vs-sidebar-group-items">
-        <li v-for="(groupItem, index) in group.submenu" :key="index">
+        <li v-for="(groupItem, index) in group.children" :key="index">
 
           <!-- If item is group -->
           <v-nav-menu-group
-            v-if        = "groupItem.submenu"
+            v-if        = "groupItem.children"
             :group      = "groupItem"
             :groupIndex = "Number(`${groupIndex}.${index}`)"
             :open       = "isGroupActive(groupItem)"
@@ -66,13 +66,13 @@
             v-else
             icon-small
             :index  = "groupIndex + '.' + index"
-            :to="groupItem.slug !== 'external' ? groupItem.url : null"
-            :href="groupItem.slug === 'external' ? groupItem.url : null"
+            :to="groupItem.meta.slug !== 'external' ? groupItem.meta.url : null"
+            :href="groupItem.meta.slug === 'external' ? groupItem.meta.url : null"
             :icon   = "itemIcon(groupIndex + '.' + index)"
-            :slug   = "groupItem.slug"
-            :target = "groupItem.target">
-              <span class="truncate">{{ $t(groupItem.i18n) || groupItem.name }}</span>
-              <vs-chip class="ml-auto" :color="groupItem.tagColor" v-if="groupItem.tag">{{ groupItem.tag }}</vs-chip>
+            :slug   = "groupItem.meta.slug"
+            :target = "groupItem.meta.target">
+              <span class="truncate">{{ $t(groupItem.meta.i18n) || groupItem.meta.name }}</span>
+              <vs-chip class="ml-auto" :color="groupItem.meta.tagColor" v-if="groupItem.meta.tag">{{ groupItem.meta.tag }}</vs-chip>
           </v-nav-menu-item>
 
         </li>
@@ -117,10 +117,10 @@ export default {
         const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
 
         let func = (item) => {
-          if (item.submenu) {
-            item.submenu.forEach((item) => {
-              if ((path == item.url || routeParent == item.slug) && item.url) { open = true}
-              else if (item.submenu) { func(item) }
+          if (item.children) {
+            item.children.forEach((item) => {
+              if ((path == item.meta.url || routeParent == item.meta.slug) && item.meta.url) { open = true}
+              else if (item.children) { func(item) }
             })
           }
         }

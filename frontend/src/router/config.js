@@ -249,10 +249,14 @@ export const asyncRouterMap = [{
   redirect: '/dashboard/analytics',
   component: () => import('@/layouts/main/Main.vue'),
   meta: {
-    header: 'Dashboard'
+    // header: 'Dashboard',
+    submenu: true,
+    name: 'Analytics',
+    slug: 'analytics',
+    i18n: 'Analytics',
+    icon: 'HomeIcon',
   },
-  children: [
-    {
+  children: [{
       path: '/dashboard/analytics',
       name: 'Analytics',
       component: () => import('@/views/dashboard/analytics/Page.vue'),
@@ -263,48 +267,45 @@ export const asyncRouterMap = [{
         slug: 'analytics',
         i18n: 'Analytics',
         icon: 'HomeIcon',
-        breadcrumb: [
-        {
-          title: 'Home',
-          url: '/login'
-        },
-        {
-          title: 'Dashboard',
-          url: '/login'
-        },
-        {
-          title: 'Analytics',
-          active: true
-        },
-      ],
+        breadcrumb: [{
+            title: 'Home',
+            url: '/login'
+          },
+          {
+            title: 'Dashboard',
+            url: '/login'
+          },
+          {
+            title: 'Analytics',
+            active: true
+          },
+        ],
       }
     },
     {
       path: '/dashboard/orders',
-      name: 'Analytics1',
+      name: 'orders',
       component: () => import('@/views/business/order/Page.vue'),
       meta: {
-        
         pageTitle: 'Orders',
         name: "Orders",
         url: "/dashboard/orders",
         slug: 'orders',
         i18n: "Orders",
         icon: "FileTextIcon",
-        breadcrumb: [
-        {
-          title: 'Home',
-          url: '/login'
-        },
-        {
-          title: 'Dashboard',
-          url: '/login'
-        },
-        {
-          title: 'Analytics1',
-          active: true
-        },
-      ],
+        breadcrumb: [{
+            title: 'Home',
+            url: '/login'
+          },
+          {
+            title: 'Dashboard',
+            url: '/login'
+          },
+          {
+            title: 'orders',
+            active: true
+          },
+        ],
       }
     }
   ]
