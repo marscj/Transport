@@ -6,7 +6,7 @@ const auth = {
   state: {
     id: '',
     token: '',
-    name: '',
+    displayName: '',
     photoURL: '',
     roles: [] 
   },
@@ -20,7 +20,7 @@ const auth = {
     },
 
     SET_NAME: (state, name) => {
-      state.name = name
+      state.displayName = name
     },
 
     SET_PHOTO: (state, url) => {
@@ -85,6 +85,7 @@ const auth = {
             const { result } = res;
             commit('SET_ID', result.id)
             commit('SET_ROLES', result.roles)
+            commit('SET_NAME', result.username)
             resolve(res)
           })
           .catch(error => {
