@@ -15,7 +15,7 @@ const router = new Router({
       y: 0
     }
   },
-  routes: constantRouterMap,
+  routes: asyncRouterMap,
 })
 
 router.afterEach(() => {

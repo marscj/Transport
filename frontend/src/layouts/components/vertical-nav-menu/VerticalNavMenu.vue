@@ -11,7 +11,6 @@
 
 <template>
   <div class="parentx">
-
     <vs-sidebar
       class="v-nav-menu items-no-padding"
       v-model="isVerticalNavMenuActive"
@@ -59,31 +58,28 @@
 
         <!-- Header Shadow -->
         <div class="shadow-bottom" v-show="showShadowBottom" />
-
         <!-- Menu Items -->
         <VuePerfectScrollbar ref="verticalNavMenuPs" class="scroll-area-v-nav-menu pt-2" :settings="settings" @ps-scroll-y="psSectionScroll">
           <template v-for="(item, index) in menuItemsUpdated">
-
             <!-- Group Header -->
-            <span v-if="item.header && !verticalNavMenuItemsMin" class="navigation-header truncate" :key="`header-${index}`">
-              {{ $t(item.i18n) || item.header }}
+            <span v-if="item.meta.header && !verticalNavMenuItemsMin" class="navigation-header truncate" :key="`header-${index}`">
+              {{ $t(item.meta.i18n) || item.meta.header }}
             </span>
+            
             <!-- /Group Header -->
-
-            <template v-else-if="!item.header">
-
+            <template v-else-if="!item.meta.header">
               <!-- Nav-Item -->
               <v-nav-menu-item
-                v-if="!item.submenu"
+                v-if="!item.meta.submenu"
                 :key="`item-${index}`"
                 :index="index"
-                :to="item.slug !== 'external' ? item.url : null"
-                :href="item.slug === 'external' ? item.url : null"
-                :icon="item.icon" :target="item.target"
-                :isDisabled="item.isDisabled"
-                :slug="item.slug">
-                  <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(item.i18n) || item.name }}</span>
-                  <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
+                :to="item.meta.slug !== 'external' ? item.meta.url : null"
+                :href="item.meta.slug === 'external' ? item.meta.url : null"
+                :icon="item.meta.icon" :target="item.meta.target"
+                :isDisabled="item.meta.isDisabled"
+                :slug="item.meta.slug">
+                  <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(item.meta.i18n) || item.meta.name }}</span>
+                  <vs-chip class="ml-auto" :color="item.meta.tagColor" v-if="item.meta.tag && (isMouseEnter || !reduce)">{{ item.meta.tag }}</vs-chip>
               </v-nav-menu-item>
 
               <!-- Nav-Group -->
@@ -166,16 +162,14 @@ export default {
     },
     menuItemsUpdated() {
       let clone = this.navMenuItems.slice()
-
       for(let [index, item] of this.navMenuItems.entries()) {
-        if (item.header && item.items.length && (index || 1)) {
-          let i = clone.findIndex(ix => ix.header === item.header)
-          for(let [subIndex, subItem] of item.items.entries()) {
+        if (item.meta.header && item.children.length && (index || 1)) {
+          let i = clone.findIndex(ix => ix.meta.header === item.meta.header)
+          for(let [subIndex, subItem] of item.children.entries()) {
             clone.splice(i + 1 + subIndex, 0, subItem)
           }
         }
       }
-
       return clone
     },
     isVerticalNavMenuActive: {

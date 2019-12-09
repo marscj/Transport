@@ -276,7 +276,6 @@ export default {
 
         // PROFILE
         activeUserInfo() {
-          console.log(this.$store.state.auth)
           return this.$store.state.auth
         },
         user_displayName() {
