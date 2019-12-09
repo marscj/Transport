@@ -2,14 +2,8 @@
 export default {
   en: {
 	Dashboard: 'Dashboard',
-	Orders: 'Orders',
+	Order: 'Order',
 	Analytics: 'Analytics',
-	Reservations: 'Reservations',
-	Staffs: 'Staffs',
-	Vehicles: 'Vehicles',
-	Users: 'Users',
-	Roles: 'Roles',
-	Sites: 'Sites',
-	FAQS: 'FAQS',
+	Business: 'Business'
   }
 }

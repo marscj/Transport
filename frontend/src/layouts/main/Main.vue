@@ -80,7 +80,7 @@
           <div class="router-content">
             <transition :name="routerTransition">
               <div
-                v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
+                v-if="$route.meta.breadcrumb || $route.meta.name"
                 class="router-header flex flex-wrap items-center mb-6"
               >
                 <div
@@ -178,7 +178,7 @@ export default {
       navbarType: themeConfig.navbarType || "floating",
       navMenuLogo: require("@/assets/images/logo/logo.png"),
       routerTransition: themeConfig.routerTransition || "none",
-      routeTitle: this.$route.meta.pageTitle,
+      routeTitle: this.$route.meta.name,
       steps: [
         {
           target: "#btnVNavMenuMinToggler",
@@ -209,7 +209,7 @@ export default {
   },
   watch: {
     $route() {
-      this.routeTitle = this.$route.meta.pageTitle;
+      this.routeTitle = this.$route.meta.name;
     },
     isThemeDark(val) {
       const color = this.navbarColor == "#fff" && val ? "#10163a" : "#fff";

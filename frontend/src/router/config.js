@@ -245,71 +245,120 @@ export const defaultRoutePath = '/admin/dashboard/analytics'
 // }]
 
 export const asyncRouterMap = [{
-  path: '/dashboard',
-  redirect: '/dashboard/analytics',
-  component: () => import('@/layouts/main/Main.vue'),
-  meta: {
-    // header: 'Dashboard',
-    submenu: true,
-    name: 'Analytics',
-    slug: 'analytics',
-    i18n: 'Analytics',
-    icon: 'HomeIcon',
-  },
-  children: [{
-      path: '/dashboard/analytics',
-      name: 'Analytics',
+    path: '/admin',
+    redirect: '/admin/analytics',
+    component: () => import('@/layouts/main/Main.vue'),
+    meta: {
+      header: 'Dashboard',
+      // submenu: true,
+      // name: 'Analytics',
+      // slug: 'analytics',
+      // i18n: 'Analytics',
+      // icon: 'HomeIcon',
+    },
+    children: [{
+      path: '/admin/analytics',
+      name: '/analytics',
       component: () => import('@/views/dashboard/analytics/Page.vue'),
       meta: {
-        pageTitle: 'Analytics',
         name: 'Analytics',
-        url: '/dashboard/analytics',
+        url: '/admin/analytics',
         slug: 'analytics',
         i18n: 'Analytics',
         icon: 'HomeIcon',
         breadcrumb: [{
             title: 'Home',
-            url: '/login'
-          },
-          {
-            title: 'Dashboard',
-            url: '/login'
+            url: '/'
           },
           {
             title: 'Analytics',
             active: true
-          },
+          }
         ],
       }
+    }]
+  },
+  {
+    path: '/admin/order',
+    redirect: '/admin/orders',
+    component: () => import('@/layouts/main/Main.vue'),
+    meta: {
+      header: 'Order',
     },
-    {
-      path: '/dashboard/orders',
+    children: [{
+      path: '/admin/orders',
       name: 'orders',
       component: () => import('@/views/business/order/Page.vue'),
       meta: {
-        pageTitle: 'Orders',
-        name: "Orders",
-        url: "/dashboard/orders",
+        name: 'Order',
+        url: '/admin/orders',
         slug: 'orders',
-        i18n: "Orders",
-        icon: "FileTextIcon",
+        i18n: 'Order',
+        icon: 'FileTextIcon',
         breadcrumb: [{
             title: 'Home',
-            url: '/login'
+            url: '/'
           },
           {
-            title: 'Dashboard',
-            url: '/login'
-          },
-          {
-            title: 'orders',
+            title: 'Order',
             active: true
-          },
+          }
         ],
       }
-    }
-  ]
-}]
+    }]
+  },
+  {
+    path: '/admin/user',
+    redirect: '/admin/users',
+    component: () => import('@/layouts/main/Main.vue'),
+    meta: {
+      header: 'User',
+    },
+    children: [{
+        path: '/admin/users',
+        name: 'users',
+        component: () => import('@/views/authorization/user/Page.vue'),
+        meta: {
+          name: 'User',
+          url: '/admin/users',
+          slug: 'users',
+          i18n: 'User',
+          icon: 'UsersIcon',
+          breadcrumb: [{
+              title: 'Home',
+              url: '/'
+            },
+            {
+              title: 'Order',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/roles',
+        name: 'roles',
+        component: () => import('@/views/authorization/role/Page.vue'),
+        meta: {
+          name: 'Role',
+          url: '/admin/roles',
+          slug: 'role',
+          i18n: 'Role',
+          icon: 'UserPlusIcon',
+          breadcrumb: [{
+              title: 'Home',
+              url: '/'
+            },
+            {
+              title: 'Role',
+              active: true
+            }
+          ],
+        }
+      },
+    ]
+  },
+]
 
 export const constantRouterMap = [{
     path: '/',
