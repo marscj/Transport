@@ -35,14 +35,15 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.roles.length === 0) {
         store.dispatch('getInfo').then(res => {
-          const roles = res.roles
+          const { roles } = res.result
           store.dispatch('GenerateRoutes', roles).then(() => {
             router.addRoutes(store.getters.addRouters)
             const redirect = decodeURIComponent(from.query.redirect || to.path)
+
             if (to.path === redirect) {
               next({ ...to, replace: true })
             } else {
-              next({ path: redirect })
+              next({ path: '/admin' })
             }
           })
         })
