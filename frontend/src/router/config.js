@@ -11,6 +11,7 @@ export const asyncRouterMap = [{
       // slug: 'analytics',
       i18n: 'Dashboard',
       // icon: 'HomeIcon',
+      permission: [ 'customuser' ],
     },
     children: [{
       path: '/admin/analytics',
@@ -71,6 +72,7 @@ export const asyncRouterMap = [{
     meta: {
       header: 'User',
       i18n: 'User',
+      permission: [ 'customuser' ],
     },
     children: [{
         path: '/admin/users',
