@@ -29,10 +29,10 @@
         <div class="header-sidebar flex items-end justify-between" slot="header">
 
           <!-- Logo -->
-          <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
+          <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/admin">
             <img :src="logo" alt="logo" class="w-10 mr-4" v-if="logo">
             <span class="vx-logo-text" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
-          </router-link>
+          </router-link> 
           <!-- /Logo -->
 
           <!-- Menu Buttons -->
@@ -171,6 +171,7 @@ export default {
           }
         }
       }
+      console.log(clone, '-----')
       return clone
     },
     isVerticalNavMenuActive: {

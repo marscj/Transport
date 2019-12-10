@@ -40,7 +40,6 @@
                   <vs-chip :color="item.tagColor" v-if="item.tag">{{ item.tag }}</vs-chip>
               </h-nav-menu-item>
             </div>
-
           </li>
         </ul>
       </vs-navbar>
