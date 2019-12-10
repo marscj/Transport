@@ -3,7 +3,7 @@ export default {
   en: {
 	Dashboard: 'Dashboard',
 	Order: 'Order',
-	OrderList: 'Order List',
+	OrderList: 'Order',
 	Analytics: 'Analytics',
 	User: 'User',
 	Role: 'Role',

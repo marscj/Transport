@@ -1,4 +1,4 @@
-export const defaultRoutePath = '/admin/dashboard/analytics'
+export const defaultRoutePath = '/admin/analytics'
 
 export const asyncRouterMap = [{
     path: '/admin',
