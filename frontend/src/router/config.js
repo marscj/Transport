@@ -47,7 +47,7 @@ export const asyncRouterMap = [{
       name: 'orders',
       component: () => import('@/views/business/order/Page.vue'),
       meta: {
-        name: 'Order List',
+        name: 'Order',
         url: '/admin/orders',
         slug: 'orders',
         i18n: 'OrderList',
@@ -57,7 +57,7 @@ export const asyncRouterMap = [{
             url: '/admin/orders'
           },
           {
-            title: 'Order',
+            title: 'Orders',
             active: true
           }
         ],
@@ -77,10 +77,10 @@ export const asyncRouterMap = [{
         name: 'users',
         component: () => import('@/views/authorization/user/Page.vue'),
         meta: {
-          name: 'User List',
+          name: 'User',
           url: '/admin/users',
           slug: 'users',
-          i18n: 'UserList',
+          i18n: 'User',
           icon: 'UsersIcon',
           breadcrumb: [{
               title: 'User',
@@ -104,11 +104,11 @@ export const asyncRouterMap = [{
           i18n: 'Role',
           icon: 'UserPlusIcon',
           breadcrumb: [{
-              title: 'Role',
-              url: '/admin/roles'
+              title: 'User',
+              url: '/admin/users'
             },
             {
-              title: 'Role',
+              title: 'Roles',
               active: true
             }
           ],
@@ -118,28 +118,28 @@ export const asyncRouterMap = [{
   },
   {
     path: '/admin/source',
-    redirect: '/admin/staffs',
+    redirect: '/admin/drivers',
     component: () => import('@/layouts/main/Main.vue'),
     meta: {
       header: 'Source',
       i18n: 'Source',
     },
     children: [{
-        path: '/admin/staffs',
+        path: '/admin/drivers',
         name: 'staf',
-        component: () => import('@/views/resource/staff/Page.vue'),
+        component: () => import('@/views/resource/driver/Page.vue'),
         meta: {
-          name: 'Staff',
-          url: '/admin/staffs',
-          slug: 'staff',
-          i18n: 'Staff',
+          name: 'Driver',
+          url: '/admin/drivers',
+          slug: 'driver',
+          i18n: 'Driver',
           icon: 'UserCheckIcon',
           breadcrumb: [{
               title: 'Source',
-              url: '/admin/staffs'
+              url: '/admin/drivers'
             },
             {
-              title: 'Staff',
+              title: 'Drivers',
               active: true
             }
           ],
@@ -157,17 +157,17 @@ export const asyncRouterMap = [{
           icon: 'TruckIcon',
           breadcrumb: [{
               title: 'Source',
-              url: '/admin/vehicles'
+              url: '/admin/drivers'
             },
             {
-              title: 'Vehicle',
+              title: 'Vehicles',
               active: true
             }
           ],
         }
       },
     ]
-  },
+  }
 ]
 
 export const constantRouterMap = [{
@@ -222,7 +222,7 @@ export const constantRouterMap = [{
     ]
   },
   {
-    path: '*',
+    path: '/404',
     redirect: '/error-404'
   }
 ]

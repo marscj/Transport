@@ -165,7 +165,7 @@ export default {
     TheNavbarHorizontal,
     TheNavbarVertical,
     VNavMenu,
-    VxTour
+    // VxTour
   },
   data() {
     return {
