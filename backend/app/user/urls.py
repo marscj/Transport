@@ -6,5 +6,5 @@ from .import views
 router = DefaultRouter()
 router.register(r'users', views.UserView, basename='user')
 router.register(r'roles', views.RoleView, basename='role')
-
+router.register(r'permissions', views.PermissionView, basename='permission')
 urlpatterns = router.urls

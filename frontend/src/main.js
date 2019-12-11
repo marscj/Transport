@@ -60,7 +60,6 @@ import VueTour from 'vue-tour'
 Vue.use(VueTour)
 require('vue-tour/dist/vue-tour.css')
 
-
 Vue.config.productionTip = false
 
 new Vue({

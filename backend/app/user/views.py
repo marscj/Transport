@@ -2,9 +2,9 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 
-from .serializers import UserDetailSerializer, GroupSerializer
+from .serializers import UserDetailSerializer, GroupSerializer, PermissionSerializer
 from .models import CustomUser
 
 class UserView(ModelViewSet):
@@ -19,3 +19,7 @@ class UserView(ModelViewSet):
 class RoleView(ModelViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
+
+class PermissionView(ModelViewSet):
+    serializer_class = PermissionSerializer
+    queryset = Permission.objects.all()

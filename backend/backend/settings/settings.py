@@ -137,7 +137,9 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_RENDERER_CLASSES': [
         'middleware.response.CustomJSONRenderer',
-    ] 
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'middleware.pagination.CustomPagination',
+    'PAGE_SIZE': 10
 }
 
 REST_AUTH_SERIALIZERS = {

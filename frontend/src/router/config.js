@@ -77,7 +77,7 @@ export const asyncRouterMap = [{
     children: [{
         path: '/admin/users',
         name: 'users',
-        component: () => import('@/views/authorization/user/Page.vue'),
+        component: () => import('@/views/user/List.vue'),
         meta: {
           name: 'User',
           url: '/admin/users',
@@ -98,7 +98,7 @@ export const asyncRouterMap = [{
       {
         path: '/admin/roles',
         name: 'roles',
-        component: () => import('@/views/authorization/role/Page.vue'),
+        component: () => import('@/views/role/Page.vue'),
         meta: {
           name: 'Role',
           url: '/admin/roles',
