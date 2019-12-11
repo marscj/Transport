@@ -1,41 +1,46 @@
+<!-- =========================================================================================
+    File Name: TableMiscellaneous.vue
+    Description: Combine filter,sorter, pagination etc.
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+      Author: Pixinvent
+    Author URL: http://www.themeforest.net/user/pixinvent
+========================================================================================== -->
+
+
 <template>
-  <vs-table multiple v-model="selected" pagination max-items="3" search :data="users" stripe>
-    <template slot="thead">
-      <vs-th sort-key="email">Email</vs-th>
-      <vs-th sort-key="username">Name</vs-th>
-      <vs-th sort-key="website">Website</vs-th>
-      <vs-th sort-key="id">Nro</vs-th>
-    </template>
+  <vx-card>
+    <vs-table ref="table" v-model="selected" pagination max-items="3" search :data="users" stripe>
+      <template slot="thead">
+        <vs-th sort-key="email">Email</vs-th>
+        <vs-th sort-key="username">Name</vs-th>
+        <vs-th sort-key="website">Website</vs-th>
+        <vs-th sort-key="id">Nro</vs-th>
+      </template>
 
-    <template slot-scope="{data}">
-      <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-        <vs-td :data="data[indextr].email">{{ data[indextr].email }}</vs-td>
+      <template slot-scope="{data}">
+        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+          <vs-td :data="data[indextr].email">{{data[indextr].email}}</vs-td>
 
-        <vs-td :data="data[indextr].username">{{ data[indextr].username }}</vs-td>
+          <vs-td :data="data[indextr].username">{{data[indextr].username}}</vs-td>
 
-        <vs-td :data="data[indextr].id">{{ data[indextr].website }}</vs-td>
+          <vs-td :data="data[indextr].id">{{data[indextr].website}}</vs-td>
 
-        <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
-      </vs-tr>
-    </template>
-
-    <h1>sdfsd</h1>
-  </vs-table>
+          <vs-td :data="data[indextr].id">{{data[indextr].id}}</vs-td>
+        </vs-tr>
+      </template>
+    </vs-table>
+  </vx-card>
 </template>
 
 <script>
+import Prism from "vue-prism-component";
+
 export default {
   data() {
     return {
+      currentx: 1,
       selected: [],
-    //   tableList: [
-    //     "vs-th: Component",
-    //     "vs-tr: Component",
-    //     "vs-td: Component",
-    //     "thread: Slot",
-    //     "tbody: Slot",
-    //     "header: Slot"
-    //   ],
       users: [
         {
           id: 1,
@@ -106,19 +111,22 @@ export default {
           username: "Moriah.Stanton",
           email: "Rey.Padberg@karina.biz",
           website: "ambrose.net"
+        },
+        {
+          id: 11,
+          name: "Clementina DuBuque",
+          username: "Moriah.Stanton",
+          email: "Rey.Padberg@karina.biz",
+          website: "ambrose.net"
         }
       ]
     };
-  }
+  },
+  components: {
+    Prism
+  },
+  mounted() {
+    console.log(this.$refs.table)
+  },
 };
 </script>
-
-<style >
- /* @import "@/assets/scss/vuexy/components/vxTable.scss"; */
-.vs-td {
-  height: 200px;
-}
-h1, p {
-  color: red !important; /* NOT WORKING */
-}
-</style>

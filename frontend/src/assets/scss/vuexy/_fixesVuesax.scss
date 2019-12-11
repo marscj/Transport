@@ -422,6 +422,11 @@
 // ======================================================================================
 // Pagination
 // ======================================================================================
+
+.vs-pagination--nav {
+  padding: 20px 0px;
+}
+
 .vs-pagination--li.is-current {
   border-radius: 50%;
 
@@ -590,7 +595,7 @@
 
       .vs-table--thead {
         th {
-          padding: 15px 0px;
+          padding: 10px 15px;
         }
 
         .con-td-check {
@@ -601,7 +606,7 @@
 
       .tr-values {
         .vs-table--td {
-          padding: 25px 0px;
+          padding: 10px 15px;
         }
       }
     }
