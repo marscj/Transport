@@ -122,13 +122,10 @@ export default {
   }),
   methods:{
     handleSearch(searching) {
-      console.log(`The user searched for: ${searching}`)
     },
     handleChangePage(page) {
-      console.log(`The user changed the page to: ${page}`)
     },
     handleSort(key, active) {
-      console.log(`the user ordered: ${key} ${active}`)
     }
   }
 }

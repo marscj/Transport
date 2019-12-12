@@ -1,9 +1,15 @@
-import { axios } from '@/utils/request'
+import {
+  axios
+} from '@/utils/request'
 
-export function getUsers() {
-  return axios.get("users/")
+export function getUsers(parameter) {
+  return axios.get("users/", {
+    params: parameter
+  })
 }
 
-export function getPermission() {
-  return axios.get("permissions/")
+export function getPermissions(parameter) {
+  return axios.get("permissions/", {
+    params: parameter
+  })
 }

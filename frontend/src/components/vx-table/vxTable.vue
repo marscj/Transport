@@ -37,7 +37,7 @@
 
       <div v-if="pagination" class="con-pagination-table vs-table--pagination">
         <vs-pagination
-          :total="getTotalPages()"
+          :total="getTotalPages"
           :maxItems="page_size"
           :description="description"
           :descriptionItems="descriptionItems"
@@ -66,7 +66,7 @@ export default {
       type: Boolean
     },
     hoverFlat: {
-      default: false,
+      default: true,
       type: Boolean
     },
     maxHeight: {
@@ -101,16 +101,8 @@ export default {
       default: false,
       type: Boolean
     },
-    page: {
-      default: 1,
-      type: Number
-    },
     page_size: {
       default: 10,
-      type: Number
-    },
-    total: {
-      default: 1,
       type: Number
     }
   },
@@ -121,10 +113,13 @@ export default {
     searchx: null,
     hasExpadableData: false,
     currentSortKey: null,
-    currentSortType: null
+    currentSortType: null,
+    total: 1,
+    page: 1
   }),
   computed: {
     getTotalPages() {
+        this.getThs;
       return Math.ceil(this.total / this.page_size);
     },
     isNoData() {
@@ -165,9 +160,9 @@ export default {
       this.loadData();
     },
     page_size(val) {
-      this.page_size = val;
+      this.page = 1
       this.loadData();
-    },
+    }
   },
   mounted() {
     window.addEventListener("resize", this.listenerChangeWidth);
@@ -179,12 +174,23 @@ export default {
   },
   methods: {
     loadData() {
-      const parameter = Object.assign({page: this.page, page_size: this.page_size})
-      const result = this.data(parameter)
-
-      result.then((res) => {
-        this.datax = res.results 
-      })
+      const parameter = Object.assign({
+        page: this.page,
+        page_size: this.page_size
+      });
+      const result = this.data(parameter);
+      result
+        .then(res => {
+          this.datax = res.results;
+          this.total = res.count;
+        })
+        .finally(() => {
+          this.$nextTick(() => {
+            if (this.datax.length > 0) {
+              this.changeTdsWidth();
+            }
+          });
+        });
     },
     changeCheckedMultiple() {
       let lengthx = this.data.length;
