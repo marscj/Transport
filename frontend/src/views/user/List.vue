@@ -47,7 +47,7 @@
           <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
           <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
           <vs-td :data="data[indextr].codename">
-            {{ data[indextr].codename }}
+            <a> {{ data[indextr].codename }} </a>
             <template slot="edit">
               <vs-input v-model="data[indextr].codename" class="inputx" placeholder="name" />
             </template>
@@ -77,7 +77,7 @@ export default {
         return getPermissions(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
-      }
+      } 
     };
   },
   computed: {
@@ -153,9 +153,7 @@ export default {
           padding: 20px !important;
         }
       }
-      th,
-      tr,
-      td {
+      th, tr, td {
         border: 1px solid #e8e8e8;
       }
     }

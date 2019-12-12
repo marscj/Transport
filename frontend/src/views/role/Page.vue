@@ -1,132 +1,63 @@
 <template>
-    <vs-card>
-      <vs-table
-      :sst="false"
-      @search="handleSearch"
-      @change-page="handleChangePage"
-      @sort="handleSort"
-      v-model="selected"
-      pagination
-      max-items="3"
-      search
-      :data="users">
-
-        <template slot="header">
-            <h3>Users</h3>
-        </template>
-
-        <template slot="thead">
-            <vs-th sort-key="email">Email</vs-th>
-            <vs-th sort-key="username">Name</vs-th>
-            <vs-th sort-key="website">Website</vs-th>
-            <vs-th sort-key="id">Nro</vs-th>
-        </template>
-
-        <template slot-scope="{data}">
-            <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-                <vs-td :data="data[indextr].email">
-                    {{ data[indextr].email }}
-                </vs-td>
-                <vs-td :data="data[indextr].username">
-                    {{ data[indextr].username }}
-                </vs-td>
-                <vs-td :data="data[indextr].id">
-                    {{ data[indextr].website }}
-                </vs-td>
-                <vs-td :data="data[indextr].id">
-                    {{ data[indextr].id }}
-                </vs-td>
-            </vs-tr>
-        </template>
-    </vs-table>
-    </vs-card>
+  <div>
+    <vs-tabs v-if="ruleData.length" position="left" class style="width:100%;">
+      <vs-tab v-for="data in ruleData" :key="data.id" :value="data.id" :label="data.name">
+        <vs-row v-for="(permission, index) in permissionData" :key="index">
+          <div class="mr-4">
+            <span>{{index}} :</span>
+          </div>
+          <div v-for="data in permission" :key="data.id" class="mr-4">
+            <vs-checkbox>{{data.codename}}</vs-checkbox>
+          </div>
+        </vs-row>
+      </vs-tab>
+    </vs-tabs>
+  </div>
 </template>
 
 <script>
+import { getRoles } from "@/http/requests/role/index.js";
+import { getPermissions } from "@/http/requests/user/index.js";
+
 export default {
-  data:()=>({
-    selected:[],
-    log: [],
-    users:[
-      {
-        "id": 1,
-        "name": "Leanne Graham",
-        "username": "Bret",
-        "email": "Sincere@april.biz",
-        "website": "hildegard.org",
-      },
-      {
-        "id": 2,
-        "name": "Ervin Howell",
-        "username": "Antonette",
-        "email": "Shanna@melissa.tv",
-        "website": "anastasia.net",
-      },
-      {
-        "id": 3,
-        "name": "Clementine Bauch",
-        "username": "Samantha",
-        "email": "Nathan@yesenia.net",
-        "website": "ramiro.info",
-      },
-      {
-        "id": 4,
-        "name": "Patricia Lebsack",
-        "username": "Karianne",
-        "email": "Julianne.OConner@kory.org",
-        "website": "kale.biz",
-      },
-      {
-        "id": 5,
-        "name": "Chelsey Dietrich",
-        "username": "Kamren",
-        "email": "Lucio_Hettinger@annie.ca",
-        "website": "demarco.info",
-      },
-      {
-        "id": 6,
-        "name": "Mrs. Dennis Schulist",
-        "username": "Leopoldo_Corkery",
-        "email": "Karley_Dach@jasper.info",
-        "website": "ola.org",
-      },
-      {
-        "id": 7,
-        "name": "Kurtis Weissnat",
-        "username": "Elwyn.Skiles",
-        "email": "Telly.Hoeger@billy.biz",
-        "website": "elvis.io",
-      },
-      {
-        "id": 8,
-        "name": "Nicholas Runolfsdottir V",
-        "username": "Maxime_Nienow",
-        "email": "Sherwood@rosamond.me",
-        "website": "jacynthe.com",
-      },
-      {
-        "id": 9,
-        "name": "Glenna Reichert",
-        "username": "Delphine",
-        "email": "Chaim_McDermott@dana.io",
-        "website": "conrad.com",
-      },
-      {
-        "id": 10,
-        "name": "Clementina DuBuque",
-        "username": "Moriah.Stanton",
-        "email": "Rey.Padberg@karina.biz",
-        "website": "ambrose.net",
-      }
-    ]
-  }),
-  methods:{
-    handleSearch(searching) {
-    },
-    handleChangePage(page) {
-    },
-    handleSort(key, active) {
+  data() {
+    return {
+      ruleData: [],
+      permissionData: []
+    };
+  },
+  mounted() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      return getRoles()
+        .then(res => {
+          const { result } = res;
+          this.ruleData = result;
+          return getPermissions();
+        })
+        .then(res => {
+          const { result } = res;
+          this.permissionData = result.reduce(function(pre, current) {
+            pre[current.content_type.app_label] =
+              pre[current.content_type.app_label] || [];
+            pre[current.content_type.app_label].push(current);
+            return pre;
+          }, {});
+          console.log(this.permissionData);
+        });
     }
   }
-}
+};
 </script>
+
+<style lang="scss">
+// .con-tab {
+//   padding-bottom: 14px;
+// }
+
+.con-slot-tabs {
+  width: 100%;
+}
+</style>
