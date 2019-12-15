@@ -89,9 +89,8 @@ export default {
       });
 
       this.rolePermissionData = _per.reduce(function(pre, current) {
-        pre[current.content_type.app_label] =
-          pre[current.content_type.app_label] || [];
-        pre[current.content_type.app_label].push(current);
+        pre[current.content_type.model] = pre[current.content_type.model] || [];
+        pre[current.content_type.model].push(current);
         return pre;
       }, {});
     },
@@ -103,7 +102,7 @@ export default {
       this.toggleDataSidebar(true);
     },
     deleteData(id) {
-      
+
     },
     editData(data) {
       this.sidebarData = data;

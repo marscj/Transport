@@ -33,7 +33,7 @@ class PermissionSerializer(serializers.ModelSerializer):
 
 class GroupSerializer(serializers.ModelSerializer):
     
-    permissions = serializers.SerializerMethodField()
+    permissions = PermissionSerializer(read_only=True, many=True)
 
     name = serializers.CharField(required=False, max_length=150)
  
@@ -42,11 +42,6 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = '__all__'
-
-    def get_permissions(self, obj):
-        query = obj.permissions.filter(content_type__model__in=['customuser', 'site'])
-        serializer =  PermissionSerializer(instance=query, many=True, context=self.context)
-        return serializer.data
 
     def update(self, instance, validated_data):
         permission = validated_data.pop('permission', None)
