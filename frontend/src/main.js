@@ -64,6 +64,9 @@ Vue.config.productionTip = false
 
 Vue.prototype.$log = console.log;
 
+import _ from 'lodash';    
+Object.defineProperty(Vue.prototype, '$_', { value: _ });
+
 new Vue({
   router,
   store,

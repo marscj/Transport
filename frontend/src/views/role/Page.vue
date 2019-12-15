@@ -2,12 +2,12 @@
   <div>
     <vs-tabs v-if="roleData.length" position="left" class style="width:100%;" v-model="curTab">
       <vs-tab v-for="data in roleData" :key="data.id" :label="data.name">
-        <vs-row v-for="(permission, index) in permissionData" :key="index">
+        <vs-row v-for="(permission, index) in rolePermissionData" :key="index" class="mt-2">
           <div class="mr-4">
             <span>{{index}} :</span>
           </div>
-          <div v-for="data in permission" :key="data.id" class="mr-4">
-            <vs-checkbox v-model="data.check">{{data.codename}}</vs-checkbox>
+          <div v-for="data in permission" :key="data.id" class="mr-4 ">
+            <vs-checkbox v-model="data.check">{{data.codename.substring(0, data.codename.indexOf('_'))}}</vs-checkbox>
           </div>
         </vs-row>
       </vs-tab>
@@ -32,7 +32,9 @@ export default {
     this.getList();
   },
   watch: {
-    curTab(val) {}
+    curTab(val) {
+      this.setRole(this.roleData[val], this.permissionData);
+    }
   },
   methods: {
     getList() {
@@ -44,21 +46,25 @@ export default {
         })
         .then(res => {
           const { result } = res;
-          console.log(this.roleData[this.curTab])
-          this.setRole(this.roleData[this.curTab], result)
-          this.permissionData = result.reduce(function(pre, current) {
-            pre[current.content_type.app_label] = pre[current.content_type.app_label] || [];
-            pre[current.content_type.app_label].push(
-              Object.assign(current, { check: true })
-            );
-            return pre;
-          }, {});
+          this.permissionData = result;
+          this.setRole(this.roleData[this.curTab], this.permissionData)
         });
     },
     setRole(role, permission) {
-      console.log('role=', role, 'permission====', permission)
-      this.rolePermissionData = role.permissions.filter(f => permission.includes(f))
-      console.log(this.rolePermissionData, '====')
+      var _inter = this.$_.intersectionBy(role.permissions, permission, "id");
+
+      var _per = permission.map(f => {
+        if (_inter.find(f1 => f.id === f1.id)) {
+          return Object.assign(f, { check: true });
+        }
+        return Object.assign(f, { check: false });
+      });
+
+      this.rolePermissionData = _per.reduce(function(pre, current) {
+        pre[current.content_type.app_label] = pre[current.content_type.app_label] || [];
+        pre[current.content_type.app_label].push(current)
+        return pre;
+      }, {});
     }
   }
 };
