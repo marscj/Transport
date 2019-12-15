@@ -1,31 +1,51 @@
 <template>
-  <div>
+  <vs-card>
+    <data-view-sidebar
+      :isSidebarActive="addNewDataSidebar"
+      @closeSidebar="toggleDataSidebar"
+      :data="sidebarData"
+    />
+
+    <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" class="mb-8">Add New</vs-button>
+
     <vs-tabs v-if="roleData.length" position="left" class style="width:100%;" v-model="curTab">
       <vs-tab v-for="data in roleData" :key="data.id" :label="data.name">
-        <vs-row v-for="(permission, index) in rolePermissionData" :key="index" class="mt-2">
-          <div class="mr-4">
+        <div v-for="(permission, index) in rolePermissionData" :key="index" class="flex h-12">
+          <div class="w-1/6">
             <span>{{index}} :</span>
           </div>
-          <div v-for="data in permission" :key="data.id" class="mr-4 ">
-            <vs-checkbox v-model="data.check">{{data.codename.substring(0, data.codename.indexOf('_'))}}</vs-checkbox>
+          <div v-for="data in permission" :key="data.id" class="w-1/6">
+            <vs-checkbox
+              v-model="data.check"
+              @click="onClick(data)"
+            >{{data.codename.substring(0, data.codename.indexOf('_'))}}</vs-checkbox>
           </div>
-        </vs-row>
+        </div>
       </vs-tab>
     </vs-tabs>
-  </div>
+  </vs-card>
 </template>
 
 <script>
-import { getRoles } from "@/http/requests/role/index.js";
-import { getPermissions } from "@/http/requests/user/index.js";
+import DataViewSidebar from "./DataViewSidebar.vue";
+import {
+  getRoles,
+  getPermissions,
+  updateRole
+} from "@/http/requests/user/index.js";
 
 export default {
+  components: {
+    DataViewSidebar
+  },
   data() {
     return {
       curTab: 0,
       roleData: [],
       permissionData: [],
-      rolePermissionData: []
+      rolePermissionData: [],
+      addNewDataSidebar: false,
+      sidebarData: {}
     };
   },
   mounted() {
@@ -47,8 +67,16 @@ export default {
         .then(res => {
           const { result } = res;
           this.permissionData = result;
-          this.setRole(this.roleData[this.curTab], this.permissionData)
+          this.setRole(this.roleData[this.curTab], this.permissionData);
         });
+    },
+    updatePermission(permission) {
+      return updateRole(this.roleData[this.curTab].id, {
+        permission: permission.id
+      }).then(res => {
+        const { result } = res;
+        this.roleData[this.curTab] = Object.assign({}, result);
+      });
     },
     setRole(role, permission) {
       var _inter = this.$_.intersectionBy(role.permissions, permission, "id");
@@ -61,10 +89,28 @@ export default {
       });
 
       this.rolePermissionData = _per.reduce(function(pre, current) {
-        pre[current.content_type.app_label] = pre[current.content_type.app_label] || [];
-        pre[current.content_type.app_label].push(current)
+        pre[current.content_type.app_label] =
+          pre[current.content_type.app_label] || [];
+        pre[current.content_type.app_label].push(current);
         return pre;
       }, {});
+    },
+    onClick(permission) {
+      this.updatePermission(permission);
+    },
+    addNewData() {
+      this.sidebarData = {};
+      this.toggleDataSidebar(true);
+    },
+    deleteData(id) {
+      
+    },
+    editData(data) {
+      this.sidebarData = data;
+      this.toggleDataSidebar(true);
+    },
+    toggleDataSidebar(val = false) {
+      this.addNewDataSidebar = val;
     }
   }
 };

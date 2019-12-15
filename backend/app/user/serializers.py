@@ -34,6 +34,10 @@ class PermissionSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     
     permissions = serializers.SerializerMethodField()
+
+    name = serializers.CharField(required=False, max_length=150)
+ 
+    permission = serializers.IntegerField(required=False, write_only=True)
     
     class Meta:
         model = Group
@@ -43,6 +47,19 @@ class GroupSerializer(serializers.ModelSerializer):
         query = obj.permissions.filter(content_type__model__in=['customuser', 'site'])
         serializer =  PermissionSerializer(instance=query, many=True, context=self.context)
         return serializer.data
+
+    def update(self, instance, validated_data):
+        permission = validated_data.pop('permission', None)
+        if permission:
+            if instance.permissions.filter(id=permission).exists():
+                instance.permissions.remove(permission)
+            else:
+                instance.permissions.add(permission)
+
+        super().update(instance, validated_data)
+
+        return instance
+    
 
 class UserDetailSerializer(serializers.ModelSerializer):
 

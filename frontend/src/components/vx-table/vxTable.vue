@@ -176,7 +176,8 @@ export default {
     loadData() {
       const parameter = Object.assign({
         page: this.page,
-        page_size: this.page_size
+        page_size: this.page_size,
+        // ordering:
       });
       const result = this.data(parameter);
       result
@@ -191,6 +192,11 @@ export default {
             }
           });
         });
+    },
+    sort(key, sortType) {
+      this.currentSortKey = key;
+      this.currentSortType = sortType;
+      this.loadData()
     },
     changeCheckedMultiple() {
       let lengthx = this.data.length;

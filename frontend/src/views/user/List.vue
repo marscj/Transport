@@ -38,20 +38,19 @@
 
       <template slot="thead">
         <vs-th style="width: 80px;">ID</vs-th>
-        <vs-th sort-key="name">Name</vs-th>
-        <vs-th sort-key="CodeName">CodeName</vs-th>
+        <vs-th sort-key="username">USERNAME</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
           <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
-          <vs-td :data="data[indextr].name">{{ data[indextr].name }}</vs-td>
-          <vs-td :data="data[indextr].codename">
+          <vs-td :data="data[indextr].username">{{ data[indextr].username }}</vs-td>
+          <!-- <vs-td :data="data[indextr].codename">
             <a> {{ data[indextr].codename }} </a>
             <template slot="edit">
               <vs-input v-model="data[indextr].codename" class="inputx" placeholder="name" />
             </template>
-          </vs-td>
+          </vs-td> -->
         </vs-tr>
       </template>
     </vx-table>
@@ -59,7 +58,7 @@
 </template>
 
 <script>
-import { getPermissions } from "@/http/requests/user/index.js";
+import { getUsers } from "@/http/requests/user/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
@@ -74,7 +73,7 @@ export default {
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getPermissions(Object.assign(parameter, {})).then(res => {
+        return getUsers(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
       } 
