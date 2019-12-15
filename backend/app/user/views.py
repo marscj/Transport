@@ -25,5 +25,5 @@ class RoleView(ModelViewSet):
 class PermissionView(ModelViewSet):
     serializer_class = PermissionSerializer
     pagination_class = None
-    queryset = Permission.objects.filter(Q(content_type__model__in=['customuser', 'site']) & Q(codename__in=['add', 'view', 'change', 'delete', 'export']))
+    queryset = Permission.objects.filter(content_type__model__in=['customuser', 'site'])
     
