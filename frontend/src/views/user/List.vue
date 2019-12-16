@@ -42,10 +42,11 @@
         <vs-th sort-key="email">EMAIL</vs-th>
         <vs-th sort-key="name">Name</vs-th>
         <vs-th >PHONE</vs-th>
-        <vs-th sort-key="organization">Organization</vs-th>
+        
         <vs-th >ROLE</vs-th>
         <vs-th >ADMIN</vs-th>
         <vs-th sort-key="is_active">ACTIVE</vs-th>
+        <vs-th sort-key="company">COMPANY</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -63,9 +64,6 @@
           <vs-td :data="data[indextr].phone">
             <a @click="editData"> {{ data[indextr].phone }} </a>
           </vs-td>
-          <vs-td :data="data[indextr].organization">
-            <a @click="editData"> {{ data[indextr].organization }} </a>
-          </vs-td>
           <vs-td :data="data[indextr].roles"> 
             <a @click="editData"> {{ $_.join(data[indextr].roles.map(f=> f.name), ',') }} </a>
           </vs-td>
@@ -74,6 +72,9 @@
           </vs-td>
           <vs-td :data="data[indextr].is_active"> 
             <vs-checkbox v-model="data[indextr].is_active" :disabled="true"  style="float:left;"/>
+          </vs-td>
+          <vs-td :data="data[indextr].company">
+            <a @click="editData"> {{ data[indextr].company }} </a>
           </vs-td>
           <!-- <vs-td :data="data[indextr].codename">
             <a> {{ data[indextr].codename }} </a>
