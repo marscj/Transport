@@ -1,6 +1,6 @@
 from django.db import models
 
-from app.vehicle.models import Vehicle
+from app.vehicle.models import Vehicle, Price
 from app.user.models import User
 
 class Order(models.Model):
@@ -31,5 +31,6 @@ class Order(models.Model):
 
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_customer', blank=True, null=True)
 
-
+    class Meta:
+        db_table = 'order'
     

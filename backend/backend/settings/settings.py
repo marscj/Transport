@@ -143,11 +143,11 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
-    'LOGIN_SERIALIZER': 'app.user.serializers.LoginSerializer',
-    'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
-}
+# REST_AUTH_SERIALIZERS = {
+#     'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
+#     'LOGIN_SERIALIZER': 'app.user.serializers.LoginSerializer',
+#     'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
+# }
 
 # REST_AUTH_REGISTER_SERIALIZERS = {
 #     'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
