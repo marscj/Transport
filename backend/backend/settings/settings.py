@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'allauth.account',
     
     'app.user',
-    'app.faq',
     'app.order',
 ]
 
