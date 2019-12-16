@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
-AUTH_USER_MODEL = 'user.CustomUser'
+AUTH_USER_MODEL = 'user.User'
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 

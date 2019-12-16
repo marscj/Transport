@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 
-class CustomUser(AbstractUser):
+class User(AbstractUser):
     
     organization = models.CharField(null=True, blank=True, max_length=64)
 
@@ -9,3 +9,8 @@ class CustomUser(AbstractUser):
     
     class Meta:
         db_table = 'user'
+
+class Role(Group):
+
+    class Meta:
+        db_table = 'role'

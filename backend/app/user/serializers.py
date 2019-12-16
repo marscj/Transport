@@ -15,7 +15,7 @@ try:
 except ImportError:
     raise ImportError("allauth needs to be added to INSTALLED_APPS.")
 
-from .models import CustomUser 
+from .models import User, Role
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -54,21 +54,26 @@ class GroupSerializer(serializers.ModelSerializer):
         super().update(instance, validated_data)
 
         return instance
+
+class RoleSerializer(GroupSerializer):
     
+    class Meta:
+        model = Role
+        fields = '__all__'
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
     roles = serializers.SerializerMethodField()
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = (
             'id', 'username', 'roles'
         )
 
     def get_roles(self, obj):
         query = obj.groups.all()
-        serializer = GroupSerializer(instance=query, many=True, context=self.context)
+        serializer = RoleSerializer(instance=query, many=True, context=self.context)
         return serializer.data
 
 class LoginSerializer(serializers.Serializer):
@@ -140,8 +145,8 @@ class LoginSerializer(serializers.Serializer):
             # Authentication without using allauth
             if email:
                 try:
-                    username = CustomUser.objects.get(email__iexact=email).get_username()
-                except CustomUser.DoesNotExist:
+                    username = User.objects.get(email__iexact=email).get_username()
+                except User.DoesNotExist:
                     pass
 
             if username:
