@@ -3,6 +3,13 @@ from django.db import models
 from app.vehicle.models import Vehicle, Price
 from app.user.models import User
 
+class Itinerary(models.Model):
+
+    price = models.ForeignKey(Price, on_delete=models.SET_NULL, related_name='itinerary_price', blank=True, null=True)
+
+    class Meta:
+        db_table = 'itinerary'
+
 class Order(models.Model):
     
     class OrderStatus(models.TextChoices):

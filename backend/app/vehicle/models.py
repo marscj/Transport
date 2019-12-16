@@ -15,7 +15,7 @@ class VehicleModel(models.Model):
     passengers = models.IntegerField(default=5)
 
     class Meta:
-        db_table = 'vehicle_model'
+        db_table = 'model'
 
 class Vehicle(models.Model):
 
