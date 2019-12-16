@@ -37,14 +37,44 @@
       </div>
 
       <template slot="thead">
-        <vs-th style="width: 80px;">ID</vs-th>
+        <vs-th style-key="width: 80px;">ID</vs-th>
         <vs-th sort-key="username">USERNAME</vs-th>
+        <vs-th sort-key="email">EMAIL</vs-th>
+        <vs-th sort-key="name">Name</vs-th>
+        <vs-th >PHONE</vs-th>
+        <vs-th sort-key="organization">Organization</vs-th>
+        <vs-th >ROLE</vs-th>
+        <vs-th >ADMIN</vs-th>
+        <vs-th sort-key="is_active">ACTIVE</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
           <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
-          <vs-td :data="data[indextr].username">{{ data[indextr].username }}</vs-td>
+          <vs-td :data="data[indextr].username"> 
+            <a @click="editData"> {{ data[indextr].username }} </a>
+          </vs-td>
+          <vs-td :data="data[indextr].email">
+            <a @click="editData"> {{ data[indextr].email }} </a>
+          </vs-td>
+          <vs-td :data="data[indextr].name">
+            <a @click="editData"> {{ data[indextr].name }} </a>
+          </vs-td>
+          <vs-td :data="data[indextr].phone">
+            <a @click="editData"> {{ data[indextr].phone }} </a>
+          </vs-td>
+          <vs-td :data="data[indextr].organization">
+            <a @click="editData"> {{ data[indextr].organization }} </a>
+          </vs-td>
+          <vs-td :data="data[indextr].roles"> 
+            <a @click="editData"> {{ $_.join(data[indextr].roles.map(f=> f.name), ',') }} </a>
+          </vs-td>
+          <vs-td :data="data[indextr].is_superuser"> 
+            <vs-checkbox v-model="data[indextr].is_superuser" :disabled="true"  style="float:left;"/>
+          </vs-td>
+          <vs-td :data="data[indextr].is_active"> 
+            <vs-checkbox v-model="data[indextr].is_active" :disabled="true"  style="float:left;"/>
+          </vs-td>
           <!-- <vs-td :data="data[indextr].codename">
             <a> {{ data[indextr].codename }} </a>
             <template slot="edit">
@@ -61,12 +91,20 @@
 import { getUsers } from "@/http/requests/user/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
+const UserType = [
+  { value: 1, label: "Customer" },
+  { value: 2, label: "Driver" },
+  { value: 3, label: "Operator" },
+  { value: 4, label: "Accounting" },
+];
+
 export default {
   components: {
     DataViewSidebar
   },
   data() {
     return {
+      UserType,
       isMounted: false,
       page_size: 10,
       addNewDataSidebar: false,
