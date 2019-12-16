@@ -76,12 +76,20 @@ const permission = {
   actions: {
     GenerateRoutes({
       commit
-    }, roles) {
+    }, res) {
       return new Promise(resolve => {
-        const _roles = filterGroup(roles)
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, _roles)
-        commit('SET_ROUTERS', accessedRouters)
-        resolve()
+        const { roles } = res.result;
+        const { is_superuser } = res.result;
+
+        if (is_superuser) {
+          commit('SET_ROUTERS', asyncRouterMap);
+        } else {
+          const _roles = filterGroup(roles);
+          const accessedRouters = filterAsyncRouter(asyncRouterMap, _roles);
+          console.log(accessedRouters, '---')
+          commit('SET_ROUTERS', accessedRouters);
+        }
+        resolve();
       })
     },
   }

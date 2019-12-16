@@ -11,7 +11,7 @@ export const asyncRouterMap = [{
       // slug: 'analytics',
       i18n: 'Dashboard',
       // icon: 'HomeIcon',
-      // permission: [ 'customuser' ],
+      // permission: [ 'user' ],
     },
     children: [{
       path: '/admin/analytics',
@@ -72,7 +72,7 @@ export const asyncRouterMap = [{
     meta: {
       header: 'User',
       i18n: 'User',
-      // permission: [ 'customuser', 'group' ],
+      // permission: [ 'user', 'role' ],
     },
     children: [{
         path: '/admin/users',
@@ -84,7 +84,7 @@ export const asyncRouterMap = [{
           slug: 'users',
           i18n: 'User',
           icon: 'UsersIcon',
-          // permission: [ 'customuser' ],
+          // permission: [ 'user' ],
           breadcrumb: [{
               title: 'User',
               url: '/admin/users'
@@ -106,7 +106,7 @@ export const asyncRouterMap = [{
           slug: 'role',
           i18n: 'Role',
           icon: 'UserPlusIcon',
-          permission: [ 'group' ],
+          permission: [ 'role' ],
           breadcrumb: [{
               title: 'User',
               url: '/admin/users'
