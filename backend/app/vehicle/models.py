@@ -17,6 +17,19 @@ class VehicleModel(models.Model):
     class Meta:
         db_table = 'model'
 
+class ModelPrice(models.Model):
+
+    itinerary = models.CharField(blank=True, null=True, max_length=64)
+
+    model = models.ForeignKey(VehicleModel, on_delete=models.SET_NULL, related_name='price', blank=True, null=True)
+
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    cost_price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    class Meta:
+        db_table = 'price'
+
 class Vehicle(models.Model):
 
     license_plate = models.CharField(blank=True, null=True, max_length=64)  
@@ -30,16 +43,4 @@ class Vehicle(models.Model):
     class Meta:
         db_table = 'vehicle'
 
-class Price(models.Model):
-
-    itinerary = models.CharField(blank=True, null=True, max_length=64)
-
-    model = models.ForeignKey(VehicleModel, on_delete=models.SET_NULL, related_name='price', blank=True, null=True)
-
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-
-    cost_price = models.DecimalField(max_digits=8, decimal_places=2)
-
-    class Meta:
-        db_table = 'price'
 
