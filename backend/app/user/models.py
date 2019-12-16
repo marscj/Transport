@@ -9,7 +9,7 @@ class User(AbstractUser):
     #     Operator = 3
     #     Accounting = 4
 
-    organization = models.CharField(null=True, blank=True, max_length=64)
+    company = models.CharField(null=True, blank=True, max_length=64)
 
     photoURL = models.URLField(null=True, blank=True)
 
