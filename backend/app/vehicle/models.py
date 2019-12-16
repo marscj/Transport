@@ -10,7 +10,7 @@ class VehicleModel(models.Model):
     
     name = models.CharField(blank=True, null=True, max_length=64)
 
-    model = models.IntegerField(default=Model.Bus, choices=Model.choices,  max_length=3)
+    model = models.IntegerField(default=Model.Bus, choices=Model.choices)
 
     price = models.DecimalField(max_digits=8, decimal_places=2)
 

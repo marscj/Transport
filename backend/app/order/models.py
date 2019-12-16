@@ -27,9 +27,9 @@ class Order(models.Model):
 
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
-    driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
+    driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_driver', blank=True, null=True)
 
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_customer', blank=True, null=True)
 
 
     
