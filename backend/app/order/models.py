@@ -3,13 +3,6 @@ from django.db import models
 from app.vehicle.models import Vehicle, Price
 from app.user.models import User
 
-class Itinerary(models.Model):
-
-    price = models.ForeignKey(Price, on_delete=models.SET_NULL, related_name='itinerary_price', blank=True, null=True)
-
-    class Meta:
-        db_table = 'itinerary'
-
 class Order(models.Model):
     
     class OrderStatus(models.TextChoices):
@@ -26,10 +19,6 @@ class Order(models.Model):
 
     end_date = models.DateField(blank=True, null=True)
 
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-
-    cost_price = models.DecimalField(max_digits=8, decimal_places=2)
-
     remark = models.TextField(max_length=256, blank=True, null=True)
 
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
@@ -40,4 +29,12 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
-    
+
+class Itinerary(models.Model):
+
+    price = models.ForeignKey(Price, on_delete=models.SET_NULL, related_name='itinerary_price', blank=True, null=True)
+
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='itinerary', blank=True, null=True)
+
+    class Meta:
+        db_table = 'itinerary'
