@@ -17,10 +17,10 @@ import store from '@/store'
 const action = Vue.directive('action', {
   inserted: function (el, binding, vnode) {
     const actionName = binding.arg
-    const roles = store.getters.roles
+    const groups = store.getters.groups
     const elVal = vnode.context.$route.meta.permission
     const permissionId = elVal instanceof String && [elVal] || elVal
-    roles.permissions.forEach(p => {
+    groups.permissions.forEach(p => {
       if (!permissionId.includes(p.permissionId)) {
         return
       }

@@ -40,20 +40,20 @@ function hasRole(roles, route) {
   }
 }
 
-function filterGroup(roles) {
-  if (roles) {
-    return roles.reduce((f1, f2) => f1.concat(f2.permissions), []).filter(f => {
+function filterGroup(groups) {
+  if (groups) {
+    return groups.reduce((f1, f2) => f1.concat(f2.permissions), []).filter(f => {
       return f.codename.includes('view_')
     })
   }
   return []
 }
 
-function filterAsyncRouter(routerMap, roles) {
+function filterAsyncRouter(routerMap, groups) {
   const accessedRouters = routerMap.filter(route => {
-    if (hasPermission(roles, route)) {
+    if (hasPermission(groups, route)) {
       if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, roles)
+        route.children = filterAsyncRouter(route.children, groups)
       }
       return true
     }
@@ -78,14 +78,14 @@ const permission = {
       commit
     }, res) {
       return new Promise(resolve => {
-        const { roles } = res.result;
+        const { groups } = res.result;
         const { is_superuser } = res.result;
 
         if (is_superuser) {
           commit('SET_ROUTERS', asyncRouterMap);
         } else {
-          const _roles = filterGroup(roles);
-          const accessedRouters = filterAsyncRouter(asyncRouterMap, _roles);
+          const _groups = filterGroup(groups);
+          const accessedRouters = filterAsyncRouter(asyncRouterMap, _groups);
           commit('SET_ROUTERS', accessedRouters);
         }
         resolve();

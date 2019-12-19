@@ -64,8 +64,8 @@
           <vs-td :data="data[indextr].phone">
             <a @click="editData"> {{ data[indextr].phone }} </a>
           </vs-td>
-          <vs-td :data="data[indextr].roles"> 
-            <a @click="editData"> {{ $_.join(data[indextr].roles.map(f=> f.name), ',') }} </a>
+          <vs-td :data="data[indextr].groups"> 
+            <a @click="editData"> {{ $_.join(data[indextr].groups.map(f=> f.name), ',') }} </a>
           </vs-td>
           <vs-td :data="data[indextr].is_superuser"> 
             <vs-checkbox v-model="data[indextr].is_superuser" :disabled="true"  style="float:left;"/>

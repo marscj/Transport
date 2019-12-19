@@ -72,7 +72,7 @@ export const asyncRouterMap = [{
     meta: {
       header: 'User',
       i18n: 'User',
-      // permission: [ 'user', 'role' ],
+      permission: [ 'user', 'group' ],
     },
     children: [{
         path: '/admin/users',
@@ -84,7 +84,7 @@ export const asyncRouterMap = [{
           slug: 'users',
           i18n: 'User',
           icon: 'UsersIcon',
-          // permission: [ 'user' ],
+          permission: [ 'user' ],
           breadcrumb: [{
               title: 'User',
               url: '/admin/users'
@@ -97,22 +97,22 @@ export const asyncRouterMap = [{
         }
       },
       {
-        path: '/admin/roles',
-        name: 'roles',
-        component: () => import('@/views/role/Page.vue'),
+        path: '/admin/groups',
+        name: 'groups',
+        component: () => import('@/views/group/Page.vue'),
         meta: {
-          name: 'Role',
-          url: '/admin/roles',
-          slug: 'role',
-          i18n: 'Role',
+          name: 'Group',
+          url: '/admin/groups',
+          slug: 'group',
+          i18n: 'Group',
           icon: 'UserPlusIcon',
-          permission: [ 'role' ],
+          permission: [ 'group' ],
           breadcrumb: [{
               title: 'User',
-              url: '/admin/users'
+              url: '/admin/groups'
             },
             {
-              title: 'Roles',
+              title: 'Groups',
               active: true
             }
           ],

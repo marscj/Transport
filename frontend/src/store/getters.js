@@ -13,7 +13,7 @@ const getters = {
     else return "xs"
   },
 
-  roles: state => state.auth.roles,
+  groups: state => state.auth.groups,
   addRouters: state => state.permission.addRouters,
 }
 

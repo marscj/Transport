@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
     } else {
-      if (store.getters.roles.length === 0) {
+      if (store.getters.groups.length === 0) {
         store.dispatch('getInfo').then(res => {
           store.dispatch('GenerateRoutes', res).then(() => {
             if(res.result.is_superuser) {

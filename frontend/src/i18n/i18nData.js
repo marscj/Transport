@@ -6,7 +6,7 @@ export default {
 	OrderList: 'Order',
 	Analytics: 'Analytics',
 	User: 'User',
-	Role: 'Role',
+	Group: 'Group',
 	Source: 'Source',
 	Driver: 'Driver',
 	Vehicle: 'Vehicle'
@@ -17,7 +17,7 @@ export default {
 	OrderList: '订单列表',
 	Analytics: '分析',
 	User: '用户管理',
-	Role: '角色管理',
+	Group: '组管理',
 	Source: '资源管理',
 	Driver: '司机管理',
 	Vehicle: '车辆管理'

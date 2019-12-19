@@ -8,7 +8,7 @@ const auth = {
     token: '',
     displayName: '',
     photoURL: '',
-    roles: [] 
+    groups: [] 
   },
   mutations: {
     SET_ID: (state, id) => {
@@ -27,8 +27,8 @@ const auth = {
       state.photoURL = url
     },
 
-    SET_ROLES: (state, roles) => {
-      state.roles = roles
+    SET_GROUPS: (state, groups) => {
+      state.groups = groups
     }
   },
   actions: {
@@ -84,7 +84,7 @@ const auth = {
           .then(res => {
             const { result } = res;
             commit('SET_ID', result.id)
-            commit('SET_ROLES', result.roles)
+            commit('SET_GROUPS', result.groups)
             commit('SET_NAME', result.username)
             resolve(res)
           })
