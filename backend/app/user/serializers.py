@@ -31,7 +31,15 @@ class PermissionSerializer(serializers.ModelSerializer):
         model = Permission
         fields = '__all__'
 
-class GroupSerializer(serializers.ModelSerializer):
+class GroupDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Group
+        fields = (
+            'id', 'name'
+        )
+
+class GroupDetailSerializer(serializers.ModelSerializer):
     
     permissions = PermissionSerializer(read_only=True, many=True)
 
@@ -57,13 +65,24 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
-    groups = GroupSerializer(required=False, read_only=True, many=True)
+    groups = GroupDetailSerializer(required=False, read_only=True, many=True)
 
     class Meta:
         model = User
         fields = (
             'id', 'username', 'email', 'phone', 'name', 'company', 'is_superuser', 'is_active', 'groups'
         )
+
+    def update(self, instance, validated_data):
+        groups = validated_data.pop('groups', None)
+        
+        if groups:
+            instance.groups.all().delete()
+            for group in groups:
+                instance.groups.add(group)
+
+        return super().update(instance, validated_data)       
+
 
 class RegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=30)

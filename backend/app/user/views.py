@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.models import Group, Permission
 
 from middleware.permission import IsAuthenticatedAndReadOnly, CustomModelPermissions
-from .serializers import UserDetailSerializer, GroupSerializer, PermissionSerializer
+from .serializers import UserDetailSerializer, GroupDetailSerializer, PermissionSerializer
 from .models import User
 
 class UserView(ModelViewSet):
@@ -21,7 +21,7 @@ class UserView(ModelViewSet):
         return Response(serializer.data)
 
 class UserGroupView(ModelViewSet):
-    serializer_class = GroupSerializer
+    serializer_class = GroupDetailSerializer
     pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Group.objects.all()
