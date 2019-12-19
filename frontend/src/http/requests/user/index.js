@@ -8,8 +8,8 @@ export function getUsers(parameter) {
   })
 }
 
-export function getRoles() {
-  return axios.get("roles/")
+export function getGroups() {
+  return axios.get("groups/")
 }
 
 export function getPermissions(parameter) {
@@ -18,6 +18,6 @@ export function getPermissions(parameter) {
   })
 }
 
-export function updateRole(pk, data) {
-  return axios.put("roles/" + `${pk}/`, data)
+export function updateGroup(pk, data) {
+  return axios.put("groups/" + `${pk}/`, data)
 }

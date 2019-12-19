@@ -29,9 +29,9 @@
 <script>
 import DataViewSidebar from "./DataViewSidebar.vue";
 import {
-  getRoles,
+  getGroups,
   getPermissions,
-  updateRole
+  updateGroup
 } from "@/http/requests/user/index.js";
 
 export default {
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getList() {
-      return getRoles()
+      return getGroups()
         .then(res => {
           const { result } = res;
           this.roleData = result;
@@ -71,7 +71,7 @@ export default {
         });
     },
     updatePermission(permission) {
-      return updateRole(this.roleData[this.curTab].id, {
+      return updateGroup(this.roleData[this.curTab].id, {
         permission: permission.id
       }).then(res => {
         const { result } = res;
