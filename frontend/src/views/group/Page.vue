@@ -6,7 +6,16 @@
       :data="sidebarData"
     />
 
-    <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" class="mb-8">Add New</vs-button>
+    <div>
+      <vs-button
+        type="border"
+        icon-pack="feather"
+        icon="icon-plus"
+        @click="addNewData"
+        class
+      >Add New</vs-button>
+      <vs-divider />
+    </div>
 
     <vs-tabs v-if="groupData.length" position="left" class style="width:100%;" v-model="curTab">
       <vs-tab v-for="data in groupData" :key="data.id" :label="data.name">
@@ -80,7 +89,11 @@ export default {
     },
     setGroup(group, permission) {
       if (group) {
-        var _inter = this.$_.intersectionBy(group.permissions, permission, "id");
+        var _inter = this.$_.intersectionBy(
+          group.permissions,
+          permission,
+          "id"
+        );
 
         var _per = permission.map(f => {
           if (_inter.find(f1 => f.id === f1.id)) {
@@ -90,7 +103,8 @@ export default {
         });
 
         this.groupPermissionData = _per.reduce(function(pre, current) {
-          pre[current.content_type.model] = pre[current.content_type.model] || [];
+          pre[current.content_type.model] =
+            pre[current.content_type.model] || [];
           pre[current.content_type.model].push(current);
           return pre;
         }, {});

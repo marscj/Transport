@@ -5,6 +5,7 @@
       @closeSidebar="toggleDataSidebar"
       :data="sidebarData"
     />
+
     <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
         <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
