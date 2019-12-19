@@ -12,6 +12,10 @@ export function updateUser(pk, data) {
   return axios.put("users/" + `${pk}/`, data)
 }
 
+export function createUser(data) {
+  return axios.post("users/", data)
+}
+
 export function getGroups() {
   return axios.get("groups/")
 }

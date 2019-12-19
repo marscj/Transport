@@ -133,7 +133,6 @@ export default {
       this.sidebarData = {};
       this.toggleDataSidebar(true);
     },
-    deleteData(id) {},
     editData(data) {
       console.log(data, '====')
       this.sidebarData = data;

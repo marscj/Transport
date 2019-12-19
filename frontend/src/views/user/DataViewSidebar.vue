@@ -10,7 +10,7 @@
     v-model="isSidebarActiveLocal"
   >
     <div class="mt-6 flex items-center justify-between px-6">
-      <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} ITEM</h4>
+      <h4>{{ isEdit ? "ADD NEW" : "UPDATE" }} ITEM</h4>
       <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
@@ -22,6 +22,7 @@
             <vs-input
               data-vv-validate-on="blur"
               label="Username"
+              :disabled="!isEdit"
               v-model="form.username"
               class="mt-5 w-full"
             />
@@ -32,6 +33,7 @@
             <vs-input
               data-vv-validate-on="blur"
               label="Email"
+              :disabled="!isEdit"
               v-model="form.email"
               class="mt-5 w-full"
             />
@@ -98,7 +100,7 @@
     </VuePerfectScrollbar>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submit" :disabled="!isFormValid">Submit</vs-button>
+      <vs-button class="mr-6" @click="submit">Submit</vs-button>
       <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
     </div>
   </vs-sidebar>
@@ -106,7 +108,7 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import { updateUser } from "@/http/requests/user/index.js";
+import { updateUser, createUser } from "@/http/requests/user/index.js";
 
 export default {
   components: {
@@ -139,8 +141,8 @@ export default {
         }
       }
     },
-    isFormValid() {
-      return true;
+    isEdit () {
+      return Object.entries(this.data).length === 0;
     }
   },
   data() {
@@ -157,7 +159,6 @@ export default {
         company: ""
       },
       settings: {
-        // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
       }
@@ -165,10 +166,15 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.form, '=====')
-      updateUser(this.form.id, this.form).then((res) => {
-        console.log(res, '------')
-      })
+      if(this.isEdit) {
+        createUser(this.form).then((res) => {
+          this.isSidebarActiveLocal = false;
+        })
+      } else {
+        updateUser(this.form.id, this.form).then((res) => {
+          this.isSidebarActiveLocal = false;
+        })
+      }
     }
   }
 };
