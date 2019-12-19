@@ -20,6 +20,14 @@ export function getGroups() {
   return axios.get("groups/")
 }
 
+export function updateGroups(pk, data) {
+  return axios.put("groups/" + `${pk}/`, data)
+}
+
+export function createGroup(data) {
+  return axios.post("groups/", data)
+}
+
 export function getPermissions(parameter) {
   return axios.get("permissions/", {
     params: parameter

@@ -9,7 +9,6 @@
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
         <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
 
-        <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mr-4">
           <div
             class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
@@ -134,12 +133,12 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      console.log(data, '====')
       this.sidebarData = data;
       this.toggleDataSidebar(true);
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
+      this.$refs.table.refresh()
     }
   }
 };

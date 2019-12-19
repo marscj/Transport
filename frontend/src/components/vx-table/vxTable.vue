@@ -173,6 +173,12 @@ export default {
     window.removeEventListener("resize", this.listenerChangeWidth);
   },
   methods: {
+    refresh (bool = false) {
+      if(bool) {
+        this.page = 1
+      }
+      this.loadData()
+    },
     loadData() {
       const parameter = Object.assign({
         page: this.page,

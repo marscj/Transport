@@ -79,7 +79,7 @@ export default {
       });
     },
     setGroup(group, permission) {
-      if (group && groups.length) {
+      if (group) {
         var _inter = this.$_.intersectionBy(group.permissions, permission, "id");
 
         var _per = permission.map(f => {
@@ -103,15 +103,13 @@ export default {
       this.sidebarData = {};
       this.toggleDataSidebar(true);
     },
-    deleteData(id) {
-
-    },
     editData(data) {
       this.sidebarData = data;
       this.toggleDataSidebar(true);
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
+      this.getList();
     }
   }
 };

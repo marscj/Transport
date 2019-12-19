@@ -10,19 +10,34 @@
     v-model="isSidebarActiveLocal"
   >
     <div class="mt-6 flex items-center justify-between px-6">
-      <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} ITEM</h4>
+      <h4>{{ isEdit ? "ADD NEW" : "UPDATE" }} ITEM</h4>
       <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
 
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
-        <vs-input label="Name" v-model="name" class="mt-5 w-full" name="item-name" />
+        <validation-observer ref="observer" v-slot="{ validate, dirty }">
+          <validation-provider name="name" rules="required|max:16|min:5" v-slot="{ errors }">
+            <vs-input
+              data-vv-validate-on="blur"
+              label="Name"
+              :disabled="!isEdit"
+              v-model="form.name"
+              class="mt-5 w-full"
+            />
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
+
+          <validation-provider name="non_field_errors" v-slot="{ errors }">
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
+        </validation-observer>
       </div>
     </VuePerfectScrollbar>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Submit</vs-button>
+      <vs-button class="mr-6" @click="submit">Submit</vs-button>
       <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
     </div>
   </vs-sidebar>
@@ -30,8 +45,12 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import { updateGroups, createGroup } from "@/http/requests/user/index.js";
 
 export default {
+  components: {
+    VuePerfectScrollbar
+  },
   props: {
     isSidebarActive: {
       type: Boolean,
@@ -39,28 +58,14 @@ export default {
     },
     data: {
       type: Object,
-      default: () => {
-      }
+      default: () => {}
     }
   },
   watch: {
     isSidebarActive(val) {
       if (!val) return;
-      if (Object.entries(this.data).length === 0) {
-        this.initValues();
-      } else {
-        this.initValues();
-      }
+      this.form = Object.assign({}, this.data);
     }
-  },
-  data() {
-    return {
-      name: '',
-      settings: { 
-          maxScrollbarLength: 60,
-          wheelSpeed: .60,
-      },
-    };
   },
   computed: {
     isSidebarActiveLocal: {
@@ -73,16 +78,34 @@ export default {
         }
       }
     },
-    isFormValid() {
-      return true;
+    isEdit () {
+      return Object.entries(this.data).length === 0;
     }
   },
-  methods: {
-    initValues() {},
-    submitData() {}
+  data() {
+    return {
+      form: {
+        id: undefined,
+        name: "",
+      },
+      settings: {
+        maxScrollbarLength: 60,
+        wheelSpeed: 0.6
+      }
+    };
   },
-  components: {
-    VuePerfectScrollbar
+  methods: {
+    submit() {
+      if(this.isEdit) {
+        createGroup(this.form).then((res) => {
+          this.isSidebarActiveLocal = false;
+        })
+      } else {
+        updateGroups(this.form.id, this.form).then((res) => {
+          this.isSidebarActiveLocal = false;
+        })
+      }
+    }
   }
 };
 </script>
@@ -97,6 +120,23 @@ export default {
     z-index: 52010;
     width: 400px;
     max-width: 90vw;
+
+    .img-upload {
+      margin-top: 2rem;
+
+      .con-img-upload {
+        padding: 0;
+      }
+
+      .con-input-upload {
+        width: 100%;
+        margin: 0;
+      }
+    }
   }
+}
+
+.scroll-area--data-list-add-new {
+  height: calc(100% - 4.3rem);
 }
 </style>
