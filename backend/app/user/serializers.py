@@ -57,10 +57,12 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
+    groups = GroupSerializer(required=False, many=True)
+
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'email', 'phone', 'name', 'company', 'is_superuser', 'is_active', 'roles'
+            'id', 'username', 'email', 'phone', 'name', 'company', 'is_superuser', 'is_active', 'groups'
         )
 
 class RegisterSerializer(serializers.Serializer):
