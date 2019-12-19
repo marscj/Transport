@@ -83,7 +83,7 @@ export default {
             color: "danger"
           });
           if (error.response) {
-            this.$refs.observer.setErrors(error.response.data);
+            this.$refs.observer.setErrors(error.response.data.result);
           }
         })
         .finally(() => {
