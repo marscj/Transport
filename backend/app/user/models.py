@@ -13,8 +13,3 @@ class User(AbstractUser):
     
     class Meta:
         db_table = 'user'
-
-class Role(Group):
-
-    class Meta:
-        db_table = 'role'

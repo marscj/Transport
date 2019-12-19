@@ -15,7 +15,7 @@ try:
 except ImportError:
     raise ImportError("allauth needs to be added to INSTALLED_APPS.")
 
-from .models import User, Role
+from .models import User
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -55,26 +55,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
         return instance
 
-class RoleSerializer(GroupSerializer):
-    
-    class Meta:
-        model = Role
-        fields = '__all__'
-
 class UserDetailSerializer(serializers.ModelSerializer):
-
-    roles = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = (
             'id', 'username', 'email', 'phone', 'name', 'company', 'is_superuser', 'is_active', 'roles'
         )
-
-    def get_roles(self, obj):
-        query = obj.groups.all()
-        serializer = RoleSerializer(instance=query, many=True, context=self.context)
-        return serializer.data
 
 class RegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=30)

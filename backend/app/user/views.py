@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from django.db.models import Q
 from django.contrib.auth.models import Group, Permission
 
-from .serializers import UserDetailSerializer, GroupSerializer, PermissionSerializer, RoleSerializer
-from .models import User, Role
+from .serializers import UserDetailSerializer, GroupSerializer, PermissionSerializer
+from .models import User
 
 class CustomPermissson(DjangoModelPermissions):
     
@@ -31,17 +31,11 @@ class UserView(ModelViewSet):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
 
-# class RoleView(ModelViewSet):
-#     serializer_class = GroupSerializer
-#     pagination_class = None
-#     permission_classes = [IsAuthenticated, CustomPermissson]
-#     queryset = Group.objects.all()
-
-class RoleView(ModelViewSet):
-    serializer_class = RoleSerializer
+class UserGroupView(ModelViewSet):
+    serializer_class = GroupSerializer
     pagination_class = None
     permission_classes = [IsAuthenticated, CustomPermissson]
-    queryset = Role.objects.all()
+    queryset = Group.objects.all()
 
 class PermissionView(ModelViewSet):
     serializer_class = PermissionSerializer
