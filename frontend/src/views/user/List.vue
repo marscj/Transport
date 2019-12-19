@@ -41,46 +41,49 @@
         <vs-th sort-key="username">USERNAME</vs-th>
         <vs-th sort-key="email">EMAIL</vs-th>
         <vs-th sort-key="name">Name</vs-th>
-        <vs-th >PHONE</vs-th>
-        <vs-th >GROUP</vs-th>
-        <vs-th >ADMIN</vs-th>
-        <vs-th sort-key="is_active">ACTIVE</vs-th>
+        <vs-th>PHONE</vs-th>
         <vs-th sort-key="company">COMPANY</vs-th>
+        <vs-th sort-key="is_superuser">ADMIN</vs-th>
+        <vs-th sort-key="is_active">ACTIVE</vs-th>
+        <vs-th>GROUP</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
           <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
-          <vs-td :data="data[indextr].username"> 
-            <a @click="editData(data[indextr])"> {{ data[indextr].username }} </a>
+          <vs-td :data="data[indextr].username">
+            <a @click="editData(data[indextr])">{{ data[indextr].username }}</a>
           </vs-td>
           <vs-td :data="data[indextr].email">
-            <a @click="editData(data[indextr])"> {{ data[indextr].email }} </a>
+            <a @click="editData(data[indextr])">{{ data[indextr].email }}</a>
           </vs-td>
           <vs-td :data="data[indextr].name">
-            <a @click="editData(data[indextr])"> {{ data[indextr].name }} </a>
+            <a @click="editData(data[indextr])">{{ data[indextr].name }}</a>
           </vs-td>
           <vs-td :data="data[indextr].phone">
-            <a @click="editData(data[indextr])"> {{ data[indextr].phone }} </a>
-          </vs-td>
-          <vs-td :data="data[indextr].groups"> 
-            <a @click="editData(data[indextr])"> {{ $_.join(data[indextr].groups.map(f=> f.name), ',') }} </a>
-          </vs-td>
-          <vs-td :data="data[indextr].is_superuser"> 
-            <vs-checkbox v-model="data[indextr].is_superuser" :disabled="true"  style="float:left;"/>
-          </vs-td>
-          <vs-td :data="data[indextr].is_active"> 
-            <vs-checkbox v-model="data[indextr].is_active" :disabled="true"  style="float:left;"/>
+            <a @click="editData(data[indextr])">{{ data[indextr].phone }}</a>
           </vs-td>
           <vs-td :data="data[indextr].company">
-            <a @click="editData(data[indextr])"> {{ data[indextr].company }} </a>
+            <a @click="editData(data[indextr])">{{ data[indextr].company }}</a>
           </vs-td>
+          <vs-td :data="data[indextr].is_superuser">
+            <vs-checkbox v-model="data[indextr].is_superuser" :disabled="true" style="float:left;" />
+          </vs-td>
+          <vs-td :data="data[indextr].is_active">
+            <vs-checkbox v-model="data[indextr].is_active" :disabled="true" style="float:left;" />
+          </vs-td>
+          <vs-td :data="data[indextr].groups">
+            <a
+              @click="editData(data[indextr])"
+            >{{ $_.join(data[indextr].groups.map(f=> f.name), ',') }}</a>
+          </vs-td>
+
           <!-- <vs-td :data="data[indextr].codename">
             <a> {{ data[indextr].codename }} </a>
             <template slot="edit">
               <vs-input v-model="data[indextr].codename" class="inputx" placeholder="name" />
             </template>
-          </vs-td> -->
+          </vs-td>-->
         </vs-tr>
       </template>
     </vx-table>
@@ -95,7 +98,7 @@ const UserType = [
   { value: 1, label: "Customer" },
   { value: 2, label: "Driver" },
   { value: 3, label: "Operator" },
-  { value: 4, label: "Accounting" },
+  { value: 4, label: "Accounting" }
 ];
 
 export default {
@@ -114,7 +117,7 @@ export default {
         return getUsers(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
-      } 
+      }
     };
   },
   computed: {
@@ -139,7 +142,7 @@ export default {
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      this.$refs.table.refresh()
+      this.$refs.table.refresh();
     }
   }
 };
@@ -190,7 +193,9 @@ export default {
           padding: 20px !important;
         }
       }
-      th, tr, td {
+      th,
+      tr,
+      td {
         border: 1px solid #e8e8e8;
       }
     }

@@ -40,7 +40,7 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="name" rules="" v-slot="{ errors }">
+          <validation-provider name="name" rules v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
               label="Name"
@@ -50,7 +50,7 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="phone" rules="" v-slot="{ errors }">
+          <validation-provider name="phone" rules v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
               label="Phone"
@@ -60,7 +60,7 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="company" rules="" v-slot="{ errors }">
+          <validation-provider name="company" rules v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
               label="Company"
@@ -70,27 +70,18 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">
-            Admin
-          </vs-checkbox>
+          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">Admin</vs-checkbox>
 
-          <vs-checkbox v-model="form.is_active" class="mt-5 w-full">
-            Active
-          </vs-checkbox>
+          <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
-          <!-- <vs-select
-            multiple
-            label="Groups"
-            class="w-full mt-5"
-            v-model="select1"
-          >
+          <vs-select label="Groups" class="w-full mt-5" v-model="select1">
             <vs-select-item
               :key="index"
               :value="item.id"
               :text="item.name"
-              v-for="(item,index) in form.groups"
+              v-for="(item,index) in groups"
             />
-          </vs-select> -->
+          </vs-select>
 
           <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span>{{ errors[0] }}</span>
@@ -108,7 +99,11 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import { updateUser, createUser } from "@/http/requests/user/index.js";
+import {
+  updateUser,
+  createUser,
+  getGroups
+} from "@/http/requests/user/index.js";
 
 export default {
   components: {
@@ -141,40 +136,52 @@ export default {
         }
       }
     },
-    isEdit () {
+    isEdit() {
       return Object.entries(this.data).length === 0;
     }
   },
   data() {
     return {
+      select1: undefined,
       form: {
         id: undefined,
         username: "",
         email: "",
         name: "",
         phone: "",
-        groups: [],
         is_superuser: false,
         is_active: false,
         company: ""
       },
+      groups: [],
       settings: {
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
       }
     };
   },
+  mounted() {
+    if (Object.entries(this.data).length === 0) {
+      this.getGroup();
+    }
+  },
   methods: {
     submit() {
-      if(this.isEdit) {
-        createUser(this.form).then((res) => {
+      if (this.isEdit) {
+        createUser(this.form).then(res => {
           this.isSidebarActiveLocal = false;
-        })
+        });
       } else {
-        updateUser(this.form.id, this.form).then((res) => {
+        updateUser(this.form.id, this.form).then(res => {
           this.isSidebarActiveLocal = false;
-        })
+        });
       }
+    },
+    getGroup() {
+      getGroups().then(res => {
+        const { result } = res;
+        this.groups = result;
+      });
     }
   }
 };
