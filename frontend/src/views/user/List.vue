@@ -42,7 +42,6 @@
         <vs-th sort-key="email">EMAIL</vs-th>
         <vs-th sort-key="name">Name</vs-th>
         <vs-th >PHONE</vs-th>
-        
         <vs-th >GROUP</vs-th>
         <vs-th >ADMIN</vs-th>
         <vs-th sort-key="is_active">ACTIVE</vs-th>
@@ -53,19 +52,19 @@
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
           <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
           <vs-td :data="data[indextr].username"> 
-            <a @click="editData"> {{ data[indextr].username }} </a>
+            <a @click="editData(data[indextr])"> {{ data[indextr].username }} </a>
           </vs-td>
           <vs-td :data="data[indextr].email">
-            <a @click="editData"> {{ data[indextr].email }} </a>
+            <a @click="editData(data[indextr])"> {{ data[indextr].email }} </a>
           </vs-td>
           <vs-td :data="data[indextr].name">
-            <a @click="editData"> {{ data[indextr].name }} </a>
+            <a @click="editData(data[indextr])"> {{ data[indextr].name }} </a>
           </vs-td>
           <vs-td :data="data[indextr].phone">
-            <a @click="editData"> {{ data[indextr].phone }} </a>
+            <a @click="editData(data[indextr])"> {{ data[indextr].phone }} </a>
           </vs-td>
           <vs-td :data="data[indextr].groups"> 
-            <a @click="editData"> {{ $_.join(data[indextr].groups.map(f=> f.name), ',') }} </a>
+            <a @click="editData(data[indextr])"> {{ $_.join(data[indextr].groups.map(f=> f.name), ',') }} </a>
           </vs-td>
           <vs-td :data="data[indextr].is_superuser"> 
             <vs-checkbox v-model="data[indextr].is_superuser" :disabled="true"  style="float:left;"/>
@@ -74,7 +73,7 @@
             <vs-checkbox v-model="data[indextr].is_active" :disabled="true"  style="float:left;"/>
           </vs-td>
           <vs-td :data="data[indextr].company">
-            <a @click="editData"> {{ data[indextr].company }} </a>
+            <a @click="editData(data[indextr])"> {{ data[indextr].company }} </a>
           </vs-td>
           <!-- <vs-td :data="data[indextr].codename">
             <a> {{ data[indextr].codename }} </a>
@@ -136,6 +135,7 @@ export default {
     },
     deleteData(id) {},
     editData(data) {
+      console.log(data, '====')
       this.sidebarData = data;
       this.toggleDataSidebar(true);
     },

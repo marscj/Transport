@@ -8,6 +8,10 @@ export function getUsers(parameter) {
   })
 }
 
+export function updateUser(pk, data) {
+  return axios.put("users/" + `${pk}/`, data)
+}
+
 export function getGroups() {
   return axios.get("groups/")
 }

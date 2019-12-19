@@ -83,7 +83,7 @@ export const asyncRouterMap = [{
           url: '/admin/users',
           slug: 'users',
           i18n: 'User',
-          icon: 'UsersIcon',
+          icon: 'UserIcon',
           permission: [ 'user' ],
           breadcrumb: [{
               title: 'User',
@@ -105,7 +105,7 @@ export const asyncRouterMap = [{
           url: '/admin/groups',
           slug: 'group',
           i18n: 'Group',
-          icon: 'UserPlusIcon',
+          icon: 'UsersIcon',
           permission: [ 'group' ],
           breadcrumb: [{
               title: 'User',
