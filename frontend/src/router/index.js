@@ -26,6 +26,8 @@ router.afterEach(() => {
   }
 })
 
+let isAlreadyAddRouter = false
+
 router.beforeEach((to, from, next) => {
   console.log('from=', from.path, 'to=', to.path)
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
@@ -33,15 +35,15 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
     } else {
-      if (store.getters.groups.length === 0) {
+      if (store.getters.groups.length === 0 && !isAlreadyAddRouter) {
         store.dispatch('getInfo').then(res => {
           store.dispatch('GenerateRoutes', res).then(() => {
+            isAlreadyAddRouter = true
             if(res.result.is_superuser) {
               router.addRoutes(asyncRouterMap)
             } else {
               router.addRoutes(store.getters.addRouters)
-            }
-            
+            }     
             const redirect = decodeURIComponent(from.query.redirect || to.path)
 
             if (to.path === redirect) {

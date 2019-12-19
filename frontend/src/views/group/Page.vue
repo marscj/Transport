@@ -79,20 +79,22 @@ export default {
       });
     },
     setGroup(group, permission) {
-      var _inter = this.$_.intersectionBy(group.permissions, permission, "id");
+      if (group && groups.length) {
+        var _inter = this.$_.intersectionBy(group.permissions, permission, "id");
 
-      var _per = permission.map(f => {
-        if (_inter.find(f1 => f.id === f1.id)) {
-          return Object.assign(f, { check: true });
-        }
-        return Object.assign(f, { check: false });
-      });
+        var _per = permission.map(f => {
+          if (_inter.find(f1 => f.id === f1.id)) {
+            return Object.assign(f, { check: true });
+          }
+          return Object.assign(f, { check: false });
+        });
 
-      this.groupPermissionData = _per.reduce(function(pre, current) {
-        pre[current.content_type.model] = pre[current.content_type.model] || [];
-        pre[current.content_type.model].push(current);
-        return pre;
-      }, {});
+        this.groupPermissionData = _per.reduce(function(pre, current) {
+          pre[current.content_type.model] = pre[current.content_type.model] || [];
+          pre[current.content_type.model].push(current);
+          return pre;
+        }, {});
+      }
     },
     onClick(permission) {
       this.updatePermission(permission);
