@@ -8,9 +8,9 @@
 
     <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" class="mb-8">Add New</vs-button>
 
-    <vs-tabs v-if="roleData.length" position="left" class style="width:100%;" v-model="curTab">
-      <vs-tab v-for="data in roleData" :key="data.id" :label="data.name">
-        <div v-for="(permission, index) in rolePermissionData" :key="index" class="flex h-12">
+    <vs-tabs v-if="groupData.length" position="left" class style="width:100%;" v-model="curTab">
+      <vs-tab v-for="data in groupData" :key="data.id" :label="data.name">
+        <div v-for="(permission, index) in groupPermissionData" :key="index" class="flex h-12">
           <div class="w-1/6">
             <span>{{index}} :</span>
           </div>
@@ -41,9 +41,9 @@ export default {
   data() {
     return {
       curTab: 0,
-      roleData: [],
+      groupData: [],
       permissionData: [],
-      rolePermissionData: [],
+      groupPermissionData: [],
       addNewDataSidebar: false,
       sidebarData: {}
     };
@@ -53,7 +53,7 @@ export default {
   },
   watch: {
     curTab(val) {
-      this.setRole(this.roleData[val], this.permissionData);
+      this.setGroup(this.groupData[val], this.permissionData);
     }
   },
   methods: {
@@ -61,25 +61,25 @@ export default {
       return getGroups()
         .then(res => {
           const { result } = res;
-          this.roleData = result;
+          this.groupData = result;
           return getPermissions();
         })
         .then(res => {
           const { result } = res;
           this.permissionData = result;
-          this.setRole(this.roleData[this.curTab], this.permissionData);
+          this.setGroup(this.groupData[this.curTab], this.permissionData);
         });
     },
     updatePermission(permission) {
-      return updateGroup(this.roleData[this.curTab].id, {
+      return updateGroup(this.groupData[this.curTab].id, {
         permission: permission.id
       }).then(res => {
         const { result } = res;
-        this.roleData[this.curTab] = Object.assign({}, result);
+        this.groupData[this.curTab] = Object.assign({}, result);
       });
     },
-    setRole(role, permission) {
-      var _inter = this.$_.intersectionBy(role.permissions, permission, "id");
+    setGroup(group, permission) {
+      var _inter = this.$_.intersectionBy(group.permissions, permission, "id");
 
       var _per = permission.map(f => {
         if (_inter.find(f1 => f.id === f1.id)) {
@@ -88,7 +88,7 @@ export default {
         return Object.assign(f, { check: false });
       });
 
-      this.rolePermissionData = _per.reduce(function(pre, current) {
+      this.groupPermissionData = _per.reduce(function(pre, current) {
         pre[current.content_type.model] = pre[current.content_type.model] || [];
         pre[current.content_type.model].push(current);
         return pre;

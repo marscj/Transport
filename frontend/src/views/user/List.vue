@@ -43,7 +43,7 @@
         <vs-th sort-key="name">Name</vs-th>
         <vs-th >PHONE</vs-th>
         
-        <vs-th >ROLE</vs-th>
+        <vs-th >GROUP</vs-th>
         <vs-th >ADMIN</vs-th>
         <vs-th sort-key="is_active">ACTIVE</vs-th>
         <vs-th sort-key="company">COMPANY</vs-th>

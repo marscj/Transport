@@ -1,6 +1,6 @@
 ###################################### role ############################################
 
-- model: user.role
+- model: auth.group
   pk: 1
   fields:
     name: Admin
