@@ -16,7 +16,7 @@ export const asyncRouterMap = [{
     children: [{
       path: '/admin/analytics',
       name: 'analytics',
-      component: () => import('@/views/dashboard/analytics/Page.vue'),
+      component: () => import('@/views/analytics/Page.vue'),
       meta: {
         name: 'Analytics',
         url: '/admin/analytics',
@@ -46,7 +46,7 @@ export const asyncRouterMap = [{
     children: [{
       path: '/admin/orders',
       name: 'orders',
-      component: () => import('@/views/business/order/Page.vue'),
+      component: () => import('@/views/order/List.vue'),
       meta: {
         name: 'Order',
         url: '/admin/orders',
@@ -122,28 +122,70 @@ export const asyncRouterMap = [{
   },
   {
     path: '/admin/source',
-    redirect: '/admin/drivers',
+    redirect: '/admin/itineraryies',
     component: () => import('@/layouts/main/Main.vue'),
     meta: {
       header: 'Source',
       i18n: 'Source',
     },
     children: [{
-        path: '/admin/drivers',
-        name: 'staf',
-        component: () => import('@/views/resource/driver/Page.vue'),
+        path: '/admin/itineraryies',
+        name: 'itineraryies',
+        component: () => import('@/views/itinerary/List.vue'),
         meta: {
-          name: 'Driver',
-          url: '/admin/drivers',
-          slug: 'driver',
-          i18n: 'Driver',
-          icon: 'UserCheckIcon',
+          name: 'Itinerary',
+          url: '/admin/itineraryies',
+          slug: 'itinerary',
+          i18n: 'Itinerary',
+          icon: 'CircleIcon',
           breadcrumb: [{
               title: 'Source',
-              url: '/admin/drivers'
+              url: '/admin/itineraryies'
             },
             {
-              title: 'Drivers',
+              title: 'Itineraryies',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/seats',
+        name: 'seats',
+        component: () => import('@/views/seat/List.vue'),
+        meta: {
+          name: 'Seat',
+          url: '/admin/seats',
+          slug: 'seat',
+          i18n: 'Seat',
+          icon: 'CircleIcon',
+          breadcrumb: [{
+              title: 'Source',
+              url: '/admin/seats'
+            },
+            {
+              title: 'Seats',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/prices',
+        name: 'prices',
+        component: () => import('@/views/price/List.vue'),
+        meta: {
+          name: 'Price',
+          url: '/admin/prices',
+          slug: 'price',
+          i18n: 'Price',
+          icon: 'CircleIcon',
+          breadcrumb: [{
+              title: 'Source',
+              url: '/admin/prices'
+            },
+            {
+              title: 'Prices',
               active: true
             }
           ],
@@ -152,13 +194,13 @@ export const asyncRouterMap = [{
       {
         path: '/admin/vehicles',
         name: 'vehicles',
-        component: () => import('@/views/resource/vehicle/Page.vue'),
+        component: () => import('@/views/vehicle/List.vue'),
         meta: {
           name: 'Vehicle',
           url: '/admin/vehicles',
           slug: 'vehicle',
           i18n: 'Vehicle',
-          icon: 'TruckIcon',
+          icon: 'CircleIcon',
           breadcrumb: [{
               title: 'Source',
               url: '/admin/drivers'
