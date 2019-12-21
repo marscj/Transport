@@ -162,7 +162,7 @@ export default {
     };
   },
   mounted() {
-    if (Object.entries(this.data).length === 0) {
+    if (Object.entries(this.groups).length === 0) {
       this.getGroup();
     }
   },

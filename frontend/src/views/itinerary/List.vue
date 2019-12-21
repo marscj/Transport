@@ -19,8 +19,8 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">{{ tr.id }}</vs-td>
-          <vs-td :data="tr.name">
+          <vs-td :data="tr.id" v-if="tr.id">{{ tr.id }}</vs-td>
+          <vs-td :data="tr.name" v-if="tr.name">
             <a @click="editData(tr)">{{ tr.name }}</a>
           </vs-td>
           <vs-td class="whitespace-no-wrap">

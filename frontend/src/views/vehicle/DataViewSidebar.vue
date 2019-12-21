@@ -18,70 +18,18 @@
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
-          <validation-provider name="username" rules="required|max:16|min:5" v-slot="{ errors }">
+          <validation-provider name="License plate" rules="required|max:16|min:5" v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
-              label="Username"
+              label="License plate"
               :disabled="!isEdit"
-              v-model="form.username"
+              v-model="form.license_plate"
               class="mt-5 w-full"
             />
             <span>{{ errors[0] }}</span>
           </validation-provider>
-
-          <validation-provider name="email" rules="email|required" v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Email"
-              :disabled="!isEdit"
-              v-model="form.email"
-              class="mt-5 w-full"
-            />
-            <span>{{ errors[0] }}</span>
-          </validation-provider>
-
-          <validation-provider name="name" rules v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Name"
-              v-model="form.name"
-              class="mt-5 w-full"
-            />
-            <span>{{ errors[0] }}</span>
-          </validation-provider>
-
-          <validation-provider name="phone" rules v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Phone"
-              v-model="form.phone"
-              class="mt-5 w-full"
-            />
-            <span>{{ errors[0] }}</span>
-          </validation-provider>
-
-          <validation-provider name="company" rules v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Company"
-              v-model="form.company"
-              class="mt-5 w-full"
-            />
-            <span>{{ errors[0] }}</span>
-          </validation-provider>
-
-          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">Admin</vs-checkbox>
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
-
-          <vs-select label="Groups" class="w-full mt-5" v-model="form.group_id">
-            <vs-select-item
-              :key="index"
-              :value="item"
-              :text="item.name"
-              v-for="(item,index) in groups"
-            />
-          </vs-select>
 
           <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span>{{ errors[0] }}</span>
@@ -100,10 +48,14 @@
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import {
-  updateUser,
-  createUser,
-  getGroup
+  getUser,
 } from "@/http/requests/user/index.js";
+
+import {
+  updateVehicle,
+  createVehicle,
+  getSeat,
+} from "@/http/requests/vehicle/index.js";
 
 export default {
   components: {
@@ -144,17 +96,14 @@ export default {
     return {
       form: {
         id: undefined,
-        username: "",
-        email: "",
-        name: "",
-        phone: "",
-        is_superuser: false,
-        is_active: false,
-        groups: [],
-        group_id: [],
-        company: ""
+        license_plate: "",
+        is_active: true,
+        seats: 5,
+        seat_id: undefined,
+        driver_id: undefined,
       },
-      groups: [],
+      users: [],
+      seats: [],
       settings: {
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
@@ -162,27 +111,36 @@ export default {
     };
   },
   mounted() {
-    if (Object.entries(this.data).length === 0) {
-      this.getGroup();
+
+    if (Object.entries(this.users).length === 0) {
+      this.getUserData();
+    }
+
+    if (Object.entries(this.seats).length === 0) {
+      this.getSeatData();
     }
   },
   methods: {
     submit() {
       if (this.isEdit) {
-        createUser(this.form).then(res => {
+        createVehicle(this.form).then(res => {
           this.isSidebarActiveLocal = false;
         });
       } else {
-        updateUser(this.form.id, this.form).then(res => {
+        updateVehicle(this.form.id, this.form).then(res => {
           this.isSidebarActiveLocal = false;
         });
       }
     },
-    getGroup() {
-      getGroup().then(res => {
-        const { result } = res;
-        this.groups = result;
-      });
+    getUserData() {
+      getUser().then(res => {
+        this.users = res.result
+      })
+    },
+    getSeatData() {
+      getSeat().then(res => {
+        this.seats = res.result
+      })
     }
   }
 };

@@ -40,7 +40,6 @@
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th sort-key="username">USERNAME</vs-th>
         <vs-th sort-key="email">EMAIL</vs-th>
-        <vs-th sort-key="name">Name</vs-th>
         <vs-th>PHONE</vs-th>
         <vs-th sort-key="company">COMPANY</vs-th>
         <vs-th sort-key="is_superuser">ADMIN</vs-th>
@@ -50,29 +49,26 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">{{ tr.id }}</vs-td>
-          <vs-td :data="tr.username">
+          <vs-td :data="tr.id" v-if="tr.id">{{ tr.id }}</vs-td>
+          <vs-td :data="tr.username" v-if="tr.username">
             <a @click="editData(tr)">{{ tr.username }}</a>
           </vs-td>
-          <vs-td :data="tr.email">
+          <vs-td :data="tr.email" v-if="tr.email">
             <a @click="editData(tr)">{{ tr.email }}</a>
           </vs-td>
-          <vs-td :data="tr.name">
-            <a @click="editData(tr)">{{ tr.name }}</a>
-          </vs-td>
-          <vs-td :data="tr.phone">
+          <vs-td :data="tr.phone" v-if="tr.phone">
             <a @click="editData(tr)">{{ tr.phone }}</a>
           </vs-td>
-          <vs-td :data="tr.company">
+          <vs-td :data="tr.company" v-if="tr.company">
             <a @click="editData(tr)">{{ tr.company }}</a>
           </vs-td>
-          <vs-td :data="tr.is_superuser">
+          <vs-td :data="tr.is_superuser" v-if="tr.is_superuser">
             <vs-checkbox v-model="tr.is_superuser" :disabled="true" style="float:left;" />
           </vs-td>
-          <vs-td :data="tr.is_active">
+          <vs-td :data="tr.is_active" v-if="tr.email">
             <vs-checkbox v-model="tr.is_active" :disabled="true" style="float:left;" />
           </vs-td>
-          <vs-td :data="tr.groups">
+          <vs-td :data="tr.groups" v-if="tr.groups">
             <a
               @click="editData(tr)"
             >{{ $_.join(tr.groups.map(f=> f.name), ',') }}</a>
