@@ -206,19 +206,6 @@ export default {
     z-index: 52010;
     width: 400px;
     max-width: 90vw;
-
-    .img-upload {
-      margin-top: 2rem;
-
-      .con-img-upload {
-        padding: 0;
-      }
-
-      .con-input-upload {
-        width: 100%;
-        margin: 0;
-      }
-    }
   }
 }
 

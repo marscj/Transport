@@ -1,5 +1,6 @@
 <template>
   <vs-sidebar
+    click-not-close
     position-right
     parent="body"
     default-index="1"
@@ -42,18 +43,18 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <p class="mt-5 ">Category</p>
+          <p class="mt-5">Category</p>
           <v-select
             v-model="category"
-            :value="form.category_id"
+            :value="form.category ? form.category.name : null"
             :options="categoryData"
             label="name"
           ></v-select>
 
-          <p class="mt-5 ">Driver</p>
+          <p class="mt-5">Driver</p>
           <v-select
             v-model="driver"
-            :value="form.driver_id"
+            :value="form.driver ? form.driver.username : null"
             :options="driverData"
             label="username"
           ></v-select>
@@ -105,6 +106,7 @@ export default {
     isSidebarActive(val) {
       if (!val) return;
       this.form = Object.assign({}, this.data);
+      console.log(this.form, "====");
     }
   },
   computed: {
@@ -129,6 +131,8 @@ export default {
         license_plate: "",
         is_active: true,
         seats: 5,
+        category: undefined,
+        driver: undefined,
         category_id: undefined,
         driver_id: undefined
       },
@@ -164,8 +168,15 @@ export default {
             }
           });
       } else {
-        console.log(this.driver, this.category)
-        updateVehicle(this.form.id, Object.assign(this.form, {category_id: this.category ? this.category.id: null, driver_id: this.driver ? this.driver.id : null}))
+        delete this.form.category;
+        delete this.form.driver;
+        updateVehicle(
+          this.form.id,
+          Object.assign(this.form, {
+            category_id: this.category ? this.category.id : null,
+            driver_id: this.driver ? this.driver.id : null
+          })
+        )
           .then(res => {
             this.isSidebarActiveLocal = false;
           })
@@ -200,19 +211,6 @@ export default {
     z-index: 52010;
     width: 400px;
     max-width: 90vw;
-
-    .img-upload {
-      margin-top: 2rem;
-
-      .con-img-upload {
-        padding: 0;
-      }
-
-      .con-input-upload {
-        width: 100%;
-        margin: 0;
-      }
-    }
   }
 }
 
