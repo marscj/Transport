@@ -34,6 +34,12 @@ class Order(models.Model):
 
 class OrderItinerary(models.Model):
 
+    date = models.DateField(blank=True, null=True)
+
+    time = models.TimeField(blank=True, null=True)
+
+    price = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
+
     itinerary = models.ForeignKey(Itinerary, on_delete=models.SET_NULL, related_name='order_itinerary', blank=True, null=True)
 
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='order_itinerary', blank=True, null=True)
