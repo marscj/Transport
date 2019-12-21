@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from .models import Itinerary, Seat, Price, Vehicle
+from .models import Itinerary, Category, Price, Vehicle
 
 class ItinerarySerializer(serializers.ModelSerializer):
 
@@ -9,17 +9,17 @@ class ItinerarySerializer(serializers.ModelSerializer):
         model = Itinerary
         fields = '__all__'
 
-class SeatSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Seat
+        model = Category
         fields = '__all__'
 
 class PriceSerializer(serializers.ModelSerializer):
 
     itinerary = ItinerarySerializer(required=False, read_only=True)
 
-    seat = SeatSerializer(required=False, read_only=True)
+    category = CategorySerializer(required=False, read_only=True)
     
     class Meta:
         model = Price

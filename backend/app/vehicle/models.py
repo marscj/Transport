@@ -9,18 +9,18 @@ class Itinerary(models.Model):
     class Meta:
         db_table = 'itinerary'
 
-class Seat(models.Model):
+class Category(models.Model):
         
     name = models.CharField(blank=True, null=True, max_length=64)
 
     class Meta:
-        db_table = 'seat'
+        db_table = 'category'
 
 class Price(models.Model):
 
     itinerary = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='price', blank=True, null=True)
 
-    seat = models.ForeignKey(Seat, on_delete=models.CASCADE, related_name='price', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='price', blank=True, null=True)
 
     price = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
 
@@ -35,7 +35,7 @@ class Vehicle(models.Model):
 
     seats = models.IntegerField(default=5)
 
-    seat = models.ForeignKey(Seat, on_delete=models.CASCADE, related_name='vehicle', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='vehicle', blank=True, null=True)
 
     driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
 

@@ -2,18 +2,18 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from middleware.permission import CustomModelPermissions
 
-from .models import Itinerary, Seat, Price, Vehicle
-from .serializers import ItinerarySerializer, SeatSerializer, PriceSerializer, VehicleSerializer
+from .models import Itinerary, Category, Price, Vehicle
+from .serializers import ItinerarySerializer, CategorySerializer, PriceSerializer, VehicleSerializer
 
 class ItineraryView(ModelViewSet):
     serializer_class = ItinerarySerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Itinerary.objects.all()
 
-class SeatView(ModelViewSet):
-    serializer_class = SeatSerializer
+class CategoryView(ModelViewSet):
+    serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
-    queryset = Seat.objects.all()
+    queryset = Category.objects.all()
 
 class PriceView(ModelViewSet):
     serializer_class = PriceSerializer

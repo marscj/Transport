@@ -39,9 +39,9 @@
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th style-key="license_plate">license plate</vs-th>
-        <vs-th style-key="seat">seat</vs-th>
-        <vs-th style-key="driver">driver</vs-th>
         <vs-th style-key="seats">seats</vs-th>
+        <vs-th style-key="driver">driver</vs-th>
+        <vs-th style-key="seat">seat</vs-th>
         <vs-th style-key="is_active">active</vs-th>
       </template>
 

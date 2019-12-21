@@ -122,7 +122,6 @@ export default {
     };
   },
   mounted() {
-
     if (Object.entries(this.users).length === 0) {
       this.getUserData();
     }
@@ -134,7 +133,6 @@ export default {
   methods: {
     submit() {
       if (this.isEdit) {
-        console.log(this.form, '-----')
         createVehicle(this.form).then(res => {
           this.isSidebarActiveLocal = false;
         }).catch(error => {
