@@ -18,52 +18,64 @@
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
-          <validation-provider
-            name="license plate"
-            rules="required|max:16|min:5"
-            v-slot="{ errors }"
-          >
+          <validation-provider name="username" rules="required|max:16|min:5" v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
-              label="License plate"
-              v-model="form.license_plate"
+              label="Username"
+              :disabled="!isEdit"
+              v-model="form.username"
               class="mt-5 w-full"
             />
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider
-            name="model"
-            rules="required|max:64|min:3"
-            v-slot="{ errors }"
-          >
+          <validation-provider name="email" rules="email|required" v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
-              label="model"
-              v-model="form.model"
+              label="Email"
+              :disabled="!isEdit"
+              v-model="form.email"
               class="mt-5 w-full"
             />
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="seats" rules="required|min_value:0" v-slot="{ errors }">
-            <vs-input-number
+          <validation-provider name="name" rules v-slot="{ errors }">
+            <vs-input
               data-vv-validate-on="blur"
-              label="Seats"
-              :step="1"
-              v-model="form.seats"
-              class="mt-5"
+              label="Name"
+              v-model="form.name"
+              class="mt-5 w-full"
             />
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <p class="mt-5">Category</p>
-          <v-select v-model="category" :options="categoryData" label="name"></v-select>
+          <validation-provider name="phone" rules v-slot="{ errors }">
+            <vs-input
+              data-vv-validate-on="blur"
+              label="Phone"
+              v-model="form.phone"
+              class="mt-5 w-full"
+            />
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
 
-          <p class="mt-5">Driver</p>
-          <v-select v-model="driver" :options="driverData" label="username"></v-select>
+          <validation-provider name="company" rules v-slot="{ errors }">
+            <vs-input
+              data-vv-validate-on="blur"
+              label="Company"
+              v-model="form.company"
+              class="mt-5 w-full"
+            />
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
+
+          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">Admin</vs-checkbox>
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
+
+          <p class="mt-5">Groups</p>
+          <v-select v-model="groups" :options="groupData" multiple label="name"></v-select>
 
           <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span>{{ errors[0] }}</span>
@@ -83,13 +95,11 @@
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import vSelect from "vue-select";
 
-import { getUser } from "@/http/requests/user/index.js";
-
 import {
-  updateVehicle,
-  createVehicle,
-  getCategory
-} from "@/http/requests/vehicle/index.js";
+  updateUser,
+  createUser,
+  getGroup
+} from "@/http/requests/user/index.js";
 
 export default {
   components: {
@@ -111,8 +121,7 @@ export default {
       if (!val) return;
       if (Object.entries(this.data).length) {
         this.form = Object.assign({}, this.data);
-        this.category = Object.assign({}, this.data.category);
-        this.driver = Object.assign({}, this.data.driver);
+        this.groups = this.data.groups ? this.data.groups.slice() : [];
       }
     }
   },
@@ -135,17 +144,16 @@ export default {
     return {
       form: {
         id: undefined,
-        license_plate: "",
-        model: "",
-        is_active: true,
-        seats: 5,
-        category_id: undefined,
-        driver_id: undefined
+        username: "",
+        email: "",
+        name: "",
+        phone: "",
+        is_superuser: false,
+        is_active: false,
+        company: ""
       },
-      category: undefined,
-      driver: undefined,
-      driverData: [],
-      categoryData: [],
+      groups: undefined,
+      groupData: [],
       settings: {
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
@@ -153,26 +161,18 @@ export default {
     };
   },
   mounted() {
-    if (Object.entries(this.driverData).length === 0) {
-      this.getUserData();
-    }
-
-    if (Object.entries(this.categoryData).length === 0) {
-      this.getCategoryData();
+    if (Object.entries(this.groupData).length === 0) {
+      this.getGroupData();
     }
   },
   methods: {
     submit() {
       if (this.isEdit) {
-        delete this.form.category;
-        delete this.form.driver;
-        createVehicle(
-          this.form, 
-          Object.assign(this.form, {
-            category_id: this.category ? this.category.id : null,
-            driver_id: this.driver ? this.driver.id : null
-          })
-        )
+        delete this.form.groups;
+        var formData = Object.assign(this.form, {
+          groups_id: this.groups.length ? this.groups.map(f => f.id) : null
+        });
+        createUser(formData)
           .then(res => {
             this.isSidebarActiveLocal = false;
           })
@@ -182,15 +182,11 @@ export default {
             }
           });
       } else {
-        delete this.form.category;
-        delete this.form.driver;
-        updateVehicle(
-          this.form.id,
-          Object.assign(this.form, {
-            category_id: this.category ? this.category.id : null,
-            driver_id: this.driver ? this.driver.id : null
-          })
-        )
+        delete this.form.groups;
+        var formData = Object.assign(this.form, {
+          groups_id: this.groups ? this.groups.map(f => f.id) : null
+        });
+        updateUser(this.form.id, formData)
           .then(res => {
             this.isSidebarActiveLocal = false;
           })
@@ -201,14 +197,10 @@ export default {
           });
       }
     },
-    getUserData() {
-      getUser().then(res => {
-        this.driverData = res.result;
-      });
-    },
-    getCategoryData() {
-      getCategory().then(res => {
-        this.categoryData = res.result;
+    getGroupData() {
+      getGroup().then(res => {
+        const { result } = res;
+        this.groupData = result;
       });
     }
   }

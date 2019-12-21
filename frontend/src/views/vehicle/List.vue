@@ -39,6 +39,7 @@
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th style-key="license_plate">license plate</vs-th>
+        <vs-th style-key="model">model</vs-th>
         <vs-th style-key="seats">seats</vs-th>
         <vs-th style-key="driver">driver</vs-th>
         <vs-th style-key="category">category</vs-th>
@@ -52,6 +53,9 @@
           </vs-td>
           <vs-td :data="tr.license_plate">
             <a @click="editData(tr)" v-if="tr.license_plate">{{ tr.license_plate }}</a>
+          </vs-td>
+          <vs-td :data="tr.model">
+            <a @click="editData(tr)" v-if="tr.model">{{ tr.model }}</a>
           </vs-td>
           <vs-td :data="tr.seats">
             <a @click="editData(tr)" v-if="tr.seats">{{ tr.seats }}</a>

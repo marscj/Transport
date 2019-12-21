@@ -35,6 +35,8 @@ class Vehicle(models.Model):
 
     seats = models.IntegerField(default=5)
 
+    model = models.CharField(blank=True, null=True, max_length=64) 
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='vehicle', blank=True, null=True)
 
     driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
