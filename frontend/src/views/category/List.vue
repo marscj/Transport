@@ -71,7 +71,8 @@ export default {
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      if(val) {
+      
+      if(!val) {
         this.$refs.table.refresh();
       }
     },
