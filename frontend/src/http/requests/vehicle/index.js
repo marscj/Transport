@@ -20,22 +20,22 @@ export function deleteItinerary(pk) {
   return axios.delete("itineraryies/" + `${pk}/`)
 }
 
-export function getSeat(parameter) {
-  return axios.get("seats/", {
+export function getCategory(parameter) {
+  return axios.get("categoryies/", {
     params: parameter
   })
 }
 
-export function updateSeat(pk, data) {
-  return axios.put("seats/" + `${pk}/`, data)
+export function updateCategory(pk, data) {
+  return axios.put("categoryies/" + `${pk}/`, data)
 }
 
-export function createSeat(data) {
-  return axios.post("seats/", data)
+export function createCategory(data) {
+  return axios.post("categoryies/", data)
 }
 
-export function deleteSeat(pk) {
-  return axios.delete("seats/" + `${pk}/`)
+export function deleteCategory(pk) {
+  return axios.delete("categoryies/" + `${pk}/`)
 }
 
 export function getPrice(parameter) {

@@ -150,21 +150,21 @@ export const asyncRouterMap = [{
         }
       },
       {
-        path: '/admin/seats',
-        name: 'seats',
-        component: () => import('@/views/seat/List.vue'),
+        path: '/admin/categoryies',
+        name: 'categoryies',
+        component: () => import('@/views/category/List.vue'),
         meta: {
-          name: 'Seat',
-          url: '/admin/seats',
-          slug: 'seat',
-          i18n: 'Seat',
+          name: 'Category',
+          url: '/admin/categoryies',
+          slug: 'category',
+          i18n: 'Category',
           icon: 'CircleIcon',
           breadcrumb: [{
               title: 'Source',
-              url: '/admin/seats'
+              url: '/admin/categoryies'
             },
             {
-              title: 'Seats',
+              title: 'Categoryies',
               active: true
             }
           ],

@@ -9,7 +9,7 @@
     <vx-table ref="table" :data="loadData">
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
-        <vs-th key="seat">SEAT</vs-th>
+        <vs-th key="category">CATEGORY</vs-th>
         <vs-th key="itinerary">ITINERARY</vs-th>
         <vs-th key="price">PRICE(AED)</vs-th>
       </template>
@@ -19,8 +19,8 @@
           <vs-td :data="tr.id">
             <span v-if="tr.id">{{ tr.id }}</span>
           </vs-td>
-          <vs-td :data="tr.seat">
-            <a @click="editData(tr)" v-if="tr.seat">{{ tr.seat.name }}</a>
+          <vs-td :data="tr.category">
+            <a @click="editData(tr)" v-if="tr.category">{{ tr.category.name }}</a>
           </vs-td>
           <vs-td :data="tr.itinerary">
             <a @click="editData(tr)" v-if="tr.itinerary">{{ tr.itinerary.name }}</a>

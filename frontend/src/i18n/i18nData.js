@@ -11,7 +11,7 @@ export default {
 	Driver: 'Driver',
 	Vehicle: 'Vehicle',
 	Itinerary: 'Itinerary',
-	Seat: 'Seat',
+	Category: 'Category',
 	Price: 'Price'
   },
   zh: {
@@ -25,7 +25,7 @@ export default {
 	Driver: '司机管理',
 	Vehicle: '车辆管理',
 	Itinerary: '行程管理',
-	Seat: '座位管理',
+	Category: '类别管理',
 	Price: '价格管理'
   }
 }

@@ -28,5 +28,5 @@ class UserGroupView(ModelViewSet):
 class PermissionView(ModelViewSet):
     serializer_class = PermissionSerializer
     permission_classes = [IsAuthenticatedAndReadOnly]
-    queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'vehicle', 'order', 'itinerary', 'seat', 'price', 'orderitinerary'])
+    queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'vehicle', 'order', 'itinerary', 'category', 'price', 'orderitinerary'])
     

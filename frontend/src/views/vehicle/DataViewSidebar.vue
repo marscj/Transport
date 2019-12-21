@@ -29,10 +29,10 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="seat" rules="required|min_value:0" v-slot="{ errors }">
+          <validation-provider name="seats" rules="required|min_value:0" v-slot="{ errors }">
             <vs-input-number
               data-vv-validate-on="blur"
-              label="Seat"
+              label="Seats"
               :step="1"
               v-model="form.seats"
               class="mt-5"

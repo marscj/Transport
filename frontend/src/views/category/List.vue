@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getSeat, deleteSeat } from "@/http/requests/vehicle/index.js";
+import { getCategory, deleteCategory } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
@@ -54,7 +54,7 @@ export default {
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getSeat(Object.assign(parameter, {})).then(res => {
+        return getCategory(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
       }
@@ -74,7 +74,7 @@ export default {
       this.$refs.table.refresh();
     },
     deleteData(id) {
-      deleteSeat(id).then(res => {
+      deleteCategory(id).then(res => {
         this.$refs.table.refresh();
       });
     },

@@ -41,7 +41,7 @@
         <vs-th style-key="license_plate">license plate</vs-th>
         <vs-th style-key="seats">seats</vs-th>
         <vs-th style-key="driver">driver</vs-th>
-        <vs-th style-key="seat">seat</vs-th>
+        <vs-th style-key="category">category</vs-th>
         <vs-th style-key="is_active">active</vs-th>
       </template>
 
@@ -59,8 +59,8 @@
           <vs-td :data="tr.driver">
             <a @click="editData(tr)" v-if="tr.driver">{{ tr.driver }}</a>
           </vs-td>
-          <vs-td :data="tr.seat">
-            <a @click="editData(tr)" v-if="tr.seat">{{ tr.seat }}</a>
+          <vs-td :data="tr.category">
+            <a @click="editData(tr)" v-if="tr.category">{{ tr.category.name }}</a>
           </vs-td>
           <vs-td :data="tr.is_active">
             <vs-checkbox v-model="tr.is_active" :disabled="true" style="float:left;" />
