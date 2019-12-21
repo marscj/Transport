@@ -32,14 +32,6 @@ class PermissionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class GroupDetailSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Group
-        fields = (
-            'id', 'name'
-        )
-
-class GroupDetailSerializer(serializers.ModelSerializer):
     
     permissions = PermissionSerializer(read_only=True, many=True)
 
@@ -65,7 +57,7 @@ class GroupDetailSerializer(serializers.ModelSerializer):
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
-    groups = GroupDetailSerializer(required=False, read_only=True, many=True)
+    groups = GroupDetailSerializer(required=False, many=True)
 
     class Meta:
         model = User
@@ -75,7 +67,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         groups = validated_data.pop('groups', None)
-        
+        print(groups, '------')
         if groups:
             instance.groups.all().delete()
             for group in groups:

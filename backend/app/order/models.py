@@ -1,6 +1,6 @@
 from django.db import models
 
-from app.vehicle.models import Vehicle, ModelPrice
+from app.vehicle.models import Vehicle, Itinerary
 from app.user.models import User
 
 class Order(models.Model):
@@ -30,11 +30,11 @@ class Order(models.Model):
     class Meta:
         db_table = 'order'
 
-class Itinerary(models.Model):
+class OrderItinerary(models.Model):
 
-    itinerary = models.ForeignKey(ModelPrice, on_delete=models.SET_NULL, related_name='itinerary_price', blank=True, null=True)
+    itinerary = models.ForeignKey(Itinerary, on_delete=models.SET_NULL, related_name='order_itinerary', blank=True, null=True)
 
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='itinerary', blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='order_itinerary', blank=True, null=True)
 
     class Meta:
-        db_table = 'itinerary'
+        db_table = 'order_itinerary'

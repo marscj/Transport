@@ -74,10 +74,10 @@
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
-          <vs-select label="Groups" class="w-full mt-5" v-model="select1">
+          <vs-select label="Groups" class="w-full mt-5" v-model="form.group_id">
             <vs-select-item
               :key="index"
-              :value="item.id"
+              :value="item"
               :text="item.name"
               v-for="(item,index) in groups"
             />
@@ -142,7 +142,6 @@ export default {
   },
   data() {
     return {
-      select1: undefined,
       form: {
         id: undefined,
         username: "",
@@ -151,6 +150,8 @@ export default {
         phone: "",
         is_superuser: false,
         is_active: false,
+        groups: [],
+        group_id: [],
         company: ""
       },
       groups: [],
