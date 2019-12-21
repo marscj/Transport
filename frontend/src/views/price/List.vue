@@ -7,15 +7,11 @@
     />
 
     <vx-table ref="table" :data="loadData" >
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between pb-4">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
-      </div>
-
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="seat">SEAT</vs-th>
         <vs-th key="itinerary">ITINERARY</vs-th>
-        <vs-th key="price">PRICE</vs-th>
+        <vs-th key="price">PRICE(AED)</vs-th>
       </template>
 
       <template slot-scope="{data}">

@@ -10,8 +10,8 @@ class ResponseMiddleware(MiddlewareMixin):
             print(request, request.data)
 
     def process_response(self, request, response):
-        # if response and hasattr(response, 'data'):
-        #     print(response.data)
+        if response and hasattr(response, 'data'):
+            print(response.data)
         return response
 
 class CustomJSONRenderer(JSONRenderer):

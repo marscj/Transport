@@ -98,10 +98,18 @@ export default {
       if(this.isEdit) {
         createSeat(this.form).then((res) => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         })
       } else {
         updateSeat(this.form.id, this.form).then((res) => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         })
       }
     }

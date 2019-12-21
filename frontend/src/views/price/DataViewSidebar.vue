@@ -18,11 +18,12 @@
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
-          <validation-provider name="name" rules="required|max:128|min:5" v-slot="{ errors }">
-            <vs-input
+          <validation-provider name="price" rules="required|min_value:0" v-slot="{ errors }">
+            <vs-input-number
               data-vv-validate-on="blur"
-              label="Name"
-              v-model="form.name"
+              label="Price"
+              :step="0.5"
+              v-model="form.price"
               class="mt-5 w-full"
             />
             <span>{{ errors[0] }}</span>
@@ -44,7 +45,7 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import { updateItinerary, createItinerary } from "@/http/requests/vehicle/index.js";
+import { updatePrice, createPrice } from "@/http/requests/vehicle/index.js";
 
 export default {
   components: {
@@ -96,12 +97,20 @@ export default {
   methods: {
     submit() {
       if(this.isEdit) {
-        createItinerary(this.form).then((res) => {
+        createPrice(this.form).then((res) => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         })
       } else {
-        updateItinerary(this.form.id, this.form).then((res) => {
+        updatePrice(this.form.id, this.form).then((res) => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         })
       }
     }
