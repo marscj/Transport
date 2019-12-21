@@ -119,7 +119,7 @@ export default {
   }),
   computed: {
     getTotalPages() {
-      this.getThs();
+      this.getThs;
       return Math.ceil(this.total / this.page_size);
     },
     isNoData() {
