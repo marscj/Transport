@@ -6,6 +6,6 @@ from .import views
 router = DefaultRouter()
 router.register(r'itinerarys', views.ItineraryView, basename='itinerary')
 router.register(r'seats', views.SeatView, basename='seat')
-router.register(r'prices', views.PriceSerializer, basename='price')
-router.register(r'vehices', views.VehicleSerializer, basename='vehicle')
+router.register(r'prices', views.PriceView, basename='price')
+router.register(r'vehices', views.VehicleView, basename='vehicle')
 urlpatterns = router.urls
