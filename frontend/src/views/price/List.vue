@@ -6,7 +6,7 @@
       :data="sidebarData"
     />
 
-    <vx-table ref="table" :data="loadData" >
+    <vx-table ref="table" :data="loadData">
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="seat">SEAT</vs-th>
@@ -16,7 +16,9 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id" v-if="tr.id">{{ tr.id }}</vs-td>
+          <vs-td :data="tr.id">
+            <span v-if="tr.id">{{ tr.id }}</span>
+          </vs-td>
           <vs-td :data="tr.seat">
             <a @click="editData(tr)" v-if="tr.seat">{{ tr.seat.name }}</a>
           </vs-td>

@@ -6,7 +6,7 @@
       :data="sidebarData"
     />
 
-    <vx-table ref="table" :data="loadData" >
+    <vx-table ref="table" :data="loadData">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between pb-4">
         <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
       </div>
@@ -19,9 +19,11 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id" v-if="tr.id">{{ tr.id }}</vs-td>
-          <vs-td :data="tr.name" v-if="tr.name">
-            <a @click="editData(tr)">{{ tr.name }}</a>
+          <vs-td :data="tr.id">
+            <span v-if="tr.id">{{ tr.id }}</span>
+          </vs-td>
+          <vs-td :data="tr.name">
+            <a @click="editData(tr)" v-if="tr.name">{{ tr.name }}</a>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
             <feather-icon
@@ -74,17 +76,17 @@ export default {
     deleteData(id) {
       deleteSeat(id).then(res => {
         this.$refs.table.refresh();
-      })
+      });
     },
     openConfirm(id) {
       this.$vs.dialog({
-        type: 'confirm',
-        color: 'danger',
+        type: "confirm",
+        color: "danger",
         title: `Confirm`,
-        text: 'Are you sure delete?',
+        text: "Are you sure delete?",
         accept: () => this.deleteData(id)
-      })
-    },
+      });
+    }
   }
 };
 </script>

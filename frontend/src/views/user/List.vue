@@ -49,29 +49,39 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id" v-if="tr.id">{{ tr.id }}</vs-td>
-          <vs-td :data="tr.username" v-if="tr.username">
-            <a @click="editData(tr)">{{ tr.username }}</a>
+          <vs-td :data="tr.id">
+            <span v-if="tr.id">{{ tr.id }}</span>
           </vs-td>
-          <vs-td :data="tr.email" v-if="tr.email">
-            <a @click="editData(tr)">{{ tr.email }}</a>
+          <vs-td :data="tr.username">
+            <a @click="editData(tr)" v-if="tr.username">{{ tr.username }}</a>
           </vs-td>
-          <vs-td :data="tr.phone" v-if="tr.phone">
-            <a @click="editData(tr)">{{ tr.phone }}</a>
+          <vs-td :data="tr.email">
+            <a @click="editData(tr)" v-if="tr.email">{{ tr.email }}</a>
           </vs-td>
-          <vs-td :data="tr.company" v-if="tr.company">
-            <a @click="editData(tr)">{{ tr.company }}</a>
+          <vs-td :data="tr.phone">
+            <a @click="editData(tr)" v-if="tr.phone">{{ tr.phone }}</a>
           </vs-td>
-          <vs-td :data="tr.is_superuser" v-if="tr.is_superuser">
-            <vs-checkbox v-model="tr.is_superuser" :disabled="true" style="float:left;" />
+          <vs-td :data="tr.company">
+            <a @click="editData(tr)" v-if="tr.company">{{ tr.company }}</a>
           </vs-td>
-          <vs-td :data="tr.is_active" v-if="tr.email">
-            <vs-checkbox v-model="tr.is_active" :disabled="true" style="float:left;" />
+          <vs-td :data="tr.is_superuser">
+            <vs-checkbox
+              v-model="tr.is_superuser"
+              :disabled="true"
+              style="float:left;"
+              v-if="tr.is_superuser"
+            />
           </vs-td>
-          <vs-td :data="tr.groups" v-if="tr.groups">
-            <a
-              @click="editData(tr)"
-            >{{ $_.join(tr.groups.map(f=> f.name), ',') }}</a>
+          <vs-td :data="tr.is_active">
+            <vs-checkbox
+              v-model="tr.is_active"
+              :disabled="true"
+              style="float:left;"
+              v-if="tr.is_active"
+            />
+          </vs-td>
+          <vs-td :data="tr.groups">
+            <a @click="editData(tr)" v-if="tr.groups">{{ $_.join(tr.groups.map(f=> f.name), ',') }}</a>
           </vs-td>
 
           <!-- <vs-td :data="tr.codename">

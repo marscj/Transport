@@ -171,10 +171,18 @@ export default {
       if (this.isEdit) {
         createUser(this.form).then(res => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         });
       } else {
         updateUser(this.form.id, this.form).then(res => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         });
       }
     },

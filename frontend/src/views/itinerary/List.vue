@@ -19,9 +19,11 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id" v-if="tr.id">{{ tr.id }}</vs-td>
-          <vs-td :data="tr.name" v-if="tr.name">
-            <a @click="editData(tr)">{{ tr.name }}</a>
+          <vs-td :data="tr.id">
+            <span v-if="tr.id">{{ tr.id }}</span>
+          </vs-td>
+          <vs-td :data="tr.name">
+            <a @click="editData(tr)" v-if="tr.name">{{ tr.name }}</a>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
             <feather-icon
@@ -38,7 +40,10 @@
 </template>
 
 <script>
-import { getItinerary, deleteItinerary } from "@/http/requests/vehicle/index.js";
+import {
+  getItinerary,
+  deleteItinerary
+} from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
@@ -74,17 +79,17 @@ export default {
     deleteData(id) {
       deleteItinerary(id).then(res => {
         this.$refs.table.refresh();
-      })
+      });
     },
     openConfirm(id) {
       this.$vs.dialog({
-        type: 'confirm',
-        color: 'danger',
+        type: "confirm",
+        color: "danger",
         title: `Confirm`,
-        text: 'Are you sure delete?',
+        text: "Are you sure delete?",
         accept: () => this.deleteData(id)
-      })
-    },
+      });
+    }
   }
 };
 </script>

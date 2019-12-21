@@ -29,6 +29,17 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
+          <validation-provider name="seat" rules="required|min_value:0" v-slot="{ errors }">
+            <vs-input-number
+              data-vv-validate-on="blur"
+              label="Seat"
+              :step="1"
+              v-model="form.seats"
+              class="mt-5"
+            />
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
+
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
           <validation-provider name="non_field_errors" v-slot="{ errors }">
@@ -123,12 +134,21 @@ export default {
   methods: {
     submit() {
       if (this.isEdit) {
+        console.log(this.form, '-----')
         createVehicle(this.form).then(res => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         });
       } else {
         updateVehicle(this.form.id, this.form).then(res => {
           this.isSidebarActiveLocal = false;
+        }).catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         });
       }
     },

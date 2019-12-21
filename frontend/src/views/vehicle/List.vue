@@ -47,18 +47,20 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">{{ tr.id }}</vs-td>
+          <vs-td :data="tr.id">
+            <span v-if="tr.id">{{ tr.id }}</span>
+          </vs-td>
           <vs-td :data="tr.license_plate">
-            <a @click="editData(tr)">{{ tr.license_plate }}</a>
-          </vs-td>
-          <vs-td :data="tr.seat">
-            <a @click="editData(tr)">{{ tr.seat }}</a>
-          </vs-td>
-          <vs-td :data="tr.driver">
-            <a @click="editData(tr)">{{ tr.driver.username }}</a>
+            <a @click="editData(tr)" v-if="tr.license_plate">{{ tr.license_plate }}</a>
           </vs-td>
           <vs-td :data="tr.seats">
-            <a @click="editData(tr)">{{ tr.driver.seats.name }}</a>
+            <a @click="editData(tr)" v-if="tr.seats">{{ tr.seats }}</a>
+          </vs-td>
+          <vs-td :data="tr.driver">
+            <a @click="editData(tr)" v-if="tr.driver">{{ tr.driver }}</a>
+          </vs-td>
+          <vs-td :data="tr.seat">
+            <a @click="editData(tr)" v-if="tr.seat">{{ tr.seat }}</a>
           </vs-td>
           <vs-td :data="tr.is_active">
             <vs-checkbox v-model="tr.is_active" :disabled="true" style="float:left;" />
