@@ -5,32 +5,32 @@ from django.db.models import Q
 
 from .models import Itinerary, Seat, Price
 
-def add_itinerary(instance):
+# def add_itinerary(instance):
     
-    for price in Price.objects.filter(seat=instance):
-        price.itinerary = instance
-        print.save()
+#     for price in Price.objects.all():
+#         price.itinerary = instance
+#         print.save()
 
-def add_seat(instance):
+# def add_seat(instance):
     
-    for price in Price.objects.filter(seat=instance):
-        price.seat = instance
-        print.save()
+#     for price in Price.objects.all():
+#         price.seat = instance
+#         print.save()
 
-@receiver(post_save, sender=Itinerary)
-def itinerary_model_post_save(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Itinerary)
+# def itinerary_model_post_save(sender, instance, created, **kwargs):
     
-    if created:
-        if not Price.objects.filter(itinerary=instance).exists():
-            Price.objects.create(itinerary=instance, price=0.0)
+#     if created:
+#         if not Price.objects.filter(itinerary=instance).exists():
+#             Price.objects.create(itinerary=instance, price=0.0)
             
-        add_itinerary(instance)
+#         add_itinerary(instance)
              
-@receiver(post_save, sender=Seat)
-def seat_model_post_save(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Seat)
+# def seat_model_post_save(sender, instance, created, **kwargs):
     
-    if created:
-        if not Price.objects.filter(seat=instance).exists():
-            Price.objects.create(seat=instance, price=0.0)
+#     if created:
+#         if not Price.objects.filter(seat=instance).exists():
+#             Price.objects.create(seat=instance, price=0.0)
             
-        add_seat(instance)
+#         add_seat(instance)

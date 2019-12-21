@@ -18,9 +18,9 @@ class Seat(models.Model):
 
 class Price(models.Model):
 
-    itinerary = models.ForeignKey(Itinerary, on_delete=models.SET_NULL, related_name='price', blank=True, null=True)
+    itinerary = models.ForeignKey(Itinerary, on_delete=models.CASCADE, related_name='price', blank=True, null=True)
 
-    seat = models.ForeignKey(Seat, on_delete=models.SET_NULL, related_name='price', blank=True, null=True)
+    seat = models.ForeignKey(Seat, on_delete=models.CASCADE, related_name='price', blank=True, null=True)
 
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
@@ -35,7 +35,7 @@ class Vehicle(models.Model):
 
     seats = models.IntegerField(default=5)
 
-    seat = models.ForeignKey(Seat, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
+    seat = models.ForeignKey(Seat, on_delete=models.CASCADE, related_name='vehicle', blank=True, null=True)
 
     driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
 

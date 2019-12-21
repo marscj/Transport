@@ -14,6 +14,7 @@
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="name">NAME</vs-th>
+        <vs-th style="width: 80px;">Action</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -22,6 +23,14 @@
           <vs-td :data="tr.name">
             <a @click="editData(tr)">{{ tr.name }}</a>
           </vs-td>
+          <vs-td class="whitespace-no-wrap">
+            <feather-icon
+              icon="TrashIcon"
+              svgClasses="w-5 h-5 hover:text-danger stroke-current"
+              class="ml-2"
+              @click.stop="openConfirm(tr.id)"
+            />
+          </vs-td>
         </vs-tr>
       </template>
     </vx-table>
@@ -29,7 +38,7 @@
 </template>
 
 <script>
-import { getSeat } from "@/http/requests/vehicle/index.js";
+import { getSeat, deleteSeat } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
@@ -61,7 +70,21 @@ export default {
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
       this.$refs.table.refresh();
-    }
+    },
+    deleteData(id) {
+      deleteSeat(id).then(res => {
+        this.$refs.table.refresh();
+      })
+    },
+    openConfirm(id) {
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: `Confirm`,
+        text: 'Are you sure delete?',
+        accept: () => this.deleteData(id)
+      })
+    },
   }
 };
 </script>
