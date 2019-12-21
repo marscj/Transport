@@ -15,15 +15,15 @@ class Order(models.Model):
 
     relatedId = models.CharField(blank=True, null=True, max_length=64)
 
-    status = models.CharField(default=OrderStatus.New, choices=OrderStatus.choices, max_length=16)
+    status = models.IntegerField(default=OrderStatus.New, choices=OrderStatus.choices)
 
     start_date = models.DateField(blank=True, null=True)
 
     end_date = models.DateField(blank=True, null=True)
 
-    remark = models.TextField(max_length=256, blank=True, null=True)
+    remark = models.TextField(blank=True, null=True)
 
-    itinerary = models.TextField(max_length=1024, blank=True, null=True)
+    itinerary = models.TextField(blank=True, null=True)
 
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
