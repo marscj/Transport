@@ -9,7 +9,10 @@ export default {
 	Group: 'Group',
 	Source: 'Source',
 	Driver: 'Driver',
-	Vehicle: 'Vehicle'
+	Vehicle: 'Vehicle',
+	Itinerary: 'Itinerary',
+	Seat: 'Seat',
+	Price: 'Price'
   },
   zh: {
 	Dashboard: '仪表盘',
@@ -20,6 +23,9 @@ export default {
 	Group: '组管理',
 	Source: '资源管理',
 	Driver: '司机管理',
-	Vehicle: '车辆管理'
+	Vehicle: '车辆管理',
+	Itinerary: '行程管理',
+	Seat: '座位管理',
+	Price: '价格管理'
   }
 }
