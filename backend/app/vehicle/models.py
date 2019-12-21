@@ -22,7 +22,7 @@ class Price(models.Model):
 
     seat = models.ForeignKey(Seat, on_delete=models.CASCADE, related_name='price', blank=True, null=True)
 
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
 
     class Meta:
         db_table = 'price'

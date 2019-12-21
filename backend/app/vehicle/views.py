@@ -18,7 +18,7 @@ class SeatView(ModelViewSet):
 class PriceView(ModelViewSet):
     serializer_class = PriceSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
-    queryset = Price.objects.all()
+    queryset = Price.objects.order_by('seat', 'itinerary')
 
 class VehicleView(ModelViewSet):
     serializer_class = VehicleSerializer
