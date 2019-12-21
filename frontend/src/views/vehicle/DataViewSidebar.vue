@@ -45,14 +45,14 @@
 
           <p class="mt-5">Category</p>
           <v-select
-            v-model="form.category"
+            v-model="category"
             :options="categoryData"
             label="name"
           ></v-select>
 
           <p class="mt-5">Driver</p>
           <v-select
-            v-model="form.driver"
+            v-model="driver"
             :options="driverData"
             label="username"
           ></v-select>
@@ -104,7 +104,8 @@ export default {
     isSidebarActive(val) {
       if (!val) return;
       this.form = Object.assign({}, this.data);
-      console.log(this.form, "====");
+      this.category = Object.assign({}, this.data.category);
+      this.driver = Object.assign({}, this.data.driver);
     }
   },
   computed: {
@@ -129,11 +130,11 @@ export default {
         license_plate: "",
         is_active: true,
         seats: 5,
-        category: undefined,
-        driver: undefined,
         category_id: undefined,
         driver_id: undefined
       },
+      category: undefined,
+      driver: undefined,
       driverData: [],
       categoryData: [],
       settings: {
@@ -164,6 +165,8 @@ export default {
             }
           });
       } else {
+        delete this.form.category;
+        delete this.form.driver;
         updateVehicle(
           this.form.id,
           Object.assign(this.form, {
