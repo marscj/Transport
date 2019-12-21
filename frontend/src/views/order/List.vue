@@ -8,7 +8,7 @@
 
     <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+        <div></div>
 
         <vs-dropdown vs-trigger-click class="cursor-pointer mr-4">
           <div
@@ -37,51 +37,49 @@
       </div>
 
       <template slot="thead">
-        <vs-th style-key="id" style="width: 80px;">ID</vs-th>
-        <vs-th sort-key="username">USERNAME</vs-th>
-        <vs-th sort-key="email">EMAIL</vs-th>
-        <vs-th>PHONE</vs-th>
-        <vs-th sort-key="company">COMPANY</vs-th>
-        <vs-th sort-key="is_superuser">ADMIN</vs-th>
-        <vs-th sort-key="is_active">ACTIVE</vs-th>
-        <vs-th>GROUP</vs-th>
+        <vs-th style-key="orderId" style="width: 100px;">Order_Id</vs-th>
+        <vs-th style-key="relatedId" style="width: 100px;">related_Id</vs-th>
+        <vs-th>Start_Date</vs-th>
+        <vs-th>End_Date</vs-th>
+        <vs-th>Itinerary</vs-th>
+        <vs-th>O-Itinerary</vs-th>
+        <vs-th>Vehicle</vs-th>
+        <vs-th>Driver</vs-th>
+        <vs-th>D-Phone</vs-th>
+        <vs-th>Remark</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">
-            <span v-if="tr.id">{{ tr.id }}</span>
+          <vs-td :data="tr.orderId">
+            <span v-if="tr.orderId">{{ tr.orderId }}</span>
           </vs-td>
-          <vs-td :data="tr.username">
-            <a @click="editData(tr)" v-if="tr.username">{{ tr.username }}</a>
+          <vs-td :data="tr.relatedId">
+            <span v-if="tr.relatedId">{{ tr.relatedId }}</span>
           </vs-td>
-          <vs-td :data="tr.email">
-            <a @click="editData(tr)" v-if="tr.email">{{ tr.email }}</a>
+          <vs-td :data="tr.start_date">
+            <span v-if="tr.start_date">{{ tr.start_date }}</span>
           </vs-td>
-          <vs-td :data="tr.phone">
-            <a @click="editData(tr)" v-if="tr.phone">{{ tr.phone }}</a>
+          <vs-td :data="tr.end_date">
+            <span v-if="tr.end_date">{{ tr.end_date }}</span>
           </vs-td>
-          <vs-td :data="tr.company">
-            <a @click="editData(tr)" v-if="tr.company">{{ tr.company }}</a>
+          <vs-td :data="tr.itinerary">
+            <span v-if="tr.itinerary">{{ tr.itinerary }}</span>
           </vs-td>
-          <vs-td :data="tr.is_superuser">
-            <vs-checkbox
-              v-model="tr.is_superuser"
-              :disabled="true"
-              style="float:left;"
-              v-if="tr.is_superuser"
-            />
+          <vs-td :data="tr.o_itinerary">
+            <span v-if="tr.o_itinerary">{{ tr.o_itinerary }}</span>
           </vs-td>
-          <vs-td :data="tr.is_active">
-            <vs-checkbox
-              v-model="tr.is_active"
-              :disabled="true"
-              style="float:left;"
-              v-if="tr.is_active"
-            />
+          <vs-td :data="tr.vehicle">
+            <span v-if="tr.vehicle">{{ tr.vehicle.license_plate }}</span>
           </vs-td>
-          <vs-td :data="tr.groups">
-            <a @click="editData(tr)" v-if="tr.groups">{{ $_.join(tr.groups.map(f=> f.name), ',') }}</a>
+          <vs-td :data="tr.driver">
+            <span v-if="tr.driver">{{ tr.driver.username }}</span>
+          </vs-td>
+          <vs-td :data="tr.driver">
+            <span v-if="tr.driver">{{ tr.driver.phone }}</span>
+          </vs-td>
+          <vs-td :data="tr.remark">
+            <span v-if="tr.remark">{{ tr.remark }}</span>
           </vs-td>
         </vs-tr>
       </template>
@@ -90,15 +88,8 @@
 </template>
 
 <script>
-import { getUser } from "@/http/requests/user/index.js";
+import { getOrder } from "@/http/requests/order/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
-
-const UserType = [
-  { value: 1, label: "Customer" },
-  { value: 2, label: "Driver" },
-  { value: 3, label: "Operator" },
-  { value: 4, label: "Accounting" }
-];
 
 export default {
   components: {
@@ -106,14 +97,13 @@ export default {
   },
   data() {
     return {
-      UserType,
       isMounted: false,
       page_size: 10,
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getUser(Object.assign(parameter, {})).then(res => {
+        return getOrder(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
       }
@@ -141,7 +131,7 @@ export default {
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      if(!val) {
+      if (!val) {
         this.$refs.table.refresh();
       }
     }
