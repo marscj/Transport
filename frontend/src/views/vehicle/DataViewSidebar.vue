@@ -18,7 +18,11 @@
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
-          <validation-provider name="License plate" rules="required|max:16|min:5" v-slot="{ errors }">
+          <validation-provider
+            name="License plate"
+            rules="required|max:16|min:5"
+            v-slot="{ errors }"
+          >
             <vs-input
               data-vv-validate-on="blur"
               label="License plate"
@@ -58,14 +62,12 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import {
-  getUser,
-} from "@/http/requests/user/index.js";
+import { getUser } from "@/http/requests/user/index.js";
 
 import {
   updateVehicle,
   createVehicle,
-  getSeat,
+  getCategory
 } from "@/http/requests/vehicle/index.js";
 
 export default {
@@ -111,10 +113,10 @@ export default {
         is_active: true,
         seats: 5,
         seat_id: undefined,
-        driver_id: undefined,
+        driver_id: undefined
       },
-      users: [],
-      seats: [],
+      userData: [],
+      categoryData: [],
       settings: {
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
@@ -122,43 +124,47 @@ export default {
     };
   },
   mounted() {
-    if (Object.entries(this.users).length === 0) {
+    if (Object.entries(this.userData).length === 0) {
       this.getUserData();
     }
 
-    if (Object.entries(this.seats).length === 0) {
-      this.getSeatData();
+    if (Object.entries(this.categoryData).length === 0) {
+      this.getCategoryData();
     }
   },
   methods: {
     submit() {
       if (this.isEdit) {
-        createVehicle(this.form).then(res => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
-        });
+        createVehicle(this.form)
+          .then(res => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       } else {
-        updateVehicle(this.form.id, this.form).then(res => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
-        });
+        updateVehicle(this.form.id, this.form)
+          .then(res => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       }
     },
     getUserData() {
       getUser().then(res => {
-        this.users = res.result
-      })
+        this.userData = res.result;
+      });
     },
-    getSeatData() {
-      getSeat().then(res => {
-        this.seats = res.result
-      })
+    getCategoryData() {
+      getCategory().then(res => {
+        this.categoryData = res.result;
+      });
     }
   }
 };

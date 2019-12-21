@@ -75,20 +75,12 @@
 import { getVehicle } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
-const UserType = [
-  { value: 1, label: "Customer" },
-  { value: 2, label: "Driver" },
-  { value: 3, label: "Operator" },
-  { value: 4, label: "Accounting" }
-];
-
 export default {
   components: {
     DataViewSidebar
   },
   data() {
     return {
-      UserType,
       isMounted: false,
       page_size: 10,
       addNewDataSidebar: false,
