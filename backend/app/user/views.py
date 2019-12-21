@@ -30,5 +30,5 @@ class PermissionView(ModelViewSet):
     serializer_class = PermissionSerializer
     pagination_class = None
     permission_classes = [IsAuthenticatedAndReadOnly]
-    queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'vehicle', 'order'])
+    queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'vehicle', 'order', 'itinerary', 'seat', 'price', 'orderitinerary'])
     
