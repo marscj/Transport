@@ -20,15 +20,15 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
-          <vs-td :data="data[indextr].seat">
-            <a @click="editData(data[indextr])" v-if="data[indextr].seat">{{ data[indextr].seat.name }}</a>
+          <vs-td :data="tr.id">{{ tr.id }}</vs-td>
+          <vs-td :data="tr.seat">
+            <a @click="editData(tr)" v-if="tr.seat">{{ tr.seat.name }}</a>
           </vs-td>
-          <vs-td :data="data[indextr].itinerary">
-            <a @click="editData(data[indextr])" v-if="data[indextr].itinerary">{{ data[indextr].itinerary.name }}</a>
+          <vs-td :data="tr.itinerary">
+            <a @click="editData(tr)" v-if="tr.itinerary">{{ tr.itinerary.name }}</a>
           </vs-td>
-          <vs-td :data="data[indextr].price">
-            <a @click="editData(data[indextr])" v-if="data[indextr].price">{{ data[indextr].price }}</a>
+          <vs-td :data="tr.price">
+            <a @click="editData(tr)" v-if="tr.price">{{ tr.price }}</a>
           </vs-td>
         </vs-tr>
       </template>

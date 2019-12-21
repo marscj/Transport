@@ -50,38 +50,38 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
-          <vs-td :data="data[indextr].username">
-            <a @click="editData(data[indextr])">{{ data[indextr].username }}</a>
+          <vs-td :data="tr.id">{{ tr.id }}</vs-td>
+          <vs-td :data="tr.username">
+            <a @click="editData(tr)">{{ tr.username }}</a>
           </vs-td>
-          <vs-td :data="data[indextr].email">
-            <a @click="editData(data[indextr])">{{ data[indextr].email }}</a>
+          <vs-td :data="tr.email">
+            <a @click="editData(tr)">{{ tr.email }}</a>
           </vs-td>
-          <vs-td :data="data[indextr].name">
-            <a @click="editData(data[indextr])">{{ data[indextr].name }}</a>
+          <vs-td :data="tr.name">
+            <a @click="editData(tr)">{{ tr.name }}</a>
           </vs-td>
-          <vs-td :data="data[indextr].phone">
-            <a @click="editData(data[indextr])">{{ data[indextr].phone }}</a>
+          <vs-td :data="tr.phone">
+            <a @click="editData(tr)">{{ tr.phone }}</a>
           </vs-td>
-          <vs-td :data="data[indextr].company">
-            <a @click="editData(data[indextr])">{{ data[indextr].company }}</a>
+          <vs-td :data="tr.company">
+            <a @click="editData(tr)">{{ tr.company }}</a>
           </vs-td>
-          <vs-td :data="data[indextr].is_superuser">
-            <vs-checkbox v-model="data[indextr].is_superuser" :disabled="true" style="float:left;" />
+          <vs-td :data="tr.is_superuser">
+            <vs-checkbox v-model="tr.is_superuser" :disabled="true" style="float:left;" />
           </vs-td>
-          <vs-td :data="data[indextr].is_active">
-            <vs-checkbox v-model="data[indextr].is_active" :disabled="true" style="float:left;" />
+          <vs-td :data="tr.is_active">
+            <vs-checkbox v-model="tr.is_active" :disabled="true" style="float:left;" />
           </vs-td>
-          <vs-td :data="data[indextr].groups">
+          <vs-td :data="tr.groups">
             <a
-              @click="editData(data[indextr])"
-            >{{ $_.join(data[indextr].groups.map(f=> f.name), ',') }}</a>
+              @click="editData(tr)"
+            >{{ $_.join(tr.groups.map(f=> f.name), ',') }}</a>
           </vs-td>
 
-          <!-- <vs-td :data="data[indextr].codename">
-            <a> {{ data[indextr].codename }} </a>
+          <!-- <vs-td :data="tr.codename">
+            <a> {{ tr.codename }} </a>
             <template slot="edit">
-              <vs-input v-model="data[indextr].codename" class="inputx" placeholder="name" />
+              <vs-input v-model="tr.codename" class="inputx" placeholder="name" />
             </template>
           </vs-td>-->
         </vs-tr>
