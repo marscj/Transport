@@ -45,16 +45,14 @@
 
           <p class="mt-5">Category</p>
           <v-select
-            v-model="category"
-            :value="form.category ? form.category.name : null"
+            v-model="form.category"
             :options="categoryData"
             label="name"
           ></v-select>
 
           <p class="mt-5">Driver</p>
           <v-select
-            v-model="driver"
-            :value="form.driver ? form.driver.username : null"
+            v-model="form.driver"
             :options="driverData"
             label="username"
           ></v-select>
@@ -136,8 +134,6 @@ export default {
         category_id: undefined,
         driver_id: undefined
       },
-      category: undefined,
-      driver: undefined,
       driverData: [],
       categoryData: [],
       settings: {
@@ -168,8 +164,6 @@ export default {
             }
           });
       } else {
-        delete this.form.category;
-        delete this.form.driver;
         updateVehicle(
           this.form.id,
           Object.assign(this.form, {
