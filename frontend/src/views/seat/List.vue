@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getItinerary } from "@/http/requests/vehicle/index.js";
+import { getSeat } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
@@ -43,7 +43,7 @@ export default {
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getItinerary(Object.assign(parameter, {})).then(res => {
+        return getSeat(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
       }

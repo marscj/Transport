@@ -13,7 +13,9 @@
 
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
-        <vs-th key="name">NAME</vs-th>
+        <vs-th key="seat">SEAT</vs-th>
+        <vs-th key="itinerary">ITINERARY</vs-th>
+        <vs-th key="price">PRICE</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -29,7 +31,7 @@
 </template>
 
 <script>
-import { getItinerary } from "@/http/requests/vehicle/index.js";
+import { getPrice } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
@@ -43,7 +45,7 @@ export default {
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getItinerary(Object.assign(parameter, {})).then(res => {
+        return getPrice(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
       }

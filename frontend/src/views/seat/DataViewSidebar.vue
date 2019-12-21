@@ -44,7 +44,7 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import { updateItinerary, createItinerary } from "@/http/requests/vehicle/index.js";
+import { updateSeat, createSeat } from "@/http/requests/vehicle/index.js";
 
 export default {
   components: {
@@ -96,11 +96,11 @@ export default {
   methods: {
     submit() {
       if(this.isEdit) {
-        createItinerary(this.form).then((res) => {
+        createSeat(this.form).then((res) => {
           this.isSidebarActiveLocal = false;
         })
       } else {
-        updateItinerary(this.form.id, this.form).then((res) => {
+        updateSeat(this.form.id, this.form).then((res) => {
           this.isSidebarActiveLocal = false;
         })
       }
