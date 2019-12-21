@@ -83,13 +83,6 @@
           <vs-td :data="tr.groups">
             <a @click="editData(tr)" v-if="tr.groups">{{ $_.join(tr.groups.map(f=> f.name), ',') }}</a>
           </vs-td>
-
-          <!-- <vs-td :data="tr.codename">
-            <a> {{ tr.codename }} </a>
-            <template slot="edit">
-              <vs-input v-model="tr.codename" class="inputx" placeholder="name" />
-            </template>
-          </vs-td>-->
         </vs-tr>
       </template>
     </vx-table>
