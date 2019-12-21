@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
 
     url(r'^api/', include('app.user.urls')),
+    url(r'^api/', include('app.vehicle.urls')),
+    url(r'^api/', include('app.order.urls')),
 ]

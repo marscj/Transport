@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
 from middleware.permission import CustomModelPermissions
 
 from .models import Itinerary, Seat, Price, Vehicle
@@ -24,6 +25,5 @@ class PriceView(ModelViewSet):
 
 class VehicleView(ModelViewSet):
     serializer_class = VehicleSerializer
-    pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Vehicle.objects.all()
