@@ -21,8 +21,14 @@
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
           <vs-td :data="data[indextr].id">{{ data[indextr].id }}</vs-td>
-          <vs-td :data="data[indextr].name">
-            <a @click="editData(data[indextr])">{{ data[indextr].name }}</a>
+          <vs-td :data="data[indextr].seat">
+            <a @click="editData(data[indextr])" v-if="data[indextr].seat">{{ data[indextr].seat.name }}</a>
+          </vs-td>
+          <vs-td :data="data[indextr].itinerary">
+            <a @click="editData(data[indextr])" v-if="data[indextr].itinerary">{{ data[indextr].itinerary.name }}</a>
+          </vs-td>
+          <vs-td :data="data[indextr].price">
+            <a @click="editData(data[indextr])" v-if="data[indextr].price">{{ data[indextr].price }}</a>
           </vs-td>
         </vs-tr>
       </template>
@@ -46,6 +52,7 @@ export default {
       selected: [],
       loadData: parameter => {
         return getPrice(Object.assign(parameter, {})).then(res => {
+          console.log(res)
           return res.result;
         });
       }

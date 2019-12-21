@@ -17,6 +17,10 @@ class SeatSerializer(serializers.ModelSerializer):
 
 class PriceSerializer(serializers.ModelSerializer):
 
+    itinerary = ItinerarySerializer(required=False, read_only=True)
+
+    seat = SeatSerializer(required=False, read_only=True)
+    
     class Meta:
         model = Price
         fields = '__all__'

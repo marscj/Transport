@@ -102,7 +102,7 @@ export default {
       type: Boolean
     },
     page_size: {
-      default: 10,
+      default: undefined,
       type: Number
     }
   },
@@ -115,11 +115,11 @@ export default {
     currentSortKey: null,
     currentSortType: null,
     total: 1,
-    page: 1
+    page: undefined
   }),
   computed: {
     getTotalPages() {
-        this.getThs;
+      this.getThs();
       return Math.ceil(this.total / this.page_size);
     },
     isNoData() {
@@ -186,10 +186,13 @@ export default {
         // ordering:
       });
       const result = this.data(parameter);
-      result
-        .then(res => {
-          this.datax = res.results;
-          this.total = res.count;
+      result.then(res => {
+          if(this.pagination) {
+            this.datax = res.results;
+            this.total = res.count;
+          } else {
+            this.datax = res;
+          }
         })
         .finally(() => {
           this.$nextTick(() => {
