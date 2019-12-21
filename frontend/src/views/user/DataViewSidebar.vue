@@ -74,14 +74,8 @@
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
-          <vs-select label="Groups" class="w-full mt-5" v-model="form.group_id">
-            <vs-select-item
-              :key="index"
-              :value="item"
-              :text="item.name"
-              v-for="(item,index) in groups"
-            />
-          </vs-select>
+          <p class="mt-5">Groups</p>
+          <v-select v-model="groups" :options="groupData" multiple label="name"></v-select>
 
           <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span>{{ errors[0] }}</span>
@@ -99,6 +93,8 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import vSelect from "vue-select";
+
 import {
   updateUser,
   createUser,
@@ -107,6 +103,7 @@ import {
 
 export default {
   components: {
+    vSelect,
     VuePerfectScrollbar
   },
   props: {
@@ -122,7 +119,10 @@ export default {
   watch: {
     isSidebarActive(val) {
       if (!val) return;
-      this.form = Object.assign({}, this.data);
+      if (Object.entries(this.data).length) {
+        this.form = Object.assign({}, this.data);
+        this.groups = this.data.groups ? this.data.groups.slice() : [];
+      }
     }
   },
   computed: {
@@ -150,11 +150,10 @@ export default {
         phone: "",
         is_superuser: false,
         is_active: false,
-        groups: [],
-        group_id: [],
         company: ""
       },
-      groups: [],
+      groups: undefined,
+      groupData: [],
       settings: {
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
@@ -162,34 +161,46 @@ export default {
     };
   },
   mounted() {
-    if (Object.entries(this.groups).length === 0) {
-      this.getGroup();
+    if (Object.entries(this.groupData).length === 0) {
+      this.getGroupData();
     }
   },
   methods: {
     submit() {
       if (this.isEdit) {
-        createUser(this.form).then(res => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
+        delete this.form.groups;
+        var formData = Object.assign(this.form, {
+          groups_id: this.groups.length ? this.groups.map(f => f.id) : null
         });
+        createUser(formData)
+          .then(res => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       } else {
-        updateUser(this.form.id, this.form).then(res => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
+        delete this.form.groups;
+        var formData = Object.assign(this.form, {
+          groups_id: this.groups ? this.groups.map(f => f.id) : null
         });
+        updateUser(this.form.id, formData)
+          .then(res => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       }
     },
-    getGroup() {
+    getGroupData() {
       getGroup().then(res => {
         const { result } = res;
-        this.groups = result;
+        this.groupData = result;
       });
     }
   }

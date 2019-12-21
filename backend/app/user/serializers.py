@@ -45,32 +45,34 @@ class GroupDetailSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         permission = validated_data.pop('permission', None)
-        if permission:
+        if permission is not None:
             if instance.permissions.filter(id=permission).exists():
                 instance.permissions.remove(permission)
             else:
                 instance.permissions.add(permission)
 
-        super().update(instance, validated_data)
-
-        return instance
+        return super().update(instance, validated_data)
 
 class UserDetailSerializer(serializers.ModelSerializer):
 
     groups = GroupDetailSerializer(required=False, many=True)
 
+    groups_id = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, write_only=True, many=True, queryset=Group.objects.all())
+
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'email', 'phone', 'name', 'company', 'is_superuser', 'is_active', 'groups'
+            'id', 'username', 'email', 'phone', 'name', 'company', 'is_superuser', 'is_active', 'groups', 'groups_id'
         )
 
     def update(self, instance, validated_data):
-        groups = validated_data.pop('groups', None)
-        if groups:
-            instance.groups.all().delete()
-            for group in groups:
-                instance.groups.add(group)
+        groups_id = validated_data.pop('groups_id', None)
+        if groups_id is not None:
+            for group in list(instance.groups.all()):
+                instance.groups.remove(group)
+                    
+            for id in groups_id:
+                instance.groups.add(id)
 
         return super().update(instance, validated_data)       
 

@@ -44,18 +44,10 @@
           </validation-provider>
 
           <p class="mt-5">Category</p>
-          <v-select
-            v-model="category"
-            :options="categoryData"
-            label="name"
-          ></v-select>
+          <v-select v-model="category" :options="categoryData" label="name"></v-select>
 
           <p class="mt-5">Driver</p>
-          <v-select
-            v-model="driver"
-            :options="driverData"
-            label="username"
-          ></v-select>
+          <v-select v-model="driver" :options="driverData" label="username"></v-select>
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
@@ -103,9 +95,11 @@ export default {
   watch: {
     isSidebarActive(val) {
       if (!val) return;
-      this.form = Object.assign({}, this.data);
-      this.category = Object.assign({}, this.data.category);
-      this.driver = Object.assign({}, this.data.driver);
+      if (Object.entries(this.data).length) {
+        this.form = Object.assign({}, this.data);
+        this.category = Object.assign({}, this.data.category);
+        this.driver = Object.assign({}, this.data.driver);
+      }
     }
   },
   computed: {
@@ -155,7 +149,15 @@ export default {
   methods: {
     submit() {
       if (this.isEdit) {
-        createVehicle(this.form)
+        delete this.form.category;
+        delete this.form.driver;
+        createVehicle(
+          this.form, 
+          Object.assign(this.form, {
+            category_id: this.category ? this.category.id : null,
+            driver_id: this.driver ? this.driver.id : null
+          })
+        )
           .then(res => {
             this.isSidebarActiveLocal = false;
           })
