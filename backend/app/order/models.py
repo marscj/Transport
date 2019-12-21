@@ -13,6 +13,8 @@ class Order(models.Model):
 
     orderId = models.CharField(blank=True, null=True, max_length=64)
 
+    relatedId = models.CharField(blank=True, null=True, max_length=64)
+
     status = models.CharField(default=OrderStatus.New, choices=OrderStatus.choices, max_length=16)
 
     start_date = models.DateField(blank=True, null=True)
@@ -21,11 +23,11 @@ class Order(models.Model):
 
     remark = models.TextField(max_length=256, blank=True, null=True)
 
+    itinerary = models.TextField(max_length=1024, blank=True, null=True)
+
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
-    driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_driver', blank=True, null=True)
-
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_customer', blank=True, null=True)
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='customer', blank=True, null=True)
 
     class Meta:
         db_table = 'order'
