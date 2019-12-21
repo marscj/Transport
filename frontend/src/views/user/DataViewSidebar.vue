@@ -102,7 +102,7 @@ import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import {
   updateUser,
   createUser,
-  getGroups
+  getGroup
 } from "@/http/requests/user/index.js";
 
 export default {
@@ -179,7 +179,7 @@ export default {
       }
     },
     getGroup() {
-      getGroups().then(res => {
+      getGroup().then(res => {
         const { result } = res;
         this.groups = result;
       });

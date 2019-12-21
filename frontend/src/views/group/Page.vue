@@ -38,8 +38,8 @@
 <script>
 import DataViewSidebar from "./DataViewSidebar.vue";
 import {
-  getGroups,
-  getPermissions,
+  getGroup,
+  getPermission,
   updateGroup
 } from "@/http/requests/user/index.js";
 
@@ -67,11 +67,11 @@ export default {
   },
   methods: {
     getList() {
-      return getGroups()
+      return getGroup()
         .then(res => {
           const { result } = res;
           this.groupData = result;
-          return getPermissions();
+          return getPermission();
         })
         .then(res => {
           const { result } = res;

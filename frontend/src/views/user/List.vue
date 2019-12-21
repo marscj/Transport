@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { getUsers } from "@/http/requests/user/index.js";
+import { getUser } from "@/http/requests/user/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 const UserType = [
@@ -114,7 +114,7 @@ export default {
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getUsers(Object.assign(parameter, {})).then(res => {
+        return getUser(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
       }

@@ -2,7 +2,7 @@ import {
   axios
 } from '@/utils/request'
 
-export function getUser(parameter) {
+export function getItinerary(parameter) {
   return axios.get("users/", {
     params: parameter
   })
