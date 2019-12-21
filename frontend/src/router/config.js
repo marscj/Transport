@@ -127,6 +127,7 @@ export const asyncRouterMap = [{
     meta: {
       header: 'Source',
       i18n: 'Source',
+      permission: [ 'itinerary', 'category', 'price', 'vehicle' ],
     },
     children: [{
         path: '/admin/itineraryies',
@@ -138,6 +139,7 @@ export const asyncRouterMap = [{
           slug: 'itinerary',
           i18n: 'Itinerary',
           icon: 'CircleIcon',
+          permission: [ 'itinerary' ],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/itineraryies'
@@ -159,6 +161,7 @@ export const asyncRouterMap = [{
           slug: 'category',
           i18n: 'Category',
           icon: 'CircleIcon',
+          permission: [ 'category', ],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/categoryies'
@@ -180,6 +183,7 @@ export const asyncRouterMap = [{
           slug: 'price',
           i18n: 'Price',
           icon: 'CircleIcon',
+          permission: [ 'price' ],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/prices'
@@ -201,6 +205,7 @@ export const asyncRouterMap = [{
           slug: 'vehicle',
           i18n: 'Vehicle',
           icon: 'CircleIcon',
+          permission: [ 'vehicle' ],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/drivers'
