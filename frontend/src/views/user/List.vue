@@ -37,7 +37,7 @@
       </div>
 
       <template slot="thead">
-        <vs-th style-key="width: 80px;">ID</vs-th>
+        <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th sort-key="username">USERNAME</vs-th>
         <vs-th sort-key="email">EMAIL</vs-th>
         <vs-th sort-key="name">Name</vs-th>

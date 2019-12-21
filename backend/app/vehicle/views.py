@@ -7,19 +7,16 @@ from .serializers import ItinerarySerializer, SeatSerializer, PriceSerializer, V
 
 class ItineraryView(ModelViewSet):
     serializer_class = ItinerarySerializer
-    pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Itinerary.objects.all()
 
 class SeatView(ModelViewSet):
     serializer_class = SeatSerializer
-    pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Seat.objects.all()
 
 class PriceView(ModelViewSet):
     serializer_class = PriceSerializer
-    pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Price.objects.all()
 

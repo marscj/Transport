@@ -7,12 +7,10 @@ from .serializers import OrderSerializer, OrderItinerarySerializer
 
 class OrderView(ModelViewSet):
     serializer_class = OrderSerializer
-    pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Order.objects.all()
 
 class OrderItineraryView(ModelViewSet):
     serializer_class = OrderItinerarySerializer
-    pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = OrderItinerary.objects.all()

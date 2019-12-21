@@ -22,13 +22,11 @@ class UserView(ModelViewSet):
 
 class UserGroupView(ModelViewSet):
     serializer_class = GroupDetailSerializer
-    pagination_class = None
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Group.objects.all()
 
 class PermissionView(ModelViewSet):
     serializer_class = PermissionSerializer
-    pagination_class = None
     permission_classes = [IsAuthenticatedAndReadOnly]
     queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'vehicle', 'order', 'itinerary', 'seat', 'price', 'orderitinerary'])
     
