@@ -67,7 +67,6 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         groups = validated_data.pop('groups', None)
-        print(groups, '------')
         if groups:
             instance.groups.all().delete()
             for group in groups:

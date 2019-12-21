@@ -1,6 +1,5 @@
 <template>
   <vs-sidebar
-    click-not-close
     position-right
     parent="body"
     default-index="1"
@@ -26,7 +25,6 @@
             <vs-input
               data-vv-validate-on="blur"
               label="License plate"
-              :disabled="!isEdit"
               v-model="form.license_plate"
               class="mt-5 w-full"
             />
@@ -43,6 +41,22 @@
             />
             <span>{{ errors[0] }}</span>
           </validation-provider>
+
+          <p class="mt-5 ">Category</p>
+          <v-select
+            v-model="category"
+            :value="form.category_id"
+            :options="categoryData"
+            label="name"
+          ></v-select>
+
+          <p class="mt-5 ">Driver</p>
+          <v-select
+            v-model="driver"
+            :value="form.driver_id"
+            :options="driverData"
+            label="username"
+          ></v-select>
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
@@ -62,6 +76,8 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import vSelect from "vue-select";
+
 import { getUser } from "@/http/requests/user/index.js";
 
 import {
@@ -72,6 +88,7 @@ import {
 
 export default {
   components: {
+    vSelect,
     VuePerfectScrollbar
   },
   props: {
@@ -112,10 +129,12 @@ export default {
         license_plate: "",
         is_active: true,
         seats: 5,
-        seat_id: undefined,
+        category_id: undefined,
         driver_id: undefined
       },
-      userData: [],
+      category: undefined,
+      driver: undefined,
+      driverData: [],
       categoryData: [],
       settings: {
         maxScrollbarLength: 60,
@@ -124,7 +143,7 @@ export default {
     };
   },
   mounted() {
-    if (Object.entries(this.userData).length === 0) {
+    if (Object.entries(this.driverData).length === 0) {
       this.getUserData();
     }
 
@@ -145,7 +164,8 @@ export default {
             }
           });
       } else {
-        updateVehicle(this.form.id, this.form)
+        console.log(this.driver, this.category)
+        updateVehicle(this.form.id, Object.assign(this.form, {category_id: this.category ? this.category.id: null, driver_id: this.driver ? this.driver.id : null}))
           .then(res => {
             this.isSidebarActiveLocal = false;
           })
@@ -158,7 +178,7 @@ export default {
     },
     getUserData() {
       getUser().then(res => {
-        this.userData = res.result;
+        this.driverData = res.result;
       });
     },
     getCategoryData() {

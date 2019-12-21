@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-
 from .models import Itinerary, Category, Price, Vehicle
+from app.user.serializers import UserDetailSerializer
 
 class ItinerarySerializer(serializers.ModelSerializer):
 
@@ -26,6 +26,14 @@ class PriceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class VehicleSerializer(serializers.ModelSerializer):
+
+    category = CategorySerializer(required=False, read_only=True)
+
+    driver = UserDetailSerializer(required=False, read_only=True)
+
+    category_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
+
+    driver_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
 
     class Meta:
         model = Vehicle

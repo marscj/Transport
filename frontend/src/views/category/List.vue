@@ -71,7 +71,9 @@ export default {
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      this.$refs.table.refresh();
+      if(val) {
+        this.$refs.table.refresh();
+      }
     },
     deleteData(id) {
       deleteCategory(id).then(res => {

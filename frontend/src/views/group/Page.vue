@@ -123,7 +123,10 @@ export default {
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      this.getList();
+      if(val) {
+        this.getList();
+      }
+      
     }
   }
 };

@@ -57,7 +57,7 @@
             <a @click="editData(tr)" v-if="tr.seats">{{ tr.seats }}</a>
           </vs-td>
           <vs-td :data="tr.driver">
-            <a @click="editData(tr)" v-if="tr.driver">{{ tr.driver }}</a>
+            <a @click="editData(tr)" v-if="tr.driver">{{ tr.driver.username }}</a>
           </vs-td>
           <vs-td :data="tr.category">
             <a @click="editData(tr)" v-if="tr.category">{{ tr.category.name }}</a>
@@ -115,7 +115,9 @@ export default {
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      this.$refs.table.refresh();
+      if(val) {
+        this.$refs.table.refresh();
+      }
     }
   }
 };
