@@ -16,23 +16,19 @@
           <span>Seats:</span>
         </div>
         <div class="w-11/12">
-          <a href class="h-12 px-4 inline-block">
-            <p>10</p>
+          <a href v-for="(data, index) in seatData" :key="index" class="h-12 mx-4 inline-block">
+            <p>{{ data.seats }}</p>
           </a>
-          <a href class="h-12 px-4 inline-block">
-            <p>15</p>
-          </a>
-          <a href class="h-12 px-4 inline-block">
-            <p>30</p>
-          </a>
-          <a href class="h-12 px-4 inline-block">
-            <p>33</p>
-          </a>
-          <a href class="h-12 px-4 inline-block">
-            <p>35</p>
-          </a>
-          <a href class="h-12 px-4 inline-block">
-            <p>37</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap mt-5 text-lg">
+        <div class="w-1/12">
+          <span>Select:</span>
+        </div>
+        <div class="w-11/12">
+          <a href v-for="(data, index) in seatData" :key="index" class="h-12 mx-4 inline-block text-gray-900 grey-light">
+            <p class="text-gray-900">{{ data.seats }}</p>
           </a>
         </div>
       </div>
@@ -58,7 +54,7 @@ export default {
   data() {
     return {
       categoryData: [],
-      seatData:[],
+      seatData: []
     };
   },
   mounted() {
@@ -67,13 +63,15 @@ export default {
   methods: {
     formSubmitted() {},
     getCategoryData() {
-      getCategory().then(res => {
-        this.categoryData = res.result;
-        return getSeats();
-      }).then(res => {
-        console.log(res, '----')
-        this.seatData = res.result
-      });
+      getCategory()
+        .then(res => {
+          this.categoryData = res.result;
+          return getSeats();
+        })
+        .then(res => {
+          console.log(res, "----");
+          this.seatData = res.result;
+        });
     }
   }
 };
