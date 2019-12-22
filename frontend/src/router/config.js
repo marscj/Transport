@@ -76,11 +76,33 @@ export const asyncRouterMap = [{
           i18n: 'MyOrder',
           icon: 'FileTextIcon',
           breadcrumb: [{
-              title: 'MyOrder',
+              title: 'Order',
               url: '/admin/my_orders'
             },
             {
               title: 'MyOrders',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/create_order',
+        name: 'create_order',
+        component: () => import('@/views/order/Create.vue'),
+        meta: {
+          name: 'CreateOrder',
+          url: '/admin/create_order',
+          slug: 'create_order',
+          i18n: 'CreateOrder',
+          icon: 'FileTextIcon',
+          isDisabled: true,
+          breadcrumb: [{
+              title: 'MyOrder',
+              url: '/admin/my_orders'
+            },
+            {
+              title: 'CreateOrder',
               active: true
             }
           ],

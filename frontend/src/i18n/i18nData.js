@@ -13,7 +13,8 @@ export default {
 	Vehicle: 'Vehicle',
 	Itinerary: 'Itinerary',
 	Category: 'Category',
-	Price: 'Price'
+	Price: 'Price',
+	CreateOrder: 'CreateOrder'
   },
   zh: {
 	Dashboard: '仪表盘',
@@ -28,6 +29,7 @@ export default {
 	Vehicle: '车辆管理',
 	Itinerary: '行程管理',
 	Category: '类别管理',
-	Price: '价格管理'
+	Price: '价格管理',
+	CreateOrder: '创建订单'
   }
 }
