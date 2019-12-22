@@ -228,7 +228,8 @@ export default {
   },
   computed: {
     ...mapState({
-      navMenuItems: state => state.permission.addRouters.filter(f => !f.hidden)
+      // navMenuItems: state => state.permission.addRouters.filter(f => !f.hidden)
+      navMenuItems: state => state.permission.addRouters
     }),
     bodyOverlay() {
       return this.$store.state.bodyOverlay;
