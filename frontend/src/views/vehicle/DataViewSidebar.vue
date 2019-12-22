@@ -190,6 +190,7 @@ export default {
             this.isSidebarActiveLocal = false;
           })
           .catch(error => {
+            console.log(error.response, '-----')
             if (error.response) {
               this.$refs.observer.setErrors(error.response.data.result);
             }

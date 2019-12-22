@@ -38,3 +38,9 @@ class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
         fields = '__all__'
+
+class SeatSerializer(serializers.Serializer):
+
+    seats = serializers.IntegerField(read_only=True)
+
+    seats__count = serializers.IntegerField(read_only=True)

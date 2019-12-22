@@ -1,28 +1,44 @@
 <template>
   <vs-card>
-    <form-wizard
-      color="rgba(var(--vs-primary), 1)"
-      :title="null"
-      :subtitle="null"
-      finishButtonText="Submit"
-      @on-complete="formSubmitted"
-    >
-      <tab-content title="Base Info" class="mb-5">
-        <div class="vx-row">
-          <div class="vx-col md:w-1/2 w-full mt-5">
-            <button
-              class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-            >Button</button>
-          </div>
+    <div class="px-4">
+      <div class="flex flex-wrap mt-5 text-lg">
+        <div class="w-1/12">
+          <span>Category:</span>
         </div>
-      </tab-content>
+        <div class="w-11/12">
+          <a href v-for="data in categoryData" :key="data.id" class="h-12 px-4 inline-block">
+            <p>{{ data.name }}</p>
+          </a>
+        </div>
+      </div>
+      <div class="flex flex-wrap mt-5 text-lg">
+        <div class="w-1/12">
+          <span>Seats:</span>
+        </div>
+        <div class="w-11/12">
+          <a href class="h-12 px-4 inline-block">
+            <p>10</p>
+          </a>
+          <a href class="h-12 px-4 inline-block">
+            <p>15</p>
+          </a>
+          <a href class="h-12 px-4 inline-block">
+            <p>30</p>
+          </a>
+          <a href class="h-12 px-4 inline-block">
+            <p>33</p>
+          </a>
+          <a href class="h-12 px-4 inline-block">
+            <p>35</p>
+          </a>
+          <a href class="h-12 px-4 inline-block">
+            <p>37</p>
+          </a>
+        </div>
+      </div>
+    </div>
 
-      <tab-content title="Step 2" class="mb-5"></tab-content>
-
-      <tab-content title="Step 3" class="mb-5"></tab-content>
-    </form-wizard>
-
-    <price-view />
+    <price-view class="mt-10" />
   </vs-card>
 </template>
 
@@ -31,6 +47,8 @@ import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PriceView from "@/views/price/List.vue";
 
+import { getCategory } from "@/http/requests/vehicle/index.js";
+
 export default {
   components: {
     FormWizard,
@@ -38,11 +56,20 @@ export default {
     PriceView
   },
   data() {
-    return {};
+    return {
+      categoryData: [],
+      seatData:[],
+    };
+  },
+  mounted() {
+    this.getCategoryData();
   },
   methods: {
-    formSubmitted() {
-      alert("Form submitted!");
+    formSubmitted() {},
+    getCategoryData() {
+      return getCategory().then(res => {
+        this.categoryData = res.result;
+      });
     }
   }
 };
