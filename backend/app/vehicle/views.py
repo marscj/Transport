@@ -30,7 +30,12 @@ class VehicleView(ModelViewSet):
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticatedOrReadOnly])
     def seats(self, request):
-        query = Vehicle.objects.values('seats').annotate(count=Count('seats')).order_by('seats')
+        category = request.query_params.get('category', None)
+        query = None
+        if category:
+            query = Vehicle.objects.filter(category__id=category).values('seats').annotate(count=Count('seats')).order_by('seats')
+        else:
+            query = Vehicle.objects.values('seats').annotate(count=Count('seats')).order_by('seats')
         # Vehicle.objects.values('seats').distinct()
         serializer = SeatSerializer(instance=query, many=True)
         return Response(serializer.data) 
