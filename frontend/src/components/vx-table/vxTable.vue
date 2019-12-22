@@ -185,7 +185,7 @@ export default {
         page_size: this.page_size,
         // ordering:
       });
-      const result = this.data(parameter);
+      const result = this.pagination ? this.data(parameter) : this.data({});
       result.then(res => {
           if(this.pagination) {
             this.datax = res.results;

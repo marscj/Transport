@@ -1,8 +1,8 @@
 <template>
   <vs-card>
     <div class="px-4">
-      <div class="flex flex-wrap mt-5 text-lg">
-        <div class="w-1/12">
+      <div class="flex flex-wrap mt-5 text-base">
+        <div class="w-1/12 py-1">
           <span>Category:</span>
         </div>
         <div class="w-11/12">
@@ -10,14 +10,15 @@
             @click="onCategory(data)"
             v-for="data in categoryData"
             :key="data.id"
-            class="inline-block border border-blue-500 rounded hover:bg-gray-200 py-1 px-3 text-white mx-4"
+            :class="category === data.id ? 'inline-block border border-blue-500 rounded bg-blue-500 text-white py-1 px-3 mx-2' : 
+                                           'inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3 mx-2'"
           >
-            <p>{{ data.name }}</p>
+            <p :class="category === data.id ? 'text-white' : 'text-blue-500' ">{{ data.name }}</p>
           </a>
         </div>
       </div>
-      <div class="flex flex-wrap mt-5 text-lg">
-        <div class="w-1/12">
+      <div class="flex flex-wrap mt-5 text-base">
+        <div class="w-1/12 py-1">
           <span>Seats:</span>
         </div>
         <div class="w-11/12">
@@ -25,30 +26,18 @@
             @click="onSeat(data)"
             v-for="(data, index) in seatData"
             :key="index"
-            class="inline-block border border-blue-500 rounded hover:bg-gray-200 py-1 px-3 text-white mx-4"
+            :class="seat === data.seats ? 'inline-block border border-blue-500 rounded bg-blue-500 text-white py-1 px-3 mx-2' : 
+                                           'inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3 mx-2'"
           >
-            <p>{{ data.seats }}</p>
+            <p
+              :class="seat === data.seats ? 'text-white' : 'text-blue-500' "
+            >{{ data.seats }} (SEAT)</p>
           </a>
         </div>
       </div>
-
-      <div class="flex flex-wrap mt-5 text-lg">
-        <div class="w-1/12">
-          <span>Select:</span>
-        </div>
-        <div class="w-11/12">
-          <vs-chip
-            @click="remove(chip)"
-            v-for="(chip, index) in chips"
-            :key="index"
-            closable
-            color="primary"
-            class="py-1 px-3 mx-4"
-          >{{ chip }}</vs-chip>
-        </div>
-      </div>
     </div>
-    <price-table class="mt-10" />
+
+    <price-table class="mt-10" :parameter="query" />
   </vs-card>
 </template>
 
@@ -67,7 +56,7 @@ export default {
   },
   computed: {
     query() {
-      return Object.assign({ category: this.category }, { seat: this.seat })
+      return Object.assign({ category: this.category }, { seat: this.seat });
     }
   },
   watch: {
@@ -76,7 +65,8 @@ export default {
         name: "create_order",
         query: this.query
       });
-      this.getSeatData()
+      this.seat = undefined;
+      this.getSeatData();
     },
     seat() {
       this.$router.push({
@@ -90,13 +80,12 @@ export default {
       category: undefined,
       seat: undefined,
       categoryData: [],
-      seatData: [],
-      chips: ["10 SEAT HIACE / 30 SEAT COASTER", "15"]
+      seatData: []
     };
   },
   mounted() {
     this.getCategoryData();
-    this.getSeatData()
+    this.getSeatData();
   },
   methods: {
     remove(item) {
@@ -117,6 +106,15 @@ export default {
     },
     onSeat(data) {
       this.seat = data.seats;
+    }
+  }
+};
+
+Array.prototype.pushNoRepeat = function() {
+  for (var i = 0; i < arguments.length; i++) {
+    var ele = arguments[i];
+    if (this.indexOf(ele) == -1) {
+      this.push(ele);
     }
   }
 };

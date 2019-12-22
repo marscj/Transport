@@ -43,6 +43,17 @@ export default {
   components: {
     DataViewSidebar
   },
+  props: {
+    parameter: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  watch: {
+    parameter() {
+      this.$refs.table.refresh()
+    }
+  },
   data() {
     return {
       page_size: 10,
@@ -50,7 +61,7 @@ export default {
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getPrice(Object.assign(parameter, {})).then(res => {
+        return getPrice(Object.assign(parameter, this.parameter)).then(res => {
           return res.result;
         });
       }
