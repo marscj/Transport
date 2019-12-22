@@ -97,11 +97,11 @@ export default {
   methods: {
     submit() {
       if(this.isEdit) {
-        createGroup(this.form).then((res) => {
+        createGroup(this.form).then(() => {
           this.isSidebarActiveLocal = false;
         })
       } else {
-        updateGroups(this.form.id, this.form).then((res) => {
+        updateGroups(this.form.id, this.form).then(() => {
           this.isSidebarActiveLocal = false;
         })
       }

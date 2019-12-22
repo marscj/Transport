@@ -96,7 +96,7 @@ export default {
   methods: {
     submit() {
       if(this.isEdit) {
-        createItinerary(this.form).then((res) => {
+        createItinerary(this.form).then(() => {
           this.isSidebarActiveLocal = false;
         }).catch(error => {
           if (error.response) {
@@ -104,7 +104,7 @@ export default {
           }
         })
       } else {
-        updateItinerary(this.form.id, this.form).then((res) => {
+        updateItinerary(this.form.id, this.form).then(() => {
           this.isSidebarActiveLocal = false;
         }).catch(error => {
           if (error.response) {

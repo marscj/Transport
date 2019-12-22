@@ -169,11 +169,11 @@ export default {
     submit() {
       if (this.isEdit) {
         delete this.form.groups;
-        var formData = Object.assign(this.form, {
+        let formData = Object.assign(this.form, {
           groups_id: this.groups.length ? this.groups.map(f => f.id) : null
         });
         createUser(formData)
-          .then(res => {
+          .then(() => {
             this.isSidebarActiveLocal = false;
           })
           .catch(error => {
@@ -183,11 +183,11 @@ export default {
           });
       } else {
         delete this.form.groups;
-        var formData = Object.assign(this.form, {
+        let formData = Object.assign(this.form, {
           groups_id: this.groups ? this.groups.map(f => f.id) : null
         });
         updateUser(this.form.id, formData)
-          .then(res => {
+          .then(() => {
             this.isSidebarActiveLocal = false;
           })
           .catch(error => {

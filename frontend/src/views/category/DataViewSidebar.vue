@@ -96,7 +96,7 @@ export default {
   methods: {
     submit() {
       if(this.isEdit) {
-        createCategory(this.form).then((res) => {
+        createCategory(this.form).then(() => {
           this.isSidebarActiveLocal = false;
         }).catch(error => {
           if (error.response) {
@@ -104,7 +104,7 @@ export default {
           }
         })
       } else {
-        updateCategory(this.form.id, this.form).then((res) => {
+        updateCategory(this.form.id, this.form).then(() => {
           this.isSidebarActiveLocal = false;
         }).catch(error => {
           if (error.response) {

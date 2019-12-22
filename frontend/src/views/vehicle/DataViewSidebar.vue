@@ -32,11 +32,7 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider
-            name="model"
-            rules="required|max:64|min:3"
-            v-slot="{ errors }"
-          >
+          <validation-provider name="model" rules="required|max:64|min:3" v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
               label="model"
@@ -167,13 +163,13 @@ export default {
         delete this.form.category;
         delete this.form.driver;
         createVehicle(
-          this.form, 
+          this.form,
           Object.assign(this.form, {
             category_id: this.category ? this.category.id : null,
             driver_id: this.driver ? this.driver.id : null
           })
         )
-          .then(res => {
+          .then(() => {
             this.isSidebarActiveLocal = false;
           })
           .catch(error => {
@@ -190,8 +186,7 @@ export default {
             category_id: this.category ? this.category.id : null,
             driver_id: this.driver ? this.driver.id : null
           })
-        )
-          .then(res => {
+        ).then(() => {
             this.isSidebarActiveLocal = false;
           })
           .catch(error => {

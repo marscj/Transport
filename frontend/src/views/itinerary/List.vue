@@ -79,7 +79,7 @@ export default {
       }
     },
     deleteData(id) {
-      deleteItinerary(id).then(res => {
+      deleteItinerary(id).then(() => {
         this.$refs.table.refresh();
       });
     },

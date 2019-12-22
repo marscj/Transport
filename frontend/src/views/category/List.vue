@@ -77,7 +77,7 @@ export default {
       }
     },
     deleteData(id) {
-      deleteCategory(id).then(res => {
+      deleteCategory(id).then(() => {
         this.$refs.table.refresh();
       });
     },
