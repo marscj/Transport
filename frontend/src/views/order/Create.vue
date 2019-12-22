@@ -27,9 +27,9 @@
           <span>Select:</span>
         </div>
         <div class="w-11/12">
-          <a href v-for="(data, index) in seatData" :key="index" class="h-12 mx-4 inline-block text-gray-900 grey-light">
-            <p class="text-gray-900">{{ data.seats }}</p>
-          </a>
+          <vs-chip @click="remove(chip)" v-for="(chip, index) in chips" :key="index" closable color="primary" class="h-8 mx-4">
+            {{ chip }}
+          </vs-chip>
         </div>
       </div>
     </div>
@@ -54,14 +54,20 @@ export default {
   data() {
     return {
       categoryData: [],
-      seatData: []
+      seatData: [],
+      chips:[
+        '10 SEAT HIACE / 30 SEAT COASTER',
+        '15',
+      ],
     };
   },
   mounted() {
     this.getCategoryData();
   },
   methods: {
-    formSubmitted() {},
+    remove (item) {
+      this.chips.splice(this.chips.indexOf(item), 1)
+    },
     getCategoryData() {
       getCategory()
         .then(res => {
@@ -69,7 +75,6 @@ export default {
           return getSeats();
         })
         .then(res => {
-          console.log(res, "----");
           this.seatData = res.result;
         });
     }
