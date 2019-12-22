@@ -8,7 +8,8 @@
 
     <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-        <div></div>
+        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-if="canCreate">Add New</vs-button>
+        <div v-else></div>
 
         <vs-dropdown vs-trigger-click class="cursor-pointer mr-4">
           <div
@@ -94,6 +95,12 @@ import DataViewSidebar from "./DataViewSidebar.vue";
 export default {
   components: {
     DataViewSidebar
+  },
+  props:{
+    canCreate: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {

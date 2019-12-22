@@ -42,29 +42,51 @@ export const asyncRouterMap = [{
     meta: {
       header: 'Order',
       i18n: 'Order',
-      permission: [ 'order' ],
+      permission: ['order'],
     },
     children: [{
-      path: '/admin/orders',
-      name: 'orders',
-      component: () => import('@/views/order/List.vue'),
-      meta: {
-        name: 'Order',
-        url: '/admin/orders',
-        slug: 'orders',
-        i18n: 'OrderList',
-        icon: 'FileTextIcon',
-        breadcrumb: [{
-            title: 'Order',
-            url: '/admin/orders'
-          },
-          {
-            title: 'Orders',
-            active: true
-          }
-        ],
+        path: '/admin/orders',
+        name: 'orders',
+        component: () => import('@/views/order/List.vue'),
+        meta: {
+          name: 'Order',
+          url: '/admin/orders',
+          slug: 'orders',
+          i18n: 'OrderList',
+          icon: 'FileTextIcon',
+          breadcrumb: [{
+              title: 'Order',
+              url: '/admin/orders'
+            },
+            {
+              title: 'Orders',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/my_orders',
+        name: 'my_orders',
+        component: () => import('@/views/order/MyOrder.vue'),
+        meta: {
+          name: 'MyOrder',
+          url: '/admin/my_orders',
+          slug: 'my_orders',
+          i18n: 'MyOrder',
+          icon: 'FileTextIcon',
+          breadcrumb: [{
+              title: 'MyOrder',
+              url: '/admin/my_orders'
+            },
+            {
+              title: 'MyOrders',
+              active: true
+            }
+          ],
+        }
       }
-    }]
+    ]
   },
   {
     path: '/admin/user',
@@ -73,7 +95,7 @@ export const asyncRouterMap = [{
     meta: {
       header: 'User',
       i18n: 'User',
-      permission: [ 'user', 'group' ],
+      permission: ['user', 'group'],
     },
     children: [{
         path: '/admin/users',
@@ -85,7 +107,7 @@ export const asyncRouterMap = [{
           slug: 'users',
           i18n: 'User',
           icon: 'UserIcon',
-          permission: [ 'user' ],
+          permission: ['user'],
           breadcrumb: [{
               title: 'User',
               url: '/admin/users'
@@ -107,7 +129,7 @@ export const asyncRouterMap = [{
           slug: 'group',
           i18n: 'Group',
           icon: 'UsersIcon',
-          permission: [ 'group' ],
+          permission: ['group'],
           breadcrumb: [{
               title: 'User',
               url: '/admin/groups'
@@ -128,7 +150,7 @@ export const asyncRouterMap = [{
     meta: {
       header: 'Source',
       i18n: 'Source',
-      permission: [ 'itinerary', 'category', 'price', 'vehicle' ],
+      permission: ['itinerary', 'category', 'price', 'vehicle'],
     },
     children: [{
         path: '/admin/itineraryies',
@@ -140,7 +162,7 @@ export const asyncRouterMap = [{
           slug: 'itinerary',
           i18n: 'Itinerary',
           icon: 'CircleIcon',
-          permission: [ 'itinerary' ],
+          permission: ['itinerary'],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/itineraryies'
@@ -162,7 +184,7 @@ export const asyncRouterMap = [{
           slug: 'category',
           i18n: 'Category',
           icon: 'CircleIcon',
-          permission: [ 'category', ],
+          permission: ['category', ],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/categoryies'
@@ -184,7 +206,7 @@ export const asyncRouterMap = [{
           slug: 'price',
           i18n: 'Price',
           icon: 'CircleIcon',
-          permission: [ 'price' ],
+          permission: ['price'],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/prices'
@@ -206,7 +228,7 @@ export const asyncRouterMap = [{
           slug: 'vehicle',
           i18n: 'Vehicle',
           icon: 'CircleIcon',
-          permission: [ 'vehicle' ],
+          permission: ['vehicle'],
           breadcrumb: [{
               title: 'Source',
               url: '/admin/drivers'
