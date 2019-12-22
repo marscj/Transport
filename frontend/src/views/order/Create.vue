@@ -47,7 +47,7 @@ import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PriceView from "@/views/price/List.vue";
 
-import { getCategory } from "@/http/requests/vehicle/index.js";
+import { getCategory, getSeats } from "@/http/requests/vehicle/index.js";
 
 export default {
   components: {
@@ -67,8 +67,12 @@ export default {
   methods: {
     formSubmitted() {},
     getCategoryData() {
-      return getCategory().then(res => {
+      getCategory().then(res => {
         this.categoryData = res.result;
+        return getSeats();
+      }).then(res => {
+        console.log(res, '----')
+        this.seatData = res.result
       });
     }
   }

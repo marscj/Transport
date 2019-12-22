@@ -73,3 +73,9 @@ export function createVehicle(data) {
 export function deleteVehicle(pk) {
   return axios.delete("vehices/" + `${pk}/`)
 }
+
+export function getSeats(parameter) {
+  return axios.get("vehices/seats/", {
+    params: parameter
+  })
+}

@@ -43,4 +43,4 @@ class SeatSerializer(serializers.Serializer):
 
     seats = serializers.IntegerField(read_only=True)
 
-    seats__count = serializers.IntegerField(read_only=True)
+    count = serializers.IntegerField(read_only=True)
