@@ -1,14 +1,14 @@
 <template>
   <vs-card id="data-list-thumb-view" class="data-list-container">
-    <data-view-sidebar
-      :isSidebarActive="addNewDataSidebar"
-      @closeSidebar="toggleDataSidebar"
-      :data="sidebarData"
-    />
-
     <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-if="canCreate">Add New</vs-button>
+        <vs-button
+          type="border"
+          icon-pack="feather"
+          icon="icon-plus"
+          @click="addNewData"
+          v-if="myOrder"
+        >Add New</vs-button>
         <div v-else></div>
 
         <vs-dropdown vs-trigger-click class="cursor-pointer mr-4">
@@ -90,27 +90,20 @@
 
 <script>
 import { getOrder } from "@/http/requests/order/index.js";
-import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
-  components: {
-    DataViewSidebar
-  },
-  props:{
-    canCreate: {
+  props: {
+    myOrder: {
       type: Boolean,
-      default: false,
+      default: false
     }
   },
   data() {
     return {
       isMounted: false,
       page_size: 10,
-      addNewDataSidebar: false,
-      sidebarData: {},
-      selected: [],
       loadData: parameter => {
-        return getOrder(Object.assign(parameter, {})).then(res => {
+        return getOrder(Object.assign(parameter, this.filter)).then(res => {
           return res.result;
         });
       }
@@ -122,26 +115,16 @@ export default {
     },
     total() {
       return this.isMounted ? this.$refs.table.total : 0;
+    },
+    filter() {
+      return this.myOrder ? { customer__id: this.$store.state.auth.id } : {};
     }
   },
   mounted() {
     this.isMounted = true;
   },
   methods: {
-    addNewData() {
-      this.sidebarData = {};
-      this.toggleDataSidebar(true);
-    },
-    editData(data) {
-      this.sidebarData = data;
-      this.toggleDataSidebar(true);
-    },
-    toggleDataSidebar(val = false) {
-      this.addNewDataSidebar = val;
-      if (!val) {
-        this.$refs.table.refresh();
-      }
-    }
+    addNewData() {}
   }
 };
 </script>
@@ -179,11 +162,7 @@ export default {
 
     .vs-table {
       border-collapse: collapse;
-      // border-collapse: separate;
-      // border-spacing: 10px 2px;
-      // padding: 10px;
       tr {
-        // box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.05);
         td {
           padding: 20px;
         }

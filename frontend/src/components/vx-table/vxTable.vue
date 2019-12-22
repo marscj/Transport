@@ -115,7 +115,7 @@ export default {
     currentSortKey: null,
     currentSortType: null,
     total: 1,
-    page: undefined
+    page: 1
   }),
   computed: {
     getTotalPages() {
