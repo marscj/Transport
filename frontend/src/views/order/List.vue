@@ -124,7 +124,11 @@ export default {
     this.isMounted = true;
   },
   methods: {
-    addNewData() {}
+    addNewData() {
+      this.$router.push({
+        name: "create_order"
+      });
+    }
   }
 };
 </script>
