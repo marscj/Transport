@@ -37,7 +37,13 @@
       </div>
     </div>
 
-    <price-table class="mt-10" :parameter="query" />
+    <price-table
+      class="mt-10"
+      :category="this.query ? this.query.category : null"
+      :showSidebar="false"
+      :showThead="false"
+      :showID="false"
+    />
   </vs-card>
 </template>
 
@@ -55,28 +61,45 @@ export default {
     PriceTable
   },
   computed: {
-    query() {
-      return Object.assign({ category: this.category }, { seat: this.seat });
+    queryBase64() {
+      // return Object.assign({ category: this.category }, { seat: this.seat });
+      return {
+        query: this.$base64.encode(
+          JSON.stringify({
+            category: this.category,
+            seat: this.seat
+          })
+        )
+      };
     }
   },
   watch: {
+    "$route.query"(oldVal, newVal) {
+      if (newVal) {
+        this.query = JSON.parse(this.$base64.decode(this.$route.query.query));
+      } else {
+        this.query = null;
+      }
+    },
+    "query.category"() {
+      this.getSeatData();
+    },
     category() {
       this.$router.push({
         name: "create_order",
-        query: this.query
+        query: this.queryBase64
       });
-      this.seat = undefined;
-      this.getSeatData();
     },
     seat() {
       this.$router.push({
         name: "create_order",
-        query: this.query
+        query: this.queryBase64
       });
     }
   },
   data() {
     return {
+      query: undefined,
       category: undefined,
       seat: undefined,
       categoryData: [],
@@ -97,7 +120,11 @@ export default {
       });
     },
     getSeatData() {
-      getSeats({ category: this.$route.query.category }).then(res => {
+      getSeats({
+        category: this.query
+          ? this.query.category
+          : null
+      }).then(res => {
         this.seatData = res.result;
       });
     },
@@ -106,15 +133,6 @@ export default {
     },
     onSeat(data) {
       this.seat = data.seats;
-    }
-  }
-};
-
-Array.prototype.pushNoRepeat = function() {
-  for (var i = 0; i < arguments.length; i++) {
-    var ele = arguments[i];
-    if (this.indexOf(ele) == -1) {
-      this.push(ele);
     }
   }
 };

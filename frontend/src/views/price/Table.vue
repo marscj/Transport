@@ -4,10 +4,11 @@
       :isSidebarActive="addNewDataSidebar"
       @closeSidebar="toggleDataSidebar"
       :data="sidebarData"
+      v-if="showSidebar"
     />
 
-    <vx-table ref="table" :data="loadData">
-      <template slot="thead">
+    <vx-table ref="table" :data="loadData" stripe>
+      <template slot="thead" v-if="showThead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="category">CATEGORY</vs-th>
         <vs-th key="itinerary">ITINERARY</vs-th>
@@ -16,17 +17,17 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">
+          <vs-td :data="tr.id" v-if="showID">
             <span v-if="tr.id">{{ tr.id }}</span>
           </vs-td>
-          <vs-td :data="tr.category">
+          <vs-td :data="tr.category" class="w-1/3">
             <a @click="editData(tr)" v-if="tr.category">{{ tr.category.name }}</a>
           </vs-td>
-          <vs-td :data="tr.itinerary">
+          <vs-td :data="tr.itinerary" class="w-1/3">
             <a @click="editData(tr)" v-if="tr.itinerary">{{ tr.itinerary.name }}</a>
           </vs-td>
-          <vs-td :data="tr.price">
-            <a @click="editData(tr)" v-if="tr.price">{{ tr.price }}</a>
+          <vs-td :data="tr.price" class="w-1/3">
+            <a @click="editData(tr)" v-if="tr.price">{{ tr.price }} AED</a>
           </vs-td>
         </vs-tr>
       </template>
@@ -44,13 +45,25 @@ export default {
     DataViewSidebar
   },
   props: {
-    parameter: {
-      type: Object,
-      default: () => {}
+    category: {
+      type: Number,
+      default: undefined
+    },
+    showSidebar: {
+      type: Boolean,
+      default: true
+    },
+    showThead: {
+      type: Boolean,
+      default: true
+    },
+    showID: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
-    parameter() {
+    category() {
       this.$refs.table.refresh()
     }
   },
@@ -61,7 +74,7 @@ export default {
       sidebarData: {},
       selected: [],
       loadData: parameter => {
-        return getPrice(Object.assign(parameter, this.parameter)).then(res => {
+        return getPrice(Object.assign(parameter, { category: this.category })).then(res => {
           return res.result;
         });
       }

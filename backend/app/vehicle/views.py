@@ -2,11 +2,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from middleware.permission import CustomModelPermissions
 from django.db.models import Count
+import django_filters
 
+from middleware.permission import CustomModelPermissions
 from .models import Itinerary, Category, Price, Vehicle
 from .serializers import ItinerarySerializer, CategorySerializer, PriceSerializer, VehicleSerializer, SeatSerializer
+
+class PriceFilter(django_filters.FilterSet):
+    category = django_filters.NumberFilter('category__id')
 
 class ItineraryView(ModelViewSet):
     serializer_class = ItinerarySerializer
@@ -22,6 +26,9 @@ class PriceView(ModelViewSet):
     serializer_class = PriceSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Price.objects.order_by('category', 'itinerary')
+
+    filterset_fields = ('category',)
+    filter_class = PriceFilter
 
 class VehicleView(ModelViewSet):
     serializer_class = VehicleSerializer
