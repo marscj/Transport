@@ -159,7 +159,7 @@ export default {
     page() {
       this.loadData();
     },
-    page_size(val) {
+    page_size() {
       this.page = 1
       this.loadData();
     }

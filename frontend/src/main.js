@@ -17,7 +17,7 @@ import './globalComponents.js'
 import './assets/scss/main.scss'
 
 // Tailwind
-import '@/assets/css/main.css'
+import '@/assets/css/tailwind.css'
 
 // i18n
 import i18n from './i18n/i18n'

@@ -97,7 +97,7 @@ export default {
   methods: {
     submit() {
       if(this.isEdit) {
-        createPrice(this.form).then((res) => {
+        createPrice(this.form).then(() => {
           this.isSidebarActiveLocal = false;
         }).catch(error => {
           if (error.response) {
@@ -105,7 +105,7 @@ export default {
           }
         })
       } else {
-        updatePrice(this.form.id, this.form).then((res) => {
+        updatePrice(this.form.id, this.form).then(() => {
           this.isSidebarActiveLocal = false;
         }).catch(error => {
           if (error.response) {
