@@ -17,6 +17,12 @@ class Order(models.Model):
 
     status = models.IntegerField(default=OrderStatus.New, choices=OrderStatus.choices)
 
+    #创建于
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    #修改于
+    change_at = models.DateTimeField(auto_now=True)
+
     start_date = models.DateField(blank=True, null=True)
 
     end_date = models.DateField(blank=True, null=True)
