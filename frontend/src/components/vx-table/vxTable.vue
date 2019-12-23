@@ -1,7 +1,8 @@
 <template>
   <div
     :class="[{'stripe': stripe, 'hoverFlat': hoverFlat}, `vs-table-${color}`]"
-    class="vs-component vs-con-table"
+    class="vs-component vs-con-table vs-con-loading__container"
+    ref="loading"
   >
     <!-- header -->
     <header class="header-table vs-table--header">
@@ -12,7 +13,8 @@
       </div>
     </header>
     <div class="con-tablex vs-table--content">
-      <div :style="styleConTbody" class="vs-con-tbody vs-table--tbody">
+      <!-- <div :style="styleConTbody" class="vs-con-tbody vs-table--tbody"> -->
+        <div :style="styleConTbody" class="vs-con-tbody">
         <table ref="table" class="vs-table vs-table--tbody-table">
           <thead ref="thead" class="vs-table--thead">
             <tr>
@@ -160,7 +162,7 @@ export default {
       this.loadData();
     },
     page_size() {
-      this.page = 1
+      this.page = 1;
       this.loadData();
     }
   },
@@ -173,21 +175,23 @@ export default {
     window.removeEventListener("resize", this.listenerChangeWidth);
   },
   methods: {
-    refresh (bool = false) {
-      if(bool) {
-        this.page = 1
+    refresh(bool = false) {
+      if (bool) {
+        this.page = 1;
       }
-      this.loadData()
+      this.loadData();
     },
     loadData() {
+      this.openLoading();
       const parameter = Object.assign({
         page: this.page,
-        page_size: this.page_size,
+        page_size: this.page_size
         // ordering:
       });
       const result = this.pagination ? this.data(parameter) : this.data({});
-      result.then(res => {
-          if(this.pagination) {
+      result
+        .then(res => {
+          if (this.pagination) {
             this.datax = res.results;
             this.total = res.count;
           } else {
@@ -199,13 +203,14 @@ export default {
             if (this.datax.length > 0) {
               this.changeTdsWidth();
             }
+            this.closeLoading();
           });
         });
     },
     sort(key, sortType) {
       this.currentSortKey = key;
       this.currentSortType = sortType;
-      this.loadData()
+      this.loadData();
     },
     changeCheckedMultiple() {
       let lengthx = this.data.length;
@@ -270,6 +275,15 @@ export default {
     },
     changeMaxItems(index) {
       this.page_size = this.descriptionItems[index];
+    },
+    openLoading() {
+      this.$vs.loading({
+        container: this.$refs.loading,
+        scale: 0.6
+      });
+    },
+    closeLoading() {
+      this.$vs.loading.close(this.$refs.loading);
     }
   }
 };

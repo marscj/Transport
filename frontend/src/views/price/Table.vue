@@ -7,7 +7,7 @@
       v-if="showSidebar"
     />
 
-    <vx-table ref="table" :data="loadData" stripe>
+    <vx-table ref="table" :data="loadData" >
       <template slot="thead" v-if="showThead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="category">CATEGORY</vs-th>
@@ -20,13 +20,13 @@
           <vs-td :data="tr.id" v-if="showID">
             <span v-if="tr.id">{{ tr.id }}</span>
           </vs-td>
-          <vs-td :data="tr.category" class="w-1/3">
+          <vs-td :data="tr.category" >
             <a @click="editData(tr)" v-if="tr.category">{{ tr.category.name }}</a>
           </vs-td>
-          <vs-td :data="tr.itinerary" class="w-1/3">
+          <vs-td :data="tr.itinerary">
             <a @click="editData(tr)" v-if="tr.itinerary">{{ tr.itinerary.name }}</a>
           </vs-td>
-          <vs-td :data="tr.price" class="w-1/3">
+          <vs-td :data="tr.price" >
             <a @click="editData(tr)" v-if="tr.price">{{ tr.price }} AED</a>
           </vs-td>
         </vs-tr>

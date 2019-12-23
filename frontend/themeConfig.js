@@ -1,5 +1,5 @@
 let colors = {
-	primary : '#2F54EB',
+	primary : '#4299e1',
 	success : '#28C76F',
 	danger  : '#EA5455',
 	warning : '#FF9F43',

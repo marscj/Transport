@@ -4,6 +4,11 @@ import store from '@/store'
 import { constantRouterMap, asyncRouterMap, defaultRoutePath } from './config'
 import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+};
+
 Vue.use(Router)
 
 const router = new Router({
