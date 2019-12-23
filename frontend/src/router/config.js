@@ -42,7 +42,6 @@ export const asyncRouterMap = [{
     meta: {
       header: 'Order',
       i18n: 'Order',
-      permission: ['order'],
     },
     children: [{
         path: '/admin/orders',
@@ -54,6 +53,7 @@ export const asyncRouterMap = [{
           slug: 'orders',
           i18n: 'OrderList',
           icon: 'FileTextIcon',
+          permission: ['order'],
           breadcrumb: [{
               title: 'Order',
               url: '/admin/orders'

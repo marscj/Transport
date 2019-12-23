@@ -62,8 +62,11 @@
                 </div>
                 <div class="w-10/12">
                   <div class="mx-4">
-                    <vs-textarea v-model="itinerary" height="200" />
+                    <vs-textarea v-model="itinerary" height="140" />
                   </div>
+                  <p class="mx-4 text-gray-400 text-sm">e.g.</p>
+                  <p class="mx-4 text-gray-400 text-sm">12-12 06:30, DXB TO CITY HOTEL</p>
+                  <p class="mx-4 text-gray-400 text-sm">12-13, SHARJHA CITY TOUR FULL DAY</p>
                 </div>
               </div>
 
@@ -73,7 +76,7 @@
                 </div>
                 <div class="w-10/12">
                   <div class="mx-4">
-                    <vs-textarea v-model="itinerary" height="200" />
+                    <vs-textarea v-model="remark" height="80" />
                   </div>
                 </div>
               </div>
@@ -86,10 +89,20 @@
               </div>
             </div>
           </div>
+          <div class="flex flex-wrap mt-5 text-base">
+            <div class="w-1/12 py-1">
+              <span>RelatedID:</span>
+            </div>
+            <div class="w-11/12">
+              <div class="py-1 px-3 mx-1">
+                <vs-input></vs-input>
+              </div>
+            </div>
+          </div>
           <div class="flex flex-wrap mt-10">
             <button
               class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
-            >Next</button>
+            >Submit</button>
           </div>
         </div>
       </div>
@@ -175,6 +188,7 @@ export default {
       start_date: undefined,
       end_date: undefined,
       itinerary: "",
+      remark: "",
       categoryData: [],
       seatData: [],
       itineraryData: []
@@ -210,7 +224,7 @@ export default {
       this.seat = data.seats;
     },
     onItinerary(data) {
-      this.itinerary += ('_-_ ' + data.name + '\n')
+      this.itinerary += data.name + "\n";
     },
     formSubmitted() {
       alert("Form submitted!");

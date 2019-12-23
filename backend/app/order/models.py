@@ -21,9 +21,13 @@ class Order(models.Model):
 
     end_date = models.DateField(blank=True, null=True)
 
-    remark = models.TextField(blank=True, null=True)
+    category = models.CharField(blank=True, null=True, max_length=64)
+
+    seats = models.IntegerField(default=5)
 
     itinerary = models.TextField(blank=True, null=True)
+
+    remark = models.TextField(blank=True, null=True)
 
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
