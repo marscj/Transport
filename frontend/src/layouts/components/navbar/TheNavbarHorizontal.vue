@@ -7,209 +7,30 @@
         :style="navbarStyle"
         :color="navbarColor"
       >
-        <template v-if="windowWidth >= 992">
-          <!-- STARRED PAGES - FIRST 10 -->
-          <ul class="vx-navbar__starred-pages">
-            <draggable
-              v-model="starredPagesLimited"
-              :group="{name: 'pinList'}"
-              class="flex cursor-move"
-            >
-              <li class="starred-page" v-for="page in starredPagesLimited" :key="page.url">
-                <vx-tooltip :text="page.label" position="bottom" delay=".3s">
-                  <feather-icon
-                    svgClasses="h-6 w-6"
-                    class="p-2 cursor-pointer"
-                    :icon="page.labelIcon"
-                    @click="$router.push(page.url).catch(() => {})"
-                  />
-                </vx-tooltip>
-              </li>
-            </draggable>
-          </ul>
-
-          <!-- STARRED PAGES MORE -->
-          <div class="vx-navbar__starred-pages--more-dropdown" v-if="starredPagesMore.length">
-            <vs-dropdown vs-custom-content vs-trigger-click>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" class="cursor-pointer p-2"></feather-icon>
-              <vs-dropdown-menu>
-                <ul class="vx-navbar__starred-pages-more--list">
-                  <draggable
-                    v-model="starredPagesMore"
-                    :group="{name: 'pinList'}"
-                    class="cursor-move"
-                  >
-                    <li
-                      class="starred-page--more flex items-center cursor-pointer"
-                      v-for="page in starredPagesMore"
-                      :key="page.url"
-                      @click="$router.push(page.url).catch(() => {})"
-                    >
-                      <feather-icon svgClasses="h-5 w-5" class="ml-2 mr-1" :icon="page.labelIcon"></feather-icon>
-                      <span class="px-2 pt-2 pb-1">{{ page.label }}</span>
-                    </li>
-                  </draggable>
-                </ul>
-              </vs-dropdown-menu>
-            </vs-dropdown>
-          </div>
-
-          <div class="bookmark-container">
-            <feather-icon
-              icon="StarIcon"
-              svgClasses="stoke-current text-warning"
-              class="cursor-pointer p-2"
-              @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown"
-            />
-            <div
-              v-click-outside="outside"
-              class="absolute bookmark-list w-1/3 xl:w-1/4 mt-4"
-              v-if="showBookmarkPagesDropdown"
-            >
-              <vx-auto-suggest
-                :autoFocus="true"
-                :data="navbarSearchAndPinList"
-                @selected="selected"
-                @actionClicked="actionClicked"
-                inputClassses="w-full"
-                show-action
-                show-pinned
-                background-overlay
-              ></vx-auto-suggest>
-            </div>
-          </div>
-        </template>
-
         <router-link tag="div" to="/" class="vx-logo cursor-pointer mx-auto flex items-center">
           <img :src="logo" alt="logo" class="w-10 mr-4" v-if="logo" />
           <span class="vx-logo-text">UBang</span>
         </router-link>
 
         <!-- I18N -->
-        <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
+        <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer mx-4">
           <span class="cursor-pointer flex items-center i18n-locale">
             <span class="hidden sm:block ml-2">{{ getCurrentLocaleData.lang }}</span>
           </span>
           <vs-dropdown-menu class="w-48 i18n-dropdown vx-navbar-dropdown">
-            <vs-dropdown-item @click="updateLocale('en')">
-              English
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="updateLocale('zh')">
-              Chinese
-            </vs-dropdown-item>
-          </vs-dropdown-menu>
-        </vs-dropdown>
-
-        <!-- SEARCHBAR -->
-        <div
-          class="search-full-container w-full h-full absolute left-0"
-          :class="{'flex': showFullSearch}"
-          v-show="showFullSearch"
-        >
-          <vx-auto-suggest
-            class="w-full"
-            inputClassses="w-full vs-input-no-border vs-input-no-shdow-focus"
-            :autoFocus="showFullSearch"
-            :data="navbarSearchAndPinList"
-            icon="SearchIcon"
-            placeholder="Search..."
-            ref="navbarSearch"
-            @closeSearchbar="showFullSearch = false"
-            @selected="selected"
-            background-overlay
-          />
-          <div class="absolute right-0 h-full z-50">
-            <feather-icon
-              icon="XIcon"
-              class="px-4 cursor-pointer h-full close-search-icon"
-              @click="showFullSearch = false"
-            ></feather-icon>
-          </div>
-        </div>
-        <feather-icon
-          icon="SearchIcon"
-          @click="showFullSearch = true"
-          class="cursor-pointer navbar-fuzzy-search ml-4"
-        ></feather-icon>
-
-        <!-- NOTIFICATIONS -->
-        <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-          <feather-icon
-            icon="BellIcon"
-            class="cursor-pointer mt-1 sm:mr-6 mr-2"
-            :badge="unreadNotifications.length"
-          ></feather-icon>
-          <vs-dropdown-menu class="notification-dropdown dropdown-custom vx-navbar-dropdown">
-            <div class="notification-top text-center p-5 bg-primary text-white">
-              <h3 class="text-white">{{ unreadNotifications.length }} New</h3>
-              <p class="opacity-75">App Notifications</p>
-            </div>
-
-            <VuePerfectScrollbar
-              ref="mainSidebarPs"
-              class="scroll-area--nofications-dropdown p-0 mb-10"
-              :settings="settings"
-            >
-              <ul class="bordered-items">
-                <li
-                  v-for="ntf in unreadNotifications"
-                  :key="ntf.index"
-                  class="flex justify-between px-4 py-4 notification cursor-pointer"
-                >
-                  <div class="flex items-start">
-                    <feather-icon
-                      :icon="ntf.icon"
-                      :svgClasses="[`text-${ntf.category}`, 'stroke-current mr-1 h-6 w-6']"
-                    ></feather-icon>
-                    <div class="mx-2">
-                      <span
-                        class="font-medium block notification-title"
-                        :class="[`text-${ntf.category}`]"
-                      >{{ ntf.title }}</span>
-                      <small>{{ ntf.msg }}</small>
-                    </div>
-                  </div>
-                  <small class="mt-1 whitespace-no-wrap">{{ elapsedTime(ntf.time) }}</small>
-                </li>
-              </ul>
-            </VuePerfectScrollbar>
-            <div
-              class="checkout-footer fixed bottom-0 rounded-b-lg text-primary w-full p-2 font-semibold text-center border border-b-0 border-l-0 border-r-0 border-solid d-theme-border-grey-light cursor-pointer"
-            >
-              <span>View All Notifications</span>
-            </div>
+            <vs-dropdown-item @click="updateLocale('en')">English</vs-dropdown-item>
+            <vs-dropdown-item @click="updateLocale('zh')">Chinese</vs-dropdown-item>
           </vs-dropdown-menu>
         </vs-dropdown>
 
         <!-- USER META -->
         <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.displayName">
-          <div class="text-right leading-tight hidden sm:block">
-            <p class="font-semibold">{{ user_displayName }}</p>
-            <small>Available</small>
-          </div>
           <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-            <div class="con-img ml-3">
-              <img
-                v-if="activeUserImg"
-                key="onlineImg"
-                :src="activeUserImg"
-                alt="user-img"
-                width="40"
-                height="40"
-                class="rounded-full shadow-md cursor-pointer block"
-              />
+            <div class="text-right leading-tight hidden sm:block">
+              <p class="font-semibold">{{ user_displayName }}</p>
             </div>
             <vs-dropdown-menu class="vx-navbar-dropdown">
               <ul style="min-width: 9rem">
-                <li
-                  class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                  @click="$router.push('/profile').catch(() => {})"
-                >
-                  <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
-                  <span class="ml-2">Profile</span>
-                </li>
-                <vs-divider class="m-1"></vs-divider>
-
                 <li
                   class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
                   @click="logout"
@@ -455,7 +276,7 @@ export default {
     },
     logout() {
       // If JWT login
-      this.$store.dispatch("auth/logout");
+      this.$store.dispatch("logout");
     },
     outside: function() {
       this.showBookmarkPagesDropdown = false;

@@ -29,10 +29,10 @@
                 @click="onCategory(data)"
                 v-for="data in categoryData"
                 :key="data.id"
-                :class="category === data.id ? 'inline-block border border-blue-500 rounded bg-blue-500 text-white py-1 px-3 mx-2' : 
-                                           'inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3 mx-2'"
+                :class="category === data.id ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
+                                           'inline-block border border-white rounded hover:border-gray-200 text-teal-500 hover:bg-gray-200 py-1 px-3 mx-2'"
               >
-                <p :class="category === data.id ? 'text-white' : 'text-blue-500' ">{{ data.name }}</p>
+                <p :class="category === data.id ? 'text-white' : 'text-teal-500' ">{{ data.name }}</p>
               </a>
             </div>
           </div>
@@ -45,11 +45,11 @@
                 @click="onSeat(data)"
                 v-for="(data, index) in seatData"
                 :key="index"
-                :class="seat === data.seats ? 'inline-block border border-blue-500 rounded bg-blue-500 text-white py-1 px-3 mx-2' : 
-                                           'inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-1 px-3 mx-2'"
+                :class="seat === data.seats ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
+                                           'inline-block border border-white rounded hover:border-gray-200 text-teal-500 hover:bg-gray-200 py-1 px-3 mx-2'"
               >
                 <p
-                  :class="seat === data.seats ? 'text-white' : 'text-blue-500' "
+                  :class="seat === data.seats ? 'text-white' : 'text-teal-500' "
                 >{{ data.seats }} (SEAT)</p>
               </a>
             </div>
@@ -87,7 +87,7 @@
           </div>
           <div class="flex flex-wrap mt-10">
             <button
-              class="ml-auto bg-blue-500 hover:bg-blue-700 focus:outline-none text-white font-bold py-2 px-10 rounded"
+              class="ml-auto bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10 rounded"
             >Submit</button>
           </div>
         </div>

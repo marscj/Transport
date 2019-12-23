@@ -88,7 +88,7 @@
                 />
 
                 <!-- DROPDOWN -->
-                <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
+                <!-- <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
                   <vs-button radius icon="icon-settings" icon-pack="feather" />
 
                   <vs-dropdown-menu class="w-32">
@@ -106,7 +106,7 @@
                       </div>
                     </vs-dropdown-item>
                   </vs-dropdown-menu>
-                </vs-dropdown>
+                </vs-dropdown> -->
               </div>
             </transition>
 
