@@ -41,7 +41,7 @@
         <vs-th key="username">USERNAME</vs-th>
         <vs-th key="email">EMAIL</vs-th>
         <vs-th key="name">Name</vs-th>
-        <vs-th>PHONE</vs-th>
+        <vs-th key="phone">PHONE</vs-th>
         <vs-th key="company">COMPANY</vs-th>
         <vs-th key="is_superuser">ADMIN</vs-th>
         <vs-th key="is_active">ACTIVE</vs-th>
