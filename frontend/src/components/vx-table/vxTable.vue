@@ -14,7 +14,7 @@
     </header>
     <div class="con-tablex vs-table--content">
       <!-- <div :style="styleConTbody" class="vs-con-tbody vs-table--tbody"> -->
-        <div :style="styleConTbody" class="vs-con-tbody">
+      <div :style="styleConTbody" class="vs-con-tbody">
         <table ref="table" class="vs-table vs-table--tbody-table">
           <thead ref="thead" class="vs-table--thead">
             <tr>

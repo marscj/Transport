@@ -86,8 +86,10 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      this.sidebarData = data;
-      this.toggleDataSidebar(true);
+      if(this.$auth('price.change')) {
+        this.sidebarData = data;
+        this.toggleDataSidebar(true);
+      }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;

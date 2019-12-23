@@ -8,13 +8,19 @@
 
     <vx-table ref="table" :data="loadData">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between pb-4">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+        <vs-button
+          type="border"
+          icon-pack="feather"
+          icon="icon-plus"
+          @click="addNewData"
+          v-action:add
+        >Add New</vs-button>
       </div>
 
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="name">NAME</vs-th>
-        <vs-th style="width: 80px;">Action</vs-th>
+        <vs-th style="width: 80px;" v-action:delete >Action</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -25,7 +31,7 @@
           <vs-td :data="tr.name">
             <a @click="editData(tr)" v-if="tr.name">{{ tr.name }}</a>
           </vs-td>
-          <vs-td class="whitespace-no-wrap">
+          <vs-td class="whitespace-no-wrap" v-action:delete>
             <feather-icon
               icon="TrashIcon"
               svgClasses="w-5 h-5 hover:text-danger stroke-current"
@@ -66,13 +72,15 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      this.sidebarData = data;
-      this.toggleDataSidebar(true);
+      if (this.$auth("category.change")) {
+        this.sidebarData = data;
+        this.toggleDataSidebar(true);
+      }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      
-      if(!val) {
+
+      if (!val) {
         this.$refs.table.refresh();
       }
     },
