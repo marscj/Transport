@@ -8,7 +8,7 @@
 
     <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-action:add>Add New</vs-button>
 
         <vs-dropdown vs-trigger-click class="cursor-pointer mr-4">
           <div
@@ -44,6 +44,7 @@
         <vs-th style-key="driver">driver</vs-th>
         <vs-th style-key="category">category</vs-th>
         <vs-th style-key="is_active">active</vs-th>
+        <vs-th style="width: 80px;" v-action:delete >Action</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -69,6 +70,14 @@
           <vs-td :data="tr.is_active">
             <vs-checkbox v-model="tr.is_active" :disabled="true" style="float:left;" />
           </vs-td>
+          <vs-td class="whitespace-no-wrap" v-action:delete>
+            <feather-icon
+              icon="TrashIcon"
+              svgClasses="w-5 h-5 hover:text-danger stroke-current"
+              class="ml-2"
+              @click.stop="openConfirm(tr.id)"
+            />
+          </vs-td>
         </vs-tr>
       </template>
     </vx-table>
@@ -76,7 +85,7 @@
 </template>
 
 <script>
-import { getVehicle } from "@/http/requests/vehicle/index.js";
+import { getVehicle, deleteVehicle } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 export default {
@@ -114,14 +123,30 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      this.sidebarData = data;
-      this.toggleDataSidebar(true);
+      if(this.$auth('vehicle.change')) {
+        this.sidebarData = data;
+        this.toggleDataSidebar(true);
+      }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
       if(!val) {
         this.$refs.table.refresh();
       }
+    },
+    deleteData(id) {
+      deleteVehicle(id).then(() => {
+        this.$refs.table.refresh();
+      });
+    },
+    openConfirm(id) {
+      this.$vs.dialog({
+        type: "confirm",
+        color: "danger",
+        title: `Confirm`,
+        text: "Are you sure delete?",
+        accept: () => this.deleteData(id)
+      });
     }
   }
 };
