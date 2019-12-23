@@ -32,7 +32,7 @@
                 :class="category === data.id ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
                                            'inline-block border border-white rounded hover:border-gray-200 text-teal-500 hover:bg-gray-200 py-1 px-3 mx-2'"
               >
-                <p :class="category === data.id ? 'text-white' : 'text-teal-500' ">{{ data.name }}</p>
+                <p :class="category === data.id ? 'text-white font-bold' : 'text-teal-500 font-bold' ">{{ data.name }}</p>
               </a>
             </div>
           </div>
@@ -49,7 +49,7 @@
                                            'inline-block border border-white rounded hover:border-gray-200 text-teal-500 hover:bg-gray-200 py-1 px-3 mx-2'"
               >
                 <p
-                  :class="seat === data.seats ? 'text-white' : 'text-teal-500' "
+                  :class="seat === data.seats ? 'text-white font-bold' : 'text-teal-500 font-bold' "
                 >{{ data.seats }} (SEAT)</p>
               </a>
             </div>
@@ -67,10 +67,10 @@
               <p class="mx-4 text-gray-400 text-sm">12-13, SHARJHA CITY TOUR FULL DAY</p>
               <p class="mx-4 text-gray-400 text-sm">12-14, DUBAI CITY TOUR HALF DAY</p>
             </div>
-            <div class="w-7/12">
+            <div class="w-6/12">
               <div class="flex flex-wrap">
-                <div v-for="data in itineraryData" :key="data.id" class="mx-4 my-1">
-                  <vs-button @click="onItinerary(data)">{{data.name}}</vs-button>
+                <div v-for="data in itineraryData" :key="data.id" class="mb-4 w-1/2">
+                  <button @click="onItinerary(data)" class="text-xs font-hairline bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white py-2 px-4 border border-teal-500 hover:border-transparent rounded">{{data.name}}</button>
                 </div>
               </div>
             </div>
