@@ -17,10 +17,8 @@ class Order(models.Model):
 
     status = models.IntegerField(default=OrderStatus.New, choices=OrderStatus.choices)
 
-    #创建于
     create_at = models.DateTimeField(auto_now_add=True)
 
-    #修改于
     change_at = models.DateTimeField(auto_now=True)
 
     start_date = models.DateField(blank=True, null=True)
@@ -46,6 +44,8 @@ class Order(models.Model):
     customer_id = models.IntegerField(blank=True, null=True)
 
     customer = models.CharField(blank=True, null=True, max_length=150)
+
+    invoice_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = 'order'
