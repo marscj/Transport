@@ -25,7 +25,6 @@ const action = Vue.directive('action', {
     if (user.is_superuser) {
       return
     }
-
     groups.reduce((f1, f2) => f1.concat(f2.permissions), []).forEach(f => {
       if (permissionId.includes(f.content_type.model)) {
         if(!f.codename.includes(actionName + '_')) {

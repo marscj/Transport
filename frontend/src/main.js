@@ -31,6 +31,9 @@ import store from './store/'
 // Directive
 import './utils/action'
 
+import PermissionHelper from '@/utils/permission'
+Vue.use(PermissionHelper)
+
 // Vuejs - Vue wrapper for hammerjs
 import {
   VueHammer

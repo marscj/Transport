@@ -8,8 +8,8 @@
 
     <vx-table ref="table" :data="loadData">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between pb-4">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
-      </div>
+        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-action:add>Add New</vs-button>
+      </div> 
 
       <template slot="thead">
         <vs-th style-key="id" style="width: 80px;">ID</vs-th>
@@ -69,8 +69,10 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      this.sidebarData = data;
-      this.toggleDataSidebar(true);
+      if (this.$auth('itinerary.change')) {
+        this.sidebarData = data;
+        this.toggleDataSidebar(true);
+      }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
