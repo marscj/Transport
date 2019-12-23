@@ -8,7 +8,8 @@ const auth = {
     token: '',
     displayName: '',
     photoURL: '',
-    groups: [] 
+    groups: [],
+    is_superuser: false,
   },
   mutations: {
     SET_ID: (state, id) => {
@@ -29,6 +30,10 @@ const auth = {
 
     SET_GROUPS: (state, groups) => {
       state.groups = groups
+    },
+
+    SET_SUPERUSER: (state, is_superuser) => {
+      state.is_superuser = is_superuser
     }
   },
   actions: {
@@ -86,6 +91,8 @@ const auth = {
             commit('SET_ID', result.id)
             commit('SET_GROUPS', result.groups)
             commit('SET_NAME', result.username)
+            commit('SET_SUPERUSER', result.is_superuser)
+            
             resolve(res)
           })
           .catch(error => {
@@ -96,6 +103,10 @@ const auth = {
 
     logout({ commit }) {
       commit('SET_TOKEN', '')
+      commit('SET_GROUPS', [])
+      commit('SET_NAME', '')
+      commit('SET_SUPERUSER', false)
+      
       Vue.ls.remove("accessToken")
       router.push('/login').catch(() => {})
     }

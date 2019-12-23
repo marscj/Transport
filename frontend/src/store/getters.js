@@ -14,6 +14,7 @@ const getters = {
   },
 
   groups: state => state.auth.groups,
+  user: state => state.auth,
   addRouters: state => state.permission.addRouters,
 }
 

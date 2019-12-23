@@ -18,14 +18,19 @@ const action = Vue.directive('action', {
   inserted: function (el, binding, vnode) {
     const actionName = binding.arg
     const groups = store.getters.groups
+    const user = store.getters.user
     const elVal = vnode.context.$route.meta.permission
     const permissionId = elVal instanceof String && [elVal] || elVal
-    groups.permissions.forEach(p => {
-      if (!permissionId.includes(p.permissionId)) {
-        return
-      }
-      if (p.actionList && !p.actionList.includes(actionName)) {
-        el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
+
+    if (user.is_superuser) {
+      return
+    }
+
+    groups.reduce((f1, f2) => f1.concat(f2.permissions), []).forEach(f => {
+      if (permissionId.includes(f.content_type.model)) {
+        if(!f.codename.includes(actionName + '_')) {
+          el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
+        }
       }
     })
   }

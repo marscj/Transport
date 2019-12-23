@@ -28,6 +28,9 @@ import router from './router'
 // Vuex Store
 import store from './store/'
 
+// Directive
+import './utils/action'
+
 // Vuejs - Vue wrapper for hammerjs
 import {
   VueHammer

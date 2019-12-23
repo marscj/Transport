@@ -55,33 +55,19 @@
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
-            <div class="w-6/12">
-              <div class="flex flex-wrap text-base">
-                <div class="w-2/12 py-1">
-                  <span>*Itinerary:</span>
-                </div>
-                <div class="w-10/12">
-                  <div class="mx-4">
-                    <vs-textarea v-model="itinerary" height="140" />
-                  </div>
-                  <p class="mx-4 text-gray-400 text-sm">e.g.</p>
-                  <p class="mx-4 text-gray-400 text-sm">12-12 06:30, DXB TO CITY HOTEL</p>
-                  <p class="mx-4 text-gray-400 text-sm">12-13, SHARJHA CITY TOUR FULL DAY</p>
-                </div>
-              </div>
-
-              <div class="flex flex-wrap mt-5 text-base">
-                <div class="w-2/12 py-1">
-                  <span>Remark:</span>
-                </div>
-                <div class="w-10/12">
-                  <div class="mx-4">
-                    <vs-textarea v-model="remark" height="80" />
-                  </div>
-                </div>
-              </div>
+            <div class="w-1/12 py-1">
+              <span>*Itinerary:</span>
             </div>
-            <div class="w-6/12">
+            <div class="w-4/12">
+              <div class="mx-4">
+                <vs-textarea v-model="itinerary" height="180" />
+              </div>
+              <p class="mx-4 text-gray-400 text-sm">e.g.</p>
+              <p class="mx-4 text-gray-400 text-sm">12-12 06:30, DXB TO CITY HOTEL</p>
+              <p class="mx-4 text-gray-400 text-sm">12-13, SHARJHA CITY TOUR FULL DAY</p>
+              <p class="mx-4 text-gray-400 text-sm">12-14, DUBAI CITY TOUR HALF DAY</p>
+            </div>
+            <div class="w-7/12">
               <div class="flex flex-wrap">
                 <div v-for="data in itineraryData" :key="data.id" class="mx-4 my-1">
                   <vs-button @click="onItinerary(data)">{{data.name}}</vs-button>
