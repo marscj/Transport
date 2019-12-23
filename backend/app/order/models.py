@@ -29,9 +29,17 @@ class Order(models.Model):
 
     remark = models.TextField(blank=True, null=True)
 
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
+    vehicl_id = models.IntegerField(blank=True, null=True)
 
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='customer', blank=True, null=True)
+    vehicle = models.CharField(blank=True, null=True, max_length=64)
+
+    driver_id = models.IntegerField(blank=True, null=True)
+
+    driver = models.CharField(blank=True, null=True, max_length=150)
+
+    customer_id = models.IntegerField(blank=True, null=True)
+
+    customer = models.CharField(blank=True, null=True, max_length=150)
 
     class Meta:
         db_table = 'order'
