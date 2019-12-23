@@ -55,31 +55,34 @@
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
-            <div class="w-1/12 py-1">
-              <span>*Itinerary:</span>
-            </div>
-            <div class="w-5/12">
-              <div class="mx-4">
-                <vs-textarea v-model="itinerary" height="200" />
+            <div class="w-6/12">
+              <div class="flex flex-wrap text-base">
+                <div class="w-2/12 py-1">
+                  <span>*Itinerary:</span>
+                </div>
+                <div class="w-10/12">
+                  <div class="mx-4">
+                    <vs-textarea v-model="itinerary" height="200" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap mt-5 text-base">
+                <div class="w-2/12 py-1">
+                  <span>Remark:</span>
+                </div>
+                <div class="w-10/12">
+                  <div class="mx-4">
+                    <vs-textarea v-model="itinerary" height="200" />
+                  </div>
+                </div>
               </div>
             </div>
             <div class="w-6/12">
               <div class="flex flex-wrap">
                 <div v-for="data in itineraryData" :key="data.id" class="mx-4 my-1">
-                  <vs-button>
-                    {{data.name}}
-                  </vs-button>
+                  <vs-button @click="onItinerary(data)">{{data.name}}</vs-button>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-wrap mt-5 text-base">
-            <div class="w-1/12 py-1">
-              <span>Remark:</span>
-            </div>
-            <div class="w-5/12">
-              <div class="mx-4">
-                <vs-textarea v-model="itinerary" height="100" />
               </div>
             </div>
           </div>
@@ -108,7 +111,11 @@ import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PriceTable from "@/views/price/Table.vue";
 import Datepicker from "vuejs-datepicker";
 
-import { getCategory, getSeats, getItinerary } from "@/http/requests/vehicle/index.js";
+import {
+  getCategory,
+  getSeats,
+  getItinerary
+} from "@/http/requests/vehicle/index.js";
 
 export default {
   components: {
@@ -170,7 +177,7 @@ export default {
       itinerary: "",
       categoryData: [],
       seatData: [],
-      itineraryData: [],
+      itineraryData: []
     };
   },
   mounted() {
@@ -193,14 +200,17 @@ export default {
     },
     getItineraryData() {
       getItinerary().then(res => {
-        this.itineraryData = res.result
-      })
+        this.itineraryData = res.result;
+      });
     },
     onCategory(data) {
       this.category = data.id;
     },
     onSeat(data) {
       this.seat = data.seats;
+    },
+    onItinerary(data) {
+      this.itinerary += ('_-_ ' + data.name + '\n')
     },
     formSubmitted() {
       alert("Form submitted!");
