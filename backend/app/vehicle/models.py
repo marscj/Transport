@@ -39,7 +39,7 @@ class Vehicle(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='vehicle', blank=True, null=True)
 
-    driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
+    driver = models.OneToOneField(User, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
 
     class Meta:
         db_table = 'vehicle'
