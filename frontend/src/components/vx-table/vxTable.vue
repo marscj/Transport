@@ -189,7 +189,7 @@ export default {
         ordering: '-id'
         // ordering:
       });
-      const result = this.pagination ? this.data(parameter) : this.data({});
+      const result = this.pagination ? this.data(parameter) : this.data({ordering: '-id'});
       result
         .then(res => {
           if (this.pagination) {
