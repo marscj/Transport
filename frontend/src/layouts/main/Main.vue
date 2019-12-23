@@ -3,10 +3,6 @@
     class="layout--main"
     :class="[layoutTypeClass, navbarClasses, footerClasses, {'app-page': isAppPage}]"
   >
-    <vx-tour
-      :steps="steps"
-      v-if="!disableThemeTour && (windowWidth >= 1200 && mainLayoutType === 'vertical')"
-    />
 
     <the-customizer
       v-if="!disableCustomizer"
@@ -144,8 +140,6 @@ import TheFooter from "@/layouts/components/TheFooter.vue";
 import themeConfig from "@/../themeConfig.js";
 import VNavMenu from "@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue";
 
-const VxTour = () => import("@/components/VxTour.vue");
-
 export default {
   components: {
     BackToTop,
@@ -155,7 +149,6 @@ export default {
     TheNavbarHorizontal,
     TheNavbarVertical,
     VNavMenu,
-    VxTour
   },
   data() {
     return {

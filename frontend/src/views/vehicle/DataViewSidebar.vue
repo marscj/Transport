@@ -17,6 +17,17 @@
 
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
+        <validation-provider name="seats" rules="required|min_value:0" v-slot="{ errors }">
+          <vs-input-number
+            data-vv-validate-on="blur"
+            label="Seats"
+            :step="1"
+            v-model="form.seats"
+            class="mt-5"
+          />
+          <span>{{ errors[0] }}</span>
+        </validation-provider>
+
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
           <validation-provider
             name="license plate"
@@ -35,20 +46,19 @@
           <validation-provider name="model" rules="required|max:64|min:3" v-slot="{ errors }">
             <vs-input
               data-vv-validate-on="blur"
-              label="model"
+              label="Model"
               v-model="form.model"
               class="mt-5 w-full"
             />
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="seats" rules="required|min_value:0" v-slot="{ errors }">
-            <vs-input-number
+          <validation-provider name="supplier" rules="required|max:64|min:3" v-slot="{ errors }">
+            <vs-input
               data-vv-validate-on="blur"
-              label="Seats"
-              :step="1"
-              v-model="form.seats"
-              class="mt-5"
+              label="Supplier"
+              v-model="form.supplier"
+              class="mt-5 w-full"
             />
             <span>{{ errors[0] }}</span>
           </validation-provider>
@@ -133,6 +143,7 @@ export default {
         id: undefined,
         license_plate: "",
         model: "",
+        supplier: "",
         is_active: true,
         seats: 5,
         category_id: undefined,
@@ -186,7 +197,8 @@ export default {
             category_id: this.category ? this.category.id : null,
             driver_id: this.driver ? this.driver.id : null
           })
-        ).then(() => {
+        )
+          .then(() => {
             this.isSidebarActiveLocal = false;
           })
           .catch(error => {

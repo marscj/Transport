@@ -44,6 +44,7 @@
         <vs-th key="driver">driver</vs-th>
         <vs-th key="category">category</vs-th>
         <vs-th key="is_active">active</vs-th>
+        <vs-th key="supplier">supplier</vs-th>
         <vs-th style="width: 80px;" v-action:delete >Action</vs-th>
       </template>
 
@@ -69,6 +70,9 @@
           </vs-td>
           <vs-td :data="tr.is_active">
             <vs-checkbox v-model="tr.is_active" :disabled="true" style="float:left;" />
+          </vs-td>
+          <vs-td :data="tr.supplier">
+            <a @click="editData(tr)" v-if="tr.supplier">{{ tr.supplier }}</a>
           </vs-td>
           <vs-td class="whitespace-no-wrap" v-action:delete>
             <feather-icon
