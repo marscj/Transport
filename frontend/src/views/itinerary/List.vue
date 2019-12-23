@@ -7,7 +7,7 @@
     />
 
     <vx-table ref="table" :data="loadData">
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between pb-4">
+      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between py-4">
         <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-action:add>Add New</vs-button>
       </div> 
 
