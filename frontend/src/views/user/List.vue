@@ -37,9 +37,10 @@
       </div>
 
       <template slot="thead">
-        <vs-th style-key="id" style="width: 80px;">ID</vs-th>
+        <vs-th key="id" style="width: 80px;">ID</vs-th>
         <vs-th sort-key="username">USERNAME</vs-th>
         <vs-th sort-key="email">EMAIL</vs-th>
+        <vs-th sort-key="name">Name</vs-th>
         <vs-th>PHONE</vs-th>
         <vs-th sort-key="company">COMPANY</vs-th>
         <vs-th sort-key="is_superuser">ADMIN</vs-th>
@@ -57,6 +58,9 @@
           </vs-td>
           <vs-td :data="tr.email">
             <a @click="editData(tr)" v-if="tr.email">{{ tr.email }}</a>
+          </vs-td>
+          <vs-td :data="tr.name">
+            <a @click="editData(tr)" v-if="tr.email">{{ tr.name }}</a>
           </vs-td>
           <vs-td :data="tr.phone">
             <a @click="editData(tr)" v-if="tr.phone">{{ tr.phone }}</a>

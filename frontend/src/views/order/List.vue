@@ -38,8 +38,8 @@
       </div>
 
       <template slot="thead">
-        <vs-th style-key="orderId" style="width: 100px;">Order_Id</vs-th>
-        <vs-th style-key="relatedId" style="width: 100px;">related_Id</vs-th>
+        <vs-th key="orderId" style="width: 100px;">Order_Id</vs-th>
+        <vs-th key="relatedId" style="width: 100px;">related_Id</vs-th>
         <vs-th>Start_Date</vs-th>
         <vs-th>End_Date</vs-th>
         <vs-th>Itinerary</vs-th>

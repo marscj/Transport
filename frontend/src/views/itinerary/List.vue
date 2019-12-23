@@ -12,7 +12,7 @@
       </div> 
 
       <template slot="thead">
-        <vs-th style-key="id" style="width: 80px;">ID</vs-th>
+        <vs-th key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="name">NAME</vs-th>
         <vs-th style="width: 80px;" v-action:delete >Action</vs-th>
       </template>

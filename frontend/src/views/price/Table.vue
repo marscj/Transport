@@ -9,7 +9,7 @@
 
     <vx-table ref="table" :data="loadData" >
       <template slot="thead" v-if="showThead">
-        <vs-th style-key="id" style="width: 80px;">ID</vs-th>
+        <vs-th key="id" style="width: 80px;">ID</vs-th>
         <vs-th key="category">CATEGORY</vs-th>
         <vs-th key="itinerary">ITINERARY</vs-th>
         <vs-th key="price">PRICE(AED)</vs-th>
