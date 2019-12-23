@@ -37,6 +37,8 @@ class Vehicle(models.Model):
 
     model = models.CharField(blank=True, null=True, max_length=64) 
 
+    supplier = models.CharField(blank=True, null=True, max_length=64) 
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='vehicle', blank=True, null=True)
 
     driver = models.OneToOneField(User, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
