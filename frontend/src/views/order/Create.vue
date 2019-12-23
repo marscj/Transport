@@ -67,7 +67,7 @@
               <p class="mx-4 text-gray-400 text-sm">12-13, SHARJHA CITY TOUR FULL DAY</p>
               <p class="mx-4 text-gray-400 text-sm">12-14, DUBAI CITY TOUR HALF DAY</p>
             </div>
-            <div class="w-6/12">
+            <div class="w-6/12 pl-10">
               <div class="flex flex-wrap">
                 <div v-for="data in itineraryData" :key="data.id" class="mb-4 w-1/2">
                   <button @click="onItinerary(data)" class="text-xs font-hairline bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white py-2 px-4 border border-teal-500 hover:border-transparent rounded">{{data.name}}</button>
