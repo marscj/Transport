@@ -1,15 +1,13 @@
 import Vue from 'vue'
-import VxTooltip from './layouts/components/vx-tooltip/VxTooltip.vue'
+
 import VxCard  from './components/vx-card/VxCard.vue'
-import VxList  from './components/vx-list/VxList.vue'
 import vxTable  from './components/vx-table/vxTable.vue'
 import VxBreadcrumb  from './layouts/components/VxBreadcrumb.vue'
 import FeatherIcon  from './components/FeatherIcon.vue'
 import VxInputGroup  from './components/vx-input-group/VxInputGroup.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full'
-Vue.component(VxTooltip.name, VxTooltip)
+
 Vue.component(VxCard.name, VxCard)
-Vue.component(VxList.name, VxList)
 Vue.component(vxTable.name, vxTable)
 Vue.component(VxBreadcrumb.name, VxBreadcrumb)
 Vue.component(FeatherIcon.name, FeatherIcon)
