@@ -185,7 +185,8 @@ export default {
       this.openLoading();
       const parameter = Object.assign({
         page: this.page,
-        page_size: this.page_size
+        page_size: this.page_size,
+        ordering: '-id'
         // ordering:
       });
       const result = this.pagination ? this.data(parameter) : this.data({});
