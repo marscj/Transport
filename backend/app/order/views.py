@@ -6,7 +6,7 @@ from middleware.mixin import CreateSerializerMixin
 from .models import Order, OrderItinerary
 from .serializers import OrderSerializer, OrderCreateSerializer, OrderItinerarySerializer
 
-class OrderView(ModelViewSet, CreateSerializerMixin):
+class OrderView(CreateSerializerMixin, ModelViewSet):
     serializer_class = OrderSerializer
     serializer_create_class = OrderCreateSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]

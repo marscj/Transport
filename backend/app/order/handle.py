@@ -8,6 +8,6 @@ from .models import Order
 def order_model_post_save(sender, instance, created, **kwargs):
     if created:
         if instance.orderId is None or instance.orderId == '':
-            instance.orderId = 'B%s' % str(instance.id + 100000)
+            instance.orderId = '%s' % str(instance.id + 100000)
             instance.save()
         

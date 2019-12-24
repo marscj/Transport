@@ -27,7 +27,7 @@ class Order(models.Model):
 
     category = models.CharField(blank=True, null=True, max_length=64)
 
-    seats = models.IntegerField(default=5)
+    seats = models.IntegerField(blank=True, null=True, default=5)
 
     itinerary = models.TextField(blank=True, null=True)
 

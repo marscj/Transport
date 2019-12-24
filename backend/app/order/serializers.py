@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from .models import Order, OrderItinerary
 
@@ -16,18 +17,28 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class OrderCreateSerializer(serializers.ModelSerializer):
 
-    start_date = serializers.DateField(required=False)
+    start_date = serializers.DateField(required=True, allow_null=False)
 
-    end_date = serializers.DateField(required=False)
+    end_date = serializers.DateField(required=True, allow_null=False)
 
-    category = serializers.CharField(required=False, max_length=64)
+    category = serializers.CharField(required=True, allow_null=False, max_length=64)
 
-    seats = serializers.IntegerField(required=False, min_value=2)
+    seats = serializers.IntegerField(required=True, allow_null=False, min_value=2)
 
-    itinerary = serializers.CharField(required=False, max_length=1024)
+    itinerary = serializers.CharField(required=True, allow_null=False, max_length=1024)
 
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = (
+            'start_date', 'end_date', 'category', 'seats', 'itinerary'
+        )
+
+    def validate(self, validate_data):
+        print(validate_data.get('start_date', None), '=====')
+        print(validate_data.get('end_date', None), '=====')
+        print(validate_data.get('category', None), '=====')
+        print(validate_data.get('seats', None), '=====')
+        print(validate_data.get('itinerary', None), '=====')
+        return validate_data
 
     

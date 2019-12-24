@@ -23,8 +23,10 @@ class CreateSerializerMixin:
         assert self.serializer_create_class is not None, error_message
         
         if self.action == 'create':
+            print('11111')
             return self.serializer_create_class
         else:
+            print('22222')
             return super().get_serializer_class()
 
 class UpdateSerializerMixin:

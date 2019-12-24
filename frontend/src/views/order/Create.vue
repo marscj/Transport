@@ -1,6 +1,6 @@
 <template>
   <vs-card>
-    <div>
+    <validation-observer ref="observer" v-slot="{ validate, dirty }">
       <div v-if="step == 1" class="mb-5">
         <div>
           <div class="flex flex-wrap mt-5 text-base">
@@ -8,16 +8,22 @@
               <span>*Date:</span>
             </div>
             <div class="w-11/12">
-              <datepicker
-                placeholder="Start Date"
-                v-model="start_date"
-                class="w-40 inline-block py-1 px-3 mx-2"
-              ></datepicker>-
-              <datepicker
-                placeholder="End Date"
-                v-model="end_date"
-                class="w-40 inline-block py-1 px-3 mx-2"
-              ></datepicker>
+              <validation-provider name="start_date" v-slot="{ errors }">
+                <datepicker
+                  placeholder="Start Date"
+                  v-model="start_date"
+                  class="w-40 inline-block py-1 px-3 mx-2"
+                ></datepicker>-
+                <span>{{ errors[0] }}</span>
+              </validation-provider>
+              <validation-provider name="end_date" v-slot="{ errors }">
+                <datepicker
+                  placeholder="End Date"
+                  v-model="end_date"
+                  class="w-40 inline-block py-1 px-3 mx-2"
+                ></datepicker>
+                <span>{{ errors[0] }}</span>
+              </validation-provider>
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
@@ -25,15 +31,20 @@
               <span>*Category:</span>
             </div>
             <div class="w-11/12">
-              <a
-                @click="onCategory(data)"
-                v-for="data in categoryData"
-                :key="data.id"
-                :class="category === data.id ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
+              <validation-provider name="category" v-slot="{ errors }">
+                <a
+                  @click="onCategory(data)"
+                  v-for="data in categoryData"
+                  :key="data.id"
+                  :class="category.id === data.id ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
                                            'inline-block border border-white rounded hover:border-gray-200 text-teal-500 hover:bg-gray-200 py-1 px-3 mx-2'"
-              >
-                <p :class="category === data.id ? 'text-white font-bold' : 'text-teal-500 font-bold' ">{{ data.name }}</p>
-              </a>
+                >
+                  <p
+                    :class="category.id === data.id ? 'text-white font-bold' : 'text-teal-500 font-bold' "
+                  >{{ data.name }}</p>
+                </a>
+                <span>{{ errors[0] }}</span>
+              </validation-provider>
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
@@ -41,17 +52,20 @@
               <span>*Seats:</span>
             </div>
             <div class="w-11/12">
-              <a
-                @click="onSeat(data)"
-                v-for="(data, index) in seatData"
-                :key="index"
-                :class="seat === data.seats ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
+              <validation-provider name="seats" v-slot="{ errors }">
+                <a
+                  @click="onSeat(data)"
+                  v-for="(data, index) in seatData"
+                  :key="index"
+                  :class="seats === data.seats ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
                                            'inline-block border border-white rounded hover:border-gray-200 text-teal-500 hover:bg-gray-200 py-1 px-3 mx-2'"
-              >
-                <p
-                  :class="seat === data.seats ? 'text-white font-bold' : 'text-teal-500 font-bold' "
-                >{{ data.seats }} (SEAT)</p>
-              </a>
+                >
+                  <p
+                    :class="seats === data.seats ? 'text-white font-bold' : 'text-teal-500 font-bold' "
+                  >{{ data.seats }} (SEAT)</p>
+                </a>
+                <span>{{ errors[0] }}</span>
+              </validation-provider>
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
@@ -60,7 +74,10 @@
             </div>
             <div class="w-4/12">
               <div class="mx-4">
-                <vs-textarea v-model="itinerary" height="180" />
+                <validation-provider name="itinerary" v-slot="{ errors }">
+                  <vs-textarea v-model="itinerary" height="180" />
+                  <span>{{ errors[0] }}</span>
+                </validation-provider>
               </div>
               <p class="mx-4 text-gray-400 text-sm">e.g.</p>
               <p class="mx-4 text-gray-400 text-sm">12-12 06:30, DXB TO CITY HOTEL</p>
@@ -70,7 +87,10 @@
             <div class="w-6/12 pl-10">
               <div class="flex flex-wrap">
                 <div v-for="data in itineraryData" :key="data.id" class="mb-4 w-1/2">
-                  <button @click="onItinerary(data)" class="text-xs font-hairline bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white py-2 px-4 border border-teal-500 hover:border-transparent rounded">{{data.name}}</button>
+                  <button
+                    @click="onItinerary(data)"
+                    class="text-xs font-hairline bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white py-2 px-4 mx-4 border border-teal-500 hover:border-transparent rounded"
+                  >{{data.name}}</button>
                 </div>
               </div>
             </div>
@@ -86,17 +106,22 @@
             </div>
           </div>
           <div class="flex flex-wrap mt-10">
+            <validation-provider name="non_field_errors" v-slot="{ errors }">
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
             <button
+              @click="onCreate()"
               class="ml-auto bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10 rounded"
             >Submit</button>
           </div>
         </div>
       </div>
-    </div>
+    </validation-observer>
 
     <price-table
       class="mt-10"
-      :category="this.query ? this.query.category : null"
+      v-if="this.query && this.query.category"
+      :category="this.query.category.id"
       :showSidebar="false"
       :showThead="false"
       :showID="false"
@@ -109,12 +134,15 @@ import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PriceTable from "@/views/price/Table.vue";
 import Datepicker from "vuejs-datepicker";
+import moment from "moment";
 
 import {
   getCategory,
   getSeats,
   getItinerary
 } from "@/http/requests/vehicle/index.js";
+
+import { createOrder } from "@/http/requests/order/index.js";
 
 export default {
   components: {
@@ -129,7 +157,7 @@ export default {
         query: this.$base64.encode(
           JSON.stringify({
             category: this.category,
-            seat: this.seat
+            seats: this.seats
           })
         )
       };
@@ -152,7 +180,7 @@ export default {
         query: this.queryBase64
       });
     },
-    seat() {
+    seats() {
       this.$router.push({
         name: "create_order",
         query: this.queryBase64
@@ -163,14 +191,14 @@ export default {
     let query = this.$route.query.query
       ? JSON.parse(this.$base64.decode(this.$route.query.query))
       : undefined;
-    let category = query ? query.category : undefined;
-    let seat = query ? query.seat : undefined;
+    let category = query ? query.category : { id: undefined };
+    let seats = query ? query.seats : undefined;
 
     return {
       step: 1,
       query: query,
       category: category,
-      seat: seat,
+      seats: seats,
       start_date: undefined,
       end_date: undefined,
       itinerary: "",
@@ -193,7 +221,7 @@ export default {
     },
     getSeatData() {
       getSeats({
-        category: this.query ? this.query.category : null
+        category: this.query ? this.query.category.id : null
       }).then(res => {
         this.seatData = res.result;
       });
@@ -204,16 +232,32 @@ export default {
       });
     },
     onCategory(data) {
-      this.category = data.id;
+      this.category = data;
     },
     onSeat(data) {
-      this.seat = data.seats;
+      this.seats = data.seats;
     },
     onItinerary(data) {
       this.itinerary += data.name + "\n";
     },
-    formSubmitted() {
-      alert("Form submitted!");
+    onCreate() {
+
+      let form = {
+        start_date: this.start_date ? moment(this.start_date, "YYYY-MM-DD") : null,
+        end_date: this.end_date ? moment(this.end_date, "YYYY-MM-DD") : null,
+        category: this.category.name,
+        seats: this.seats,
+        itinerary: this.itinerary
+      };
+      createOrder(form)
+        .then(res => {
+          console.log(res, "-====");
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        });
     }
   }
 };
