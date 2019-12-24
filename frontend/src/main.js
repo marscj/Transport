@@ -60,6 +60,11 @@ Vue.use(Storage, {
   storage: 'local', // storage name session, local, memory
 });
 
+import moment from 'moment'
+Vue.filter('moment', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return moment(dataStr).format(pattern)
+})
+
 Vue.config.productionTip = false
 
 Vue.prototype.$log = console.log;

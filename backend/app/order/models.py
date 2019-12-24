@@ -41,6 +41,8 @@ class Order(models.Model):
 
     driver = models.CharField(blank=True, null=True, max_length=150)
 
+    driver_phone = models.CharField(blank=True, null=True, max_length=64)
+
     customer_id = models.IntegerField(blank=True, null=True)
 
     customer = models.CharField(blank=True, null=True, max_length=150)

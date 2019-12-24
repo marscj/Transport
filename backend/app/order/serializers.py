@@ -29,9 +29,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = (
-            'start_date', 'end_date', 'category', 'seats', 'itinerary'
-        )
+        fields = '__all__'
 
     def validate(self, validate_data):
         print(validate_data.get('start_date', None), '=====')

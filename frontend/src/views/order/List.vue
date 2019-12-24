@@ -37,21 +37,21 @@
         </vs-dropdown>
       </div>
 
-      <template slot="thead">
-        <vs-th key="orderId" style="width: 100px;">Order_Id</vs-th>
-        <vs-th key="relatedId" style="width: 100px;">related_Id</vs-th>
-        <vs-th>Start_Date</vs-th>
-        <vs-th>End_Date</vs-th>
-        <vs-th>Itinerary</vs-th>
-        <vs-th>O-Itinerary</vs-th>
-        <vs-th>Vehicle</vs-th>
-        <vs-th>Driver</vs-th>
-        <vs-th>D-Phone</vs-th>
-        <vs-th>Remark</vs-th>
+      <template slot="thead" >
+        <vs-th key="orderId" class="w-1">Order_Id</vs-th>
+        <vs-th key="relatedId" class="w-21">related_Id</vs-th>
+        <vs-th key="start_date" class="w-1">Start_Date</vs-th>
+        <vs-th key="end_date" class="w-1">End_Date</vs-th>
+        <vs-th key="itinerary" class="w-2">Itinerary</vs-th>
+        <vs-th >O-Itinerary</vs-th>
+        <vs-th key="vehicle">Vehicle</vs-th>
+        <vs-th key="driver">Driver</vs-th>
+        <vs-th key="driver_phone">D-Phone</vs-th>
+        <vs-th key="remark">Remark</vs-th>
       </template>
 
-      <template slot-scope="{data}">
-        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
+      <template slot-scope="{data}" >
+        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true" class="whitespace-pre-wrap">
           <vs-td :data="tr.orderId">
             <span v-if="tr.orderId">{{ tr.orderId }}</span>
           </vs-td>
@@ -59,15 +59,15 @@
             <span v-if="tr.relatedId">{{ tr.relatedId }}</span>
           </vs-td>
           <vs-td :data="tr.start_date">
-            <span v-if="tr.start_date">{{ tr.start_date }}</span>
+            <span v-if="tr.start_date">{{ tr.start_date | moment('MM-DD') }}</span>
           </vs-td>
           <vs-td :data="tr.end_date">
-            <span v-if="tr.end_date">{{ tr.end_date }}</span>
+            <span v-if="tr.end_date">{{ tr.end_date | moment('MM-DD') }}</span>
           </vs-td>
           <vs-td :data="tr.itinerary">
-            <span v-if="tr.itinerary">{{ tr.itinerary }}</span>
+            <span v-if="tr.itinerary" >{{ tr.itinerary }}</span>
           </vs-td>
-          <vs-td :data="tr.o_itinerary">
+          <vs-td :data="tr.o_itinerary" >
             <span v-if="tr.o_itinerary">{{ tr.o_itinerary }}</span>
           </vs-td>
           <vs-td :data="tr.vehicle">
@@ -90,6 +90,7 @@
 
 <script>
 import { getOrder } from "@/http/requests/order/index.js";
+import moment from "moment";
 
 export default {
   props: {

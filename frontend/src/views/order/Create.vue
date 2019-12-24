@@ -12,17 +12,17 @@
                 <datepicker
                   placeholder="Start Date"
                   v-model="start_date"
-                  class="w-40 inline-block py-1 px-3 mx-2"
+                  class="w-40 inline-block py-1 mx-2"
                 ></datepicker>-
-                <span>{{ errors[0] }}</span>
+                <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
               <validation-provider name="end_date" v-slot="{ errors }">
                 <datepicker
                   placeholder="End Date"
                   v-model="end_date"
-                  class="w-40 inline-block py-1 px-3 mx-2"
+                  class="w-40 inline-block py-1 mx-2"
                 ></datepicker>
-                <span>{{ errors[0] }}</span>
+                <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -43,7 +43,7 @@
                     :class="category.id === data.id ? 'text-white font-bold' : 'text-teal-500 font-bold' "
                   >{{ data.name }}</p>
                 </a>
-                <span>{{ errors[0] }}</span>
+                <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -64,7 +64,7 @@
                     :class="seats === data.seats ? 'text-white font-bold' : 'text-teal-500 font-bold' "
                   >{{ data.seats }} (SEAT)</p>
                 </a>
-                <span>{{ errors[0] }}</span>
+                <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -76,7 +76,7 @@
               <div class="mx-4">
                 <validation-provider name="itinerary" v-slot="{ errors }">
                   <vs-textarea v-model="itinerary" height="180" />
-                  <span>{{ errors[0] }}</span>
+                  <span class="text-red-600 text-base">{{ errors[0] }}</span>
                 </validation-provider>
               </div>
               <p class="mx-4 text-gray-400 text-sm">e.g.</p>
@@ -101,18 +101,20 @@
             </div>
             <div class="w-11/12">
               <div class="py-1 px-3 mx-1">
-                <vs-input></vs-input>
+                <vs-input v-model="relatedId"></vs-input>
               </div>
             </div>
           </div>
           <div class="flex flex-wrap mt-10">
-            <validation-provider name="non_field_errors" v-slot="{ errors }">
-              <span>{{ errors[0] }}</span>
-            </validation-provider>
-            <button
-              @click="onCreate()"
-              class="ml-auto bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10 rounded"
-            >Submit</button>
+            <div class="ml-auto">
+              <validation-provider name="non_field_errors" v-slot="{ errors }" class="mx-4">
+                <span class="text-red-600 text-base">{{ errors[0] }}</span>
+              </validation-provider>
+              <button
+                @click="onCreate()"
+                class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10 rounded"
+              >Submit</button>
+            </div>
           </div>
         </div>
       </div>
@@ -203,6 +205,7 @@ export default {
       end_date: undefined,
       itinerary: "",
       remark: "",
+      relatedId: "",
       categoryData: [],
       seatData: [],
       itineraryData: []
@@ -241,13 +244,17 @@ export default {
       this.itinerary += data.name + "\n";
     },
     onCreate() {
-
       let form = {
-        start_date: this.start_date ? moment(this.start_date, "YYYY-MM-DD") : null,
-        end_date: this.end_date ? moment(this.end_date, "YYYY-MM-DD") : null,
+        start_date: this.start_date
+          ? moment(this.start_date).format("YYYY-MM-DD")
+          : null,
+        end_date: this.end_date
+          ? moment(this.end_date).format("YYYY-MM-DD")
+          : null,
         category: this.category.name,
         seats: this.seats,
-        itinerary: this.itinerary
+        itinerary: this.itinerary,
+        relatedId: this.relatedId
       };
       createOrder(form)
         .then(res => {
