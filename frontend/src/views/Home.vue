@@ -17,7 +17,7 @@
       </div>
     </div>
   </header>
-  <div class="relative pb-6" style="height:500px;">
+  <div class="relative pb-6" style="height:700px;">
     <img src="@/assets/images/pages/home/bus-1.jpeg" class=" top-0 w-full h-full object-cover" />
     <div class="container mx-auto relative ">
       <div class="flex">
@@ -43,14 +43,11 @@
         <div class="md:w-1/2">
           <h3 class="flex flex-col text-4xl text-secondary font-bold mb-6">
             About us
-            <span class="bg-primary h-1 w-20 block mt-4"></span>
+            <span class="bg-primary h-1 w-40 block mt-4"></span>
           </h3>
           <p
             class="text-lg text-secondary-700 mb-4"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet est tellus, et consequat sem sodales id. Quisque molestie et mauris efficitur lacinia.</p>
-          <p
-            class="text-lg text-secondary-700"
-          >Aliquam eget semper mi. Mauris magna risus, viverra in nulla id, placerat fermentum tellus. Aliquam non.</p>
+          >ubang services is a part of Bastaki group of companies,we are reliable and professional transportation provider. we are offering great expertise in all your transportation needs, Ubang service passionate and willing to serve our respected clients with smile face. Ubang is platform where you can spend unforgettable time with comfort and you can explore your destination with style.we are happy to serve our customers 7 days a week.</p>
         </div>
       </div>
     </div>
@@ -62,8 +59,8 @@
     />
     <div class="container mx-auto px-6 py-32 relative">
       <h3 class="flex flex-col items-center text-4xl text-secondary font-bold">
-        Services we offer
-        <span class="bg-primary h-1 w-20 block mt-4"></span>
+        Our Services
+        <span class="bg-primary h-1 w-56 block mt-4"></span>
       </h3>
       <div
         class="flex flex-col md:flex-row items-center mb-24 md:mb-16 xl:mb-8 mt-16 md:mt-0 md:mt-16 lg:mt-0"
