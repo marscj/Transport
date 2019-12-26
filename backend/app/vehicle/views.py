@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, DjangoModelPermissions
 from django.db.models import Count
 import django_filters
 
@@ -14,17 +14,17 @@ class PriceFilter(django_filters.FilterSet):
 
 class ItineraryView(ModelViewSet):
     serializer_class = ItinerarySerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [DjangoModelPermissions]
     queryset = Itinerary.objects.all()
 
 class CategoryView(ModelViewSet):
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [DjangoModelPermissions]
     queryset = Category.objects.all()
 
 class PriceView(ModelViewSet):
     serializer_class = PriceSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [DjangoModelPermissions]
     queryset = Price.objects.order_by('category', 'itinerary')
 
     filterset_fields = ('category',)
