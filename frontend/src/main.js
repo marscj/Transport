@@ -65,6 +65,16 @@ Vue.filter('moment', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
   return moment(dataStr).format(pattern)
 })
 
+import { Table } from 'ant-design-vue';
+// import 'ant-design-vue/lib/button/style/css';
+// import "ant-design-vue/lib/table/style";
+Vue.use(Table);
+// Vue.use(Pagination);
+
+// import Antd from 'ant-design-vue';
+// import 'ant-design-vue/dist/antd.css';
+// Vue.use(Antd);
+
 Vue.config.productionTip = false
 
 Vue.prototype.$log = console.log;

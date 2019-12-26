@@ -50,7 +50,7 @@
           v-if="myOrder"
         >Add New</vs-button>
 
-        <vs-dropdown vs-trigger-click class="cursor-pointer ">
+        <vs-dropdown vs-trigger-click class="cursor-pointer">
           <div
             class="p-2 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
           >
@@ -110,10 +110,15 @@
             <a v-if="tr.end_date">{{ tr.end_date | moment('YY-MM-DD') }}</a>
           </vs-td>
           <vs-td :data="tr.itinerary">
-            
             <a v-if="tr.itinerary">
-              <p>Category: <span> {{tr.category}}</span></p>
-              <p>Seats:<span>         {{tr.seats}}</span></p>
+              <p>
+                Category:
+                <span>{{tr.category}}</span>
+              </p>
+              <p>
+                Seats:
+                <span>{{tr.seats}}</span>
+              </p>
               <p>Itinerary:</p>
               <p>{{tr.itinerary}}</p>
             </a>
@@ -136,12 +141,14 @@
         </vs-tr>
       </template>
     </vx-table>
+
+    <va-table />
   </vs-card>
 </template>
 
 <script>
 import { getOrder } from "@/http/requests/order/index.js";
-// import moment from "moment";
+
 
 export default {
   props: {
@@ -184,3 +191,4 @@ export default {
   }
 };
 </script>
+
