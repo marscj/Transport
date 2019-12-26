@@ -5,17 +5,17 @@ from app.user.models import User
 
 class Order(models.Model):
     
-    class OrderStatus(models.IntegerChoices):
-        New = 1
-        Pending = 2
-        Cancel = 3
-        Complete = 4
+    class OrderStatus(models.TextChoices):
+        New = 'New'
+        Pending = 'Pending'
+        Cancel = 'Cancel'
+        Complete = 'Complete'
 
     orderId = models.CharField(blank=True, null=True, max_length=64)
 
     relatedId = models.CharField(blank=True, null=True, max_length=64)
 
-    status = models.IntegerField(default=OrderStatus.New, choices=OrderStatus.choices)
+    status = models.CharField(default=OrderStatus.New, choices=OrderStatus.choices, max_length=16)
 
     create_at = models.DateTimeField(auto_now_add=True)
 

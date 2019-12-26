@@ -79,8 +79,8 @@
       <template slot="thead">
         <vs-th key="orderId" class="w-32">ORDERID</vs-th>
         <vs-th key="relatedId" class="w-32">RELATEDID</vs-th>
-        <vs-th key="start_date" class="w-24">START</vs-th>
-        <vs-th key="end_date" class="w-24">END</vs-th>
+        <vs-th key="start_date" class="w-28">START</vs-th>
+        <vs-th key="end_date" class="w-28">END</vs-th>
         <vs-th key="itinerary" class="w-96">ITINERARY</vs-th>
         <vs-th class="w-96">ITINERARY</vs-th>
         <vs-th key="vehicle" class="w-40">VEHICLE</vs-th>
@@ -104,13 +104,19 @@
             <a v-if="tr.relatedId">{{ tr.relatedId }}</a>
           </vs-td>
           <vs-td :data="tr.start_date">
-            <a v-if="tr.start_date">{{ tr.start_date | moment('MM-DD') }}</a>
+            <a v-if="tr.start_date">{{ tr.start_date | moment('YY-MM-DD') }}</a>
           </vs-td>
           <vs-td :data="tr.end_date">
-            <a v-if="tr.end_date">{{ tr.end_date | moment('MM-DD') }}</a>
+            <a v-if="tr.end_date">{{ tr.end_date | moment('YY-MM-DD') }}</a>
           </vs-td>
           <vs-td :data="tr.itinerary">
-            <a v-if="tr.itinerary">{{ tr.itinerary }}</a>
+            
+            <a v-if="tr.itinerary">
+              <p>Category: <span> {{tr.category}}</span></p>
+              <p>Seats:<span>         {{tr.seats}}</span></p>
+              <p>Itinerary:</p>
+              <p>{{tr.itinerary}}</p>
+            </a>
           </vs-td>
           <vs-td :data="tr.itinerary">
             <a v-if="tr.itinerary">{{ tr.itinerary }}</a>
