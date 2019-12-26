@@ -38,49 +38,49 @@
       </div>
 
       <template slot="thead" >
-        <vs-th key="orderId" class="w-1">Order_Id</vs-th>
-        <vs-th key="relatedId" class="w-21">related_Id</vs-th>
-        <vs-th key="start_date" class="w-1">Start_Date</vs-th>
-        <vs-th key="end_date" class="w-1">End_Date</vs-th>
-        <vs-th key="itinerary" class="w-2">Itinerary</vs-th>
-        <vs-th >O-Itinerary</vs-th>
-        <vs-th key="vehicle">Vehicle</vs-th>
-        <vs-th key="driver">Driver</vs-th>
-        <vs-th key="driver_phone">D-Phone</vs-th>
-        <vs-th key="remark">Remark</vs-th>
+        <vs-th key="orderId">ORDERID</vs-th>
+        <vs-th key="relatedId" >RELATEDID</vs-th>
+        <vs-th key="start_date" >STARTDATE</vs-th>
+        <vs-th key="end_date" >ENDDATE</vs-th>
+        <vs-th key="itinerary" style="width:500px;">ITINERARY</vs-th>
+        <vs-th >ITINERARY</vs-th>
+        <vs-th key="vehicle">VEHICLE</vs-th>
+        <vs-th key="driver">DRIVER</vs-th>
+        <vs-th key="driver_phone">PHONE</vs-th>
+        <vs-th key="remark">REMARK</vs-th>
       </template>
 
       <template slot-scope="{data}" >
-        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true" class="whitespace-pre-wrap">
+        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true" class="text-xs whitespace-pre-wrap">
           <vs-td :data="tr.orderId">
-            <span v-if="tr.orderId">{{ tr.orderId }}</span>
+            <a v-if="tr.orderId">{{ tr.orderId }}</a>
           </vs-td>
           <vs-td :data="tr.relatedId">
-            <span v-if="tr.relatedId">{{ tr.relatedId }}</span>
+            <a v-if="tr.relatedId">{{ tr.relatedId }}</a>
           </vs-td>
           <vs-td :data="tr.start_date">
-            <span v-if="tr.start_date">{{ tr.start_date | moment('MM-DD') }}</span>
+            <a v-if="tr.start_date">{{ tr.start_date | moment('MM-DD') }}</a>
           </vs-td>
           <vs-td :data="tr.end_date">
-            <span v-if="tr.end_date">{{ tr.end_date | moment('MM-DD') }}</span>
+            <a v-if="tr.end_date">{{ tr.end_date | moment('MM-DD') }}</a>
           </vs-td>
           <vs-td :data="tr.itinerary">
-            <span v-if="tr.itinerary" >{{ tr.itinerary }}</span>
-          </vs-td>
-          <vs-td :data="tr.o_itinerary" >
-            <span v-if="tr.o_itinerary">{{ tr.o_itinerary }}</span>
+            <a v-if="tr.itinerary" >{{ tr.itinerary }}</a>
+          </vs-td> 
+          <vs-td :data="tr.itinerary" >
+            <a v-if="tr.itinerary">{{ tr.itinerary }}</a>
           </vs-td>
           <vs-td :data="tr.vehicle">
-            <span v-if="tr.vehicle">{{ tr.vehicle.license_plate }}</span>
+            <a v-if="tr.vehicle">{{ tr.vehicle.license_plate }}</a>
           </vs-td>
           <vs-td :data="tr.driver">
-            <span v-if="tr.driver">{{ tr.driver.username }}</span>
-          </vs-td>
+            <a v-if="tr.driver">{{ tr.driver.username }}</a>
+          </vs-td> 
           <vs-td :data="tr.driver">
-            <span v-if="tr.driver">{{ tr.driver.phone }}</span>
+            <a v-if="tr.driver">{{ tr.driver.phone }}</a>
           </vs-td>
           <vs-td :data="tr.remark">
-            <span v-if="tr.remark">{{ tr.remark }}</span>
+            <a v-if="tr.remark">{{ tr.remark }}</a>
           </vs-td>
         </vs-tr>
       </template>
@@ -90,7 +90,7 @@
 
 <script>
 import { getOrder } from "@/http/requests/order/index.js";
-import moment from "moment";
+// import moment from "moment";
 
 export default {
   props: {
@@ -133,77 +133,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-#data-list-thumb-view {
-  .vs-con-table {
-    .vs-table--header {
-      display: flex;
-      flex-wrap: wrap-reverse;
-      margin-left: 1rem;
-      margin-right: 1rem;
-      > span {
-        display: flex;
-        flex-grow: 1;
-      }
-
-      .vs-table--search {
-        padding-top: 2;
-
-        .vs-table--search-input {
-          padding: 0.9rem 2.5rem;
-          font-size: 1rem;
-
-          & + i {
-            left: 1rem;
-          }
-
-          &:focus + i {
-            left: 1rem;
-          }
-        }
-      }
-    }
-
-    .vs-table {
-      border-collapse: collapse;
-      tr {
-        td {
-          padding: 20px;
-        }
-        td.td-check {
-          padding: 20px !important;
-        }
-      }
-      th,
-      tr,
-      td {
-        border: 1px solid #e8e8e8;
-      }
-    }
-
-    .vs-table--thead {
-      th {
-        padding-top: 20;
-        padding-bottom: 20;
-
-        .vs-table-text {
-          text-transform: uppercase;
-          font-weight: 600;
-        }
-      }
-      th.td-check {
-        padding: 0 15px !important;
-      }
-      tr {
-        background: none;
-        box-shadow: none;
-      }
-    }
-
-    .vs-table--pagination {
-      justify-content: center;
-    }
-  }
-}
-</style>
