@@ -82,7 +82,7 @@
         <vs-th key="start_date" class="w-28">START</vs-th>
         <vs-th key="end_date" class="w-28">END</vs-th>
         <vs-th key="itinerary" class="w-96">ITINERARY</vs-th>
-        <vs-th class="w-96">ITINERARY</vs-th>
+        <vs-th key="order_itinerary" class="w-96">ITINERARY</vs-th>
         <vs-th key="vehicle" class="w-40">VEHICLE</vs-th>
         <vs-th key="driver" class="w-40">DRIVER</vs-th>
         <vs-th key="driver_phone" class="w-40">PHONE</vs-th>
@@ -118,8 +118,8 @@
               <p>{{tr.itinerary}}</p>
             </a>
           </vs-td>
-          <vs-td :data="tr.itinerary">
-            <a v-if="tr.itinerary">{{ tr.itinerary }}</a>
+          <vs-td :data="tr.order_itinerary">
+            <a v-if="tr.order_itinerary">{{ tr.order_itinerary }}</a>
           </vs-td>
           <vs-td :data="tr.vehicle">
             <a v-if="tr.vehicle">{{ tr.vehicle }}</a>

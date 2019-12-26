@@ -29,6 +29,8 @@ class Order(models.Model):
 
     seats = models.IntegerField(blank=True, null=True, default=5)
 
+    passenger = models.IntegerField(blank=True, null=True, default=0)
+
     itinerary = models.TextField(blank=True, null=True)
 
     remark = models.TextField(blank=True, null=True)

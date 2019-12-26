@@ -11,6 +11,8 @@ class OrderItinerarySerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
 
+    order_itinerary = OrderItinerarySerializer(read_only=True, many=True)
+    
     class Meta:
         model = Order
         fields = '__all__'
