@@ -1,3 +1,5 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 module.exports = {
   publicPath: '/',
   outputDir: 'dist',
@@ -10,7 +12,16 @@ module.exports = {
       splitChunks: {
         chunks: 'all'
       }
-    }
+    },
+    externals: {
+      'vue': 'Vue',
+      'vue-router': 'VueRouter',
+      'vuex': 'Vuex',
+      'axios': 'axios',
+      'ant-design-vue': 'antd',
+      'vue-feather-icons': 'VueFeatherIcon',
+      'moment': 'moment'
+    },
   },
   devServer: {
     port: 8001,
@@ -27,5 +38,9 @@ module.exports = {
       }
     }
   },
+  chainWebpack: config => {
+    config
+      .plugin('webpack-bundle-analyzer')
+      .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+  }
 }
-

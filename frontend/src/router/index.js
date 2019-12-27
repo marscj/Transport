@@ -9,7 +9,7 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 };
 
-Vue.use(Router)
+// Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
