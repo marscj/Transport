@@ -19,7 +19,6 @@ module.exports = {
       'vuex': 'Vuex',
       'axios': 'axios',
       'ant-design-vue': 'antd',
-      'vue-feather-icons': 'VueFeatherIcon',
       'moment': 'moment'
     },
   },
