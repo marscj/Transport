@@ -46,14 +46,29 @@
       :rowKey="(record) => record.id"
       :columns="columns"
       :data="loadData"
+      :scroll="{ x: 1300 }"
     >
+      <template slot="create_date" slot-scope="data">{{ data | moment('YYYY-MM-DD')}}</template>
+
+      <template slot="itinerary" slot-scope="data">
+        <p>Category: {{data.category}}</p>
+        <p>Seats: {{data.seats}}</p>
+        <p>Passengers: {{data.passenger}}</p>
+        <p>Itinerary:</p>
+        <p class="whitespace-pre-line">{{data.itinerary}}</p>
+      </template>
+
+      <template slot="invoice" slot-scope="data">
+        <a href="#" v-if="!data">invoice</a>
+        <span v-else> unknow</span>
+      </template>
     </s-table>
   </vs-card>
 </template>
 
 <script>
 import { getOrder } from "@/http/requests/order";
-import STable from "@/components/s-table/STable.vue";
+import STable from "@/components/s-table";
 import moment from "moment";
 export default {
   components: {
@@ -69,34 +84,87 @@ export default {
     return {
       columns: [
         {
-          title: 'ORDERID',
-          dataIndex: 'orderId',
-          align: 'left'
+          title: "ORDERID",
+          dataIndex: "orderId",
+          align: "center",
+          width: 80,
+          fiexd: "left"
         },
         {
-          title: 'RELATEDID',
-          dataIndex: 'relatedId',
+          title: "RELATEDID",
+          dataIndex: "relatedId",
+          align: "center",
+          width: 80
         },
         {
-          title: 'START DATE',
-          dataIndex: 'start_date',
-          customRender: (text, record, index) => {
-            return <p> {text} </p>
-          }
+          title: "CREATEDATE",
+          dataIndex: "create_at",
+          scopedSlots: { customRender: "create_date" },
+          align: "center",
+          width: 110
         },
         {
-          title: 'END DATE',
-          dataIndex: 'end_date',
-          customRender: (text, record, index) => {
-            return <p> {text} </p>
-          }
+          title: "STARTDATE",
+          dataIndex: "start_date",
+          align: "center",
+          width: 110
         },
         {
-          title: 'CREATE DATE',
-          dataIndex: 'create_at',
-          customRender: (text, record, index) => {
-            return <p> {text | moment('YYYY-MM-DD')} </p>
-          }
+          title: "ENDDATE",
+          dataIndex: "end_date",
+          align: "center",
+          width: 110
+        },
+        {
+          title: "ITINERARY",
+          scopedSlots: { customRender: "itinerary" }
+        },
+        {
+          title: "O-ITINERARY",
+          scopedSlots: { customRender: "o_itinerary" }
+        },
+        {
+          title: "Vehicle",
+          dataIndex: "vehicle",
+          align: "center",
+          width: 100
+        },
+        {
+          title: "Driver",
+          dataIndex: "driver",
+          align: "center",
+          width: 100
+        },
+        {
+          title: "Phone",
+          dataIndex: "driver_phone",
+          align: "center",
+          width: 100
+        },
+        {
+          title: "Status",
+          dataIndex: "status",
+          align: "center",
+          width: 80
+        },
+        {
+          title: "Customer",
+          dataIndex: "customer",
+          align: "center",
+          width: 100
+        },
+        {
+          title: "Operator",
+          dataIndex: "operator",
+          align: "center",
+          width: 100
+        },
+        {
+          title: "Invoice",
+          dataIndex: "invoice_id",
+          scopedSlots: { customRender: "invoice" },
+          align: "center",
+          width: 100
         }
       ],
       page_size: 10,

@@ -49,6 +49,12 @@ class Order(models.Model):
 
     customer = models.CharField(blank=True, null=True, max_length=150)
 
+    operator_id = models.IntegerField(blank=True, null=True)
+
+    operator = models.CharField(blank=True, null=True, max_length=150)
+
+    customer = models.CharField(blank=True, null=True, max_length=150)
+
     invoice_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
