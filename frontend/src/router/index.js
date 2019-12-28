@@ -34,7 +34,6 @@ router.afterEach(() => {
 let isAlreadyAddRouter = false
 
 router.beforeEach((to, from, next) => {
-  // console.log('from=', from.path, 'to=', to.path)
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
   if(Vue.ls.get("accessToken")) {
     if (to.path === '/login') {

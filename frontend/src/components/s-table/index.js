@@ -10,9 +10,10 @@ export default {
 
       localLoading: false,
       localDataSource: [],
-      localPagination: Object.assign({}, this.pagination)
+      localPagination: Object.assign({}, this.pagination),
     }
   },
+
   props: Object.assign({}, Table.props, {
     bordered: {
       type: Boolean,
@@ -42,6 +43,12 @@ export default {
       type: String,
       default: 'default'
     },
+    /**
+     * alert: {
+     *   show: true,
+     *   clear: Function
+     * }
+     */
     alert: {
       type: [Object, Boolean],
       default: null
@@ -49,6 +56,11 @@ export default {
     rowSelection: {
       type: Object,
       default: null
+    },
+    /** @Deprecated */
+    showAlertInfo: {
+      type: Boolean,
+      default: false
     },
     showPagination: {
       type: String | Boolean,
@@ -60,11 +72,12 @@ export default {
     }
   }),
   watch: {
+
     'localPagination.current' (val) {
       this.pageURI && this.$router.push({
         ...this.$route,
         name: this.$route.name,
-        params: Object.assign({}, this.$route.params, {
+        query: Object.assign({}, this.$route.query, {
           pageNo: val
         })
       })
@@ -86,7 +99,7 @@ export default {
     }
   },
   created () {
-    const { pageNo } = this.$route.params
+    const { pageNo } = this.$route.query
     const localPageNum = this.pageURI && (pageNo && parseInt(pageNo)) || this.pageNum
     this.localPagination = ['auto', true].includes(this.showPagination) && Object.assign({}, this.localPagination, {
       current: localPageNum,
@@ -116,11 +129,14 @@ export default {
      */
     loadData (pagination, filters, sorter) {
       this.localLoading = true
+      
+      if(pagination) {
+        this.localPagination = Object.assign({}, pagination)
+      }
+
       const parameter = Object.assign({
-        page: (pagination && pagination.current) ||
-          this.showPagination && this.localPagination.current || this.pageNum,
-        page_size: (pagination && pagination.pageSize) ||
-          this.showPagination && this.localPagination.pageSize || this.pageSize
+        page: (pagination && pagination.current) || this.showPagination && this.localPagination.current || this.pageNum,
+        page_size: (pagination && pagination.pageSize) || this.showPagination && this.localPagination.pageSize || this.pageSize
       },
       (sorter && sorter.field && {
         sortField: sorter.field
@@ -129,18 +145,18 @@ export default {
         sortOrder: sorter.order
       }) || {}, {
         ...filters
-      })
-
+      }
+      )
       const result = this.data(parameter)
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       // eslint-disable-next-line
       if ((typeof result === 'object' || typeof result === 'function') && typeof result.then === 'function') {
         result.then(r => {
           this.localPagination = this.showPagination && Object.assign({}, this.localPagination, {
+            current: this.localPagination.current, // 返回结果中的当前分页数
             total: r.count, // 返回结果中的总记录数
             showSizeChanger: this.showSizeChanger,
-            pageSize: (pagination && pagination.pageSize) ||
-              this.localPagination.pageSize
+            pageSize: (pagination && pagination.pageSize) || this.localPagination.pageSize
           }) || false
           // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
           if (r.results.length === 0 && this.showPagination && this.localPagination.current > 1) {
