@@ -254,8 +254,7 @@ export default {
         relatedId: this.relatedId
       };
       createOrder(form)
-        .then(res => {
-        })
+        .then()
         .catch(error => {
           if (error.response) {
             this.$refs.observer.setErrors(error.response.data.result);

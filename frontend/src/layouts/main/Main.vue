@@ -205,6 +205,7 @@ export default {
       }
       // else if(this.mainLayoutType === "boxed") return "content-area-reduced"
       else return "content-area-full";
+      return "content-area-reduced";
     },
     footerClasses() {
       return {
