@@ -75,7 +75,7 @@
             <div class="w-4/12">
               <div class="mx-4">
                 <validation-provider name="itinerary" v-slot="{ errors }">
-                  <vs-textarea v-model="itinerary" height="180" />
+                  <a-textarea v-model="itinerary" :rows="13" class=" hover:border-teal-500 focus:border-teal-500"></a-textarea>
                   <span class="text-red-600 text-base">{{ errors[0] }}</span>
                 </validation-provider>
               </div>

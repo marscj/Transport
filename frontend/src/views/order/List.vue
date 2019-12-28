@@ -40,6 +40,10 @@
       </div>
     </div>
 
+    <div class="p-4" v-if="myOrder">
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" >Add New</vs-button>
+    </div>
+    
     <s-table
       class="p-4"
       ref="table"
@@ -55,7 +59,8 @@
         <p>Seats: {{data.seats}}</p>
         <p>Passengers: {{data.passenger}}</p>
         <p>Itinerary:</p>
-        <p class="whitespace-pre-line">{{data.itinerary}}</p>
+        <pre >{{data.itinerary}}</pre>
+        <!-- <p class="whitespace-pre-line">{{data.itinerary}}</p> -->
       </template>
 
       <template slot="invoice" slot-scope="data">
