@@ -2,13 +2,13 @@
   <vs-card>
     <validation-observer ref="observer" v-slot="{ validate, dirty }">
       <div v-if="step == 1" class="mb-5">
-        <div>
+        <div class="p-10">
           <div class="flex flex-wrap mt-5 text-base">
             <div class="w-1/12 py-1">
               <span>*Date:</span>
             </div>
             <div class="w-11/12">
-              <validation-provider name="start_date" v-slot="{ errors }">
+              <validation-provider name="start_date" rules="required"  v-slot="{ errors }">
                 <datepicker
                   placeholder="Start Date"
                   v-model="start_date"
@@ -16,7 +16,7 @@
                 ></datepicker>-
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
-              <validation-provider name="end_date" v-slot="{ errors }">
+              <validation-provider name="end_date" rules="required" v-slot="{ errors }">
                 <datepicker
                   placeholder="End Date"
                   v-model="end_date"
@@ -31,7 +31,7 @@
               <span>*Category:</span>
             </div>
             <div class="w-11/12">
-              <validation-provider name="category" v-slot="{ errors }">
+              <validation-provider name="category" rules="required" v-slot="{ errors }">
                 <a
                   @click="onCategory(data)"
                   v-for="data in categoryData"
@@ -52,7 +52,7 @@
               <span>*Seats:</span>
             </div>
             <div class="w-11/12">
-              <validation-provider name="seats" v-slot="{ errors }">
+              <validation-provider name="seats" rules="required" v-slot="{ errors }">
                 <a
                   @click="onSeat(data)"
                   v-for="(data, index) in seatData"
@@ -69,24 +69,32 @@
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
-            <div class="w-1/12 py-1">
+            <div class="w-1/12">
               <span>*Passengers:</span>
             </div>
             <div class="w-11/12">
-              <validation-provider name="passenger" rules="required|min_value:0" v-slot="{ errors }">
+              <validation-provider
+                name="passenger"
+                rules="required|min_value:0"
+                v-slot="{ errors }"
+              >
                 <a-input-number v-model="passenger" class="w-64 mx-2"></a-input-number>
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
-            <div class="w-1/12 py-1">
+            <div class="w-1/12">
               <span>*Itinerary:</span>
             </div>
             <div class="w-4/12">
               <div class="mx-2">
-                <validation-provider name="itinerary" v-slot="{ errors }">
-                  <a-textarea v-model="itinerary" :rows="13" class=" hover:border-teal-500 focus:border-teal-500"></a-textarea>
+                <validation-provider name="itinerary" rules="required" v-slot="{ errors }">
+                  <a-textarea
+                    v-model="itinerary"
+                    :rows="13"
+                    class="hover:border-teal-500 focus:border-teal-500"
+                  ></a-textarea>
                   <span class="text-red-600 text-base">{{ errors[0] }}</span>
                 </validation-provider>
               </div>
@@ -107,7 +115,7 @@
             </div>
           </div>
           <div class="flex flex-wrap mt-5 text-base">
-            <div class="w-1/12 py-1">
+            <div class="w-1/12 ">
               <span>RelatedID:</span>
             </div>
             <div class="w-11/12">
@@ -116,20 +124,39 @@
               </div>
             </div>
           </div>
+          <a-divider class="mt-10"></a-divider>
           <div class="flex flex-wrap mt-10">
-            <div class="ml-auto">
-              <validation-provider name="non_field_errors" v-slot="{ errors }" class="mx-4">
+            <div class="mr-auto">
+              <validation-provider name="non_field_errors" v-slot="{ errors }" >
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
               <button
-                @click="onCreate()"
-                class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10 rounded"
+                @click="onSuccess()"
+                class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10  rounded"
               >Submit</button>
             </div>
           </div>
         </div>
       </div>
     </validation-observer>
+
+    <div v-if="step == 2" class="mb-5">
+      <div class="text-center p-4">
+        <h1 class="text-4xl font-bold">Check out</h1>
+      </div>
+      <a-form class="p-10" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+        <a-form-item label="RelatedID" class="m-0">{{relatedId}}</a-form-item>
+        <a-form-item label="Start Date" class="m-0"> {{start_date | moment('YYYY-MM-DD')}} </a-form-item>
+        <a-form-item label="End Date" class="m-0"> {{end_date | moment('YYYY-MM-DD')}}</a-form-item>
+        <a-form-item label="Category" class="m-0">{{category.name}}</a-form-item>
+        <a-form-item label="Seats" class="m-0">{{seats}}</a-form-item>
+        <a-form-item label="Passengers" class="m-0">{{passenger}}</a-form-item>
+        <a-form-item label="Itinerary" class="m-0"><pre>{{itinerary}}</pre></a-form-item>
+        <a-divider class="mt-10"></a-divider>
+        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="step = 1">Back</a-button>
+        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded">Continue</a-button>
+      </a-form>
+    </div>
 
     <price-table
       class="mt-10"
@@ -143,7 +170,6 @@
 </template>
 
 <script>
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PriceTable from "@/views/price/Table.vue";
 import Datepicker from "vuejs-datepicker";
 import moment from "moment";
@@ -252,6 +278,9 @@ export default {
     onItinerary(data) {
       this.itinerary += data.name + "\n";
     },
+    onSuccess() {
+      this.step = 2;
+    },
     onCreate() {
       let form = {
         start_date: this.start_date
@@ -267,7 +296,7 @@ export default {
         relatedId: this.relatedId
       };
       createOrder(form)
-        .then()
+        .then(res => {})
         .catch(error => {
           if (error.response) {
             this.$refs.observer.setErrors(error.response.data.result);
