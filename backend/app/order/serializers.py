@@ -29,6 +29,8 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     itinerary = serializers.CharField(required=True, allow_null=False, max_length=1024)
 
+    passenger = serializers.IntegerField(required=True, allow_null=False)
+
     class Meta:
         model = Order
         fields = '__all__'

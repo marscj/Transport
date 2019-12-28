@@ -64,7 +64,7 @@
       </template>
 
       <template slot="invoice" slot-scope="data">
-        <a href="#" v-if="!data">invoice</a>
+        <a href="#" v-if="data">invoice</a>
         <span v-else> unknow</span>
       </template>
     </s-table>

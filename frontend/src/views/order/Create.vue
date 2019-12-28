@@ -70,10 +70,21 @@
           </div>
           <div class="flex flex-wrap mt-5 text-base">
             <div class="w-1/12 py-1">
+              <span>*Passengers:</span>
+            </div>
+            <div class="w-11/12">
+              <validation-provider name="passenger" rules="required|min_value:0" v-slot="{ errors }">
+                <a-input-number v-model="passenger" class="w-64 mx-2"></a-input-number>
+                <span class="text-red-600 text-base">{{ errors[0] }}</span>
+              </validation-provider>
+            </div>
+          </div>
+          <div class="flex flex-wrap mt-5 text-base">
+            <div class="w-1/12 py-1">
               <span>*Itinerary:</span>
             </div>
             <div class="w-4/12">
-              <div class="mx-4">
+              <div class="mx-2">
                 <validation-provider name="itinerary" v-slot="{ errors }">
                   <a-textarea v-model="itinerary" :rows="13" class=" hover:border-teal-500 focus:border-teal-500"></a-textarea>
                   <span class="text-red-600 text-base">{{ errors[0] }}</span>
@@ -89,7 +100,7 @@
                 <div v-for="data in itineraryData" :key="data.id" class="mb-4 w-1/2">
                   <button
                     @click="onItinerary(data)"
-                    class="text-xs font-hairline bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white py-2 px-4 mx-4 border border-teal-500 hover:border-transparent rounded"
+                    class="text-xs font-hairline bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white py-2 px-4 mx-4 border border-teal-500 hover:border-teal-500 rounded"
                   >{{data.name}}</button>
                 </div>
               </div>
@@ -100,7 +111,7 @@
               <span>RelatedID:</span>
             </div>
             <div class="w-11/12">
-              <div class="py-1 px-3 mx-1">
+              <div class="py-1 px-2">
                 <vs-input v-model="relatedId"></vs-input>
               </div>
             </div>
@@ -200,6 +211,7 @@ export default {
       seats: seats,
       start_date: undefined,
       end_date: undefined,
+      passenger: undefined,
       itinerary: "",
       remark: "",
       relatedId: "",
@@ -251,6 +263,7 @@ export default {
         category: this.category.name,
         seats: this.seats,
         itinerary: this.itinerary,
+        passenger: this.passenger,
         relatedId: this.relatedId
       };
       createOrder(form)
