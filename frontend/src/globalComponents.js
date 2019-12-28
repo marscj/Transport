@@ -2,14 +2,12 @@ import Vue from 'vue'
 
 import VxCard  from './components/vx-card/VxCard.vue'
 import vxTable  from './components/vx-table/vxTable.vue'
-import vaTable  from './components/va-table/vaTable.vue'
 import VxBreadcrumb  from './layouts/components/VxBreadcrumb.vue'
 import FeatherIcon  from './components/FeatherIcon.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full'
 
 Vue.component(VxCard.name, VxCard)
 Vue.component(vxTable.name, vxTable)
-Vue.component(vaTable.name, vaTable)
 Vue.component(VxBreadcrumb.name, VxBreadcrumb)
 Vue.component(FeatherIcon.name, FeatherIcon)
 Vue.component('ValidationProvider', ValidationProvider);

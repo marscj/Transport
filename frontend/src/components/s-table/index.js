@@ -1,5 +1,4 @@
-import T from 'ant-design-vue/es/table/Table'
-import get from 'lodash.get'
+import { Table } from 'ant-design-vue'
 
 export default {
   data () {
@@ -14,7 +13,11 @@ export default {
       localPagination: Object.assign({}, this.pagination)
     }
   },
-  props: Object.assign({}, T.props, {
+  props: Object.assign({}, Table.props, {
+    bordered: {
+      type: Boolean,
+      default: true
+    },
     rowKey: {
       type: [String, Function],
       default: 'key'
@@ -90,7 +93,6 @@ export default {
       pageSize: this.pageSize,
       showSizeChanger: this.showSizeChanger
     }) || false
-    console.log('this.localPagination', this.localPagination)
     this.needTotalList = this.initTotalList(this.columns)
     this.loadData()
   },
@@ -117,7 +119,7 @@ export default {
       const parameter = Object.assign({
         page: (pagination && pagination.current) ||
           this.showPagination && this.localPagination.current || this.pageNum,
-        pageSize: (pagination && pagination.pageSize) ||
+        page_size: (pagination && pagination.pageSize) ||
           this.showPagination && this.localPagination.pageSize || this.pageSize
       },
       (sorter && sorter.field && {
@@ -127,23 +129,21 @@ export default {
         sortOrder: sorter.order
       }) || {}, {
         ...filters
-      }
-      )
-      console.log('parameter', parameter)
+      })
+
       const result = this.data(parameter)
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       // eslint-disable-next-line
       if ((typeof result === 'object' || typeof result === 'function') && typeof result.then === 'function') {
         result.then(r => {
           this.localPagination = this.showPagination && Object.assign({}, this.localPagination, {
-            current: r.pageNo, // 返回结果中的当前分页数
-            total: r.totalCount, // 返回结果中的总记录数
+            total: r.count, // 返回结果中的总记录数
             showSizeChanger: this.showSizeChanger,
             pageSize: (pagination && pagination.pageSize) ||
               this.localPagination.pageSize
           }) || false
           // 为防止删除数据后导致页面当前页面数据长度为 0 ,自动翻页到上一页
-          if (r.data.length === 0 && this.showPagination && this.localPagination.current > 1) {
+          if (r.results.length === 0 && this.showPagination && this.localPagination.current > 1) {
             this.localPagination.current--
             this.loadData()
             return
@@ -158,8 +158,7 @@ export default {
           } catch (e) {
             this.localPagination = false
           }
-          console.log('loadData -> this.localPagination', this.localPagination)
-          this.localDataSource = r.data // 返回结果中的数组数据
+          this.localDataSource = r.results // 返回结果中的数组数据
           this.localLoading = false
         })
       }
@@ -189,7 +188,7 @@ export default {
         return {
           ...item,
           total: selectedRows.reduce((sum, val) => {
-            const total = sum + parseInt(get(val, item.dataIndex))
+            const total = sum + parseInt(this.$_.get(val, item.dataIndex))
             return isNaN(total) ? 0 : total
           }, 0)
         }
@@ -251,7 +250,7 @@ export default {
     const localKeys = Object.keys(this.$data)
     const showAlert = (typeof this.alert === 'object' && this.alert !== null && this.alert.show) && typeof this.rowSelection.selectedRowKeys !== 'undefined' || this.alert
 
-    Object.keys(T.props).forEach(k => {
+    Object.keys(Table.props).forEach(k => {
       const localKey = `local${k.substring(0, 1).toUpperCase()}${k.substring(1)}`
       if (localKeys.includes(localKey)) {
         props[k] = this[localKey]
@@ -260,7 +259,6 @@ export default {
       if (k === 'rowSelection') {
         if (showAlert && this.rowSelection) {
           // 如果需要使用alert，则重新绑定 rowSelection 事件
-          console.log('this.rowSelection', this.rowSelection)
           props[k] = {
             ...this.rowSelection,
             selectedRows: this.selectedRows,

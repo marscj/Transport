@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <vx-table ref="table" pagination :data="loadData" :page_size="page_size">
+    <!-- <vx-table ref="table" pagination :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between py-6">
         <vs-button
           type="border"
@@ -140,21 +140,42 @@
           </vs-td>
         </vs-tr>
       </template>
-    </vx-table>
+    </vx-table> -->
 
-    <va-table />
+     <s-table
+      ref="table1"
+      size="default"
+      :pageURI="true"
+      :rowKey="(record) => record.id"
+      :columns="[
+        {
+            title: 'ID',
+            dataIndex: 'orderId'
+        },
+      ]"
+      :data="loadData"
+      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+    ></s-table>
   </vs-card>
 </template>
 
 <script>
-import { getOrder } from "@/http/requests/order/index.js";
-
+import { getOrder } from "@/http/requests/order";
+import STable from "@/components/s-table";
 
 export default {
+  components: {
+    STable
+  },
   props: {
     myOrder: {
       type: Boolean,
       default: false
+    }
+  },
+  watch: {
+    "$refs.table1"(val) {
+      console.log(val, 'table-')
     }
   },
   data() {
@@ -181,6 +202,7 @@ export default {
   },
   mounted() {
     this.isMounted = true;
+    console.log(this.$refs.table1, '===')
   },
   methods: {
     addNewData() {
