@@ -2,17 +2,17 @@
   <a-table :columns="columns" :dataSource="data" bordered striped>
     <a slot="name" slot-scope="text" href="javascript:;">{{text}}</a>
     <span slot="customTitle"></span>
-    <span slot="tags" slot-scope="tags"></span>
+    <span slot="tags" slot-scope=""></span>
     <span slot="action" slot-scope="text, record">
       <a href="javascript:;">Invite 一 {{record.name}}</a>
       <a href="javascript:;">Delete</a>
       <a href="javascript:;" class="ant-dropdown-link">More actions</a>
     </span>
-  </a-table>
+  </a-table> 
 </template>
 
 <script>
-import "ant-design-vue/lib/table/style/css";
+// import "ant-design-vue/lib/table/style/css";
 
 const columns = [
   {

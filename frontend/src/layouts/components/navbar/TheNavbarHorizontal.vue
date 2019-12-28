@@ -48,8 +48,6 @@
 </template>
 
 <script>
-import VxAutoSuggest from "@/components/vx-auto-suggest/VxAutoSuggest.vue";
-import VuePerfectScrollbar from "vue-perfect-scrollbar";
 
 export default {
   name: "the-navbar",
@@ -135,10 +133,12 @@ export default {
     },
 
     // I18N
-    getCurrentLocaleData() {
+    getCurrentLocaleData() { 
       const locale = this.$i18n.locale;
       if (locale == "en") return { flag: "us", lang: "English" };
       else if (locale == "zh") return { flag: "br", lang: "Chinese" };
+
+      return { flag: "us", lang: "English" };
     },
 
     // BOOKMARK & SEARCH
@@ -273,10 +273,6 @@ export default {
         el.__vueClickOutside__ = null;
       }
     }
-  },
-  components: {
-    VxAutoSuggest,
-    VuePerfectScrollbar,
   }
 };
 </script>

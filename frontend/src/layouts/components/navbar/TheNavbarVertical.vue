@@ -48,8 +48,6 @@
 </template>
 
 <script>
-import VxAutoSuggest from "@/components/vx-auto-suggest/VxAutoSuggest.vue";
-import VuePerfectScrollbar from "vue-perfect-scrollbar";
 
 export default {
   name: "the-navbar",
@@ -96,6 +94,8 @@ export default {
       if (this.verticalNavMenuWidth == "default") return "navbar-default";
       else if (this.verticalNavMenuWidth == "reduced") return "navbar-reduced";
       else if (this.verticalNavMenuWidth) return "navbar-full";
+
+      return "navbar-default"; 
     },
 
     // I18N
@@ -103,6 +103,8 @@ export default {
       const locale = this.$i18n.locale;
       if (locale == "en") return { flag: "us", lang: "English" };
       else if (locale == "zh") return { flag: "br", lang: "Chinese" };
+
+      return { flag: "us", lang: "English" }; 
     },
     i18n_locale_img() {
       return require(`@/assets/images/flags/${this.$i18n.locale}.png`);
@@ -243,10 +245,6 @@ export default {
         el.__vueClickOutside__ = null;
       }
     }
-  },
-  components: {
-    VxAutoSuggest,
-    VuePerfectScrollbar,
   }
-};
+}; 
 </script>

@@ -3,10 +3,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
   publicPath: '/',
   outputDir: 'dist',
-  transpileDependencies: [
-    'vue-echarts',
-    'resize-detector'
-  ],
   configureWebpack: {
     optimization: {
       splitChunks: {
