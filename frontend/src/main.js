@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-// Vuesax Component Framework
 import Vuesax from 'vuesax'
-import 'material-icons/iconfont/material-icons.css' //Material Icons
-import 'vuesax/dist/vuesax.css'; // Vuesax
+import 'vuesax/dist/vuesax.css'
 Vue.use(Vuesax)
+
+import 'material-icons/iconfont/material-icons.css' //Material Icons
 
 // Theme Configurations
 import '../themeConfig.js'
@@ -34,10 +34,7 @@ import './utils/action'
 import PermissionHelper from '@/utils/permission'
 Vue.use(PermissionHelper)
 
-// Vuejs - Vue wrapper for hammerjs
-import {
-  VueHammer
-} from 'vue2-hammer'
+import { VueHammer } from 'vue2-hammer'
 Vue.use(VueHammer)
 
 // PrismJS
@@ -77,6 +74,9 @@ Vue.prototype.$log = console.log;
 
 import _ from 'lodash';    
 Object.defineProperty(Vue.prototype, '$_', { value: _ });
+
+// import VueLodash from 'vue-lodash'
+// Vue.use(VueLodash, { name: 'lodash' }) 
 
 new Vue({
   router,

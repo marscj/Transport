@@ -19,7 +19,9 @@ module.exports = {
       'vuex': 'Vuex',
       'axios': 'axios',
       'ant-design-vue': 'antd',
-      'moment': 'moment'
+      'lodash': '_',
+      'moment': 'moment',
+      'vuesax': 'vuesax',
     },
   },
   devServer: {
