@@ -132,7 +132,6 @@
 </template>
 
 <script>
-import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
 import PriceTable from "@/views/price/Table.vue";
 import Datepicker from "vuejs-datepicker";
@@ -148,8 +147,6 @@ import { createOrder } from "@/http/requests/order/index.js";
 
 export default {
   components: {
-    FormWizard,
-    TabContent,
     PriceTable,
     Datepicker
   },
@@ -258,7 +255,6 @@ export default {
       };
       createOrder(form)
         .then(res => {
-          console.log(res, "-====");
         })
         .catch(error => {
           if (error.response) {

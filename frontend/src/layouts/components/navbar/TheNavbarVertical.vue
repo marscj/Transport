@@ -50,7 +50,6 @@
 <script>
 import VxAutoSuggest from "@/components/vx-auto-suggest/VxAutoSuggest.vue";
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import draggable from "vuedraggable";
 
 export default {
   name: "the-navbar",
@@ -248,7 +247,6 @@ export default {
   components: {
     VxAutoSuggest,
     VuePerfectScrollbar,
-    draggable
   }
 };
 </script>

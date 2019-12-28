@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import Vuesax from 'vuesax'
-import 'vuesax/dist/vuesax.css'
+// import 'vuesax/dist/vuesax.css'
 Vue.use(Vuesax)
 
 import 'material-icons/iconfont/material-icons.css' //Material Icons
@@ -69,8 +69,6 @@ import antd from 'ant-design-vue';
 Vue.use(antd);
 
 Vue.config.productionTip = false
-
-Vue.prototype.$log = console.log;
 
 import _ from 'lodash';    
 Object.defineProperty(Vue.prototype, '$_', { value: _ });
