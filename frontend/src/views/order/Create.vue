@@ -9,19 +9,16 @@
             </div>
             <div class="w-11/12">
               <validation-provider name="start_date" rules="required"  v-slot="{ errors }">
-                <datepicker
+                <!-- <datepicker
                   placeholder="Start Date"
                   v-model="start_date"
                   class="w-40 inline-block py-1 mx-2"
-                ></datepicker>-
+                ></datepicker> -->
+                <a-date-picker placeholder="Start Date" v-model="start_date" class="w-40 inline-block py-1 mx-2"></a-date-picker>
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
               <validation-provider name="end_date" rules="required" v-slot="{ errors }">
-                <datepicker
-                  placeholder="End Date"
-                  v-model="end_date"
-                  class="w-40 inline-block py-1 mx-2"
-                ></datepicker>
+                <a-date-picker placeholder="End Date" v-model="end_date" class="w-40 inline-block py-1 mx-2"></a-date-picker>
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
             </div>
@@ -171,7 +168,6 @@
 
 <script>
 import PriceTable from "@/views/price/Table.vue";
-import Datepicker from "vuejs-datepicker";
 import moment from "moment";
 
 import {
@@ -185,7 +181,6 @@ import { createOrder } from "@/http/requests/order/index.js";
 export default {
   components: {
     PriceTable,
-    Datepicker
   },
   computed: {
     queryBase64() {
