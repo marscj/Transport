@@ -19,13 +19,14 @@
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
           <validation-provider name="price" rules="required|min_value:0" v-slot="{ errors }">
-            <vs-input-number
-              data-vv-validate-on="blur"
-              label="Price"
-              :step="0.5"
-              v-model="form.price"
-              class="mt-5 w-full"
-            />
+            <a-form-item label="Price">
+              <a-input-number
+                :step="0.5"
+                v-model="form.price"
+                class="w-full"
+              />
+            </a-form-item>
+
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
@@ -78,7 +79,7 @@ export default {
         }
       }
     },
-    isEdit () {
+    isEdit() {
       return Object.entries(this.data).length === 0;
     }
   },
@@ -86,7 +87,7 @@ export default {
     return {
       form: {
         id: undefined,
-        name: "",
+        name: ""
       },
       settings: {
         maxScrollbarLength: 60,
@@ -96,22 +97,26 @@ export default {
   },
   methods: {
     submit() {
-      if(this.isEdit) {
-        createPrice(this.form).then(() => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
-        })
+      if (this.isEdit) {
+        createPrice(this.form)
+          .then(() => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       } else {
-        updatePrice(this.form.id, this.form).then(() => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
-        })
+        updatePrice(this.form.id, this.form)
+          .then(() => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       }
     }
   }

@@ -7,42 +7,44 @@
       v-if="showSidebar"
     />
 
-    <vx-table ref="table" :data="loadData" >
-      <template slot="thead" v-if="showThead">
-        <vs-th key="id" style="width: 80px;">ID</vs-th>
-        <vs-th key="category">CATEGORY</vs-th>
-        <vs-th key="itinerary">ITINERARY</vs-th>
-        <vs-th key="price">PRICE(AED)</vs-th>
+    <div class="p-4" action:add>
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+    </div>
+
+    <s-table
+      class="p-4"
+      ref="table"
+      :columns="columns"
+      :data="loadData"
+      :showPagination="false"
+      :rowKey="(record) => record.id"
+    >
+      <template slot="itinerary" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text.name }}</a>
       </template>
 
-      <template slot-scope="{data}">
-        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id" v-if="showID">
-            <span v-if="tr.id">{{ tr.id }}</span>
-          </vs-td>
-          <vs-td :data="tr.category" >
-            <a @click="editData(tr)" v-if="tr.category">{{ tr.category.name }}</a>
-          </vs-td>
-          <vs-td :data="tr.itinerary">
-            <a @click="editData(tr)" v-if="tr.itinerary">{{ tr.itinerary.name }}</a>
-          </vs-td>
-          <vs-td :data="tr.price" >
-            <a @click="editData(tr)" v-if="tr.price">{{ tr.price }} AED</a>
-          </vs-td>
-        </vs-tr>
+      <template slot="category" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text.name }}</a>
       </template>
-    </vx-table>
+
+      <template slot="price" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }} AED</a>
+      </template>
+      
+    </s-table>
   </div>
 </template>
 
 <script>
 import { getPrice } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
+import STable from "@/components/s-table";
 
 export default {
   name: 'PriceTable',
   components: {
-    DataViewSidebar
+    DataViewSidebar,
+    STable
   },
   props: {
     category: {
@@ -53,14 +55,6 @@ export default {
       type: Boolean,
       default: true
     },
-    showThead: {
-      type: Boolean,
-      default: true
-    },
-    showID: {
-      type: Boolean,
-      default: true
-    }
   },
   watch: {
     category() {
@@ -69,12 +63,29 @@ export default {
   },
   data() {
     return {
-      page_size: 10,
+      columns: [
+        {
+          title: "Itinerary",
+          dataIndex: "itinerary",
+          scopedSlots: { customRender: "itinerary" }
+        },
+        {
+          title: "Category",
+          dataIndex: "category",
+          scopedSlots: { customRender: "category" }
+        },
+        {
+          title: "Price",
+          dataIndex: "price",
+          scopedSlots: { customRender: "price" }
+        },
+      ],
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],
       loadData: parameter => {
         return getPrice(Object.assign(parameter, { category: this.category })).then(res => {
+          console.log(res, '---')
           return res.result;
         });
       }
