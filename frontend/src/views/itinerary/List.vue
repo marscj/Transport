@@ -6,36 +6,43 @@
       :data="sidebarData"
     />
 
-    <vx-table ref="table" :data="loadData">
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between py-4">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-action:add>Add New</vs-button>
-      </div> 
+    <div>
+      <div class="flex flex-wrap pt-4">
+        <div class="px-4">
+          <a-form-item label="VEHICLE">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item>
+            <button
+              class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
+            >Search</button>
+          </a-form-item>
+        </div>
+      </div>
+    </div>
 
-      <template slot="thead">
-        <vs-th key="id" style="width: 80px;">ID</vs-th>
-        <vs-th key="name">NAME</vs-th>
-        <vs-th style="width: 80px;" v-action:delete >Action</vs-th>
-      </template>
+    <div class="px-4" action:add>
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+    </div>
 
-      <template slot-scope="{data}">
-        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">
-            <span v-if="tr.id">{{ tr.id }}</span>
-          </vs-td>
-          <vs-td :data="tr.name">
-            <a @click="editData(tr)" v-if="tr.name">{{ tr.name }}</a>
-          </vs-td>
-          <vs-td class="whitespace-no-wrap" v-action:delete>
-            <feather-icon
-              icon="TrashIcon"
-              svgClasses="w-5 h-5 hover:text-danger stroke-current"
-              class="ml-2"
-              @click.stop="openConfirm(tr.id)"
-            />
-          </vs-td>
-        </vs-tr>
-      </template>
-    </vx-table>
+    <s-table
+      class="p-4"
+      :columns="columns"
+      :data="loadData"
+      :showPagination="false"
+      :rowKey="(record) => record.id"
+    ></s-table>
+
+    <template slot="action" slot-scope="text, data" v-action:delete>
+      <feather-icon
+        icon="TrashIcon"
+        svgClasses="w-5 h-5 hover:text-danger stroke-current"
+        class="ml-2"
+        @click.stop="openConfirm(data.id)"
+      />
+    </template>
   </vs-card>
 </template>
 
@@ -46,13 +53,31 @@ import {
 } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
+import STable from "@/components/s-table";
+
 export default {
   components: {
-    DataViewSidebar
+    DataViewSidebar,
+    STable
   },
   data() {
     return {
-      page_size: 10,
+      columns: [
+        {
+          title: "ID",
+          dataIndex: "id",
+          align: "center",
+          width: 80
+        },
+        {
+          title: "NAME",
+          dataIndex: "name"
+        },
+        {
+          title: "ACTION",
+          scopedSlots: { customRender: "action" }
+        }
+      ],
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],
@@ -69,14 +94,14 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      if (this.$auth('itinerary.change')) {
+      if (this.$auth("itinerary.change")) {
         this.sidebarData = data;
         this.toggleDataSidebar(true);
       }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      if(!val) {
+      if (!val) {
         this.$refs.table.refresh();
       }
     },

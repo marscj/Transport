@@ -7,9 +7,8 @@
     />
 
     <div>
-      <a-form></a-form>
       <div class="flex flex-wrap pt-4">
-        <div class="px-4 ">
+        <div class="px-4">
           <a-form-item label="USERNAME">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
@@ -38,7 +37,13 @@
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
-    <s-table ref="table" class="p-4" :columns="columns" :data="loadData">
+    <s-table
+      ref="table"
+      class="p-4"
+      :columns="columns"
+      :data="loadData"
+      :rowKey="(record) => record.id"
+    >
       <template slot="username" slot-scope="text, data">
         <a @click="editData(data)" v-if="text">{{ text }}</a>
       </template>
@@ -171,8 +176,10 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      this.sidebarData = data;
-      this.toggleDataSidebar(true);
+      if (this.$auth("user.change")) {
+        this.sidebarData = data;
+        this.toggleDataSidebar(true);
+      }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;

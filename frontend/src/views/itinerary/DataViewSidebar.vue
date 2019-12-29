@@ -19,12 +19,13 @@
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
           <validation-provider name="name" rules="required|max:128|min:5" v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Name"
-              v-model="form.name"
-              class="mt-5 w-full"
-            />
+            <a-form-item label="Name">
+              <a-input
+                data-vv-validate-on="blur"
+                v-model="form.name"
+              />
+            </a-form-item>
+
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
@@ -44,7 +45,10 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import { updateItinerary, createItinerary } from "@/http/requests/vehicle/index.js";
+import {
+  updateItinerary,
+  createItinerary
+} from "@/http/requests/vehicle/index.js";
 
 export default {
   components: {
@@ -77,7 +81,7 @@ export default {
         }
       }
     },
-    isEdit () {
+    isEdit() {
       return Object.entries(this.data).length === 0;
     }
   },
@@ -85,7 +89,7 @@ export default {
     return {
       form: {
         id: undefined,
-        name: "",
+        name: ""
       },
       settings: {
         maxScrollbarLength: 60,
@@ -95,22 +99,26 @@ export default {
   },
   methods: {
     submit() {
-      if(this.isEdit) {
-        createItinerary(this.form).then(() => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
-        })
+      if (this.isEdit) {
+        createItinerary(this.form)
+          .then(() => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       } else {
-        updateItinerary(this.form.id, this.form).then(() => {
-          this.isSidebarActiveLocal = false;
-        }).catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
-        })
+        updateItinerary(this.form.id, this.form)
+          .then(() => {
+            this.isSidebarActiveLocal = false;
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
       }
     }
   }
