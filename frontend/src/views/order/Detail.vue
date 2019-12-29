@@ -66,7 +66,7 @@
 
     <div class="p-4">
       <div class="flex flex-wrap">
-        <a-form-item label="VEHICLE" class="w-64 mr-6">
+        <a-form-item label="VEHICLE" class="flex-1 mr-6">
           <a-select class="w-full">
             <a-select-option
               v-for="data in vehicleData"
@@ -75,17 +75,7 @@
             >{{data.license_plate}}</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="DRIVER" class="w-64 mx-6">
-          <a-select class="w-full">
-            <a-select-option
-              v-for="data in vehicleData"
-              :key="data.id"
-              :value="data"
-            >{{data.license_plate}}</a-select-option>
-          </a-select>
-        </a-form-item>
-
-        <a-form-item label="PHONE" class="w-64 mx-6">
+        <a-form-item label="DRIVER" class="flex-1 mx-6">
           <a-select class="w-full">
             <a-select-option
               v-for="data in vehicleData"
@@ -95,7 +85,17 @@
           </a-select>
         </a-form-item>
 
-        <a-form-item label="STATUS" class="w-64 mx-6">
+        <a-form-item label="PHONE" class="flex-1 mx-6">
+          <a-select class="w-full">
+            <a-select-option
+              v-for="data in vehicleData"
+              :key="data.id"
+              :value="data"
+            >{{data.license_plate}}</a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <a-form-item label="STATUS" class="flex-1 mx-6">
           <a-select class="w-full">
             <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
           </a-select>
