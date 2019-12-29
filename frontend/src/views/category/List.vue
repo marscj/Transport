@@ -48,12 +48,6 @@ export default {
     return {
       columns: [
         {
-          title: "ID",
-          dataIndex: "id",
-          align: "center",
-          width: 80
-        },
-        {
           title: "Name",
           dataIndex: "name",
           scopedSlots: { customRender: "name" }

@@ -17,57 +17,55 @@
 
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
-        <validation-provider name="seats" rules="required|min_value:0" v-slot="{ errors }">
-          <vs-input-number
-            data-vv-validate-on="blur"
-            label="Seats"
-            :step="1"
-            v-model="form.seats"
-            class="mt-5"
-          />
-          <span>{{ errors[0] }}</span>
-        </validation-provider>
-
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
-          <validation-provider
-            name="license plate"
-            rules="required|max:16|min:5"
-            v-slot="{ errors }"
-          >
-            <vs-input
-              data-vv-validate-on="blur"
-              label="License plate"
-              v-model="form.license_plate"
-              class="mt-5 w-full"
-            />
+          
+          <validation-provider name="license_plate" rules="required|max:16|min:5" v-slot="{ errors }">
+            <a-form-item label="License plate">
+              <a-input
+                v-model="form.license_plate"
+                class="w-full"
+              />
+            </a-form-item>
+
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
           <validation-provider name="model" rules="required|max:64|min:3" v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Model"
+            <a-form-item label="Model">
+              <a-input
               v-model="form.model"
-              class="mt-5 w-full"
+              class="w-full"
             />
+            </a-form-item>
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
+
+          <validation-provider name="seats" rules="required|min_value:0" v-slot="{ errors }">
+            <a-form-item label="Seats">
+              <a-input-number :step="1" v-model="form.seats" class="w-full" />
+            </a-form-item>
+
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
           <validation-provider name="supplier" rules="required|max:64|min:3" v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Supplier"
-              v-model="form.supplier"
-              class="mt-5 w-full"
-            />
+            <a-form-item label="Supplier">
+              <a-input
+                v-model="form.supplier"
+                class="w-full"
+              />
+            </a-form-item>
+
             <span>{{ errors[0] }}</span>
           </validation-provider>
+          
+          <a-form-item label="Category">
+            <v-select v-model="category" :options="categoryData" label="name"></v-select>
+          </a-form-item>
 
-          <p class="mt-5">Category</p>
-          <v-select v-model="category" :options="categoryData" label="name"></v-select>
-
-          <p class="mt-5">Driver</p>
-          <v-select v-model="driver" :options="driverData" label="username"></v-select>
+          <a-form-item label="Driver">
+            <v-select v-model="driver" :options="driverData" label="username"></v-select>
+          </a-form-item>
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
@@ -209,7 +207,7 @@ export default {
       }
     },
     getUserData() {
-      getUser().then(res => {
+      getUser({role: 'Driver'}).then(res => {
         this.driverData = res.result;
       });
     },

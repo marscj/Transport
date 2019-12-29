@@ -5,8 +5,8 @@
       @closeSidebar="toggleDataSidebar"
       :data="sidebarData"
     />
-
-    <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
+    
+    <!-- <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
         <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-action:add>Add New</vs-button>
 
@@ -84,42 +84,139 @@
           </vs-td>
         </vs-tr>
       </template>
-    </vx-table>
+    </vx-table> -->
+
+    <div>
+      <div class="flex flex-wrap pt-4">
+        <div class="px-4">
+          <a-form-item label="USERNAME">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item label="EMAIL">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item label="COMPANY">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item>
+            <button
+              class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
+            >Search</button>
+          </a-form-item>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4" action:add>
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+    </div>
+
+    <s-table
+      ref="table"
+      class="p-4"
+      :columns="columns"
+      :data="loadData"
+      :rowKey="(record) => record.id"
+    >
+      <template slot="license_plate" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
+      <template slot="model" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
+      <template slot="seats" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
+      <template slot="category" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text.name }}</a>
+      </template>
+
+      <template slot="driver" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text.username }}</a>
+      </template>
+
+      <template slot="active" slot-scope="text, data">
+        <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
+      </template>
+    </s-table>
   </vs-card>
 </template>
 
 <script>
 import { getVehicle, deleteVehicle } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
+import STable from "@/components/s-table";
 
 export default {
   components: {
-    DataViewSidebar
+    DataViewSidebar,
+    STable
   },
   data() {
     return {
-      isMounted: false,
-      page_size: 10,
+      columns: [
+        {
+          title: "LICENSE PLATE",
+          dataIndex: "license_plate",
+          scopedSlots: { customRender: "license_plate" },
+          align: "center"
+        },
+        {
+          title: "MODEL",
+          dataIndex: "model",
+          scopedSlots: { customRender: "model" },
+          align: "center"
+        },
+        {
+          title: "SEATS",
+          dataIndex: "seats",
+          scopedSlots: { customRender: "seats" },
+          align: "center"
+        },
+        {
+          title: "CATEGORY",
+          dataIndex: "category",
+          scopedSlots: { customRender: "category" },
+          align: "center"
+        },
+        {
+          title: "DRIVER",
+          dataIndex: "driver",
+          scopedSlots: { customRender: "driver" },
+          align: "center"
+        },
+        {
+          title: "SUPPLIER",
+          dataIndex: "supplier",
+          scopedSlots: { customRender: "supplier" },
+          align: "center"
+        },
+        {
+          title: "ACTIVE",
+          dataIndex: "is_active",
+          scopedSlots: { customRender: "active" },
+          align: "center"
+        },
+      ],
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],
       loadData: parameter => {
         return getVehicle(Object.assign(parameter, {})).then(res => {
+          console.log(res, '----')
           return res.result;
         });
       }
     };
-  },
-  computed: {
-    currentPage() {
-      return this.isMounted ? this.$refs.table.page : 0;
-    },
-    total() {
-      return this.isMounted ? this.$refs.table.total : 0;
-    }
-  },
-  mounted() {
-    this.isMounted = true;
   },
   methods: {
     addNewData() {
