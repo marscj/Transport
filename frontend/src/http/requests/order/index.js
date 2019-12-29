@@ -24,3 +24,8 @@ export function deleteOrder(pk) {
   return axios.delete("orders/" + `${pk}/`)
 }
 
+export function getOrderItinerary(parameter) {
+  return axios.get("order_itinerary/", {
+    params: parameter
+  })
+}

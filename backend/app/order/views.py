@@ -22,3 +22,8 @@ class OrderView(CreateSerializerMixin, ModelViewSet):
             return Order.objects.filter(driver_id=self.request.user.id)
         
         return Order.objects.all()
+
+class OrderItineraryView(ModelViewSet):
+    serializer_class = OrderItinerarySerializer
+    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    queryset = OrderItinerary.objects.all()

@@ -256,7 +256,6 @@ export default {
           sorter: true
         }
       ],
-      page_size: 10,
       loadData: parameter => {
         return getOrders(Object.assign(parameter, this.filter)).then(res => {
           console.log(res, "=--=");

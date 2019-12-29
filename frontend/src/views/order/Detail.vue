@@ -42,27 +42,88 @@
 
     <div class="p-4">
       <div class="flex flex-wrap">
-        <a-form-item label="Vehicle">
-            <a-select>
-              <a-select-option key="" value=""></a-select-option>
-            </a-select>
+        <a-form-item label="VEHICLE" class="w-64 mr-6">
+          <a-select class="w-full">
+            <a-select-option
+              v-for="data in vehicleData"
+              :key="data.id"
+              :value="data"
+            >{{data.license_plate}}</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="DRIVER" class="w-64 mx-6">
+          <a-select class="w-full">
+            <a-select-option
+              v-for="data in vehicleData"
+              :key="data.id"
+              :value="data"
+            >{{data.license_plate}}</a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <a-form-item label="PHONE" class="w-64 mx-6">
+          <a-select class="w-full">
+            <a-select-option
+              v-for="data in vehicleData"
+              :key="data.id"
+              :value="data"
+            >{{data.license_plate}}</a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <a-form-item label="STATUS" class="w-64 mx-6">
+          <a-select class="w-full">
+            <a-select-option
+              v-for="data in Status"
+              :key="data"
+              :value="data"
+            >{{data}}</a-select-option>
+          </a-select>
         </a-form-item>
       </div>
+    </div>
+
+    <div class="p-4">
+      <s-table ref="table" :rowKey="(record) => record.id" :columns="columns" :data="loadData">
+        <template slot="title">
+          <a-button type="primary">ADD ITIERNARY</a-button>
+        </template>
+      </s-table>
     </div>
   </vs-card>
 </template>
 
 <script>
-import { getOrder } from "@/http/requests/order";
+import STable from "@/components/s-table";
+
+import { getOrder, getOrderItinerary } from "@/http/requests/order";
+import { getVehicle } from "@/http/requests/vehicle";
 const Status = ["New", "Confirm", "Pending", "Cancel", "Complete"];
 
 export default {
+  components: {
+    STable
+  },
   mounted() {
     this.getOrderData(this.$route.params.id);
+    this.getVehicleData();
   },
   data() {
     return {
+      columns: [
+        {
+          title: "ID",
+          dataIndex: "id",
+        }
+      ],
+      loadData: parameter => {
+        return getOrderItinerary(Object.assign(parameter, this.filter)).then(res => {
+          console.log(res, "=--=");
+          return res.result;
+        });
+      },
       Status,
+      vehicleData: [],
       form: {}
     };
   },
@@ -70,6 +131,11 @@ export default {
     getOrderData(id) {
       getOrder(id).then(res => {
         this.form = res.result;
+      });
+    },
+    getVehicleData() {
+      getVehicle().then(res => {
+        this.vehicleData = res.result;
       });
     }
   }
