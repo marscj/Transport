@@ -16,6 +16,7 @@ except ImportError:
     raise ImportError("allauth needs to be added to INSTALLED_APPS.")
 
 from .models import User
+from app.vehicle.models import Vehicle
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -59,10 +60,12 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, write_only=True, many=True, queryset=Group.objects.all())
 
+    vehicle = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, read_only=True)
+
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'email', 'phone', 'company', 'is_superuser', 'is_active', 'groups', 'groups_id', 'role'
+            'id', 'username', 'email', 'phone', 'company', 'is_superuser', 'is_active', 'groups', 'groups_id', 'role', 'vehicle'
         )
 
     def update(self, instance, validated_data):

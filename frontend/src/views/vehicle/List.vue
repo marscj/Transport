@@ -144,6 +144,10 @@
         <a @click="editData(data)" v-if="text">{{ text.username }}</a>
       </template>
 
+      <template slot="supplier" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
       <template slot="active" slot-scope="text, data">
         <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
       </template>
