@@ -85,7 +85,6 @@ export default {
       selected: [],
       loadData: parameter => {
         return getPrice(Object.assign(parameter, { category: this.category })).then(res => {
-          console.log(res, '---')
           return res.result;
         });
       }

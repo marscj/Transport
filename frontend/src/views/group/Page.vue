@@ -72,7 +72,6 @@ export default {
       return updateGroup(this.groupData[this.curTab].id, {
         permission: permission.id
       }).then(res => {
-        console.log(res, '====')
         const { result } = res;
         this.groupData[this.curTab] = Object.assign({}, result);
       });
@@ -101,7 +100,6 @@ export default {
       }
     },
     onClick(permission) {
-      console.log('1111')
       this.updatePermission(permission);
     },
     addNewData() {

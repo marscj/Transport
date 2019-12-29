@@ -140,16 +140,15 @@ export default {
         page: (pagination && pagination.current) || this.showPagination && this.localPagination.current || this.pageNum,
         page_size: (pagination && pagination.pageSize) || this.showPagination && this.localPagination.pageSize || this.pageSize
       },
-      (sorter && sorter.field && {
-        sortField: sorter.field
-      }) || {},
-      (sorter && sorter.order && {
-        sortOrder: sorter.order
-      }) || {}, {
+      (sorter && sorter.field && sorter.order && {
+        ordering: sorter.order === 'ascend' ? "" + sorter.field  : "-" + sorter.field 
+      }) || {
+        ordering: '-id'
+      }, {
         ...filters
-      }
-      )
-      const result = this.data(this.showPagination ? parameter : {})
+      })
+
+      const result = this.data(this.showPagination ? parameter : { ordering: 'id'})
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       // eslint-disable-next-line
       if ((typeof result === 'object' || typeof result === 'function') && typeof result.then === 'function') {

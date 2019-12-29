@@ -96,13 +96,15 @@ export default {
           title: "USERNAME",
           dataIndex: "username",
           scopedSlots: { customRender: "username" },
-          align: "center"
+          align: "center",
+          sorter: true,
         },
         {
           title: "EMAIL",
           dataIndex: "email",
           scopedSlots: { customRender: "email" },
-          align: "center"
+          align: "center",
+          sorter: true,
         },
         {
           title: "PHONE",

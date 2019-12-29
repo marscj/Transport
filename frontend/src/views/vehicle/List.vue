@@ -234,7 +234,6 @@ export default {
       selected: [],
       loadData: parameter => {
         return getVehicle(Object.assign(parameter, {})).then(res => {
-          console.log(res, "----");
           return res.result;
         });
       }
