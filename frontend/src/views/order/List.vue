@@ -93,7 +93,7 @@ export default {
           dataIndex: "orderId",
           align: "center",
           width: 80,
-          fiexd: "left"
+          fixed: "left"
         },
         {
           title: "RELATEDID",
@@ -121,12 +121,16 @@ export default {
           width: 110
         },
         {
-          title: "ITINERARY",
+          title: "CUSTOMER ITINERARY",
           scopedSlots: { customRender: "itinerary" }
         },
         {
-          title: "O-ITINERARY",
+          title: "ORDER ITINERARY",
           scopedSlots: { customRender: "o_itinerary" }
+        },
+        {
+          title: "PRICE",
+          scopedSlots: { customRender: "price" }
         },
         {
           title: "Vehicle",

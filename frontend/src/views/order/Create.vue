@@ -70,7 +70,7 @@
                 rules="required|min_value:0"
                 v-slot="{ errors }"
               >
-                <a-input-number v-model="passenger" class="w-64 mx-2"></a-input-number>
+                <a-input-number v-model="passenger" class="hover:border-teal-500 focus:border-teal-500 mx-2" ></a-input-number>
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
             </div>
@@ -125,7 +125,7 @@
               <button
                 @click="onCheck()"
                 class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10  rounded"
-              >Submit</button>
+              >CheckOut</button>
             </div>
           </div>
         </div>
@@ -146,8 +146,20 @@
         <a-form-item label="Itinerary" class="m-0"><pre>{{itinerary}}</pre></a-form-item>
         <a-divider class="mt-10"></a-divider>
         <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="step = 1">Back</a-button>
-        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onCreate()">Continue</a-button>
+        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onCreate()">Submit</a-button>
       </a-form>
+    </div>
+
+    <div v-if="step === 3" class="mb-5">
+      <div class="text-center p-4">
+        <h1 class="text-4xl font-bold">Success</h1>
+      </div>
+      <a-form class="p-10" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+        <a-divider class="mt-64"></a-divider>
+        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="$router.go(-1)">Back</a-button>
+        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onContinue()">Continue</a-button>
+      </a-form>
+
     </div>
 
     <price-table
@@ -248,7 +260,9 @@ export default {
         relatedId: this.relatedId
       };
       createOrder(form)
-        .then(res => {})
+        .then(() => {
+          this.step = 3;
+        })
         .catch(error => {
           this.step = 1;
           if (error.response) {
@@ -257,6 +271,17 @@ export default {
             })
           }
         });
+    },
+    onContinue() {
+      this.step = 1;
+      this.category = undefined;
+      this.seats= undefined;
+      this.start_date= undefined;
+      this.end_date= undefined;
+      this.passenger= undefined;
+      this.itinerary= "";
+      this.remark= "";
+      this.relatedId= "";
     }
   }
 };
