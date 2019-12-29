@@ -8,23 +8,23 @@
 
     <div>
       <a-form></a-form>
-      <div class="flex flex-wrap">
-        <div class="p-4">
+      <div class="flex flex-wrap pt-4">
+        <div class="px-4 ">
           <a-form-item label="USERNAME">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="EMAIL">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="COMPANY">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item>
             <button
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="p-4" action:add>
+    <div class="px-4" action:add>
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 

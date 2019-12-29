@@ -1,48 +1,48 @@
 <template>
   <vs-card>
     <div>
-      <div class="flex flex-wrap">
-        <div class="p-4">
+      <div class="flex flex-wrap pt-4">
+        <div class="px-4">
           <a-form-item label="ORDERID">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="RELATEDID">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="START DATE">
             <a-date-picker class="hover:border-teal-500 focus:border-teal-500"></a-date-picker>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="END DATE">
             <a-date-picker class="hover:border-teal-500 focus:border-teal-500"></a-date-picker>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="VEHICLE">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="DRIVER">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4" v-if="!myOrder">
+        <div class="px-4" v-if="!myOrder">
           <a-form-item label="CUSTOMER">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item label="STATUS">
             <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
-        <div class="p-4">
+        <div class="px-4">
           <a-form-item>
             <button
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div class="p-4" v-if="myOrder">
+    <div class="px-4" v-if="myOrder">
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 

@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
+Vue.use(Antd);
+
 import Vuesax from 'vuesax'
-// import 'vuesax/dist/vuesax.css'
+import 'vuesax/dist/vuesax.css'
 Vue.use(Vuesax)
 
 import 'material-icons/iconfont/material-icons.css' //Material Icons
@@ -61,12 +65,6 @@ import moment from 'moment'
 Vue.filter('moment', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
   return moment(dataStr).format(pattern)
 })
-
-// import { Table } from 'ant-design-vue';
-// Vue.use(Table);
-
-import antd from 'ant-design-vue';
-Vue.use(antd);
 
 Vue.config.productionTip = false
 

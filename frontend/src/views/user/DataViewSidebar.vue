@@ -19,63 +19,79 @@
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
           <validation-provider name="username" rules="required|max:16|min:5" v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Username"
-              :disabled="!isEdit"
-              v-model="form.username"
-              class="mt-5 w-full"
-            />
+            <a-form-item label="USERNAME">
+              <a-input
+                data-vv-validate-on="blur"
+                :disabled="!isEdit"
+                v-model="form.username"
+                class="w-full"
+              />
+            </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
           <validation-provider name="email" rules="email|required" v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Email"
-              :disabled="!isEdit"
-              v-model="form.email"
-              class="mt-5 w-full"
-            />
+            <a-form-item label="EMAIL">
+              <a-input
+                data-vv-validate-on="blur"
+                :disabled="!isEdit"
+                v-model="form.email"
+                class="w-full"
+              />
+            </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="name" rules v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Name"
-              v-model="form.name"
-              class="mt-5 w-full"
-            />
+          <validation-provider name="phone" v-slot="{ errors }">
+            <a-form-item label="PHONE">
+              <a-input
+                data-vv-validate-on="blur"
+                :disabled="!isEdit"
+                v-model="form.phone"
+                class="w-full"
+              />
+            </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="phone" rules v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Phone"
-              v-model="form.phone"
-              class="mt-5 w-full"
-            />
+          <validation-provider name="company" v-slot="{ errors }">
+            <a-form-item label="COMPANY">
+              <a-input
+                data-vv-validate-on="blur"
+                :disabled="!isEdit"
+                v-model="form.company"
+                class="w-full"
+              />
+            </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <validation-provider name="company" rules v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Company"
-              v-model="form.company"
-              class="mt-5 w-full"
-            />
+          <validation-provider name="role" v-slot="{ errors }">
+            <a-form-item label="ROLE">
+              <a-input
+                data-vv-validate-on="blur"
+                :disabled="!isEdit"
+                v-model="form.role"
+                class="w-full"
+              />
+            </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">Admin</vs-checkbox>
+          <a-checkbox v-model="form.is_active" class="mt-5 w-full">Active</a-checkbox>
+          
+          <a-checkbox v-model="form.is_superuser" class="w-full">Admin</a-checkbox>
 
-          <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
-
-          <p class="mt-5">Groups</p>
-          <v-select v-model="groups" :options="groupData" multiple label="name"></v-select>
+          <validation-provider name="groups" rules v-slot="{ errors }">
+            <a-form-item label="Group">
+              <a-select mode="multiple">
+                <!-- <a-select-option key="1" value="1">1</a-select-option> -->
+                <!-- <a-select-option key="2" value="2">2</a-select-option> -->
+                <!-- <a-select-option v-for="data in groupData" :key="data.id" :value="data">{{data.name}}</a-select-option> -->
+              </a-select>
+            </a-form-item>
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
 
           <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span>{{ errors[0] }}</span>
@@ -93,7 +109,6 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import vSelect from "vue-select";
 
 import {
   updateUser,
@@ -103,7 +118,6 @@ import {
 
 export default {
   components: {
-    vSelect,
     VuePerfectScrollbar
   },
   props: {
@@ -179,7 +193,7 @@ export default {
           .catch(error => {
             if (error.response) {
               this.$refs.observer.setErrors(error.response.data.result);
-            } 
+            }
           });
       } else {
         delete this.form.groups;

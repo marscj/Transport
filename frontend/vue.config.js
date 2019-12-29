@@ -14,10 +14,10 @@ module.exports = {
       'vue-router': 'VueRouter',
       'vuex': 'Vuex',
       'axios': 'axios',
-      'ant-design-vue': 'antd',
+      // 'ant-design-vue': 'antd',
       'lodash': '_',
       'moment': 'moment',
-      'vuesax': 'vuesax',
+      // 'vuesax': 'vuesax',
     },
   },
   devServer: {
