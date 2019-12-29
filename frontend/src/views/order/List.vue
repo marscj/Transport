@@ -203,6 +203,7 @@ export default {
       page_size: 10,
       loadData: parameter => {
         return getOrder(Object.assign(parameter, this.filter)).then(res => {
+          console.log(res, '=--=')
           return res.result;
         });
       }

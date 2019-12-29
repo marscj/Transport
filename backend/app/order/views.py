@@ -14,7 +14,9 @@ class OrderView(CreateSerializerMixin, ModelViewSet):
     queryset = Order.objects.all()
 
     def get_queryset(self):
-        if self.request.user.role == User.Role.Customer:
+        if self.request.user.is_superuser:
+            return Order.objects.all()
+        elif self.request.user.role == User.Role.Customer:
             return Order.objects.filter(customer_id=self.request.user.id)
         elif self.request.user.role == User.Role.Driver:
             return Order.objects.filter(driver_id=self.request.user.id)
