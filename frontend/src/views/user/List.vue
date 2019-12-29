@@ -6,120 +6,144 @@
       :data="sidebarData"
     />
 
-    <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-        <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
-
-        <vs-dropdown vs-trigger-click class="cursor-pointer mr-4">
-          <div
-            class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
-          >
-            <span
-              class="mr-6"
-            >{{ currentPage * page_size - (page_size - 1) }} - {{ total - currentPage * page_size > 0 ? currentPage * page_size : total }}</span>
-            <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-          </div>
-          <vs-dropdown-menu>
-            <vs-dropdown-item @click="page_size=10">
-              <span>10</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="page_size=20">
-              <span>20</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="page_size=50">
-              <span>50</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="page_size=100">
-              <span>100</span>
-            </vs-dropdown-item>
-          </vs-dropdown-menu>
-        </vs-dropdown>
+    <div>
+      <a-form></a-form>
+      <div class="flex flex-wrap">
+        <div class="p-4">
+          <a-form-item label="USERNAME">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
+        </div>
+        <div class="p-4">
+          <a-form-item label="EMAIL">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
+        </div>
+        <div class="p-4">
+          <a-form-item label="COMPANY">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
+        </div>
+        <div class="p-4">
+          <a-form-item>
+            <button
+              class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
+            >Search</button>
+          </a-form-item>
+        </div>
       </div>
+    </div>
 
-      <template slot="thead">
-        <vs-th key="id" style="width: 80px;">ID</vs-th>
-        <vs-th key="username">USERNAME</vs-th>
-        <vs-th key="email">EMAIL</vs-th>
-        <vs-th key="name">Name</vs-th>
-        <vs-th key="phone">PHONE</vs-th>
-        <vs-th key="company">COMPANY</vs-th>
-        <vs-th key="is_superuser">ADMIN</vs-th>
-        <vs-th key="is_active">ACTIVE</vs-th>
-        <vs-th>GROUP</vs-th>
+    <div class="p-4" action:add>
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+    </div>
+
+    <s-table ref="table" class="p-4" :columns="columns" :data="loadData">
+      <template slot="username" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
       </template>
 
-      <template slot-scope="{data}">
-        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">
-            <span v-if="tr.id">{{ tr.id }}</span>
-          </vs-td>
-          <vs-td :data="tr.username">
-            <a @click="editData(tr)" v-if="tr.username">{{ tr.username }}</a>
-          </vs-td>
-          <vs-td :data="tr.email">
-            <a @click="editData(tr)" v-if="tr.email">{{ tr.email }}</a>
-          </vs-td>
-          <vs-td :data="tr.name">
-            <a @click="editData(tr)" v-if="tr.email">{{ tr.name }}</a>
-          </vs-td>
-          <vs-td :data="tr.phone">
-            <a @click="editData(tr)" v-if="tr.phone">{{ tr.phone }}</a>
-          </vs-td>
-          <vs-td :data="tr.company">
-            <a @click="editData(tr)" v-if="tr.company">{{ tr.company }}</a>
-          </vs-td>
-          <vs-td :data="tr.is_superuser">
-            <vs-checkbox
-              v-model="tr.is_superuser"
-              :disabled="true"
-              style="float:left;"
-              v-if="tr.is_superuser"
-            />
-          </vs-td>
-          <vs-td :data="tr.is_active">
-            <vs-checkbox
-              v-model="tr.is_active"
-              :disabled="true"
-              style="float:left;"
-              v-if="tr.is_active"
-            />
-          </vs-td>
-          <vs-td :data="tr.groups">
-            <a @click="editData(tr)" v-if="tr.groups">{{ $_.join(tr.groups.map(f=> f.name), ',') }}</a>
-          </vs-td>
-
-          <!-- <vs-td :data="tr.codename">
-            <a> {{ tr.codename }} </a>
-            <template slot="edit">
-              <vs-input v-model="tr.codename" class="inputx" placeholder="name" />
-            </template>
-          </vs-td>-->
-        </vs-tr>
+      <template slot="email" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
       </template>
-    </vx-table>
+
+      <template slot="phone" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
+      <template slot="company" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
+      <template slot="role" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
+      <template slot="group" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ $_.join(text.map(f=> f.name), ', ') }}</a>
+      </template>
+
+      <template slot="admin" slot-scope="text, data">
+        <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
+      </template>
+
+      <template slot="active" slot-scope="text, data">
+        <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
+      </template>
+    </s-table>
   </vs-card>
 </template>
 
 <script>
 import { getUser } from "@/http/requests/user/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
-
-const UserType = [
-  { value: 1, label: "Customer" },
-  { value: 2, label: "Driver" },
-  { value: 3, label: "Operator" },
-  { value: 4, label: "Accounting" }
-];
+import STable from "@/components/s-table";
 
 export default {
   components: {
-    DataViewSidebar
+    DataViewSidebar,
+    STable
   },
   data() {
     return {
-      UserType,
-      isMounted: false,
-      page_size: 10,
+      columns: [
+        {
+          title: "ID",
+          dataIndex: "id",
+          align: "center",
+          width: 80
+        },
+        {
+          title: "USERNAME",
+          dataIndex: "username",
+          scopedSlots: { customRender: "username" },
+          align: "center"
+        },
+        {
+          title: "EMAIL",
+          dataIndex: "email",
+          scopedSlots: { customRender: "email" },
+          align: "center"
+        },
+        {
+          title: "PHONE",
+          dataIndex: "phone",
+          scopedSlots: { customRender: "phone" },
+          align: "center"
+        },
+        {
+          title: "COMPANY",
+          dataIndex: "company",
+          scopedSlots: { customRender: "company" },
+          align: "center"
+        },
+        {
+          title: "Role",
+          dataIndex: "role",
+          scopedSlots: { customRender: "role" },
+          align: "center"
+        },
+        {
+          title: "GROUP",
+          dataIndex: "groups",
+          scopedSlots: { customRender: "group" },
+          align: "center"
+        },
+        {
+          title: "ADMIN",
+          dataIndex: "is_superuser",
+          scopedSlots: { customRender: "admin" },
+          align: "center",
+          width: 40
+        },
+        {
+          title: "ACTIVE",
+          dataIndex: "is_active",
+          scopedSlots: { customRender: "active" },
+          align: "center",
+          width: 40
+        }
+      ],
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],
@@ -152,7 +176,7 @@ export default {
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      if(!val) {
+      if (!val) {
         this.$refs.table.refresh();
       }
     }

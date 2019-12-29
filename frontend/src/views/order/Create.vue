@@ -145,8 +145,8 @@
         <a-form-item label="Passengers" class="m-0">{{passenger}}</a-form-item>
         <a-form-item label="Itinerary" class="m-0"><pre>{{itinerary}}</pre></a-form-item>
         <a-divider class="mt-10"></a-divider>
-        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="step = 1">Back</a-button>
-        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onCreate()">Submit</a-button>
+        <button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="step = 1">Back</button>
+        <button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onCreate()">Submit</button>
       </a-form>
     </div>
 
@@ -156,8 +156,8 @@
       </div>
       <a-form class="p-10" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
         <a-divider class="mt-64"></a-divider>
-        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="$router.go(-1)">Back</a-button>
-        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onContinue()">Continue</a-button>
+        <button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="$router.go(-1)">Back</button>
+        <button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onContinue()">Continue</button>
       </a-form>
 
     </div>

@@ -3,6 +3,7 @@ from rest_framework.validators import UniqueValidator
 from django.db import transaction
 
 from .models import Order, OrderItinerary
+from app.user.models import User
 
 class OrderItinerarySerializer(serializers.ModelSerializer):
 
@@ -51,7 +52,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        if instance.operator_id is None:
+        if instance.operator_id is None and self.get_user().role == User.Role.Operator :
             operator_id = self.get_user().id
             operator = self.get_user().username
             instance.save() 

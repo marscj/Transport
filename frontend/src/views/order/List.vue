@@ -1,49 +1,61 @@
 <template>
-  <vs-card class="shadow-none">
+  <vs-card>
     <div>
       <div class="flex flex-wrap">
         <div class="p-4">
-          <p class="pb-2 font-bold">OrderID:</p>
-          <vs-input />
+          <a-form-item label="ORDERID">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
         </div>
         <div class="p-4">
-          <p class="pb-2 font-bold">RelatedID:</p>
-          <vs-input />
+          <a-form-item label="RELATEDID">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
         </div>
         <div class="p-4">
-          <p class="pb-2 font-bold">Start Date:</p>
-          <vs-input />
+          <a-form-item label="START DATE">
+            <a-date-picker class="hover:border-teal-500 focus:border-teal-500"></a-date-picker>
+          </a-form-item>
         </div>
         <div class="p-4">
-          <p class="pb-2 font-bold">End Date:</p>
-          <vs-input />
+          <a-form-item label="END DATE">
+            <a-date-picker class="hover:border-teal-500 focus:border-teal-500"></a-date-picker>
+          </a-form-item>
         </div>
         <div class="p-4">
-          <p class="pb-2 font-bold">Vehicle:</p>
-          <vs-input />
+          <a-form-item label="VEHICLE">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
         </div>
         <div class="p-4">
-          <p class="pb-2 font-bold">Driver:</p>
-          <vs-input />
+          <a-form-item label="DRIVER">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
         </div>
         <div class="p-4" v-if="!myOrder">
-          <p class="pb-2 font-bold">Customer:</p>
-          <vs-input />
+          <a-form-item label="CUSTOMER">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
         </div>
         <div class="p-4">
-          <p class="pb-2 font-bold">Status:</p>
-          <vs-input />
+          <a-form-item label="STATUS">
+            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          </a-form-item>
         </div>
-        <div class="p-3">
-          <vs-button class="mt-8">Search</vs-button>
+        <div class="p-4">
+          <a-form-item>
+            <button
+              class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
+            >Search</button>
+          </a-form-item>
         </div>
       </div>
     </div>
 
     <div class="p-4" v-if="myOrder">
-      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" >Add New</vs-button>
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
-    
+
     <s-table
       class="p-4"
       ref="table"
@@ -59,13 +71,13 @@
         <p>Seats: {{data.seats}}</p>
         <p>Passengers: {{data.passenger}}</p>
         <p>Itinerary:</p>
-        <pre >{{data.itinerary}}</pre>
+        <pre>{{data.itinerary}}</pre>
         <!-- <p class="whitespace-pre-line">{{data.itinerary}}</p> -->
       </template>
 
       <template slot="invoice" slot-scope="data">
         <a href="#" v-if="data">invoice</a>
-        <span v-else> unknow</span>
+        <span v-else>unknow</span>
       </template>
     </s-table>
   </vs-card>

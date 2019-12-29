@@ -15,8 +15,6 @@ class User(AbstractUser):
 
     photoURL = models.URLField(null=True, blank=True)
 
-    name = models.CharField(null=True, blank=True, max_length=150)
-
     phone = models.CharField(null=True, blank=True, max_length=16)
     
     class Meta:
