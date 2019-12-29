@@ -9,16 +9,11 @@
             </div>
             <div class="w-11/12">
               <validation-provider name="start_date" rules="required"  v-slot="{ errors }">
-                <!-- <datepicker
-                  placeholder="Start Date"
-                  v-model="start_date"
-                  class="w-40 inline-block py-1 mx-2"
-                ></datepicker> -->
-                <a-date-picker placeholder="Start Date" v-model="start_date" class="w-40 inline-block py-1 mx-2"></a-date-picker>
+                <a-date-picker placeholder="Start Date" v-model="start_date" class="py-1 mx-2"></a-date-picker> - 
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
               <validation-provider name="end_date" rules="required" v-slot="{ errors }">
-                <a-date-picker placeholder="End Date" v-model="end_date" class="w-40 inline-block py-1 mx-2"></a-date-picker>
+                <a-date-picker placeholder="End Date" v-model="end_date" class="py-1 mx-2 "></a-date-picker>
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
             </div>
@@ -28,16 +23,16 @@
               <span>*Category:</span>
             </div>
             <div class="w-11/12">
-              <validation-provider name="category" rules="required" v-slot="{ errors }">
+              <validation-provider name="category" v-slot="{ errors }">
                 <a
                   @click="onCategory(data)"
                   v-for="data in categoryData"
                   :key="data.id"
-                  :class="category.id === data.id ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
+                  :class="( category && category.id === data.id) ? 'inline-block border border-teal-500 rounded bg-teal-500 text-white py-1 px-3 mx-2' : 
                                            'inline-block border border-white rounded hover:border-gray-200 text-teal-500 hover:bg-gray-200 py-1 px-3 mx-2'"
                 >
                   <p
-                    :class="category.id === data.id ? 'text-white font-bold' : 'text-teal-500 font-bold' "
+                    :class="( category && category.id === data.id) ? 'text-white font-bold' : 'text-teal-500 font-bold' "
                   >{{ data.name }}</p>
                 </a>
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
@@ -49,7 +44,7 @@
               <span>*Seats:</span>
             </div>
             <div class="w-11/12">
-              <validation-provider name="seats" rules="required" v-slot="{ errors }">
+              <validation-provider name="seats" v-slot="{ errors }">
                 <a
                   @click="onSeat(data)"
                   v-for="(data, index) in seatData"
@@ -128,7 +123,7 @@
                 <span class="text-red-600 text-base">{{ errors[0] }}</span>
               </validation-provider>
               <button
-                @click="onSuccess()"
+                @click="onCheck()"
                 class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-10  rounded"
               >Submit</button>
             </div>
@@ -137,7 +132,7 @@
       </div>
     </validation-observer>
 
-    <div v-if="step == 2" class="mb-5">
+    <div v-if="step === 2" class="mb-5">
       <div class="text-center p-4">
         <h1 class="text-4xl font-bold">Check out</h1>
       </div>
@@ -145,20 +140,20 @@
         <a-form-item label="RelatedID" class="m-0">{{relatedId}}</a-form-item>
         <a-form-item label="Start Date" class="m-0"> {{start_date | moment('YYYY-MM-DD')}} </a-form-item>
         <a-form-item label="End Date" class="m-0"> {{end_date | moment('YYYY-MM-DD')}}</a-form-item>
-        <a-form-item label="Category" class="m-0">{{category.name}}</a-form-item>
+        <a-form-item label="Category" class="m-0">{{category ? category.name : ''}}</a-form-item>
         <a-form-item label="Seats" class="m-0">{{seats}}</a-form-item>
         <a-form-item label="Passengers" class="m-0">{{passenger}}</a-form-item>
         <a-form-item label="Itinerary" class="m-0"><pre>{{itinerary}}</pre></a-form-item>
         <a-divider class="mt-10"></a-divider>
         <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold mr-2 px-10 rounded" @click="step = 1">Back</a-button>
-        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded">Continue</a-button>
+        <a-button class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold ml-2 px-10  rounded" @click="onCreate()">Continue</a-button>
       </a-form>
     </div>
 
     <price-table
       class="mt-10"
-      v-if="this.query && this.query.category"
-      :category="this.query.category.id"
+      v-if="category"
+      :category="category.id"
       :showSidebar="false"
       :showThead="false"
       :showID="false"
@@ -182,54 +177,16 @@ export default {
   components: {
     PriceTable,
   },
-  computed: {
-    queryBase64() {
-      return {
-        query: this.$base64.encode(
-          JSON.stringify({
-            category: this.category,
-            seats: this.seats
-          })
-        )
-      };
-    }
-  },
   watch: {
-    "$route.query"(oldVal, newVal) {
-      if (newVal) {
-        this.query = JSON.parse(this.$base64.decode(this.$route.query.query));
-      } else {
-        this.query = null;
-      }
-    },
-    "query.category"() {
+    "category"() {
       this.getSeatData();
     },
-    category() {
-      this.$router.push({
-        name: "create_order",
-        query: this.queryBase64
-      });
-    },
-    seats() {
-      this.$router.push({
-        name: "create_order",
-        query: this.queryBase64
-      });
-    }
   },
   data() {
-    let query = this.$route.query.query
-      ? JSON.parse(this.$base64.decode(this.$route.query.query))
-      : undefined;
-    let category = query ? query.category : { id: undefined };
-    let seats = query ? query.seats : undefined;
-
     return {
       step: 1,
-      query: query,
-      category: category,
-      seats: seats,
+      category: undefined,
+      seats: undefined,
       start_date: undefined,
       end_date: undefined,
       passenger: undefined,
@@ -254,7 +211,7 @@ export default {
     },
     getSeatData() {
       getSeats({
-        category: this.query ? this.query.category.id : null
+        category: this.category ? this.category.id : null
       }).then(res => {
         this.seatData = res.result;
       });
@@ -273,7 +230,7 @@ export default {
     onItinerary(data) {
       this.itinerary += data.name + "\n";
     },
-    onSuccess() {
+    onCheck() {
       this.step = 2;
     },
     onCreate() {
@@ -284,7 +241,7 @@ export default {
         end_date: this.end_date
           ? moment(this.end_date).format("YYYY-MM-DD")
           : null,
-        category: this.category.name,
+        category: this.category ? this.category.name : null,
         seats: this.seats,
         itinerary: this.itinerary,
         passenger: this.passenger,
@@ -293,26 +250,14 @@ export default {
       createOrder(form)
         .then(res => {})
         .catch(error => {
+          this.step = 1;
           if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
+            this.$nextTick(() => {
+              this.$refs.observer.setErrors(error.response.data.result);
+            })
           }
         });
     }
   }
 };
 </script>
-
-<style>
-.vue-form-wizard .wizard-tab-content {
-  padding: 20px 0px 0px;
-}
-
-.vdp-datepicker input {
-  padding: 3px;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  color: #626262;
-  width: 100%;
-}
-</style>
