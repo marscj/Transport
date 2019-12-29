@@ -19,7 +19,7 @@
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
           <validation-provider name="username" rules="required|max:16|min:5" v-slot="{ errors }">
-            <a-form-item label="USERNAME">
+            <a-form-item label="USERNAME" class="m-0">
               <a-input
                 data-vv-validate-on="blur"
                 :disabled="!isEdit"
@@ -31,10 +31,9 @@
           </validation-provider>
 
           <validation-provider name="email" rules="email|required" v-slot="{ errors }">
-            <a-form-item label="EMAIL">
+            <a-form-item label="EMAIL" class="m-0">
               <a-input
                 data-vv-validate-on="blur"
-                :disabled="!isEdit"
                 v-model="form.email"
                 class="w-full"
               />
@@ -43,10 +42,9 @@
           </validation-provider>
 
           <validation-provider name="phone" v-slot="{ errors }">
-            <a-form-item label="PHONE">
+            <a-form-item label="PHONE" class="m-0">
               <a-input
                 data-vv-validate-on="blur"
-                :disabled="!isEdit"
                 v-model="form.phone"
                 class="w-full"
               />
@@ -55,10 +53,9 @@
           </validation-provider>
 
           <validation-provider name="company" v-slot="{ errors }">
-            <a-form-item label="COMPANY">
+            <a-form-item label="COMPANY" class="m-0">
               <a-input
                 data-vv-validate-on="blur"
-                :disabled="!isEdit"
                 v-model="form.company"
                 class="w-full"
               />
@@ -67,28 +64,19 @@
           </validation-provider>
 
           <validation-provider name="role" v-slot="{ errors }">
-            <a-form-item label="ROLE">
-              <a-input
-                data-vv-validate-on="blur"
-                :disabled="!isEdit"
-                v-model="form.role"
-                class="w-full"
-              />
+            <a-form-item label="ROLE" class="m-0">
+              <v-select v-model="form.role" :options="Role" ></v-select>
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
-          <a-checkbox v-model="form.is_active" class="mt-5 w-full">Active</a-checkbox>
+          <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
           
-          <a-checkbox v-model="form.is_superuser" class="w-full">Admin</a-checkbox>
+          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">Admin</vs-checkbox>
 
           <validation-provider name="groups" rules v-slot="{ errors }">
             <a-form-item label="Group">
-              <a-select mode="multiple">
-                <!-- <a-select-option key="1" value="1">1</a-select-option> -->
-                <!-- <a-select-option key="2" value="2">2</a-select-option> -->
-                <!-- <a-select-option v-for="data in groupData" :key="data.id" :value="data">{{data.name}}</a-select-option> -->
-              </a-select>
+              <v-select v-model="groups" :options="groupData" multiple label="name"></v-select>
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
@@ -109,6 +97,9 @@
 
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import vSelect from "vue-select";
+
+const Role = ['Customer', 'Driver', 'Operator', 'Accounting']
 
 import {
   updateUser,
@@ -118,6 +109,7 @@ import {
 
 export default {
   components: {
+    vSelect,
     VuePerfectScrollbar
   },
   props: {
@@ -156,12 +148,13 @@ export default {
   },
   data() {
     return {
+      Role,
       form: {
         id: undefined,
         username: "",
         email: "",
-        name: "",
         phone: "",
+        role: "",
         is_superuser: false,
         is_active: false,
         company: ""
