@@ -41,6 +41,30 @@
     </div>
 
     <div class="p-4">
+      <table class="table-auto w-full">
+        <thead>
+          <tr>
+            <th class="text-center py-4">DATE</th>
+            <th class="text-center py-4">TIME</th>
+            <th class="text-center py-4">ITINERARY</th>
+            <th class="text-center py-4">PRICE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="data in form.order_itinerary" :key="data.id">
+            <td class="border px-4 py-4 text-center">{{data.date}}</td>
+            <td class="border px-4 py-4 text-center">{{data.time}}</td>
+            <td class="border px-4 py-4 text-center">{{data.itinerary.name}}</td>
+            <td class="border px-4 py-4 text-center">{{data.price}}</td>
+          </tr>
+        </tbody>
+        <t-foot>
+          <a-button type="primary">ADD ITINERARY</a-button>
+        </t-foot>
+      </table>
+    </div>
+
+    <div class="p-4">
       <div class="flex flex-wrap">
         <a-form-item label="VEHICLE" class="w-64 mr-6">
           <a-select class="w-full">
@@ -73,37 +97,20 @@
 
         <a-form-item label="STATUS" class="w-64 mx-6">
           <a-select class="w-full">
-            <a-select-option
-              v-for="data in Status"
-              :key="data"
-              :value="data"
-            >{{data}}</a-select-option>
+            <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
           </a-select>
         </a-form-item>
       </div>
-    </div>
-
-    <div class="p-4">
-      <s-table ref="table" :rowKey="(record) => record.id" :columns="columns" :data="loadData">
-        <template slot="title">
-          <a-button type="primary">ADD ITIERNARY</a-button>
-        </template>
-      </s-table>
     </div>
   </vs-card>
 </template>
 
 <script>
-import STable from "@/components/s-table";
-
 import { getOrder, getOrderItinerary } from "@/http/requests/order";
 import { getVehicle } from "@/http/requests/vehicle";
 const Status = ["New", "Confirm", "Pending", "Cancel", "Complete"];
 
 export default {
-  components: {
-    STable
-  },
   mounted() {
     this.getOrderData(this.$route.params.id);
     this.getVehicleData();
@@ -113,14 +120,16 @@ export default {
       columns: [
         {
           title: "ID",
-          dataIndex: "id",
+          dataIndex: "id"
         }
       ],
       loadData: parameter => {
-        return getOrderItinerary(Object.assign(parameter, this.filter)).then(res => {
-          console.log(res, "=--=");
-          return res.result;
-        });
+        return getOrderItinerary(Object.assign(parameter, this.filter)).then(
+          res => {
+            console.log(res, "=--=");
+            return res.result;
+          }
+        );
       },
       Status,
       vehicleData: [],
