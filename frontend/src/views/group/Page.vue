@@ -6,15 +6,8 @@
       :data="sidebarData"
     />
 
-    <div>
-      <vs-button
-        type="border"
-        icon-pack="feather"
-        icon="icon-plus"
-        @click="addNewData"
-        class
-      >Add New</vs-button>
-      <vs-divider />
+    <div class="p-4" action:add>
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
     <vs-tabs v-if="groupData.length" position="left" class style="width:100%;" v-model="curTab">

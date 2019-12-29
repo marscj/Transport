@@ -19,13 +19,10 @@
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
           <validation-provider name="name" rules="required|max:16|min:5" v-slot="{ errors }">
-            <vs-input
-              data-vv-validate-on="blur"
-              label="Name"
-              :disabled="!isEdit"
-              v-model="form.name"
-              class="mt-5 w-full"
-            />
+            <a-form-item label="Name">
+              <a-input :disabled="!isEdit" v-model="form.name" class="w-full" />
+            </a-form-item>
+
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
@@ -78,7 +75,7 @@ export default {
         }
       }
     },
-    isEdit () {
+    isEdit() {
       return Object.entries(this.data).length === 0;
     }
   },
@@ -86,7 +83,7 @@ export default {
     return {
       form: {
         id: undefined,
-        name: "",
+        name: ""
       },
       settings: {
         maxScrollbarLength: 60,
@@ -96,14 +93,14 @@ export default {
   },
   methods: {
     submit() {
-      if(this.isEdit) {
+      if (this.isEdit) {
         createGroup(this.form).then(() => {
           this.isSidebarActiveLocal = false;
-        })
+        });
       } else {
         updateGroups(this.form.id, this.form).then(() => {
           this.isSidebarActiveLocal = false;
-        })
+        });
       }
     }
   }
