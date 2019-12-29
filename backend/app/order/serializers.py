@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from django.db import transaction
 
 from .models import Order, OrderItinerary
 
@@ -36,11 +37,23 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, validate_data):
-        print(validate_data.get('start_date', None), '=====')
-        print(validate_data.get('end_date', None), '=====')
-        print(validate_data.get('category', None), '=====')
-        print(validate_data.get('seats', None), '=====')
-        print(validate_data.get('itinerary', None), '=====')
         return validate_data
 
-    
+    def get_user(self):
+        return self.context['request'].user
+
+    @transaction.atomic
+    def create(self, validate_data):
+        customer_id = self.get_user().id
+        customer = self.get_user().username
+        order = Order.objects.create(**validate_data, customer_id=customer_id, customer=customer)
+        return order
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        if instance.operator_id is None:
+            operator_id = self.get_user().id
+            operator = self.get_user().username
+            instance.save()
+        
+        return super().update(instance, validated_data)
