@@ -5,5 +5,4 @@ from .import views
 
 router = DefaultRouter()
 router.register(r'orders', views.OrderView, basename='order')
-router.register(r'order_itinerarys', views.OrderItineraryView, basename='order_itinerary')
 urlpatterns = router.urls

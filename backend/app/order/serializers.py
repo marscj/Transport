@@ -54,6 +54,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         if instance.operator_id is None:
             operator_id = self.get_user().id
             operator = self.get_user().username
-            instance.save()
+            instance.save() 
         
         return super().update(instance, validated_data)

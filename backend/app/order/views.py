@@ -5,6 +5,7 @@ from middleware.permission import CustomModelPermissions
 from middleware.mixin import CreateSerializerMixin
 from .models import Order, OrderItinerary
 from .serializers import OrderSerializer, OrderCreateSerializer, OrderItinerarySerializer
+from app.user.models import User
 
 class OrderView(CreateSerializerMixin, ModelViewSet):
     serializer_class = OrderSerializer
@@ -12,7 +13,10 @@ class OrderView(CreateSerializerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Order.objects.all()
 
-class OrderItineraryView(ModelViewSet):
-    serializer_class = OrderItinerarySerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
-    queryset = OrderItinerary.objects.all()
+    def get_queryset(self):
+        if self.request.user.role == User.Role.Customer:
+            return Order.objects.filter(customer_id=self.request.user.id)
+        elif self.request.user.role == User.Role.Driver:
+            return Order.objects.filter(driver_id=self.request.user.id)
+        
+        return Order.objects.all()
