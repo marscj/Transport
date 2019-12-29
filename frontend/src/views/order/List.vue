@@ -64,28 +64,28 @@
       :data="loadData"
       :scroll="{ x: 1300 }"
     >
-      <template slot="orderId" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="orderId" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id">{{text}}</a>
       </template>
 
-      <template slot="relatedId" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="relatedId" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id">{{text}}</a>
       </template>
 
-      <template slot="create_date" slot-scope="data">
-        <a>{{ data | moment('YYYY-MM-DD')}}</a>
+      <template slot="create_date" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id">{{ text | moment('YYYY-MM-DD')}}</a>
       </template>
 
-      <template slot="start_date" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="start_date" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id">{{text}}</a>
       </template>
 
-      <template slot="end_date" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="end_date" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id">{{text}}</a>
       </template>
 
       <template slot="itinerary" slot-scope="data">
-        <a>
+        <a :href="'/admin/orders/' + data.id" >
           <p>Category: {{data.category}}</p>
           <p>Seats: {{data.seats}}</p>
           <p>Passengers: {{data.passenger}}</p>
@@ -98,28 +98,28 @@
 
       <template slot="price"></template>
 
-      <template slot="vehicle" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="vehicle" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
       </template>
 
-      <template slot="driver" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="driver" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
       </template>
 
-      <template slot="driver_phone" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="driver_phone" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
       </template>
 
-      <template slot="status" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="status" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
       </template>
 
-      <template slot="customer" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="customer" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
       </template>
 
-      <template slot="operator" slot-scope="text">
-        <a>{{text}}</a>
+      <template slot="operator" slot-scope="text, data">
+        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
       </template>
 
       <template slot="invoice" slot-scope="data">

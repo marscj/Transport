@@ -14,7 +14,8 @@ export default {
 	Itinerary: 'Itinerary',
 	Category: 'Category',
 	Price: 'Price',
-	CreateOrder: 'CreateOrder'
+	CreateOrder: 'CreateOrder',
+	OrderDetail: 'OrderDetail'
   },
   zh: {
 	Dashboard: '仪表盘',
@@ -30,6 +31,7 @@ export default {
 	Itinerary: '行程管理',
 	Category: '类别管理',
 	Price: '价格管理',
-	CreateOrder: '创建订单'
+	CreateOrder: '创建订单',
+	OrderDetail: '订单详情'
   }
 }
