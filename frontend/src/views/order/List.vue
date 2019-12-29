@@ -105,32 +105,37 @@ export default {
           dataIndex: "orderId",
           align: "center",
           width: 80,
-          fixed: "left"
+          fixed: "left",
+          sorter: true,
         },
         {
           title: "RELATEDID",
           dataIndex: "relatedId",
           align: "center",
-          width: 80
+          width: 80,
+          sorter: true,
         },
         {
           title: "CREATEDATE",
           dataIndex: "create_at",
           scopedSlots: { customRender: "create_date" },
           align: "center",
-          width: 110
+          width: 110,
+          sorter: true,
         },
         {
           title: "STARTDATE",
           dataIndex: "start_date",
           align: "center",
-          width: 110
+          width: 110,
+          sorter: true,
         },
         {
           title: "ENDDATE",
           dataIndex: "end_date",
           align: "center",
-          width: 110
+          width: 110,
+          sorter: true,
         },
         {
           title: "CUSTOMER ITINERARY",
@@ -148,44 +153,51 @@ export default {
           title: "Vehicle",
           dataIndex: "vehicle",
           align: "center",
-          width: 100
+          width: 100,
+          sorter: true,
         },
         {
           title: "Driver",
           dataIndex: "driver",
           align: "center",
-          width: 100
+          width: 100,
+          sorter: true,
         },
         {
           title: "Phone",
           dataIndex: "driver_phone",
           align: "center",
-          width: 100
+          width: 100,
+          sorter: true,
         },
         {
           title: "Status",
           dataIndex: "status",
           align: "center",
-          width: 80
+          width: 80,
+          sorter: true,
         },
         {
           title: "Customer",
           dataIndex: "customer",
           align: "center",
-          width: 100
+          width: 100,
+          sorter: true,
         },
         {
           title: "Operator",
           dataIndex: "operator",
           align: "center",
-          width: 100
+          width: 100,
+          sorter: true,
         },
         {
           title: "Invoice",
           dataIndex: "invoice_id",
           scopedSlots: { customRender: "invoice" },
           align: "center",
-          width: 100
+          width: 100,
+          sorter: true,
         }
       ],
       page_size: 10,

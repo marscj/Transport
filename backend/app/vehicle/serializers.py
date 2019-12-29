@@ -1,7 +1,9 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from .models import Itinerary, Category, Price, Vehicle
 from app.user.serializers import UserDetailSerializer
+from app.user.models import User
 
 class ItinerarySerializer(serializers.ModelSerializer):
 

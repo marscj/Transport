@@ -110,19 +110,22 @@ export default {
           title: "PHONE",
           dataIndex: "phone",
           scopedSlots: { customRender: "phone" },
-          align: "center"
+          align: "center",
+          sorter: true,
         },
         {
           title: "COMPANY",
           dataIndex: "company",
           scopedSlots: { customRender: "company" },
-          align: "center"
+          align: "center",
+          sorter: true,
         },
         {
           title: "Role",
           dataIndex: "role",
           scopedSlots: { customRender: "role" },
-          align: "center"
+          align: "center",
+          sorter: true,
         },
         {
           title: "GROUP",
@@ -135,14 +138,16 @@ export default {
           dataIndex: "is_superuser",
           scopedSlots: { customRender: "admin" },
           align: "center",
-          width: 40
+          width: 40,
+          sorter: true,
         },
         {
           title: "ACTIVE",
           dataIndex: "is_active",
           scopedSlots: { customRender: "active" },
           align: "center",
-          width: 40
+          width: 40,
+          sorter: true,
         }
       ],
       addNewDataSidebar: false,

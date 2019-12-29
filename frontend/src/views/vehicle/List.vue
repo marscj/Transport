@@ -177,43 +177,50 @@ export default {
           title: "LICENSE PLATE",
           dataIndex: "license_plate",
           scopedSlots: { customRender: "license_plate" },
-          align: "center"
+          align: "center",
+          sorter: true
         },
         {
           title: "MODEL",
           dataIndex: "model",
           scopedSlots: { customRender: "model" },
-          align: "center"
+          align: "center",
+          sorter: true
         },
         {
           title: "SEATS",
           dataIndex: "seats",
           scopedSlots: { customRender: "seats" },
-          align: "center"
+          align: "center",
+          sorter: true
         },
         {
           title: "CATEGORY",
           dataIndex: "category",
           scopedSlots: { customRender: "category" },
-          align: "center"
+          align: "center",
+          sorter: true
         },
         {
           title: "DRIVER",
           dataIndex: "driver",
           scopedSlots: { customRender: "driver" },
-          align: "center"
+          align: "center",
+          sorter: true
         },
         {
           title: "SUPPLIER",
           dataIndex: "supplier",
           scopedSlots: { customRender: "supplier" },
-          align: "center"
+          align: "center",
+          sorter: true,
         },
         {
           title: "ACTIVE",
           dataIndex: "is_active",
           scopedSlots: { customRender: "active" },
-          align: "center"
+          align: "center",
+          sorter: true,
         },
         {
           title: "ACTION",
