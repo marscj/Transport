@@ -6,24 +6,7 @@
       :data="sidebarData"
     />
 
-    <div>
-      <div class="flex flex-wrap pt-4">
-        <div class="px-4">
-          <a-form-item label="VEHICLE">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
-          </a-form-item>
-        </div>
-        <div class="px-4">
-          <a-form-item>
-            <button
-              class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
-            >Search</button>
-          </a-form-item>
-        </div>
-      </div>
-    </div>
-
-    <div class="px-4" action:add>
+    <div class="p-4" action:add>
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 

@@ -6,56 +6,63 @@
       :data="sidebarData"
     />
 
-    <vx-table ref="table" :data="loadData">
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between py-4">
-        <vs-button
-          type="border"
-          icon-pack="feather"
-          icon="icon-plus"
-          @click="addNewData"
-          v-action:add
-        >Add New</vs-button>
-      </div>
+    <div class="p-4" action:add>
+      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+    </div>
 
-      <template slot="thead">
-        <vs-th key="id" style="width: 80px;">ID</vs-th>
-        <vs-th key="name">NAME</vs-th>
-        <vs-th style="width: 80px;" v-action:delete >Action</vs-th>
+    <s-table
+      class="p-4"
+      ref="table"
+      :columns="columns"
+      :data="loadData"
+      :showPagination="false"
+      :rowKey="(record) => record.id"
+    >
+      <template slot="name" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
       </template>
 
-      <template slot-scope="{data}">
-        <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" :activeEdit="true">
-          <vs-td :data="tr.id">
-            <span v-if="tr.id">{{ tr.id }}</span>
-          </vs-td>
-          <vs-td :data="tr.name">
-            <a @click="editData(tr)" v-if="tr.name">{{ tr.name }}</a>
-          </vs-td>
-          <vs-td class="whitespace-no-wrap" v-action:delete>
-            <feather-icon
-              icon="TrashIcon"
-              svgClasses="w-5 h-5 hover:text-danger stroke-current"
-              class="ml-2"
-              @click.stop="openConfirm(tr.id)"
-            />
-          </vs-td>
-        </vs-tr>
+      <template slot="action" slot-scope="text, data">
+        <feather-icon
+          icon="TrashIcon"
+          svgClasses="w-5 h-5 hover:text-danger stroke-current"
+          class="ml-2"
+          @click.stop="openConfirm(data.id)"
+        />
       </template>
-    </vx-table>
+    </s-table>
   </vs-card>
 </template>
 
 <script>
 import { getCategory, deleteCategory } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
+import STable from "@/components/s-table";
 
 export default {
   components: {
-    DataViewSidebar
+    DataViewSidebar,
+    STable
   },
   data() {
     return {
-      page_size: 10,
+      columns: [
+        {
+          title: "ID",
+          dataIndex: "id",
+          align: "center",
+          width: 80
+        },
+        {
+          title: "Name",
+          dataIndex: "name",
+          scopedSlots: { customRender: "name" }
+        },
+        {
+          title: "ACTION",
+          scopedSlots: { customRender: "action" }
+        }
+      ],
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],
