@@ -131,7 +131,7 @@
         </div>
       </div>
     </validation-observer>
-
+ 
     <div v-if="step === 2" class="mb-5">
       <div class="text-center p-4">
         <h1 class="text-4xl font-bold">Check out</h1>

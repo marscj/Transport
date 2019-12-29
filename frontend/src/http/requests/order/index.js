@@ -2,10 +2,14 @@ import {
   axios
 } from '@/utils/request'
 
-export function getOrder(parameter) {
+export function getOrders(parameter) {
   return axios.get("orders/", {
     params: parameter
   })
+}
+
+export function getOrder(pk) {
+  return axios.get("orders/" + `${pk}/`)
 }
 
 export function updateOrder(pk, data) {

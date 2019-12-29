@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import { getOrder } from "@/http/requests/order";
+import { getOrders } from "@/http/requests/order";
 import STable from "@/components/s-table";
 import moment from "moment";
 export default {
@@ -258,7 +258,7 @@ export default {
       ],
       page_size: 10,
       loadData: parameter => {
-        return getOrder(Object.assign(parameter, this.filter)).then(res => {
+        return getOrders(Object.assign(parameter, this.filter)).then(res => {
           console.log(res, "=--=");
           return res.result;
         });

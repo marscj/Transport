@@ -7,6 +7,7 @@ class Order(models.Model):
     
     class OrderStatus(models.TextChoices):
         New = 'New'
+        Confirm = 'Confirm'
         Pending = 'Pending'
         Cancel = 'Cancel'
         Complete = 'Complete'
