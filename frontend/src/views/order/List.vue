@@ -64,15 +64,62 @@
       :data="loadData"
       :scroll="{ x: 1300 }"
     >
-      <template slot="create_date" slot-scope="data">{{ data | moment('YYYY-MM-DD')}}</template>
+      <template slot="orderId" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="relatedId" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="create_date" slot-scope="data">
+        <a>{{ data | moment('YYYY-MM-DD')}}</a>
+      </template>
+
+      <template slot="start_date" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="end_date" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
 
       <template slot="itinerary" slot-scope="data">
-        <p>Category: {{data.category}}</p>
-        <p>Seats: {{data.seats}}</p>
-        <p>Passengers: {{data.passenger}}</p>
-        <p>Itinerary:</p>
-        <pre>{{data.itinerary}}</pre>
-        <!-- <p class="whitespace-pre-line">{{data.itinerary}}</p> -->
+        <a>
+          <p>Category: {{data.category}}</p>
+          <p>Seats: {{data.seats}}</p>
+          <p>Passengers: {{data.passenger}}</p>
+          <p>Itinerary:</p>
+          <pre>{{data.itinerary}}</pre>
+        </a>
+      </template>
+
+      <template slot="o-itinerary"></template>
+
+      <template slot="price"></template>
+
+      <template slot="vehicle" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="driver" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="driver_phone" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="status" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="customer" slot-scope="text">
+        <a>{{text}}</a>
+      </template>
+
+      <template slot="operator" slot-scope="text">
+        <a>{{text}}</a>
       </template>
 
       <template slot="invoice" slot-scope="data">
@@ -103,17 +150,18 @@ export default {
         {
           title: "ORDERID",
           dataIndex: "orderId",
+          scopedSlots: { customRender: "orderId" },
           align: "center",
           width: 80,
-          fixed: "left",
-          sorter: true,
+          sorter: true
         },
         {
           title: "RELATEDID",
           dataIndex: "relatedId",
+          scopedSlots: { customRender: "relatedId" },
           align: "center",
           width: 80,
-          sorter: true,
+          sorter: true
         },
         {
           title: "CREATEDATE",
@@ -121,21 +169,23 @@ export default {
           scopedSlots: { customRender: "create_date" },
           align: "center",
           width: 110,
-          sorter: true,
+          sorter: true
         },
         {
           title: "STARTDATE",
           dataIndex: "start_date",
+          scopedSlots: { customRender: "start_date" },
           align: "center",
           width: 110,
-          sorter: true,
+          sorter: true
         },
         {
           title: "ENDDATE",
           dataIndex: "end_date",
+          scopedSlots: { customRender: "end_date" },
           align: "center",
           width: 110,
-          sorter: true,
+          sorter: true
         },
         {
           title: "CUSTOMER ITINERARY",
@@ -152,44 +202,50 @@ export default {
         {
           title: "Vehicle",
           dataIndex: "vehicle",
+          scopedSlots: { customRender: "vehicle" },
           align: "center",
           width: 100,
-          sorter: true,
+          sorter: true
         },
         {
           title: "Driver",
           dataIndex: "driver",
+          scopedSlots: { customRender: "driver" },
           align: "center",
           width: 100,
-          sorter: true,
+          sorter: true
         },
         {
           title: "Phone",
           dataIndex: "driver_phone",
+          scopedSlots: { customRender: "driver_phone" },
           align: "center",
           width: 100,
-          sorter: true,
+          sorter: true
         },
         {
           title: "Status",
           dataIndex: "status",
+          scopedSlots: { customRender: "status" },
           align: "center",
           width: 80,
-          sorter: true,
+          sorter: true
         },
         {
           title: "Customer",
           dataIndex: "customer",
+          scopedSlots: { customRender: "customer" },
           align: "center",
           width: 100,
-          sorter: true,
+          sorter: true
         },
         {
           title: "Operator",
           dataIndex: "operator",
+          scopedSlots: { customRender: "operator" },
           align: "center",
           width: 100,
-          sorter: true,
+          sorter: true
         },
         {
           title: "Invoice",
@@ -197,13 +253,13 @@ export default {
           scopedSlots: { customRender: "invoice" },
           align: "center",
           width: 100,
-          sorter: true,
+          sorter: true
         }
       ],
       page_size: 10,
       loadData: parameter => {
         return getOrder(Object.assign(parameter, this.filter)).then(res => {
-          console.log(res, '=--=')
+          console.log(res, "=--=");
           return res.result;
         });
       }
