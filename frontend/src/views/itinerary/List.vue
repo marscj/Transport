@@ -29,20 +29,25 @@
 
     <s-table
       class="p-4"
+      ref="table"
       :columns="columns"
       :data="loadData"
       :showPagination="false"
       :rowKey="(record) => record.id"
-    ></s-table>
+    >
+      <template slot="name" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
 
-    <template slot="action" slot-scope="text, data" v-action:delete>
-      <feather-icon
-        icon="TrashIcon"
-        svgClasses="w-5 h-5 hover:text-danger stroke-current"
-        class="ml-2"
-        @click.stop="openConfirm(data.id)"
-      />
-    </template>
+      <template slot="action" slot-scope="text, data">
+        <feather-icon
+          icon="TrashIcon"
+          svgClasses="w-5 h-5 hover:text-danger stroke-current"
+          class="ml-2"
+          @click.stop="openConfirm(data.id)"
+        />
+      </template>
+    </s-table>
   </vs-card>
 </template>
 
@@ -70,8 +75,9 @@ export default {
           width: 80
         },
         {
-          title: "NAME",
-          dataIndex: "name"
+          title: "Name",
+          dataIndex: "name",
+          scopedSlots: { customRender: "name" },
         },
         {
           title: "ACTION",
