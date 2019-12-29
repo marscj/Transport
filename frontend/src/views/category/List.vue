@@ -56,7 +56,15 @@ export default {
           title: "ACTION",
           scopedSlots: { customRender: "action" }
         }
-      ],
+      ].filter(f => {
+        if (f.title == "ACTION") {
+          if (this.$auth("itinerary.delete")) {
+            return f;
+          }
+        } else {
+          return f;
+        }
+      }),
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],

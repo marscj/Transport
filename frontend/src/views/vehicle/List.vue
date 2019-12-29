@@ -5,7 +5,7 @@
       @closeSidebar="toggleDataSidebar"
       :data="sidebarData"
     />
-    
+
     <!-- <vx-table ref="table" pagination search :data="loadData" :page_size="page_size">
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
         <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData" v-action:add>Add New</vs-button>
@@ -84,7 +84,7 @@
           </vs-td>
         </vs-tr>
       </template>
-    </vx-table> -->
+    </vx-table>-->
 
     <div>
       <div class="flex flex-wrap pt-4">
@@ -147,6 +147,15 @@
       <template slot="active" slot-scope="text, data">
         <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
       </template>
+
+       <template slot="action" slot-scope="text, data">
+        <feather-icon
+          icon="TrashIcon"
+          svgClasses="w-5 h-5 hover:text-danger stroke-current"
+          class="ml-2"
+          @click.stop="openConfirm(data.id)"
+        />
+      </template>
     </s-table>
   </vs-card>
 </template>
@@ -206,13 +215,26 @@ export default {
           scopedSlots: { customRender: "active" },
           align: "center"
         },
-      ],
+        {
+          title: "ACTION",
+          scopedSlots: { customRender: "action" },
+          align: "center"
+        }
+      ].filter(f => {
+        if (f.title == "ACTION") {
+          if (this.$auth("itinerary.delete")) {
+            return f;
+          }
+        } else {
+          return f;
+        }
+      }),
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],
       loadData: parameter => {
         return getVehicle(Object.assign(parameter, {})).then(res => {
-          console.log(res, '----')
+          console.log(res, "----");
           return res.result;
         });
       }
@@ -224,14 +246,14 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      if(this.$auth('vehicle.change')) {
+      if (this.$auth("vehicle.change")) {
         this.sidebarData = data;
         this.toggleDataSidebar(true);
       }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
-      if(!val) {
+      if (!val) {
         this.$refs.table.refresh();
       }
     },

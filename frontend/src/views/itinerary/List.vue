@@ -54,13 +54,21 @@ export default {
         {
           title: "Name",
           dataIndex: "name",
-          scopedSlots: { customRender: "name" },
+          scopedSlots: { customRender: "name" }
         },
         {
           title: "ACTION",
           scopedSlots: { customRender: "action" }
         }
-      ],
+      ].filter(f => {
+        if (f.title == "ACTION") {
+          if (this.$auth("itinerary.delete")) {
+            return f;
+          }
+        } else {
+          return f;
+        }
+      }),
       addNewDataSidebar: false,
       sidebarData: {},
       selected: [],

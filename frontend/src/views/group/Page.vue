@@ -19,7 +19,7 @@
           <div v-for="data in permission" :key="data.id" class="w-1/6">
             <vs-checkbox
               v-model="data.check"
-              @click="onClick(data)"
+              @change="onClick(data)"
             >{{data.codename.substring(0, data.codename.indexOf('_'))}}</vs-checkbox>
           </div>
         </div>
@@ -30,11 +30,7 @@
 
 <script>
 import DataViewSidebar from "./DataViewSidebar.vue";
-import {
-  getGroup,
-  getPermission,
-  updateGroup
-} from "@/http/requests/user/index.js";
+import { getGroup, getPermission, updateGroup } from "@/http/requests/user/index.js";
 
 export default {
   components: {
@@ -76,6 +72,7 @@ export default {
       return updateGroup(this.groupData[this.curTab].id, {
         permission: permission.id
       }).then(res => {
+        console.log(res, '====')
         const { result } = res;
         this.groupData[this.curTab] = Object.assign({}, result);
       });
@@ -104,6 +101,7 @@ export default {
       }
     },
     onClick(permission) {
+      console.log('1111')
       this.updatePermission(permission);
     },
     addNewData() {
