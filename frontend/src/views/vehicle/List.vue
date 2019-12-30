@@ -126,7 +126,9 @@ export default {
     queryParam: {
       type: Object,
       default: () => {
-        return {
+        return { 
+          start_date: '2019-12-01',
+          end_date: '2019-12-03',
           is_active: true
         }
       }
