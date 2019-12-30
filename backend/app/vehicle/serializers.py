@@ -40,6 +40,14 @@ class VehicleSerializer(serializers.ModelSerializer):
         model = Vehicle
         fields = '__all__'
 
+class VehicleSimpleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vehicle
+        fields = (
+            'id', 'license_plate'
+        )
+
 class SeatSerializer(serializers.Serializer):
 
     seats = serializers.IntegerField(read_only=True)

@@ -79,6 +79,13 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
         return super().update(instance, validated_data)       
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = (
+            'id', 'username', 'phone'
+        )
 
 class RegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=30)
