@@ -65,33 +65,33 @@
       :scroll="{ x: 1300 }"
     >
       <template slot="orderId" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id">{{text}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
       </template>
 
       <template slot="relatedId" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id">{{text}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
       </template>
 
       <template slot="create_date" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id">{{ text | moment('YYYY-MM-DD')}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{ text | moment('YYYY-MM-DD')}}</router-link>
       </template>
 
       <template slot="start_date" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id">{{text}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
       </template>
 
       <template slot="end_date" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id">{{text}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
       </template>
 
       <template slot="itinerary" slot-scope="data">
-        <a :href="'/admin/orders/' + data.id" >
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
           <p>Category: {{data.category}}</p>
           <p>Seats: {{data.seats}}</p>
           <p>Passengers: {{data.passenger}}</p>
           <p>Itinerary:</p>
           <pre>{{data.itinerary}}</pre>
-        </a>
+        </router-link>
       </template>
 
       <template slot="o-itinerary"></template>
@@ -99,27 +99,27 @@
       <template slot="price"></template>
 
       <template slot="vehicle" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.license_plate}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.license_plate}}</router-link>
       </template>
 
       <template slot="driver" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.username}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.username}}</router-link>
       </template>
 
       <template slot="driver_phone" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.phone}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.phone}}</router-link>
       </template>
 
       <template slot="status" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
       </template>
 
       <template slot="customer" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.username}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.username}}</router-link>
       </template>
 
       <template slot="operator" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.username}}</a>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.username}}</router-link>
       </template>
 
       <template slot="invoice" slot-scope="text">

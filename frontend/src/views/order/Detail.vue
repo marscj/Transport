@@ -81,7 +81,7 @@
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
-          <a-select class="w-full" v-model="form.status">
+          <a-select class="w-full" v-model="form.status" @change="onStatus">
             <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
           </a-select>
         </a-form-item>
@@ -209,10 +209,12 @@ export default {
         this.driver = null;
         this.phone = null;
         
-        this.form.vehicle_id = null;
         this.form.driver_id = null;
       }
 
+      this.updateOrderData();
+    },
+    onStatus(data) {
       this.updateOrderData();
     }
   }

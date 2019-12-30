@@ -63,7 +63,6 @@ class OrderSerializer(serializers.ModelSerializer):
         
         if instance.operator_id is None and self.get_user().role == User.Role.Operator:
             instance.operator_id = self.get_user().id
-            instance.operator = self.get_user().username
         
         instance.save()
 

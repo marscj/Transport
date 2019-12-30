@@ -9,7 +9,7 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 };
 
-// Vue.use(Router)
+Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
@@ -31,7 +31,7 @@ router.afterEach(() => {
   }
 })
 
-let isAlreadyAddRouter = false
+var isAlreadyAddRouter = false
 
 router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
