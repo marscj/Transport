@@ -79,7 +79,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
         return super().update(instance, validated_data)       
 
-class UserDetailSerializer(serializers.ModelSerializer):
+class UserSimpleSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User

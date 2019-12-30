@@ -4,6 +4,8 @@ from django.db import transaction
 
 from .models import Order, OrderItinerary
 from app.user.models import User
+from app.user.serializers import UserSimpleSerializer
+from app.vehicle.serializers import VehicleSimpleSerializer
 
 class OrderItinerarySerializer(serializers.ModelSerializer):
 
@@ -12,6 +14,26 @@ class OrderItinerarySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
+
+    vehicle = VehicleSimpleSerializer(read_only=True)
+
+    vehicle_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
+
+    driver = UserSimpleSerializer(read_only=True)
+
+    driver_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
+
+    operator = UserSimpleSerializer(read_only=True)
+
+    operator_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
+
+    customer = UserSimpleSerializer(read_only=True)
+
+    customer_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
+
+    invoice = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    invoice_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
 
     order_itinerary = OrderItinerarySerializer(read_only=True, many=True)
     
