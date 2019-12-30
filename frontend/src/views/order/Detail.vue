@@ -70,10 +70,10 @@
     <div class="p-4">
       <div class="flex flex-wrap">
         <a-form-item label="VEHICLE" class="flex-1 mr-6">
-          <button @click="vehicle_table_show=!vehicle_table_show" class="bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.vehicle}} </button>
+          <button @click="vehicle_table_show=!vehicle_table_show" class="bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.vehicle ? form.vehicle : 'Choose Vehicle'}} </button>
         </a-form-item>
         <a-form-item label="DRIVER" class="flex-1 mx-6">
-          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver}} </button>
+          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver : 'Choose Driver'}} </button>
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
