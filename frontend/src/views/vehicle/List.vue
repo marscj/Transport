@@ -5,7 +5,7 @@
       @closeSidebar="toggleDataSidebar"
       :data="sidebarData"
     />
-    
+
     <div>
       <div class="flex flex-wrap pt-4">
         <div class="px-4">
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="px-4" action:add>
+    <div class="px-4" action:add v-if="!selectModel">
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
@@ -72,7 +72,7 @@
         <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
       </template>
 
-       <template slot="action" slot-scope="text, data">
+      <template slot="action" slot-scope="text, data">
         <feather-icon
           icon="TrashIcon"
           svgClasses="w-5 h-5 hover:text-danger stroke-current"
@@ -93,6 +93,12 @@ export default {
   components: {
     DataViewSidebar,
     STable
+  },
+  props: {
+    selectModel: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -137,14 +143,14 @@ export default {
           dataIndex: "supplier",
           scopedSlots: { customRender: "supplier" },
           align: "center",
-          sorter: true,
+          sorter: true
         },
         {
           title: "ACTIVE",
           dataIndex: "is_active",
           scopedSlots: { customRender: "active" },
           align: "center",
-          sorter: true,
+          sorter: true
         },
         {
           title: "ACTION",
@@ -176,9 +182,13 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      if (this.$auth("vehicle.change")) {
-        this.sidebarData = data;
-        this.toggleDataSidebar(true);
+      if (this.selectModel) {
+        this.$emit('vehicle', data)
+      } else {
+        if (this.$auth("vehicle.change")) {
+          this.sidebarData = data;
+          this.toggleDataSidebar(true);
+        }
       }
     },
     toggleDataSidebar(val = false) {

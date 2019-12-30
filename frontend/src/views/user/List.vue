@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="px-4" action:add>
+    <div class="px-4" action:add v-if="!selectModel">
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
@@ -89,6 +89,12 @@ export default {
     DataViewSidebar,
     STable
   },
+  props: {
+    selectModel: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       columns: [
@@ -97,35 +103,35 @@ export default {
           dataIndex: "username",
           scopedSlots: { customRender: "username" },
           align: "center",
-          sorter: true,
+          sorter: true
         },
         {
           title: "EMAIL",
           dataIndex: "email",
           scopedSlots: { customRender: "email" },
           align: "center",
-          sorter: true,
+          sorter: true
         },
         {
           title: "PHONE",
           dataIndex: "phone",
           scopedSlots: { customRender: "phone" },
           align: "center",
-          sorter: true,
+          sorter: true
         },
         {
           title: "COMPANY",
           dataIndex: "company",
           scopedSlots: { customRender: "company" },
           align: "center",
-          sorter: true,
+          sorter: true
         },
         {
           title: "Role",
           dataIndex: "role",
           scopedSlots: { customRender: "role" },
           align: "center",
-          sorter: true,
+          sorter: true
         },
         {
           title: "GROUP",
@@ -139,7 +145,7 @@ export default {
           scopedSlots: { customRender: "admin" },
           align: "center",
           width: 40,
-          sorter: true,
+          sorter: true
         },
         {
           title: "ACTIVE",
@@ -147,7 +153,7 @@ export default {
           scopedSlots: { customRender: "active" },
           align: "center",
           width: 40,
-          sorter: true,
+          sorter: true
         }
       ],
       addNewDataSidebar: false,
@@ -177,10 +183,14 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      if (this.$auth("user.change")) {
-        this.sidebarData = data;
-        this.toggleDataSidebar(true);
-      }
+      if (this.selectModel) {
+        this.$emit("driver", data);
+      } else {
+        if (this.$auth("user.change")) {
+          this.sidebarData = data;
+          this.toggleDataSidebar(true);
+        }
+      } 
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;

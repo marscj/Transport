@@ -40,7 +40,7 @@
       </table>
     </div>
 
-    <div class="p-4">
+    <div class="p-4" v-if="form.vehicle">
       <table class="table-fixed w-full">
         <thead>
           <tr>
@@ -59,7 +59,10 @@
           </tr>
         </tbody>
         <t-foot>
-          <button @click="itinerary_show=!itinerary_show" class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded">ADD ITINERARY</button>
+          <button
+            @click="itinerary_show=!itinerary_show"
+            class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded"
+          >ADD ITINERARY</button>
         </t-foot>
       </table>
     </div>
@@ -67,36 +70,18 @@
     <div class="p-4">
       <div class="flex flex-wrap">
         <a-form-item label="VEHICLE" class="flex-1 mr-6">
-          <a-select class="w-full">
-            <a-select-option
-              v-for="data in vehicleData"
-              :key="data.id"
-              :value="data"
-            >{{data.license_plate}}</a-select-option>
-          </a-select>
+          <a-input @click="vehicle_table_show=!vehicle_table_show" v-model="form.vehicle"></a-input>
         </a-form-item>
         <a-form-item label="DRIVER" class="flex-1 mx-6">
-          <a-select class="w-full">
-            <a-select-option
-              v-for="data in vehicleData"
-              :key="data.id"
-              :value="data"
-            >{{data.license_plate}}</a-select-option>
-          </a-select>
+          <a-input @click="driver_table_show=!driver_table_show" v-model="form.driver"></a-input>
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
-          <a-select class="w-full">
-            <a-select-option
-              v-for="data in vehicleData"
-              :key="data.id"
-              :value="data"
-            >{{data.license_plate}}</a-select-option>
-          </a-select>
+          <a-input v-model="form.driver_phone"></a-input>
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
-          <a-select class="w-full">
+          <a-select class="w-full" v-model="form.status">
             <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
           </a-select>
         </a-form-item>
@@ -104,29 +89,61 @@
     </div>
 
     <a-modal v-model="itinerary_show" title="Itinerary">
+      <validation-observer ref="observer" v-slot="{ validate, dirty }">
+        <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-form-item label="DATE" required>
+            <validation-provider name="date" rules="required" v-slot="{ errors }">
+              <a-date-picker v-model="itinerary.date"></a-date-picker>
+            </validation-provider>
+          </a-form-item>
+          <a-form-item label="TIME">
+            <validation-provider name="time" v-slot="{ errors }">
+              <a-time-picker v-model="itinerary.time"></a-time-picker>
+            </validation-provider>
+          </a-form-item>
+          <a-form-item label="ITINERARY">
+            <validation-provider name="itinerary_id" v-slot="{ errors }"></validation-provider>
+          </a-form-item>
+        </a-form>
+      </validation-observer>
+    </a-modal>
 
+    <a-modal v-model="vehicle_table_show" title="Vehicle" :width="1024">
+      <vehicle-table :selectModel="true" @vehicle="onHandleVehicle" />
+    </a-modal>
+
+    <a-modal v-model="driver_table_show" title="Driver" :width="1024">
+      <driver-table :selectModel="true" @driver="onHandleDriver" />
     </a-modal>
   </vs-card>
 </template>
 
 <script>
-import { getOrder, getOrderItinerary } from "@/http/requests/order";
+import { getOrder, updateOrder, getOrderItinerary } from "@/http/requests/order";
 import { getVehicle } from "@/http/requests/vehicle";
+import VehicleTable from "@/views/vehicle/List.vue";
+import DriverTable from "@/views/user/List.vue";
+
 const Status = ["New", "Confirm", "Pending", "Cancel", "Complete"];
 
 export default {
-  mounted() {
-    this.getOrderData(this.$route.params.id);
-    this.getVehicleData();
+  components: {
+    VehicleTable,
+    DriverTable
   },
   data() {
     return {
       Status,
-      vehicleData: [],
       form: {},
       itinerary: {},
       itinerary_show: false,
+      vehicle_table_show: false,
+      driver_table_show: false
     };
+  },
+  mounted() {
+    this.getOrderData(this.$route.params.id);
+    this.getVehicleData();
   },
   methods: {
     getOrderData(id) {
@@ -134,10 +151,19 @@ export default {
         this.form = res.result;
       });
     },
-    getVehicleData() {
-      getVehicle().then(res => {
-        this.vehicleData = res.result;
-      });
+    onHandleVehicle(data) {
+      this.vehicle_table_show = false;
+      this.form.vehicle = data.license_plate;
+      this.form.vehicle_id = data.id;
+      this.form.driver = data.driver ? data.driver.username : null;
+      this.form.driver_id = data.driver ? data.driver.id : null;
+      this.form.driver_phone = data.driver ? data.driver.phone : null;
+    },
+    onHandleDriver(data) {
+      this.driver_table_show = false;
+      this.form.driver = data.username;
+      this.form.driver_id = data.id;
+      this.form.driver_phone = data.phone;
     }
   }
 };
