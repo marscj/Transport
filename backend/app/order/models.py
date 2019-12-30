@@ -2,6 +2,8 @@ from django.db import models
 
 from app.vehicle.models import Vehicle, Itinerary
 from app.user.models import User
+from app.invoice.models import Invoice
+from app.vehicle.models import Vehicle
 
 class Order(models.Model):
     
@@ -36,25 +38,15 @@ class Order(models.Model):
 
     remark = models.TextField(blank=True, null=True)
 
-    vehicle_id = models.IntegerField(blank=True, null=True)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
-    vehicle = models.CharField(blank=True, null=True, max_length=64)
+    driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_driver', blank=True, null=True)
 
-    driver_id = models.IntegerField(blank=True, null=True)
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_customer', blank=True, null=True)
 
-    driver = models.CharField(blank=True, null=True, max_length=150)
+    operator = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_operator', blank=True, null=True)
 
-    driver_phone = models.CharField(blank=True, null=True, max_length=64)
-
-    customer_id = models.IntegerField(blank=True, null=True)
-
-    customer = models.CharField(blank=True, null=True, max_length=150)
-
-    operator_id = models.IntegerField(blank=True, null=True)
-
-    operator = models.CharField(blank=True, null=True, max_length=150)
-
-    invoice_id = models.IntegerField(blank=True, null=True)
+    invoice = models.ForeignKey(Invoice, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
     class Meta:
         db_table = 'order'
