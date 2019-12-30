@@ -99,15 +99,15 @@
       <template slot="price"></template>
 
       <template slot="vehicle" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text.license_plate}}</a>
+        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.license_plate}}</a>
       </template>
 
       <template slot="driver" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text.username}}</a>
+        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.username}}</a>
       </template>
 
       <template slot="driver_phone" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text.phone}}</a>
+        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.phone}}</a>
       </template>
 
       <template slot="status" slot-scope="text, data">
@@ -115,15 +115,15 @@
       </template>
 
       <template slot="customer" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text.username}}</a>
+        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.username}}</a>
       </template>
 
       <template slot="operator" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text.username}}</a>
+        <a :href="'/admin/orders/' + data.id" v-if="text">{{text.username}}</a>
       </template>
 
-      <template slot="invoice" slot-scope="data">
-        <a href="#" v-if="data">invoice</a>
+      <template slot="invoice" slot-scope="text">
+        <a href="#" v-if="text">invoice</a>
         <span v-else>unknow</span>
       </template>
     </s-table>

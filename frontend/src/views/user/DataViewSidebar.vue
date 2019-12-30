@@ -177,7 +177,7 @@ export default {
       if (this.isEdit) {
         delete this.form.groups;
         let formData = Object.assign(this.form, {
-          groups_id: this.groups.length ? this.groups.map(f => f.id) : null
+          groups_id: this.groups && this.groups.length ? this.groups.map(f => f.id) : null
         });
         createUser(formData)
           .then(() => {
@@ -185,6 +185,7 @@ export default {
           })
           .catch(error => {
             if (error.response) {
+              console.log(error.response)
               this.$refs.observer.setErrors(error.response.data.result);
             }
           });

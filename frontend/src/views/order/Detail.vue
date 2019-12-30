@@ -29,8 +29,8 @@
               <p>Itinerary:</p>
               <pre>{{form.itinerary}}</pre>
             </td>
-            <td class="border px-4 py-4 text-center">{{form.customer.username}}</td>
-            <td class="border px-4 py-4 text-center">{{form.operator.username}}</td>
+            <td class="border px-4 py-4 text-center">{{form.customer ? form.customer.username : ''}}</td>
+            <td class="border px-4 py-4 text-center">{{form.operator ? form.operator.username : ''}}</td>
             <td class="border px-4 py-4 text-center">
               <a href="#" v-if="data">invoice</a>
               <span v-else>unknow</span>
@@ -77,7 +77,7 @@
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
-          <a-input v-model="form.driver.phone" disabled></a-input>
+          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver.username : 'Choose Driver'}} </button>
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
@@ -168,11 +168,14 @@ export default {
     },
     onHandleVehicle(data) {
       this.vehicle_table_show = false;
+      this.form.vehicle = data;
       this.form.vehicle_id = data.id;
+      this.form.driver =  data.driver;
       this.form.driver_id = data.driver ? data.driver.id : null;
     },
     onHandleDriver(data) {
       this.driver_table_show = false;
+      this.form.driver =  data;
       this.form.driver_id = data.id;
     }
   }

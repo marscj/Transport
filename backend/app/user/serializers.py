@@ -58,14 +58,12 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     groups = GroupDetailSerializer(required=False, many=True)
 
-    groups_id = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, write_only=True, many=True, queryset=Group.objects.all())
-
-    vehicle = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, read_only=True)
+    # groups_id = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, write_only=True, many=True, queryset=Group.objects.all())
 
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'email', 'phone', 'company', 'is_superuser', 'is_active', 'groups', 'groups_id', 'role', 'vehicle'
+            'id', 'username', 'email', 'phone', 'company', 'is_superuser', 'is_active', 'groups', 'role'
         )
 
     def update(self, instance, validated_data):
