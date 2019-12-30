@@ -41,7 +41,7 @@
     </div>
 
     <div class="p-4">
-      <table class="table-auto w-full">
+      <table class="table-fixed w-full">
         <thead>
           <tr>
             <th class="text-center py-4">DATE</th>
@@ -59,7 +59,7 @@
           </tr>
         </tbody>
         <t-foot>
-          <a-button type="primary">ADD ITINERARY</a-button>
+          <button @click="itinerary_show=!itinerary_show" class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded">ADD ITINERARY</button>
         </t-foot>
       </table>
     </div>
@@ -102,6 +102,10 @@
         </a-form-item>
       </div>
     </div>
+
+    <a-modal v-model="itinerary_show" title="Itinerary">
+
+    </a-modal>
   </vs-card>
 </template>
 
@@ -117,23 +121,11 @@ export default {
   },
   data() {
     return {
-      columns: [
-        {
-          title: "ID",
-          dataIndex: "id"
-        }
-      ],
-      loadData: parameter => {
-        return getOrderItinerary(Object.assign(parameter, this.filter)).then(
-          res => {
-            console.log(res, "=--=");
-            return res.result;
-          }
-        );
-      },
       Status,
       vehicleData: [],
-      form: {}
+      form: {},
+      itinerary: {},
+      itinerary_show: false,
     };
   },
   methods: {
