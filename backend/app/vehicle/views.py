@@ -12,6 +12,15 @@ from .serializers import ItinerarySerializer, CategorySerializer, PriceSerialize
 class PriceFilter(django_filters.FilterSet):
     category = django_filters.NumberFilter('category__id')
 
+class VehicleFilter(django_filters.FilterSet):
+    license_plate = django_filters.CharFilter('license_plate')
+    model = django_filters.CharFilter('model')
+    setas = django_filters.NumberFilter('setas')
+    category = django_filters.CharFilter('category__name')
+    driver = django_filters.CharFilter('driver__username')
+    supplier = django_filters.CharFilter('supplier')
+    is_active = django_filters.BooleanFilter('is_active')
+
 class ItineraryView(ModelViewSet):
     serializer_class = ItinerarySerializer
     permission_classes = [DjangoModelPermissions]
@@ -34,6 +43,9 @@ class VehicleView(ModelViewSet):
     serializer_class = VehicleSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Vehicle.objects.all()
+
+    filterset_fields = ('license_plate', 'model', 'seats', 'category', 'driver', 'supplier', 'is_active')
+    filter_class = VehicleFilter
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticatedOrReadOnly])
     def seats(self, request):

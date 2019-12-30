@@ -4,28 +4,47 @@
       :isSidebarActive="addNewDataSidebar"
       @closeSidebar="toggleDataSidebar"
       :data="sidebarData"
+      :categoryData="categoryData"
     />
 
     <div>
       <div class="flex flex-wrap pt-4">
         <div class="px-4">
-          <a-form-item label="USERNAME">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          <a-form-item label="LICENSE PLATE">
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.license_plate"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
-          <a-form-item label="EMAIL">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          <a-form-item label="MODEL">
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.model"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
-          <a-form-item label="COMPANY">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+          <a-form-item label="SEATS">
+            <a-input-number class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.seats"></a-input-number>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item label="CATEGORY" >
+            <a-select v-model="queryParam.category" class="w-64">
+              <a-select-option v-for="data in categoryData" :key="data.id" :value="data.name">{{data.name}}</a-select-option>
+            </a-select>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item label="DRIVER">
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.driver"></a-input>
+          </a-form-item> 
+        </div>
+        <div class="px-4">
+          <a-form-item label="SUPPLIER">
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.supplier"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item>
             <button
+              @click="()=>$refs.table.refresh()"
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
             >Search</button>
           </a-form-item>
@@ -85,7 +104,7 @@
 </template>
 
 <script>
-import { getVehicle, deleteVehicle } from "@/http/requests/vehicle/index.js";
+import { getVehicle, deleteVehicle, getCategory } from "@/http/requests/vehicle/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 import STable from "@/components/s-table";
 
@@ -101,7 +120,9 @@ export default {
     },
     queryParam: {
       type: Object,
-      default: {}
+      default: () => {
+        return {}
+      }
     }
   },
   data() {
@@ -172,6 +193,7 @@ export default {
       }),
       addNewDataSidebar: false,
       sidebarData: {},
+      categoryData: [],
       loadData: parameter => {
         return getVehicle(Object.assign(parameter, this.queryParam)).then(res => {
           return res.result;
@@ -179,7 +201,15 @@ export default {
       }
     };
   },
+  mounted() {
+    this.getCategoryData()
+  },
   methods: {
+    getCategoryData() {
+      getCategory().then(res => {
+        this.categoryData = res.result
+      })
+    },
     addNewData() {
       this.sidebarData = {};
       this.toggleDataSidebar(true);

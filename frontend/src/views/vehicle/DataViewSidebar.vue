@@ -105,6 +105,10 @@ export default {
     data: {
       type: Object,
       default: () => {}
+    },
+    categoryData: {
+      type: Array,
+      default: () => []
     }
   },
   watch: {
@@ -147,7 +151,6 @@ export default {
       category: undefined,
       driver: undefined,
       driverData: [],
-      categoryData: [],
       settings: {
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
@@ -156,7 +159,6 @@ export default {
   },
   mounted() {
     this.getUserData();
-    this.getCategoryData();
   },
   methods: {
     submit() {
@@ -205,11 +207,6 @@ export default {
             return f
           }
         });
-      });
-    },
-    getCategoryData() {
-      getCategory().then(res => {
-        this.categoryData = res.result;
       });
     }
   }
