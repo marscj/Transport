@@ -1,3 +1,4 @@
+from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
@@ -38,8 +39,20 @@ class PriceView(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
     queryset = Price.objects.order_by('category', 'itinerary')
 
-    filterset_fields = ('category',)
+    filterset_fields = ('category')
     filter_class = PriceFilter
+
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticatedOrReadOnly])
+    def get_price(self, request):
+        category = request.GET['category']
+        itinerary = request.GET['itinerary']
+
+        try:
+            price = Price.objects.get(category__name=category, itinerary__id=itinerary)
+        except Price.DoesNotExist:
+            return Http404
+
+        return Response({'price': price.price})
 
 class VehicleView(ModelViewSet):
     serializer_class = VehicleSerializer

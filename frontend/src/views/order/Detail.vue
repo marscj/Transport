@@ -54,7 +54,7 @@
           <tr v-for="data in form.order_itinerary" :key="data.id">
             <td class="border px-4 py-4 text-center">{{data.date}}</td>
             <td class="border px-4 py-4 text-center">{{data.time}}</td>
-            <td class="border px-4 py-4 text-center">{{data.itinerary.name}}</td>
+            <td class="border px-4 py-4 text-center">{{data.itinerary}}</td>
             <td class="border px-4 py-4 text-center">{{data.price}}</td>
           </tr>
         </tbody>
@@ -70,10 +70,22 @@
     <div class="p-4">
       <div class="flex flex-wrap">
         <a-form-item label="VEHICLE" class="flex-1 mr-6">
-          <a-input v-model="vehicle" @click="vehicle_table_show=!vehicle_table_show" @change="onVehicleChange" readonly allowClear></a-input>
+          <a-input
+            v-model="vehicle"
+            @click="vehicle_table_show=!vehicle_table_show"
+            @change="onVehicleChange"
+            readonly
+            allowClear
+          ></a-input>
         </a-form-item>
         <a-form-item label="DRIVER" class="flex-1 mx-6">
-          <a-input v-model="driver" @click="driver_table_show=!driver_table_show" @change="onDriverChange" readonly allowClear></a-input>
+          <a-input
+            v-model="driver"
+            @click="driver_table_show=!driver_table_show"
+            @change="onDriverChange"
+            readonly
+            allowClear
+          ></a-input>
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
@@ -88,21 +100,38 @@
       </div>
     </div>
 
-    <a-modal v-model="itinerary_show" title="Itinerary">
-      <validation-observer ref="observer" v-slot="{ validate, dirty }">
+    <a-modal v-model="itinerary_show" title="Itinerary" :width="800" @ok="handleItinerary">
+      <validation-observer ref="observer_itinerary" v-slot="{ validate, dirty }">
         <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
           <a-form-item label="DATE" required>
             <validation-provider name="date" rules="required" v-slot="{ errors }">
-              <a-date-picker v-model="itinerary.date"></a-date-picker>
+              <a-date-picker v-model="itinerary.date" class="w-64"></a-date-picker>
+              <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
           <a-form-item label="TIME">
             <validation-provider name="time" v-slot="{ errors }">
-              <a-time-picker v-model="itinerary.time"></a-time-picker>
+              <a-time-picker v-model="itinerary.time" class="w-64"></a-time-picker>
+              <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
           <a-form-item label="ITINERARY">
-            <validation-provider name="itinerary_id" v-slot="{ errors }"></validation-provider>
+            <validation-provider name="itinerary_id" v-slot="{ errors }">
+              <a-select v-model="itinerary.itinerary" @change="onItineraryChange">
+                <a-select-option
+                  v-for="data in itineraryData"
+                  :key="data.id"
+                  :value="data"
+                >{{data.name}}</a-select-option>
+              </a-select>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+          <a-form-item label="PRICE">
+            <validation-provider name="price" v-slot="{ errors }">
+              <a-input v-model="itinerary.price" disabled addonAfter="AED"></a-input>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
         </a-form>
       </validation-observer>
@@ -115,7 +144,6 @@
     <a-modal v-model="driver_table_show" title="Driver" :width="1024">
       <driver-table :selectModel="true" @driver="onHandleDriver" />
     </a-modal>
-
   </vs-card>
 </template>
 
@@ -123,11 +151,14 @@
 import {
   getOrder,
   updateOrder,
-  getOrderItinerary
+  getOrderItinerary,
+  createOrderItinerary,
+  updateOrderItinerary
 } from "@/http/requests/order";
-import { getVehicle } from "@/http/requests/vehicle";
+import { getVehicle, getItinerary, getPriceExa } from "@/http/requests/vehicle";
 import VehicleTable from "@/views/vehicle/List.vue";
 import DriverTable from "@/views/user/List.vue";
+import moment from 'moment';
 
 const Status = ["New", "Confirm", "Pending", "Cancel", "Complete"];
 
@@ -140,10 +171,16 @@ export default {
     return {
       Status,
       form: {},
-      itinerary: {},
+      itinerary: {
+        date: undefined,
+        time: undefined,
+        itinerary: undefined,
+        price: undefined
+      },
       vehicle: "",
       driver: "",
       phone: "",
+      itineraryData: [],
       itinerary_show: false,
       vehicle_table_show: false,
       driver_table_show: false
@@ -151,33 +188,41 @@ export default {
   },
   mounted() {
     this.getOrderData();
+    this.getItineraryData();
   },
   methods: {
+    getItineraryData() {
+      getItinerary().then(res => {
+        this.itineraryData = res.result;
+      });
+    },
     getOrderData() {
       getOrder(this.$route.params.id).then(res => {
         this.form = res.result;
-        this.vehicle = this.form.vehicle ? this.form.vehicle.license_plate : null;
+        this.vehicle = this.form.vehicle
+          ? this.form.vehicle.license_plate
+          : null;
         this.driver = this.form.driver ? this.form.driver.username : null;
         this.phone = this.form.driver ? this.form.driver.phone : null;
       });
     },
     updateOrderData() {
-      console.log(this.form)
+      console.log(this.form);
       updateOrder(this.$route.params.id, this.form).then(res => {
         this.form = res.result;
       });
     },
-    onVehicleChange(event){
-      if(event.target.value === '') {
-        this.onHandleVehicle(null)
+    onVehicleChange(event) {
+      if (event.target.value === "") {
+        this.onHandleVehicle(null);
       }
     },
     onHandleVehicle(data) {
       this.vehicle_table_show = false;
-      if(data) {
+      if (data) {
         this.vehicle = data.license_plate;
-        this.driver = data.driver ? data.driver.username: null;
-        this.phone = data.driver ? data.driver.phone: null;
+        this.driver = data.driver ? data.driver.username : null;
+        this.phone = data.driver ? data.driver.phone : null;
 
         this.form.vehicle_id = data.id;
         this.form.driver_id = data.driver ? data.driver.id : null;
@@ -192,15 +237,15 @@ export default {
 
       this.updateOrderData();
     },
-    onDriverChange(event){
-      if(event.target.value === '') {
-        this.onHandleDriver(null)
+    onDriverChange(event) {
+      if (event.target.value === "") {
+        this.onHandleDriver(null);
       }
     },
     onHandleDriver(data) {
       this.driver_table_show = false;
-      
-      if(data) {
+
+      if (data) {
         this.driver = data.username;
         this.phone = data.phone;
 
@@ -208,7 +253,7 @@ export default {
       } else {
         this.driver = null;
         this.phone = null;
-        
+
         this.form.driver_id = null;
       }
 
@@ -216,6 +261,30 @@ export default {
     },
     onStatus(data) {
       this.updateOrderData();
+    },
+    onItineraryChange(data) {
+      getPriceExa({ category: this.form.category, itinerary: data.id }).then(
+        res => {
+          this.itinerary.price = res.result.price;
+        }
+      );
+    },
+    handleItinerary() {
+      let form = Object.assign(this.itinerary, { 
+        order_id: this.form.id,
+        itinerary_id: this.itinerary.id,
+        date: '2019-09-09',
+        time: '12:12:12'
+        // date: this.itinerary.date ? moment(this.itinerary.date).format('YYYY-MM-DD') : null,
+        // time: this.itinerary.date ? moment(this.itinerary.time).format('HH:mm:ss') : null,
+      });
+      createOrderItinerary(form).then(res => {
+        // this.getOrderData();
+      }).catch(error => {
+        if (error.response) {
+          this.$refs.observer_itinerary.setErrors(error.response.data.result);
+        }
+      });
     }
   }
 };

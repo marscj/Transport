@@ -44,6 +44,12 @@ export function getPrice(parameter) {
   })
 }
 
+export function getPriceExa(parameter) {
+  return axios.get("prices/get_price/", {
+    params: parameter
+  })
+}
+
 export function updatePrice(pk, data) {
   return axios.put("prices/" + `${pk}/`, data)
 }

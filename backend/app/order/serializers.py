@@ -5,9 +5,21 @@ from django.db import transaction
 from .models import Order, OrderItinerary
 from app.user.models import User
 from app.user.serializers import UserSimpleSerializer
-from app.vehicle.serializers import VehicleSimpleSerializer
+from app.vehicle.serializers import VehicleSimpleSerializer, ItinerarySerializer
 
 class OrderItinerarySerializer(serializers.ModelSerializer):
+
+    date = serializers.DateField(required=True, allow_null=False)
+
+    time = serializers.TimeField(required=False, allow_null=True)
+
+    price = serializers.DecimalField(required=True, allow_null=False, max_digits=8, decimal_places=2)
+
+    itinerary = ItinerarySerializer(read_only=True)
+
+    order_id = serializers.IntegerField(required=True, write_only=True, allow_null=False)
+
+    itinerary_id = serializers.IntegerField(required=True, write_only=True, allow_null=False)
 
     class Meta:
         model = OrderItinerary

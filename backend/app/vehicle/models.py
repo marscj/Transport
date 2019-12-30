@@ -4,14 +4,14 @@ from app.user.models import User
 
 class Itinerary(models.Model):
     
-    name = models.CharField(blank=True, null=True, max_length=128)
+    name = models.CharField(blank=True, null=True, unique=True, max_length=128)
 
     class Meta:
         db_table = 'itinerary'
 
 class Category(models.Model):
         
-    name = models.CharField(blank=True, null=True, max_length=64)
+    name = models.CharField(blank=True, null=True, unique=True, max_length=64)
 
     class Meta:
         db_table = 'category'

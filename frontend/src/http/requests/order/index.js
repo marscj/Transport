@@ -29,3 +29,11 @@ export function getOrderItinerary(parameter) {
     params: parameter
   })
 }
+
+export function updateOrderItinerary(pk, data) {
+  return axios.put("order_itinerary/" + `${pk}/`, data)
+}
+
+export function createOrderItinerary(data) {
+  return axios.post("order_itinerary/", data)
+}
