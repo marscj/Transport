@@ -178,7 +178,7 @@ export default {
   },
   methods: {
     addNewData() {
-      this.sidebarData = {};
+      this.sidebarData = Object.assign({});
       this.toggleDataSidebar(true);
     },
     editData(data) {

@@ -113,10 +113,8 @@ export default {
   watch: {
     isSidebarActive(val) {
       if (!val) return;
-      if (Object.entries(this.data).length) {
-        this.form = Object.assign({}, this.data);
-        this.groups = this.data.groups ? this.data.groups.slice() : [];
-      }
+      this.form = Object.assign({}, this.data);
+      this.groups = this.data.groups ? this.data.groups.slice() : [];
     }
   },
   computed: {
