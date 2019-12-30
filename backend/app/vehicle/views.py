@@ -15,7 +15,7 @@ class PriceFilter(django_filters.FilterSet):
 class VehicleFilter(django_filters.FilterSet):
     license_plate = django_filters.CharFilter('license_plate')
     model = django_filters.CharFilter('model')
-    setas = django_filters.NumberFilter('setas')
+    seats = django_filters.NumberFilter('seats',lookup_expr=('gte'),)
     category = django_filters.CharFilter('category__name')
     driver = django_filters.CharFilter('driver__username')
     supplier = django_filters.CharFilter('supplier')

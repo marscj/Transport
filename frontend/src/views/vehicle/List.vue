@@ -26,7 +26,7 @@
         </div>
         <div class="px-4">
           <a-form-item label="CATEGORY" >
-            <a-select v-model="queryParam.category" class="w-64">
+            <a-select v-model="queryParam.category" class="w-64" allowClear>
               <a-select-option v-for="data in categoryData" :key="data.id" :value="data.name">{{data.name}}</a-select-option>
             </a-select>
           </a-form-item>
@@ -39,6 +39,11 @@
         <div class="px-4">
           <a-form-item label="SUPPLIER">
             <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.supplier"></a-input>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item label="ACTIVE">
+            <vs-checkbox v-model="queryParam.is_active"></vs-checkbox >
           </a-form-item>
         </div>
         <div class="px-4">
@@ -121,7 +126,9 @@ export default {
     queryParam: {
       type: Object,
       default: () => {
-        return {}
+        return {
+          is_active: true
+        }
       }
     }
   },
