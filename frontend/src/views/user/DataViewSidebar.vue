@@ -32,49 +32,37 @@
 
           <validation-provider name="email" rules="email|required" v-slot="{ errors }">
             <a-form-item label="EMAIL" class="m-0">
-              <a-input
-                data-vv-validate-on="blur"
-                v-model="form.email"
-                class="w-full"
-              />
+              <a-input data-vv-validate-on="blur" v-model="form.email" class="w-full" />
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
           <validation-provider name="phone" v-slot="{ errors }">
             <a-form-item label="PHONE" class="m-0">
-              <a-input
-                data-vv-validate-on="blur"
-                v-model="form.phone"
-                class="w-full"
-              />
+              <a-input data-vv-validate-on="blur" v-model="form.phone" class="w-full" />
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
           <validation-provider name="company" v-slot="{ errors }">
             <a-form-item label="COMPANY" class="m-0">
-              <a-input
-                data-vv-validate-on="blur"
-                v-model="form.company"
-                class="w-full"
-              />
+              <a-input data-vv-validate-on="blur" v-model="form.company" class="w-full" />
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
           <validation-provider name="role" v-slot="{ errors }">
             <a-form-item label="ROLE" class="m-0">
-              <v-select v-model="form.role" :options="Role" ></v-select>
+              <v-select v-model="form.role" :options="Role"></v-select>
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
-          
+
           <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">Admin</vs-checkbox>
 
-          <validation-provider name="groups" rules v-slot="{ errors }">
+          <validation-provider name="groups_id" rules v-slot="{ errors }">
             <a-form-item label="Group">
               <v-select v-model="groups" :options="groupData" multiple label="name"></v-select>
             </a-form-item>
@@ -99,7 +87,7 @@
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import vSelect from "vue-select";
 
-const Role = ['Customer', 'Driver', 'Operator', 'Accounting']
+const Role = ["Customer", "Driver", "Operator", "Accounting"];
 
 import {
   updateUser,
@@ -159,7 +147,7 @@ export default {
         is_active: false,
         company: ""
       },
-      groups: undefined,
+      groups: [],
       groupData: [],
       settings: {
         maxScrollbarLength: 60,
@@ -176,24 +164,34 @@ export default {
     submit() {
       if (this.isEdit) {
         delete this.form.groups;
-        let formData = Object.assign(this.form, {
-          groups_id: this.groups && this.groups.length ? this.groups.map(f => f.id) : null
-        });
+        let formData = Object.assign(
+          this.form,
+          this.groups.length
+            ? {
+                groups_id: this.groups.map(f => f.id)
+              }
+            : {}
+        );
         createUser(formData)
           .then(() => {
             this.isSidebarActiveLocal = false;
           })
           .catch(error => {
             if (error.response) {
-              console.log(error.response)
+              console.log(error.response);
               this.$refs.observer.setErrors(error.response.data.result);
             }
           });
       } else {
         delete this.form.groups;
-        let formData = Object.assign(this.form, {
-          groups_id: this.groups ? this.groups.map(f => f.id) : null
-        });
+        let formData = Object.assign(
+          this.form,
+          this.groups.length
+            ? {
+                groups_id: this.groups.map(f => f.id)
+              }
+            : {}
+        );
         updateUser(this.form.id, formData)
           .then(() => {
             this.isSidebarActiveLocal = false;
