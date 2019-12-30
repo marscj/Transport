@@ -13,13 +13,14 @@ from .models import User
 
 class UserFilter(django_filters.FilterSet):
     role = django_filters.CharFilter('role')
+    vehicle = django_filters.BooleanFilter('vehicle', lookup_expr='isnull')
 
 class UserView(ModelViewSet):
     serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = User.objects.all()
 
-    filterset_fields = ('role',)
+    filterset_fields = ('role', 'vehicle')
     filter_class = UserFilter
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated, DjangoModelPermissions])

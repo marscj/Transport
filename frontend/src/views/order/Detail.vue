@@ -77,7 +77,7 @@
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
-          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver.username : 'Choose Driver'}} </button>
+          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver.phone || 'unkonw' : 'Choose Driver'}} </button>
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">

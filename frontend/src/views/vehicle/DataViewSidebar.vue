@@ -201,12 +201,9 @@ export default {
       }
     },
     getUserData() {
-      getUser({ role: 'Driver', vehicle: 'null' }).then(res => {
-        this.driverData = res.result.filter(f => {
-          if (f.vehicle == null){
-            return f
-          }
-        });
+      getUser({role: 'Driver', vehicle: true}).then(res => {
+        this.driverData = res.result;
+        console.log(this.driverData, res)
       });
     }
   }
