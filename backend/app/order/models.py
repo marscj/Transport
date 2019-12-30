@@ -36,7 +36,7 @@ class Order(models.Model):
 
     remark = models.TextField(blank=True, null=True)
 
-    vehicl_id = models.IntegerField(blank=True, null=True)
+    vehicle_id = models.IntegerField(blank=True, null=True)
 
     vehicle = models.CharField(blank=True, null=True, max_length=64)
 
@@ -53,8 +53,6 @@ class Order(models.Model):
     operator_id = models.IntegerField(blank=True, null=True)
 
     operator = models.CharField(blank=True, null=True, max_length=150)
-
-    customer = models.CharField(blank=True, null=True, max_length=150)
 
     invoice_id = models.IntegerField(blank=True, null=True)
 

@@ -70,14 +70,14 @@
     <div class="p-4">
       <div class="flex flex-wrap">
         <a-form-item label="VEHICLE" class="flex-1 mr-6">
-          <a-input @click="vehicle_table_show=!vehicle_table_show" v-model="form.vehicle"></a-input>
+          <button @click="vehicle_table_show=!vehicle_table_show" class="bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.vehicle}} </button>
         </a-form-item>
         <a-form-item label="DRIVER" class="flex-1 mx-6">
-          <a-input @click="driver_table_show=!driver_table_show" v-model="form.driver"></a-input>
+          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver}} </button>
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
-          <a-input v-model="form.driver_phone"></a-input>
+          <a-input v-model="form.driver_phone" ></a-input>
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
@@ -115,11 +115,22 @@
     <a-modal v-model="driver_table_show" title="Driver" :width="1024">
       <driver-table :selectModel="true" @driver="onHandleDriver" />
     </a-modal>
+
+    <div class="p-4">
+      <button
+        @click="updateOrderData"
+        class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded"
+      >Update</button>
+    </div>
   </vs-card>
 </template>
 
 <script>
-import { getOrder, updateOrder, getOrderItinerary } from "@/http/requests/order";
+import {
+  getOrder,
+  updateOrder,
+  getOrderItinerary
+} from "@/http/requests/order";
 import { getVehicle } from "@/http/requests/vehicle";
 import VehicleTable from "@/views/vehicle/List.vue";
 import DriverTable from "@/views/user/List.vue";
@@ -142,12 +153,16 @@ export default {
     };
   },
   mounted() {
-    this.getOrderData(this.$route.params.id);
-    this.getVehicleData();
+    this.getOrderData();
   },
   methods: {
-    getOrderData(id) {
-      getOrder(id).then(res => {
+    getOrderData() {
+      getOrder(this.$route.params.id).then(res => {
+        this.form = res.result;
+      });
+    },
+    updateOrderData(id) {
+      updateOrder(this.$route.params.id, this.form).then(res => {
         this.form = res.result;
       });
     },
