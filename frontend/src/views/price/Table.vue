@@ -82,7 +82,6 @@ export default {
       ],
       addNewDataSidebar: false,
       sidebarData: {},
-      selected: [],
       loadData: parameter => {
         return getPrice(Object.assign(parameter, { category: this.category })).then(res => {
           return res.result;

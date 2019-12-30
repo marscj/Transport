@@ -98,6 +98,10 @@ export default {
     selectModel: {
       type: Boolean,
       default: false
+    },
+    queryParam: {
+      type: Object,
+      default: {}
     }
   },
   data() {
@@ -168,9 +172,8 @@ export default {
       }),
       addNewDataSidebar: false,
       sidebarData: {},
-      selected: [],
       loadData: parameter => {
-        return getVehicle(Object.assign(parameter, {})).then(res => {
+        return getVehicle(Object.assign(parameter, this.queryParam)).then(res => {
           return res.result;
         });
       }

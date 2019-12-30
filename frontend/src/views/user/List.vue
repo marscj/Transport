@@ -158,7 +158,6 @@ export default {
       ],
       addNewDataSidebar: false,
       sidebarData: {},
-      selected: [],
       loadData: parameter => {
         return getUser(Object.assign(parameter, {})).then(res => {
           return res.result;

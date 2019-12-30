@@ -67,7 +67,6 @@ export default {
       }),
       addNewDataSidebar: false,
       sidebarData: {},
-      selected: [],
       loadData: parameter => {
         return getCategory(Object.assign(parameter, {})).then(res => {
           return res.result;

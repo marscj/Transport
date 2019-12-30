@@ -71,7 +71,6 @@ export default {
       }),
       addNewDataSidebar: false,
       sidebarData: {},
-      selected: [],
       loadData: parameter => {
         return getItinerary(Object.assign(parameter, {})).then(res => {
           return res.result;
