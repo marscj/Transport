@@ -29,8 +29,8 @@
               <p>Itinerary:</p>
               <pre>{{form.itinerary}}</pre>
             </td>
-            <td class="border px-4 py-4 text-center">{{form.customer}}</td>
-            <td class="border px-4 py-4 text-center">{{form.operator}}</td>
+            <td class="border px-4 py-4 text-center">{{form.customer.username}}</td>
+            <td class="border px-4 py-4 text-center">{{form.operator.username}}</td>
             <td class="border px-4 py-4 text-center">
               <a href="#" v-if="data">invoice</a>
               <span v-else>unknow</span>
@@ -70,14 +70,14 @@
     <div class="p-4">
       <div class="flex flex-wrap">
         <a-form-item label="VEHICLE" class="flex-1 mr-6">
-          <button @click="vehicle_table_show=!vehicle_table_show" class="bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.vehicle ? form.vehicle : 'Choose Vehicle'}} </button>
+          <button @click="vehicle_table_show=!vehicle_table_show" class="bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.vehicle ? form.vehicle.license_plate : 'Choose Vehicle'}} </button>
         </a-form-item>
         <a-form-item label="DRIVER" class="flex-1 mx-6">
-          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver : 'Choose Driver'}} </button>
+          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver.username : 'Choose Driver'}} </button>
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
-          <a-input v-model="form.driver_phone" ></a-input>
+          <a-input v-model="form.driver.phone" disabled></a-input>
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
@@ -168,17 +168,12 @@ export default {
     },
     onHandleVehicle(data) {
       this.vehicle_table_show = false;
-      this.form.vehicle = data.license_plate;
       this.form.vehicle_id = data.id;
-      this.form.driver = data.driver ? data.driver.username : null;
       this.form.driver_id = data.driver ? data.driver.id : null;
-      this.form.driver_phone = data.driver ? data.driver.phone : null;
     },
     onHandleDriver(data) {
       this.driver_table_show = false;
-      this.form.driver = data.username;
       this.form.driver_id = data.id;
-      this.form.driver_phone = data.phone;
     }
   }
 };

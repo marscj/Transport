@@ -99,15 +99,15 @@
       <template slot="price"></template>
 
       <template slot="vehicle" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
+        <a :href="'/admin/orders/' + data.id" >{{text.license_plate}}</a>
       </template>
 
       <template slot="driver" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
+        <a :href="'/admin/orders/' + data.id" >{{text.username}}</a>
       </template>
 
       <template slot="driver_phone" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
+        <a :href="'/admin/orders/' + data.id" >{{text.phone}}</a>
       </template>
 
       <template slot="status" slot-scope="text, data">
@@ -115,11 +115,11 @@
       </template>
 
       <template slot="customer" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
+        <a :href="'/admin/orders/' + data.id" >{{text.username}}</a>
       </template>
 
       <template slot="operator" slot-scope="text, data">
-        <a :href="'/admin/orders/' + data.id" >{{text}}</a>
+        <a :href="'/admin/orders/' + data.id" >{{text.username}}</a>
       </template>
 
       <template slot="invoice" slot-scope="data">
@@ -217,7 +217,7 @@ export default {
         },
         {
           title: "Phone",
-          dataIndex: "driver_phone",
+          dataIndex: "driver",
           scopedSlots: { customRender: "driver_phone" },
           align: "center",
           width: 100,
@@ -258,7 +258,6 @@ export default {
       ],
       loadData: parameter => {
         return getOrders(Object.assign(parameter, this.filter)).then(res => {
-          console.log(res, "=--=");
           return res.result;
         });
       }
