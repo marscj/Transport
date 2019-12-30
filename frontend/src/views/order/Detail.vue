@@ -70,14 +70,14 @@
     <div class="p-4">
       <div class="flex flex-wrap">
         <a-form-item label="VEHICLE" class="flex-1 mr-6">
-          <button @click="vehicle_table_show=!vehicle_table_show" class="bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.vehicle ? form.vehicle.license_plate : 'Choose Vehicle'}} </button>
+          <a-input v-model="vehicle" @click="vehicle_table_show=!vehicle_table_show" @change="onVehicleChange" readonly allowClear></a-input>
         </a-form-item>
         <a-form-item label="DRIVER" class="flex-1 mx-6">
-          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver.username : 'Choose Driver'}} </button>
+          <a-input v-model="driver" @click="driver_table_show=!driver_table_show" @change="onDriverChange" readonly allowClear></a-input>
         </a-form-item>
 
         <a-form-item label="PHONE" class="flex-1 mx-6">
-          <button @click="driver_table_show=!driver_table_show" class="text-center bg-transparent hover:bg-teal-500 text-teal-700 font-semibold hover:text-white border border-teal-500 hover:border-transparent rounded px-4 w-full"> {{form.driver ? form.driver.phone || 'unkonw' : 'Choose Driver'}} </button>
+          <a-input v-model="phone" disabled></a-input>
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
@@ -116,12 +116,6 @@
       <driver-table :selectModel="true" @driver="onHandleDriver" />
     </a-modal>
 
-    <div class="p-4">
-      <button
-        @click="updateOrderData"
-        class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded"
-      >Update</button>
-    </div>
   </vs-card>
 </template>
 
@@ -147,6 +141,9 @@ export default {
       Status,
       form: {},
       itinerary: {},
+      vehicle: "",
+      driver: "",
+      phone: "",
       itinerary_show: false,
       vehicle_table_show: false,
       driver_table_show: false
@@ -159,24 +156,64 @@ export default {
     getOrderData() {
       getOrder(this.$route.params.id).then(res => {
         this.form = res.result;
+        this.vehicle = this.form.vehicle ? this.form.vehicle.license_plate : null;
+        this.driver = this.form.driver ? this.form.driver.username : null;
+        this.phone = this.form.driver ? this.form.driver.phone : null;
       });
     },
-    updateOrderData(id) {
+    updateOrderData() {
+      console.log(this.form)
       updateOrder(this.$route.params.id, this.form).then(res => {
         this.form = res.result;
       });
     },
+    onVehicleChange(event){
+      if(event.target.value === '') {
+        this.onHandleVehicle(null)
+      }
+    },
     onHandleVehicle(data) {
       this.vehicle_table_show = false;
-      this.form.vehicle = data;
-      this.form.vehicle_id = data.id;
-      this.form.driver =  data.driver;
-      this.form.driver_id = data.driver ? data.driver.id : null;
+      if(data) {
+        this.vehicle = data.license_plate;
+        this.driver = data.driver ? data.driver.username: null;
+        this.phone = data.driver ? data.driver.phone: null;
+
+        this.form.vehicle_id = data.id;
+        this.form.driver_id = data.driver ? data.driver.id : null;
+      } else {
+        this.vehicle = null;
+        this.driver = null;
+        this.phone = null;
+
+        this.form.vehicle_id = null;
+        this.form.driver_id = null;
+      }
+
+      this.updateOrderData();
+    },
+    onDriverChange(event){
+      if(event.target.value === '') {
+        this.onHandleDriver(null)
+      }
     },
     onHandleDriver(data) {
       this.driver_table_show = false;
-      this.form.driver =  data;
-      this.form.driver_id = data.id;
+      
+      if(data) {
+        this.driver = data.username;
+        this.phone = data.phone;
+
+        this.form.driver_id = data.id;
+      } else {
+        this.driver = null;
+        this.phone = null;
+        
+        this.form.vehicle_id = null;
+        this.form.driver_id = null;
+      }
+
+      this.updateOrderData();
     }
   }
 };
