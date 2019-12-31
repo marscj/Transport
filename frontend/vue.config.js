@@ -10,7 +10,7 @@ module.exports = {
       }
     },
     externals: {
-      // 'vue': 'Vue',
+      'vue': 'Vue',
       'vue-router': 'VueRouter',
       'vuex': 'Vuex',
       'axios': 'axios',
