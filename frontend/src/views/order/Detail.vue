@@ -133,6 +133,12 @@
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
+          <a-form-item label="PRICE">
+            <validation-provider name="price" v-slot="{ errors }">
+              <a-input v-model="itinerary.price" :disabled="$auth('order_itinerary.edit_payment')" addonAfter="AED"></a-input>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
         </a-form>
       </validation-observer>
     </a-modal>

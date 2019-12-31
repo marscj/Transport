@@ -27,7 +27,7 @@ const action = Vue.directive('action', {
     }
     groups.reduce((f1, f2) => f1.concat(f2.permissions), []).forEach(f => {
       if (permissionId.includes(f.content_type.model)) {
-        if(!f.codename.includes(actionName + '_')) {
+        if(!f.codename === actionName) {
           el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
         }
       }

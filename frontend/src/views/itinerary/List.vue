@@ -6,7 +6,7 @@
       :data="sidebarData"
     />
 
-    <div class="p-4" action:add>
+    <div class="p-4" action:add_itinerary>
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
@@ -62,7 +62,7 @@ export default {
         }
       ].filter(f => {
         if (f.title == "ACTION") {
-          if (this.$auth("itinerary.delete")) {
+          if (this.$auth("itinerary.delete_itinerary")) {
             return f;
           }
         } else {
@@ -84,7 +84,7 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      if (this.$auth("itinerary.change")) {
+      if (this.$auth("itinerary.change_itinerary")) {
         this.sidebarData = data;
         this.toggleDataSidebar(true);
       }

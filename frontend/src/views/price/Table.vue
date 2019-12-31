@@ -7,7 +7,7 @@
       v-if="showSidebar"
     />
 
-    <div class="p-4" action:add>
+    <div class="p-4" action:add_price>
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
@@ -95,7 +95,7 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      if(this.$auth('price.change')) {
+      if(this.$auth('price.change_price')) {
         this.sidebarData = data;
         this.toggleDataSidebar(true);
       }

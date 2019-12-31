@@ -6,7 +6,7 @@
       :data="sidebarData"
     />
 
-    <div class="p-4" action:add>
+    <div class="p-4" action:add_group>
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 

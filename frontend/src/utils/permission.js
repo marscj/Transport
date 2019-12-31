@@ -17,7 +17,7 @@ function plugin (Vue) {
           }
 
           return groups.reduce((f1, f2) => f1.concat(f2.permissions), []).find(f => {
-            return f.content_type.model == model && f.codename.includes(action + '_');
+            return f.content_type.model === model && f.codename === action;
           });
         }
       }

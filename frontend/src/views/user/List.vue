@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="px-4" action:add v-if="!selectModel">
+    <div class="px-4" action:add_user v-if="!selectModel">
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
@@ -185,7 +185,7 @@ export default {
       if (this.selectModel) {
         this.$emit("driver", data);
       } else {
-        if (this.$auth("user.change")) {
+        if (this.$auth("user.change_user")) {
           this.sidebarData = data;
           this.toggleDataSidebar(true);
         }

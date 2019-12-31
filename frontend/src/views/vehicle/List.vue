@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="px-4" action:add v-if="!selectModel">
+    <div class="px-4" action:add_vehicle v-if="!selectModel">
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
@@ -193,7 +193,7 @@ export default {
         }
       ].filter(f => {
         if (f.title == "ACTION") {
-          if (this.$auth("itinerary.delete")) {
+          if (this.$auth("itinerary.delete_itinerary")) {
             return f;
           }
         } else {
@@ -227,7 +227,7 @@ export default {
       if (this.selectModel) {
         this.$emit('vehicle', data)
       } else {
-        if (this.$auth("vehicle.change")) {
+        if (this.$auth("vehicle.change_vehicle")) {
           this.sidebarData = data;
           this.toggleDataSidebar(true);
         }
