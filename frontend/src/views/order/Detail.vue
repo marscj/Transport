@@ -4,15 +4,15 @@
       <table class="table-auto w-full">
         <thead>
           <tr>
-            <th class="text-center py-4">ORDERID</th>
-            <th class="text-center py-4">RELATEDID</th>
-            <th class="text-center py-4">CREATE DATE</th>
-            <th class="text-center py-4">START DATE</th>
-            <th class="text-center py-4">END DATE</th>
+            <th class="w-40 text-center py-4">ORDERID</th>
+            <th class="w-40 text-center py-4">RELATEDID</th>
+            <th class="w-40 text-center py-4">CREATE DATE</th>
+            <th class="w-40 text-center py-4">START DATE</th>
+            <th class="w-40 text-center py-4">END DATE</th>
             <th class="text-center py-4">ITINERARY</th>
-            <th class="text-center py-4">CUSTOMER</th>
-            <th class="text-center py-4">OPERATOR</th>
-            <th class="text-center py-4">INVOICE</th>
+            <th class="w-40 text-center py-4">CUSTOMER</th>
+            <th class="w-40 text-center py-4">OPERATOR</th>
+            <th class="w-40 text-center py-4">INVOICE</th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +48,7 @@
             <th class="w-40 text-center py-4">TIME</th>
             <th class="text-center py-4">ITINERARY</th>
             <th class="w-40 text-center py-4">PRICE</th>
+            <th class="w-40 text-center py-4">PAYMENT</th>
           </tr>
         </thead>
         <tbody>
@@ -56,6 +57,7 @@
             <td class="border px-4 py-4 text-center">{{data.time}}</td>
             <td class="border px-4 py-4 text-center">{{data.itinerary ? data.itinerary.name : ''}}</td>
             <td class="border px-4 py-4 text-center">{{data.price}}</td>
+            <td class="border px-4 py-4 text-center">{{data.payment}}</td>
           </tr>
         </tbody>
         <t-foot >
@@ -133,9 +135,9 @@
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
-          <a-form-item label="PRICE">
+          <a-form-item label="PAYMENT">
             <validation-provider name="price" v-slot="{ errors }">
-              <a-input v-model="itinerary.price" :disabled="$auth('order_itinerary.edit_payment')" addonAfter="AED"></a-input>
+              <a-input v-model="itinerary.payment" :disabled="$auth('order_itinerary.edit_payment123')" addonAfter="AED"></a-input>
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
