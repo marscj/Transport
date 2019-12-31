@@ -113,11 +113,6 @@ export const asyncRouterMap = [{
         name: 'order_detail',
         component: () => import('@/views/order/Detail.vue'),
         meta: {
-          name: 'OrderDetail',
-          url: '/admin/orders/:id',
-          slug: 'order_detail',
-          i18n: 'OrderDetail',
-          icon: 'FileTextIcon',
           isDisabled: true,
         }
       }

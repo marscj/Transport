@@ -44,10 +44,10 @@
       <table class="table-fixed w-full">
         <thead>
           <tr>
-            <th class="text-center py-4">DATE</th>
-            <th class="text-center py-4">TIME</th>
+            <th class="w-40 text-center py-4">DATE</th>
+            <th class="w-40 text-center py-4">TIME</th>
             <th class="text-center py-4">ITINERARY</th>
-            <th class="text-center py-4">PRICE</th>
+            <th class="w-40 text-center py-4">PRICE</th>
           </tr>
         </thead>
         <tbody>
