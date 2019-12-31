@@ -17,7 +17,7 @@ class VehicleFilter(django_filters.FilterSet):
     license_plate = django_filters.CharFilter('license_plate')
     model = django_filters.CharFilter('model')
     seats = django_filters.NumberFilter('seats',lookup_expr=('gte'),)
-    category = django_filters.CharFilter('category__name')
+    category = django_filters.CharFilter('category__id')
     driver = django_filters.CharFilter('driver__username')
     supplier = django_filters.CharFilter('supplier')
     is_active = django_filters.BooleanFilter('is_active')

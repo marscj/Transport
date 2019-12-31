@@ -27,7 +27,7 @@
         <div class="px-4">
           <a-form-item label="CATEGORY" >
             <a-select v-model="queryParam.category" class="w-64" allowClear>
-              <a-select-option v-for="data in categoryData" :key="data.id" :value="data.name">{{data.name}}</a-select-option>
+              <a-select-option v-for="data in categoryData" :key="data.id" :value="data.id">{{data.name}}</a-select-option>
             </a-select>
           </a-form-item>
         </div>
