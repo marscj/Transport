@@ -37,3 +37,7 @@ export function updateOrderItinerary(pk, data) {
 export function createOrderItinerary(data) {
   return axios.post("order_itinerary/", data)
 }
+
+export function deleteOrderItinerary(pk) {
+  return axios.delete("order_itinerary/" + `${pk}/`)
+}

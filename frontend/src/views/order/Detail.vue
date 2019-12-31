@@ -1,37 +1,37 @@
 <template>
   <vs-card>
-    <div class="p-4">
+    <div class="p-4 border border-gray-300">
       <table class="table-auto w-full">
         <thead>
           <tr>
-            <th class="w-40 text-center py-4">ORDERID</th>
-            <th class="w-40 text-center py-4">RELATEDID</th>
-            <th class="w-40 text-center py-4">CREATE DATE</th>
-            <th class="w-40 text-center py-4">START DATE</th>
-            <th class="w-40 text-center py-4">END DATE</th>
-            <th class="text-center py-4">ITINERARY</th>
-            <th class="w-40 text-center py-4">CUSTOMER</th>
-            <th class="w-40 text-center py-4">OPERATOR</th>
-            <th class="w-40 text-center py-4">INVOICE</th>
+            <th class="w-40 text-center py-3">ORDERID</th>
+            <th class="w-40 text-center py-3">RELATEDID</th>
+            <th class="w-40 text-center py-3">CREATE DATE</th>
+            <th class="w-40 text-center py-3">START DATE</th>
+            <th class="w-40 text-center py-3">END DATE</th>
+            <th class="text-center py-3">ITINERARY</th>
+            <th class="w-40 text-center py-3">CUSTOMER</th>
+            <th class="w-40 text-center py-3">OPERATOR</th>
+            <th class="w-40 text-center py-3">INVOICE</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="border px-4 py-4 text-center">{{form.orderId}}</td>
-            <td class="border px-4 py-4 text-center">{{form.relatedId}}</td>
-            <td class="border px-4 py-4 text-center">{{form.create_at | moment('YYYY-MM-DD')}}</td>
-            <td class="border px-4 py-4 text-center">{{form.start_date}}</td>
-            <td class="border px-4 py-4 text-center">{{form.end_date}}</td>
-            <td class="border px-4 py-4">
+            <td class="border px-4 py-3 text-center">{{form.orderId}}</td>
+            <td class="border px-4 py-3 text-center">{{form.relatedId}}</td>
+            <td class="border px-4 py-3 text-center">{{form.create_at | moment('YYYY-MM-DD')}}</td>
+            <td class="border px-4 py-3 text-center">{{form.start_date}}</td>
+            <td class="border px-4 py-3 text-center">{{form.end_date}}</td>
+            <td class="border px-4 py-3">
               <p>Category: {{form.category}}</p>
               <p>Seats: {{form.seats}}</p>
               <p>Passengers: {{form.passenger}}</p>
               <p>Itinerary:</p>
               <pre>{{form.itinerary}}</pre>
             </td>
-            <td class="border px-4 py-4 text-center">{{form.customer ? form.customer.username : ''}}</td>
-            <td class="border px-4 py-4 text-center">{{form.operator ? form.operator.username : ''}}</td>
-            <td class="border px-4 py-4 text-center">
+            <td class="border px-4 py-3 text-center">{{form.customer ? form.customer.username : ''}}</td>
+            <td class="border px-4 py-3 text-center">{{form.operator ? form.operator.username : ''}}</td>
+            <td class="border px-4 py-3 text-center">
               <a href="#" v-if="data">invoice</a>
               <span v-else>unknow</span>
             </td>
@@ -40,27 +40,46 @@
       </table>
     </div>
 
-    <div class="p-4">
+    <div class="p-4 mt-4 border border-gray-300">
       <table class="table-fixed w-full">
         <thead>
           <tr>
-            <th class="w-40 text-center py-4">DATE</th>
-            <th class="w-40 text-center py-4">TIME</th>
-            <th class="text-center py-4">ITINERARY</th>
-            <th class="w-40 text-center py-4">PRICE</th>
-            <th class="w-40 text-center py-4">PAYMENT</th>
+            <th class="w-40 text-center py-3">DATE</th>
+            <th class="w-40 text-center py-3">TIME</th>
+            <th class="text-center py-3">ITINERARY</th>
+            <th class="w-40 text-center py-3">PRICE</th>
+            <th class="w-40 text-center py-3">PAYMENT</th>
+            <th class="w-40 text-center py-3" v-if="$auth('orderitinerary.delete_orderitinerary')">ACTION</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="data in form.order_itinerary" :key="data.id">
-            <td class="border px-4 py-4 text-center">{{data.date}}</td>
-            <td class="border px-4 py-4 text-center">{{data.time}}</td>
-            <td class="border px-4 py-4 text-center">{{data.itinerary ? data.itinerary.name : ''}}</td>
-            <td class="border px-4 py-4 text-center">{{data.price}}</td>
-            <td class="border px-4 py-4 text-center">{{data.payment}}</td>
+            <td class="border px-4 py-3 text-center">
+              <a>{{data.date}}</a>
+            </td>
+            <td class="border px-4 py-3 text-center">
+              <a>{{data.time}}</a>
+            </td>
+            <td class="border px-4 py-3 text-center">
+              <a>{{data.itinerary ? data.itinerary.name : ''}}</a>
+            </td>
+            <td class="border px-4 py-3 text-center">
+              <a>{{data.price}}</a>
+            </td>
+            <td class="border px-4 py-3 text-center">
+              <a>{{data.payment}}</a>
+            </td>
+            <td class="border px-4 py-3 text-center" v-if="$auth('orderitinerary.delete_orderitinerary')">
+              <feather-icon
+                icon="TrashIcon"
+                svgClasses="w-5 h-5 hover:text-danger stroke-current"
+                class="ml-2"
+                @click.stop="openConfirm(data.id)"
+              />
+            </td>
           </tr>
         </tbody>
-        <t-foot >
+        <t-foot>
           <button
             @click="itinerary_show=!itinerary_show"
             class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded mt-4"
@@ -117,9 +136,9 @@
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
-          <a-form-item label="ITINERARY">
+          <a-form-item label="ITINERARY" required>
             <validation-provider name="itinerary_id" v-slot="{ errors }">
-              <a-select v-model="itinerary.itinerary" @change="onItineraryChange" >
+              <a-select v-model="itinerary.itinerary" @change="onItineraryChange">
                 <a-select-option
                   v-for="data in itineraryData"
                   :key="data.id"
@@ -129,15 +148,19 @@
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
-          <a-form-item label="PRICE">
+          <a-form-item label="PRICE" required>
             <validation-provider name="price" v-slot="{ errors }">
               <a-input v-model="itinerary.price" disabled addonAfter="AED"></a-input>
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
-          <a-form-item label="PAYMENT">
+          <a-form-item label="PAYMENT" required>
             <validation-provider name="payment" v-slot="{ errors }">
-              <a-input v-model="itinerary.payment" :disabled="!$auth('orderitinerary.edit_payment')" addonAfter="AED"></a-input>
+              <a-input
+                v-model="itinerary.payment"
+                :disabled="!$auth('orderitinerary.edit_payment')"
+                addonAfter="AED"
+              ></a-input>
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
@@ -161,12 +184,13 @@ import {
   updateOrder,
   getOrderItinerary,
   createOrderItinerary,
-  updateOrderItinerary
+  updateOrderItinerary,
+  deleteOrderItinerary
 } from "@/http/requests/order";
 import { getVehicle, getItinerary, getPriceExa } from "@/http/requests/vehicle";
 import VehicleTable from "@/views/vehicle/List.vue";
 import DriverTable from "@/views/user/List.vue";
-import moment from 'moment';
+import moment from "moment";
 
 const Status = ["New", "Confirm", "Pending", "Cancel", "Complete"];
 
@@ -280,20 +304,42 @@ export default {
     handleItinerary() {
       let form = {
         order_id: this.form.id,
-        itinerary_id: this.itinerary.itinerary ? this.itinerary.itinerary : null,
-        date: this.itinerary.date ? moment(this.itinerary.date).format('YYYY-MM-DD') : null,
-        time: this.itinerary.time ? moment(this.itinerary.time).format('HH:mm:ss') : null,
+        itinerary_id: this.itinerary.itinerary
+          ? this.itinerary.itinerary
+          : null,
+        date: this.itinerary.date
+          ? moment(this.itinerary.date).format("YYYY-MM-DD")
+          : null,
+        time: this.itinerary.time
+          ? moment(this.itinerary.time).format("HH:mm:ss")
+          : null,
         price: this.itinerary.price,
         payment: this.itinerary.payment
-      }
-      createOrderItinerary(form).then(res => {
-        this.getOrderData().then(() => {
-          this.itinerary_show = false;
+      };
+      createOrderItinerary(form)
+        .then(res => {
+          this.getOrderData().then(() => {
+            this.itinerary_show = false;
+          });
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer_itinerary.setErrors(error.response.data.result);
+          }
         });
-      }).catch(error => {
-        if (error.response) {
-          this.$refs.observer_itinerary.setErrors(error.response.data.result);
-        }
+    },
+    deleteData(id) {
+      deleteOrderItinerary(id).then(() => {
+        this.getOrderData();
+      });
+    },
+    openConfirm(id) {
+      this.$vs.dialog({
+        type: "confirm",
+        color: "danger",
+        title: `Confirm`,
+        text: "Are you sure delete?",
+        accept: () => this.deleteData(id)
       });
     }
   }
