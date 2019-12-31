@@ -122,8 +122,13 @@
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
-          <a-select class="w-full" v-model="form.status" @change="onStatus" >
-            <a-select-option v-for="data in Status" :key="data" :value="data" :disabled="!$auth('orderitinerary.change_status') && data !== 'Confirm'">{{data}}</a-select-option>
+          <a-select class="w-full" v-model="form.status" @change="onStatus">
+            <a-select-option
+              v-for="data in Status"
+              :key="data"
+              :value="data"
+              :disabled="!$auth('orderitinerary.change_status') && data !== 'Confirm'"
+            >{{data}}</a-select-option>
           </a-select>
         </a-form-item>
       </div>
@@ -182,17 +187,32 @@
     </a-modal>
 
     <a-modal v-model="vehicle_table_show" title="Vehicle" :width="1024">
-      <vehicle-table ref="vehicle" :selectModel="true" @vehicle="onHandleVehicle" :queryParam="{
+      <vehicle-table
+        ref="vehicle"
+        :selectModel="true"
+        @vehicle="onHandleVehicle"
+        :queryParam="{
         is_active: true,
         start_0: this.form.start_date,
         start_1: this.form.end_date,
         end_0: this.form.start_date,
         end_1: this.form.end_date,
-      }"/>
+      }"
+      />
     </a-modal>
 
     <a-modal v-model="driver_table_show" title="Driver" :width="1024">
-      <driver-table :selectModel="true" @driver="onHandleDriver" />
+      <driver-table
+        :selectModel="true"
+        @driver="onHandleDriver"
+        :queryParam="{
+        role: 'Driver',
+        start_0: this.form.start_date,
+        start_1: this.form.end_date,
+        end_0: this.form.start_date,
+        end_1: this.form.end_date,
+      }"
+      />
     </a-modal>
   </vs-card>
 </template>
@@ -327,7 +347,7 @@ export default {
           type: "confirm",
           color: "danger",
           title: `Confirm`,
-          text: "Only new orders can be edit or create",
+          text: "Only new orders can be edit or create"
         });
 
         return;
@@ -407,10 +427,10 @@ export default {
       });
     },
     openVehicle() {
-       this.vehicle_table_show = true; 
-       if(this.$refs.vehicle) {
-         this.$refs.vehicle.refresh()
-       }
+      this.vehicle_table_show = true;
+      if (this.$refs.vehicle) {
+        this.$refs.vehicle.refresh();
+      }
     }
   }
 };

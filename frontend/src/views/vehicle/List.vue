@@ -203,7 +203,7 @@ export default {
       sidebarData: {},
       categoryData: [],
       loadData: parameter => {
-        return getVehicle(Object.assign(parameter, this.queryParam)).then(res => {
+        return getVehicle(Object.assign(parameter, this.localQueryParam)).then(res => {
           return res.result;
         });
       }

@@ -14,13 +14,19 @@ from .models import User
 class UserFilter(django_filters.FilterSet):
     role = django_filters.CharFilter('role')
     vehicle = django_filters.BooleanFilter('vehicle', lookup_expr='isnull')
+    username = django_filters.CharFilter('username')
+    email = django_filters.CharFilter('email')
+    company = django_filters.CharFilter('company')
+    start_0 = django_filters.DateFilter('order_driver__start_date', lookup_expr='gt', exclude=True)
+    start_1 = django_filters.DateFilter('order_driver__start_date', lookup_expr='lt', exclude=True)
+    end_0 = django_filters.DateFilter('order_driver__end_date', lookup_expr='gt', exclude=True)
+    end_1 = django_filters.DateFilter('order_driver__end_date', lookup_expr='lt', exclude=True)
 
 class UserView(ModelViewSet):
     serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = User.objects.all()
 
-    filterset_fields = ('role', 'vehicle')
     filter_class = UserFilter
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated, DjangoModelPermissions])

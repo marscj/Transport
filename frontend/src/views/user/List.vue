@@ -10,22 +10,30 @@
       <div class="flex flex-wrap pt-4">
         <div class="px-4">
           <a-form-item label="USERNAME">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.username"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="EMAIL">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.email"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="COMPANY">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.company"></a-input>
+          </a-form-item>
+        </div>
+        <div class="px-4">
+          <a-form-item label="Role" >
+            <a-select v-model="localQueryParam.role" class="w-64" allowClear>
+              <a-select-option v-for="data in Role" :key="data" :value="data">{{data}}</a-select-option>
+            </a-select>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item>
             <button
+              @click="()=>$refs.table.refresh()"
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
             >Search</button>
           </a-form-item>
@@ -84,6 +92,8 @@ import { getUser } from "@/http/requests/user/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 import STable from "@/components/s-table";
 
+const Role = ["Customer", "Driver", "Operator", "Accounting"];
+
 export default {
   components: {
     DataViewSidebar,
@@ -93,10 +103,20 @@ export default {
     selectModel: {
       type: Boolean,
       default: false
+    },
+    queryParam: {
+      type: Object,
+      default: () => {
+        return { 
+          is_active: true
+        }
+      }
     }
   },
   data() {
     return {
+      localQueryParam: Object.assign({}, this.queryParam),
+      Role,
       columns: [
         {
           title: "USERNAME",
@@ -159,22 +179,11 @@ export default {
       addNewDataSidebar: false,
       sidebarData: {},
       loadData: parameter => {
-        return getUser(Object.assign(parameter, {})).then(res => {
+        return getUser(Object.assign(parameter, this.localQueryParam)).then(res => {
           return res.result;
         });
       }
     };
-  },
-  computed: {
-    currentPage() {
-      return this.isMounted ? this.$refs.table.page : 0;
-    },
-    total() {
-      return this.isMounted ? this.$refs.table.total : 0;
-    }
-  },
-  mounted() {
-    this.isMounted = true;
   },
   methods: {
     addNewData() {
