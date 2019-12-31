@@ -15,6 +15,8 @@ class OrderItinerarySerializer(serializers.ModelSerializer):
 
     price = serializers.DecimalField(required=True, allow_null=False, max_digits=8, decimal_places=2)
 
+    payment = serializers.DecimalField(required=False, allow_null=False, max_digits=8, decimal_places=2)
+
     itinerary = ItinerarySerializer(read_only=True)
 
     order_id = serializers.IntegerField(required=True, write_only=True, allow_null=False)

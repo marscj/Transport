@@ -59,9 +59,14 @@ class OrderItinerary(models.Model):
 
     price = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
 
+    payment = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
+
     itinerary = models.ForeignKey(Itinerary, on_delete=models.SET_NULL, related_name='order_itinerary', blank=True, null=True)
 
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='order_itinerary', blank=True, null=True)
 
     class Meta:
         db_table = 'order_itinerary'
+        permissions = [
+            ("change_payment", "Can change the payment"),
+        ]

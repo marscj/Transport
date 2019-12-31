@@ -10,17 +10,17 @@
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
-    <vs-tabs v-if="groupData.length" position="left" class style="width:100%;" v-model="curTab">
+    <vs-tabs v-if="groupData.length" position="left" class="w-full" v-model="curTab">
       <vs-tab v-for="data in groupData" :key="data.id" :label="data.name">
         <div v-for="(permission, index) in groupPermissionData" :key="index" class="flex h-12">
-          <div class="w-1/6">
+          <div class="w-28">
             <span>{{index}} :</span>
           </div>
-          <div v-for="data in permission" :key="data.id" class="w-1/6">
+          <div v-for="data in permission" :key="data.id" class="w-64">
             <vs-checkbox
               v-model="data.check"
               @change="onClick(data)"
-            >{{data.codename.substring(0, data.codename.indexOf('_'))}}</vs-checkbox>
+            >{{data.name}}</vs-checkbox>
           </div>
         </div>
       </vs-tab>
