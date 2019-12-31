@@ -49,27 +49,33 @@
             <th class="text-center py-3">ITINERARY</th>
             <th class="w-40 text-center py-3">PRICE</th>
             <th class="w-40 text-center py-3">PAYMENT</th>
-            <th class="w-40 text-center py-3" v-if="$auth('orderitinerary.delete_orderitinerary')">ACTION</th>
+            <th
+              class="w-40 text-center py-3"
+              v-if="$auth('orderitinerary.delete_orderitinerary')"
+            >ACTION</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="data in form.order_itinerary" :key="data.id">
             <td class="border px-4 py-3 text-center">
-              <a>{{data.date}}</a>
+              <a @click="openItinerary(data)">{{data.date}}</a>
             </td>
             <td class="border px-4 py-3 text-center">
-              <a>{{data.time}}</a>
+              <a @click="openItinerary(data)">{{data.time}}</a>
             </td>
             <td class="border px-4 py-3 text-center">
-              <a>{{data.itinerary ? data.itinerary.name : ''}}</a>
+              <a @click="openItinerary(data)">{{data.itinerary ? data.itinerary.name : ''}}</a>
             </td>
             <td class="border px-4 py-3 text-center">
-              <a>{{data.price}}</a>
+              <a @click="openItinerary(data)">{{data.price}}</a>
             </td>
             <td class="border px-4 py-3 text-center">
-              <a>{{data.payment}}</a>
+              <a @click="openItinerary(data)">{{data.payment}}</a>
             </td>
-            <td class="border px-4 py-3 text-center" v-if="$auth('orderitinerary.delete_orderitinerary')">
+            <td
+              class="border px-4 py-3 text-center"
+              v-if="$auth('orderitinerary.delete_orderitinerary')"
+            >
               <feather-icon
                 icon="TrashIcon"
                 svgClasses="w-5 h-5 hover:text-danger stroke-current"
@@ -81,7 +87,7 @@
         </tbody>
         <t-foot>
           <button
-            @click="itinerary_show=!itinerary_show"
+            @click="openItinerary()"
             class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded mt-4"
           >ADD ITINERARY</button>
         </t-foot>
@@ -121,7 +127,12 @@
       </div>
     </div>
 
-    <a-modal v-model="itinerary_show" title="Itinerary" :width="800" @ok="handleItinerary">
+    <a-modal
+      v-model="itinerary_show"
+      :title="itinerary_edit ? 'Itinerary Update' : 'Itinerary Create'"
+      :width="800"
+      @ok="handleItinerary"
+    >
       <validation-observer ref="observer_itinerary" v-slot="{ validate, dirty }">
         <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
           <a-form-item label="DATE" required>
@@ -132,7 +143,7 @@
           </a-form-item>
           <a-form-item label="TIME">
             <validation-provider name="time" v-slot="{ errors }">
-              <a-time-picker v-model="itinerary.time" class="w-64"></a-time-picker>
+              <a-time-picker v-model="itinerary.time" format="HH:mm" class="w-64"></a-time-picker>
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
@@ -214,6 +225,7 @@ export default {
       phone: "",
       itineraryData: [],
       itinerary_show: false,
+      itinerary_edit: false,
       vehicle_table_show: false,
       driver_table_show: false
     };
@@ -301,6 +313,20 @@ export default {
         }
       );
     },
+    openItinerary(data) {
+      this.itinerary_show = true;
+      this.itinerary_edit = data ? true : false;
+      this.itinerary = data
+        ? {
+            id: data.id,
+            date: moment(data.date, "YYYY-MM-DD"),
+            time: moment(data.time, "HH:mm"),
+            itinerary: data.itinerary.id,
+            price: data.price,
+            payment: data.payment
+          }
+        : {};
+    },
     handleItinerary() {
       let form = {
         order_id: this.form.id,
@@ -311,22 +337,41 @@ export default {
           ? moment(this.itinerary.date).format("YYYY-MM-DD")
           : null,
         time: this.itinerary.time
-          ? moment(this.itinerary.time).format("HH:mm:ss")
+          ? moment(this.itinerary.time).format("HH:mm")
           : null,
         price: this.itinerary.price,
         payment: this.itinerary.payment
       };
-      createOrderItinerary(form)
-        .then(res => {
-          this.getOrderData().then(() => {
-            this.itinerary_show = false;
+
+      if (this.itinerary_edit) {
+        updateOrderItinerary(this.itinerary.id, form)
+          .then(res => {
+            this.getOrderData().then(() => {
+              this.itinerary_show = false;
+            });
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer_itinerary.setErrors(
+                error.response.data.result
+              );
+            }
           });
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer_itinerary.setErrors(error.response.data.result);
-          }
-        });
+      } else {
+        createOrderItinerary(form)
+          .then(res => {
+            this.getOrderData().then(() => {
+              this.itinerary_show = false;
+            });
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer_itinerary.setErrors(
+                error.response.data.result
+              );
+            }
+          });
+      }
     },
     deleteData(id) {
       deleteOrderItinerary(id).then(() => {
