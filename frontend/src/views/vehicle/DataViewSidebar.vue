@@ -203,7 +203,6 @@ export default {
     getUserData() {
       getUser({role: 'Driver', vehicle: true}).then(res => {
         this.driverData = res.result;
-        console.log(this.driverData, res)
       });
     }
   }

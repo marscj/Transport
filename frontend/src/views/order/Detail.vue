@@ -213,7 +213,6 @@ export default {
       });
     },
     updateOrderData() {
-      console.log(this.form);
       updateOrder(this.$route.params.id, this.form).then(res => {
         this.form = res.result;
       });
@@ -269,7 +268,6 @@ export default {
       this.updateOrderData();
     },
     onItineraryChange(data) {
-      console.log(data, '=====')
       getPriceExa({ category: this.form.category, itinerary: data }).then(
         res => {
           this.itinerary.price = res.result.price;

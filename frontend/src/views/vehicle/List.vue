@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="px-4" action:add_vehicle v-if="!selectModel">
+    <div class="px-4" v-action:add v-if="!selectModel">
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 

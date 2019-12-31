@@ -7,10 +7,6 @@
       v-if="showSidebar"
     />
 
-    <div class="p-4" action:add_price>
-      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
-    </div>
-
     <s-table
       class="p-4"
       ref="table"

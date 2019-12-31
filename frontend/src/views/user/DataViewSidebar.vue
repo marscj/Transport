@@ -176,7 +176,6 @@ export default {
           })
           .catch(error => {
             if (error.response) {
-              console.log(error.response);
               this.$refs.observer.setErrors(error.response.data.result);
             }
           });

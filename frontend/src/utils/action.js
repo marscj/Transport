@@ -16,17 +16,22 @@ import store from '@/store'
  */
 const action = Vue.directive('action', {
   inserted: function (el, binding, vnode) {
+    console.log(permissionId, '----')
     const actionName = binding.arg
     const groups = store.getters.groups
     const user = store.getters.user
     const elVal = vnode.context.$route.meta.permission
     const permissionId = elVal instanceof String && [elVal] || elVal
 
+    console.log(permissionId, '----')
+
     if (user.is_superuser) {
       return
     }
     groups.reduce((f1, f2) => f1.concat(f2.permissions), []).forEach(f => {
+      console.log(permissionId, f.content_type.model, '----')
       if (permissionId.includes(f.content_type.model)) {
+        console.log(f.codename, actionName, '=====')
         if(!f.codename === actionName) {
           el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
         }

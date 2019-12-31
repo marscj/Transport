@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="px-4" action:add_user v-if="!selectModel">
+    <div class="px-4" v-action:add_user v-if="!selectModel">
       <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
     </div>
 
