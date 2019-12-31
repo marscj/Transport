@@ -16,9 +16,11 @@ function plugin (Vue) {
             return true
           }
 
-          return groups.reduce((f1, f2) => f1.concat(f2.permissions), []).find(f => {
+          let list = groups.reduce((f1, f2) => f1.concat(f2.permissions), []).find(f => {
             return f.content_type.model === model && f.codename === action;
           });
+
+          return Boolean(list)
         }
       }
     }

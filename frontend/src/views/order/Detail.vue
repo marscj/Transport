@@ -40,7 +40,7 @@
       </table>
     </div>
 
-    <div class="p-4" v-if="form.vehicle">
+    <div class="p-4">
       <table class="table-fixed w-full">
         <thead>
           <tr>
@@ -136,8 +136,8 @@
             </validation-provider>
           </a-form-item>
           <a-form-item label="PAYMENT">
-            <validation-provider name="price" v-slot="{ errors }">
-              <a-input v-model="itinerary.payment" :disabled="$auth('order_itinerary.edit_payment123')" addonAfter="AED"></a-input>
+            <validation-provider name="payment" v-slot="{ errors }">
+              <a-input v-model="itinerary.payment" :disabled="!$auth('orderitinerary.edit_payment')" addonAfter="AED"></a-input>
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
@@ -272,7 +272,8 @@ export default {
     onItineraryChange(data) {
       getPriceExa({ category: this.form.category, itinerary: data }).then(
         res => {
-          this.itinerary.price = res.result.price;
+          this.itinerary.price = Number(res.result.price);
+          this.itinerary.payment = Number(res.result.price);
         }
       );
     },
@@ -282,7 +283,8 @@ export default {
         itinerary_id: this.itinerary.itinerary ? this.itinerary.itinerary : null,
         date: this.itinerary.date ? moment(this.itinerary.date).format('YYYY-MM-DD') : null,
         time: this.itinerary.time ? moment(this.itinerary.time).format('HH:mm:ss') : null,
-        price: this.itinerary.price
+        price: this.itinerary.price,
+        payment: this.itinerary.payment
       }
       createOrderItinerary(form).then(res => {
         this.getOrderData().then(() => {
