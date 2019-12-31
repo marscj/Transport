@@ -16,13 +16,16 @@ class PriceFilter(django_filters.FilterSet):
 class VehicleFilter(django_filters.FilterSet):
     license_plate = django_filters.CharFilter('license_plate')
     model = django_filters.CharFilter('model')
-    seats = django_filters.NumberFilter('seats',lookup_expr=('gte'),)
+    seats = django_filters.NumberFilter('seats', lookup_expr=('gte'),)
     category = django_filters.CharFilter('category__id')
+    category_name = django_filters.CharFilter('category__name')
     driver = django_filters.CharFilter('driver__username')
     supplier = django_filters.CharFilter('supplier')
     is_active = django_filters.BooleanFilter('is_active')
-    start_date = django_filters.DateFilter('order__start_date', lookup_expr=('gte'))
-    end_date = django_filters.DateFilter('order__end_date', lookup_expr=('lte'))
+    start_0 = django_filters.DateFilter('order__start_date', lookup_expr='gt', exclude=True)
+    start_1 = django_filters.DateFilter('order__start_date', lookup_expr='lt', exclude=True)
+    end_0 = django_filters.DateFilter('order__end_date', lookup_expr='gt', exclude=True)
+    end_1 = django_filters.DateFilter('order__end_date', lookup_expr='lt', exclude=True)
 
 class ItineraryView(ModelViewSet):
     serializer_class = ItinerarySerializer
@@ -59,7 +62,6 @@ class VehicleView(ModelViewSet):
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Vehicle.objects.all()
 
-    filterset_fields = ('license_plate', 'model', 'seats', 'category', 'driver', 'supplier', 'is_active', 'start_date', 'end_date')
     filter_class = VehicleFilter
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticatedOrReadOnly])

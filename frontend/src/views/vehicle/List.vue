@@ -11,39 +11,39 @@
       <div class="flex flex-wrap pt-4">
         <div class="px-4">
           <a-form-item label="LICENSE PLATE">
-            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.license_plate"></a-input>
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.license_plate"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="MODEL">
-            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.model"></a-input>
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.model"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="SEATS">
-            <a-input-number class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.seats"></a-input-number>
+            <a-input-number class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.seats"></a-input-number>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="CATEGORY" >
-            <a-select v-model="queryParam.category" class="w-64" allowClear>
+            <a-select v-model="localQueryParam.category" class="w-64" allowClear>
               <a-select-option v-for="data in categoryData" :key="data.id" :value="data.id">{{data.name}}</a-select-option>
             </a-select>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="DRIVER">
-            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.driver"></a-input>
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.driver"></a-input>
           </a-form-item> 
         </div>
         <div class="px-4">
           <a-form-item label="SUPPLIER">
-            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="queryParam.supplier"></a-input>
+            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.supplier"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="ACTIVE">
-            <vs-checkbox v-model="queryParam.is_active"></vs-checkbox >
+            <vs-checkbox v-model="localQueryParam.is_active"></vs-checkbox >
           </a-form-item>
         </div>
         <div class="px-4">
@@ -127,8 +127,6 @@ export default {
       type: Object,
       default: () => {
         return { 
-          // start_date: '2019-12-01',
-          // end_date: '2019-12-03',
           is_active: true
         }
       }
@@ -136,6 +134,7 @@ export default {
   },
   data() {
     return {
+      localQueryParam: Object.assign({}, this.queryParam),
       columns: [
         {
           title: "LICENSE PLATE",
@@ -216,7 +215,7 @@ export default {
   methods: {
     getCategoryData() {
       getCategory().then(res => {
-        this.categoryData = res.result
+        this.categoryData = res.result;
       })
     },
     addNewData() {
@@ -241,8 +240,11 @@ export default {
     },
     deleteData(id) {
       deleteVehicle(id).then(() => {
-        this.$refs.table.refresh();
+        this.result()
       });
+    },
+    refresh() {
+      this.$refs.table.refresh();
     },
     openConfirm(id) {
       this.$vs.dialog({

@@ -99,7 +99,7 @@
         <a-form-item label="VEHICLE" class="flex-1 mr-6">
           <a-input
             v-model="vehicle"
-            @click="vehicle_table_show=!vehicle_table_show"
+            @click="openVehicle"
             @change="onVehicleChange"
             :disabled="form.status !== 'New'"
             readonly
@@ -182,7 +182,13 @@
     </a-modal>
 
     <a-modal v-model="vehicle_table_show" title="Vehicle" :width="1024">
-      <vehicle-table :selectModel="true" @vehicle="onHandleVehicle" />
+      <vehicle-table ref="vehicle" :selectModel="true" @vehicle="onHandleVehicle" :queryParam="{
+        is_active: true,
+        start_0: this.form.start_date,
+        start_1: this.form.end_date,
+        end_0: this.form.start_date,
+        end_1: this.form.end_date,
+      }"/>
     </a-modal>
 
     <a-modal v-model="driver_table_show" title="Driver" :width="1024">
@@ -399,6 +405,12 @@ export default {
         text: "Are you sure delete?",
         accept: () => this.deleteData(id)
       });
+    },
+    openVehicle() {
+       this.vehicle_table_show = true; 
+       if(this.$refs.vehicle) {
+         this.$refs.vehicle.refresh()
+       }
     }
   }
 };
