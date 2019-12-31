@@ -231,7 +231,7 @@ import VehicleTable from "@/views/vehicle/List.vue";
 import DriverTable from "@/views/user/List.vue";
 import moment from "moment";
 
-const Status = ["New", "Confirm", "Pending", "Cancel", "Complete"];
+const Status = ["New", "Confirm", "Pending", "Cancel", "Complete", "Paid"];
 
 export default {
   components: {

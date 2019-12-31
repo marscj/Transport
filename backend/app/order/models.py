@@ -12,7 +12,9 @@ class Order(models.Model):
         Confirm = 'Confirm'
         Pending = 'Pending'
         Cancel = 'Cancel'
-        Complete = 'Complete'
+        Complete = 'Complete',
+        Paid = 'Paid'
+
 
     orderId = models.CharField(blank=True, null=True, max_length=64)
 
