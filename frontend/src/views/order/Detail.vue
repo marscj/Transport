@@ -101,6 +101,7 @@
             v-model="vehicle"
             @click="vehicle_table_show=!vehicle_table_show"
             @change="onVehicleChange"
+            :disabled="form.status !== 'New'"
             readonly
             allowClear
           ></a-input>
@@ -110,6 +111,7 @@
             v-model="driver"
             @click="driver_table_show=!driver_table_show"
             @change="onDriverChange"
+            :disabled="form.status !== 'New'"
             readonly
             allowClear
           ></a-input>
@@ -120,8 +122,8 @@
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
-          <a-select class="w-full" v-model="form.status" @change="onStatus">
-            <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
+          <a-select class="w-full" v-model="form.status" @change="onStatus" >
+            <a-select-option v-for="data in Status" :key="data" :value="data" :disabled="!$auth('orderitinerary.change_status') && data !== 'Confirm'">{{data}}</a-select-option>
           </a-select>
         </a-form-item>
       </div>
@@ -314,6 +316,17 @@ export default {
       );
     },
     openItinerary(data) {
+      if (this.form.status !== "New") {
+        this.$vs.dialog({
+          type: "confirm",
+          color: "danger",
+          title: `Confirm`,
+          text: "Only new orders can be edit or create",
+        });
+
+        return;
+      }
+
       this.itinerary_show = true;
       this.itinerary_edit = data ? true : false;
       this.itinerary = data

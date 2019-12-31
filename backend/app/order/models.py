@@ -69,4 +69,5 @@ class OrderItinerary(models.Model):
         db_table = 'order_itinerary'
         permissions = [
             ("edit_payment", "Can edit the payment"),
+            ("change_status", "Can change the status"),
         ]
