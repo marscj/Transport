@@ -54,14 +54,14 @@
           <tr v-for="data in form.order_itinerary" :key="data.id">
             <td class="border px-4 py-4 text-center">{{data.date}}</td>
             <td class="border px-4 py-4 text-center">{{data.time}}</td>
-            <td class="border px-4 py-4 text-center">{{data.itinerary}}</td>
+            <td class="border px-4 py-4 text-center">{{data.itinerary ? data.itinerary.name : ''}}</td>
             <td class="border px-4 py-4 text-center">{{data.price}}</td>
           </tr>
         </tbody>
-        <t-foot>
+        <t-foot >
           <button
             @click="itinerary_show=!itinerary_show"
-            class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded"
+            class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded mt-4"
           >ADD ITINERARY</button>
         </t-foot>
       </table>
@@ -117,11 +117,11 @@
           </a-form-item>
           <a-form-item label="ITINERARY">
             <validation-provider name="itinerary_id" v-slot="{ errors }">
-              <a-select v-model="itinerary.itinerary" @change="onItineraryChange">
+              <a-select v-model="itinerary.itinerary" @change="onItineraryChange" >
                 <a-select-option
                   v-for="data in itineraryData"
                   :key="data.id"
-                  :value="data"
+                  :value="data.id"
                 >{{data.name}}</a-select-option>
               </a-select>
               <span>{{ errors[0] }}</span>
@@ -197,7 +197,7 @@ export default {
       });
     },
     getOrderData() {
-      getOrder(this.$route.params.id).then(res => {
+      return getOrder(this.$route.params.id).then(res => {
         this.form = res.result;
         this.vehicle = this.form.vehicle
           ? this.form.vehicle.license_plate
@@ -263,23 +263,25 @@ export default {
       this.updateOrderData();
     },
     onItineraryChange(data) {
-      getPriceExa({ category: this.form.category, itinerary: data.id }).then(
+      console.log(data, '=====')
+      getPriceExa({ category: this.form.category, itinerary: data }).then(
         res => {
           this.itinerary.price = res.result.price;
         }
       );
     },
     handleItinerary() {
-      let form = Object.assign(this.itinerary, { 
+      let form = {
         order_id: this.form.id,
-        itinerary_id: this.itinerary.id,
-        date: '2019-09-09',
-        time: '12:12:12'
-        // date: this.itinerary.date ? moment(this.itinerary.date).format('YYYY-MM-DD') : null,
-        // time: this.itinerary.date ? moment(this.itinerary.time).format('HH:mm:ss') : null,
-      });
+        itinerary_id: this.itinerary.itinerary ? this.itinerary.itinerary : null,
+        date: this.itinerary.date ? moment(this.itinerary.date).format('YYYY-MM-DD') : null,
+        time: this.itinerary.time ? moment(this.itinerary.time).format('HH:mm:ss') : null,
+        price: this.itinerary.price
+      }
       createOrderItinerary(form).then(res => {
-        // this.getOrderData();
+        this.getOrderData().then(() => {
+          this.itinerary_show = false;
+        });
       }).catch(error => {
         if (error.response) {
           this.$refs.observer_itinerary.setErrors(error.response.data.result);
