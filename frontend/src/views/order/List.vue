@@ -241,7 +241,7 @@ export default {
               title: "PRICE",
               children: [
                 {
-                  title: "SELLING PRICE",
+                  title: "PRICE",
                   dataIndex: "order_itinerary",
                   scopedSlots: { customRender: "price" }
                 },

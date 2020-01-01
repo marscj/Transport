@@ -10,7 +10,6 @@ class Order(models.Model):
     class OrderStatus(models.TextChoices):
         New = 'New'
         Confirm = 'Confirm'
-        Pending = 'Pending'
         Cancel = 'Cancel'
         Complete = 'Complete',
         Paid = 'Paid'
@@ -39,6 +38,8 @@ class Order(models.Model):
     itinerary = models.TextField(blank=True, null=True)
 
     remark = models.TextField(blank=True, null=True)
+
+    is_lock = models.BooleanField(default=False, blank=True, null=True)
 
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
@@ -71,5 +72,5 @@ class OrderItinerary(models.Model):
         db_table = 'order_itinerary'
         permissions = [
             ("edit_payment", "Can edit the payment"),
-            ("change_status", "Can change the status"),
+            ("change_lock", "Can change the lock"),
         ]
