@@ -62,69 +62,106 @@
       :rowKey="(record) => record.id"
       :columns="columns"
       :data="loadData"
-      :scroll="{ x: 1300 }"
+      size="middle"
+      :scroll="{ x: '130%' }"
     >
       <template slot="orderId" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><p class="text-gray-700">{{text}}</p></router-link>
       </template>
 
       <template slot="relatedId" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
       </template>
 
       <template slot="create_date" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{ text | moment('YYYY-MM-DD')}}</router-link>
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+        ><pre class="text-gray-700">{{ text | moment('YYYY-MM-DD')}}</pre></router-link>
       </template>
 
       <template slot="start_date" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
       </template>
 
       <template slot="end_date" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
       </template>
 
-      <template slot="itinerary" slot-scope="data">
+      <template slot="o-itinerary" slot-scope="text, data">
         <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <p>Category: {{data.category}}</p>
-          <p>Seats: {{data.seats}}</p>
-          <p>Passengers: {{data.passenger}}</p>
-          <p>Itinerary:</p>
-          <pre>{{data.itinerary}}</pre>
+          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal">
+            <span class="text-blue-500">{{pre.date | moment('MM-DD')}}</span>
+            <span class="text-blue-500" v-if="pre.time">,{{pre.time.substring(0,5)}}</span>
+            <span class="text-blue-500">,{{pre.itinerary.name}}</span>
+          </pre>
         </router-link>
       </template>
 
-      <template slot="o-itinerary"></template>
+      <template slot="price" slot-scope="text, data">
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal text-pink-500">
+            <span>{{pre.price}}</span>
+          </pre>
+        </router-link>
+      </template>
 
-      <template slot="price"></template>
+      <template slot="payment" slot-scope="text, data">
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal text-pink-500">
+            <span>{{pre.payment}}</span>
+          </pre>
+        </router-link>
+      </template>
+
+      <template slot="itinerary" slot-scope="text, data">
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+          <p>Category: {{text.category}}</p>
+          <p>Seats: {{text.seats}}</p>
+          <p>Passengers: {{text.passenger}}</p>
+          <p>Itinerary:</p>
+          <pre>{{text.itinerary}}</pre>
+        </router-link>
+      </template>
 
       <template slot="vehicle" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.license_plate}}</router-link>
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+          v-if="text"
+        ><pre class="text-gray-700">{{text.license_plate}}</pre></router-link>
       </template>
 
       <template slot="driver" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.username}}</router-link>
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+          v-if="text"
+        ><pre class="text-gray-700">{{text.username}}</pre></router-link>
       </template>
 
       <template slot="driver_phone" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.phone}}</router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text"><pre class="text-gray-700">{{text.phone}}</pre></router-link>
       </template>
 
       <template slot="status" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">{{text}}</router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
       </template>
 
       <template slot="customer" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.username}}</router-link>
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+          v-if="text"
+        ><pre class="text-gray-700">{{text.username}}</pre></router-link>
       </template>
 
       <template slot="operator" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">{{text.username}}</router-link>
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+          v-if="text"
+        ><pre class="text-gray-700">{{text.username}}</pre></router-link>
       </template>
 
       <template slot="invoice" slot-scope="text">
         <a href="#" v-if="text">invoice</a>
-        <span v-else>unknow</span>
+        <pre v-else class="text-gray-700">unknow</pre>
       </template>
     </s-table>
   </vs-card>
@@ -188,16 +225,34 @@ export default {
           sorter: true
         },
         {
-          title: "CUSTOMER ITINERARY",
-          scopedSlots: { customRender: "itinerary" }
-        },
-        {
-          title: "ORDER ITINERARY",
-          scopedSlots: { customRender: "o_itinerary" }
-        },
-        {
-          title: "PRICE",
-          scopedSlots: { customRender: "price" }
+          title: "ITINERARY",
+          children: [
+            {
+              title: "CUSTOMER ",
+              scopedSlots: { customRender: "itinerary" },
+              width: 350
+            },
+            {
+              title: "ORDER",
+              dataIndex: "order_itinerary",
+              scopedSlots: { customRender: "o-itinerary" }
+            },
+            {
+              title: "PRICE",
+              children: [
+                {
+                  title: "SELLING PRICE",
+                  dataIndex: "order_itinerary",
+                  scopedSlots: { customRender: "price" }
+                },
+                {
+                  title: "PAYMENT",
+                  dataIndex: "order_itinerary",
+                  scopedSlots: { customRender: "payment" }
+                }
+              ]
+            }
+          ]
         },
         {
           title: "Vehicle",

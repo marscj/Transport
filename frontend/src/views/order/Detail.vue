@@ -122,7 +122,7 @@
         </a-form-item>
 
         <a-form-item label="STATUS" class="flex-1 mx-6">
-          <a-select class="w-full" v-model="form.status" @change="onStatus">
+          <a-select class="w-full" v-model="form.status">
             <a-select-option
               v-for="data in Status"
               :key="data"
@@ -131,7 +131,16 @@
             >{{data}}</a-select-option>
           </a-select>
         </a-form-item>
+
+        <a-form-item label="REMARK" class="w-1/3 mr-6">
+          <a-textarea v-model="form.remark"></a-textarea>
+        </a-form-item>
       </div>
+
+      <button
+        @click="updateOrderData"
+        class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded mt-4"
+      >Update</button>
     </div>
 
     <a-modal
@@ -279,9 +288,26 @@ export default {
       });
     },
     updateOrderData() {
-      updateOrder(this.$route.params.id, this.form).then(res => {
-        this.form = res.result;
-      });
+      updateOrder(this.$route.params.id, this.form)
+        .then(res => {
+          this.form = res.result;
+          this.$vs.notify({
+            title: "Update ",
+            text: 'Success',
+            iconPack: "feather",
+            icon: "icon-alert-circle",
+            color: "success"
+          });
+        })
+        .catch(error => {
+          this.$vs.notify({
+            title: "Error",
+            text: error.message,
+            iconPack: "feather",
+            icon: "icon-alert-circle",
+            color: "danger"
+          });
+        });
     },
     onVehicleChange(event) {
       if (event.target.value === "") {
@@ -305,8 +331,6 @@ export default {
         this.form.vehicle_id = null;
         this.form.driver_id = null;
       }
-
-      this.updateOrderData();
     },
     onDriverChange(event) {
       if (event.target.value === "") {
@@ -327,11 +351,6 @@ export default {
 
         this.form.driver_id = null;
       }
-
-      this.updateOrderData();
-    },
-    onStatus(data) {
-      this.updateOrderData();
     },
     onItineraryChange(data) {
       getPriceExa({ category: this.form.category, itinerary: data }).then(
@@ -359,7 +378,7 @@ export default {
         ? {
             id: data.id,
             date: moment(data.date, "YYYY-MM-DD"),
-            time: moment(data.time, "HH:mm"),
+            time: data.time ? moment(data.time, "HH:mm") : null,
             itinerary: data.itinerary.id,
             price: data.price,
             payment: data.payment
