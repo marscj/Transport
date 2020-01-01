@@ -53,7 +53,10 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
-
+        permissions = [
+            ("change_lock", "Can change the lock"),
+        ]
+        
 class OrderItinerary(models.Model):
 
     date = models.DateField(blank=True, null=True)
@@ -72,5 +75,4 @@ class OrderItinerary(models.Model):
         db_table = 'order_itinerary'
         permissions = [
             ("edit_payment", "Can edit the payment"),
-            ("change_lock", "Can change the lock"),
         ]

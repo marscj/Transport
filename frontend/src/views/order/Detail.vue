@@ -1,7 +1,7 @@
 <template>
   <div>
-    <a-checkbox v-model="form.is_lock" class="pb-4">Lock</a-checkbox>
-    <vs-card :style="form.is_lock ? 'background-color:#f5f5f5;' : ''">
+    <a-checkbox v-model="form.is_lock" class="pb-4" :disabled="!canChangeLock">Lock</a-checkbox>
+    <vs-card :style="form.is_lock || !canChangeOrder ? 'background-color:#f5f5f5;' : ''">
       <div class="p-4 border border-gray-300">
         <table class="table-auto w-full">
           <thead>
@@ -271,7 +271,7 @@ export default {
   },
   computed: {
     canChangeLock() {
-      return this.$auth("order.change_lock")
+      return this.$auth("order.change_lock") 
     },
     canChangeOrder() {
       return this.$auth("order.change_order") && !this.form.is_lock;
