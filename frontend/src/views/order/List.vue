@@ -4,12 +4,12 @@
       <div class="flex flex-wrap pt-4">
         <div class="px-4">
           <a-form-item label="ORDERID">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input v-model="localQueryParam.orderId" class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="RELATEDID">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input v-model="localQueryParam.relatedId" class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
@@ -24,27 +24,30 @@
         </div>
         <div class="px-4">
           <a-form-item label="VEHICLE">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input v-model="localQueryParam.vehicle" class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="DRIVER">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input v-model="localQueryParam.driver" class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
         <div class="px-4" v-if="!myOrder">
           <a-form-item label="CUSTOMER">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input v-model="localQueryParam.customer" class="hover:border-teal-500 focus:border-teal-500"></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="STATUS">
-            <a-input class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-select class="w-48" v-model="localQueryParam.status" >
+              <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
+            </a-select>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item>
             <button
+              @click="()=>$refs.table.refresh()"
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
             >Search</button>
           </a-form-item>
@@ -171,6 +174,9 @@
 import { getOrders } from "@/http/requests/order";
 import STable from "@/components/s-table";
 import moment from "moment";
+
+const Status = ["New", "Confirm", "Cancel", "Complete", "Paid"];
+
 export default {
   components: {
     STable
@@ -179,10 +185,18 @@ export default {
     myOrder: {
       type: Boolean,
       default: false
+    },
+    queryParam: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
   },
   data() {
     return {
+      Status,
+      localQueryParam: Object.assign({}, this.queryParam),
       columns: [
         {
           title: "ORDERID",
@@ -312,16 +326,11 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getOrders(Object.assign(parameter, this.filter)).then(res => {
+        return getOrders(Object.assign(parameter, this.localQueryParam)).then(res => {
           return res.result;
         });
       }
     };
-  },
-  computed: {
-    filter() {
-      return this.myOrder ? { customer__id: this.$store.state.auth.id } : {};
-    }
   },
   methods: {
     addNewData() {
