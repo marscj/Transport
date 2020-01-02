@@ -1,43 +1,52 @@
-export const defaultRoutePath = '/admin/analytics'
+export const defaultRoutePath = '/admin/my_orders'
 
-export const asyncRouterMap = [{
+export const asyncRouterMap = [
+  {
     path: '/admin',
-    redirect: '/admin/analytics',
-    component: () => import('@/layouts/main/Main.vue'),
-    meta: {
-      header: 'Dashboard',
-      // submenu: true,
-      // name: 'Analytics',
-      // slug: 'analytics',
-      i18n: 'Dashboard',
-      // icon: 'HomeIcon',
-      // permission: [ 'user' ],
-    },
-    children: [{
-      path: '/admin/analytics',
-      name: 'analytics',
-      component: () => import('@/views/analytics/Page.vue'),
-      meta: {
-        name: 'Analytics',
-        url: '/admin/analytics',
-        slug: 'analytics',
-        i18n: 'Analytics',
-        icon: 'HomeIcon',
-        breadcrumb: [{
-            title: 'Dashboard',
-            url: '/admin/analytics'
-          },
-          {
-            title: 'Analytics',
-            active: true
-          }
-        ],
-      }
-    }]
+    redirect: defaultRoutePath,
+    meta:{
+      isDisabled: true,
+    }
   },
+  // {
+  //   path: '/admin',
+  //   redirect: '/admin/analytics',
+  //   component: () => import('@/layouts/main/Main.vue'),
+  //   meta: {
+  //     header: 'Dashboard',
+  //     // submenu: true,
+  //     // name: 'Analytics',
+  //     // slug: 'analytics',
+  //     i18n: 'Dashboard',
+  //     // icon: 'HomeIcon',
+  //     // permission: [ 'user' ],
+  //   },
+  //   children: [{
+  //     path: '/admin/analytics',
+  //     name: 'analytics',
+  //     component: () => import('@/views/analytics/Page.vue'),
+  //     meta: {
+  //       name: 'Analytics',
+  //       url: '/admin/analytics',
+  //       slug: 'analytics',
+  //       i18n: 'Analytics',
+  //       icon: 'HomeIcon',
+  //       breadcrumb: [{
+  //           title: 'Dashboard',
+  //           url: '/admin/analytics'
+  //         },
+  //         {
+  //           title: 'Analytics',
+  //           active: true
+  //         }
+  //       ],
+  //     }
+  //   }]
+  // },
   {
     path: '/admin/order',
-    redirect: '/admin/orders',
+    redirect: '/admin/my_orders',
+    name: 'order',
     component: () => import('@/layouts/main/Main.vue'),
     meta: {
       header: 'Order',
