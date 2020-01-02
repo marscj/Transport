@@ -255,12 +255,12 @@ export default {
               title: "PRICE",
               children: [
                 {
-                  title: "PRICE",
+                  title: "PRICE(AED)",
                   dataIndex: "order_itinerary",
                   scopedSlots: { customRender: "price" }
                 },
                 {
-                  title: "PAYMENT",
+                  title: "PAYMENT(AED)",
                   dataIndex: "order_itinerary",
                   scopedSlots: { customRender: "payment" }
                 }
@@ -269,7 +269,7 @@ export default {
           ]
         },
         {
-          title: "Vehicle",
+          title: "VEHICLE",
           dataIndex: "vehicle",
           scopedSlots: { customRender: "vehicle" },
           align: "center",
@@ -277,7 +277,7 @@ export default {
           sorter: true
         },
         {
-          title: "Driver",
+          title: "DRIVER",
           dataIndex: "driver",
           scopedSlots: { customRender: "driver" },
           align: "center",
@@ -285,7 +285,7 @@ export default {
           sorter: true
         },
         {
-          title: "Phone",
+          title: "PHONE",
           dataIndex: "driver",
           scopedSlots: { customRender: "driver_phone" },
           align: "center",
@@ -293,7 +293,7 @@ export default {
           sorter: true
         },
         {
-          title: "Status",
+          title: "STATUS",
           dataIndex: "status",
           scopedSlots: { customRender: "status" },
           align: "center",
@@ -301,7 +301,7 @@ export default {
           sorter: true
         },
         {
-          title: "Customer",
+          title: "CUSTOMER",
           dataIndex: "customer",
           scopedSlots: { customRender: "customer" },
           align: "center",
@@ -309,7 +309,7 @@ export default {
           sorter: true
         },
         {
-          title: "Operator",
+          title: "OPERATOR",
           dataIndex: "operator",
           scopedSlots: { customRender: "operator" },
           align: "center",
@@ -317,7 +317,7 @@ export default {
           sorter: true
         },
         {
-          title: "Invoice",
+          title: "INVOICE",
           dataIndex: "invoice_id",
           scopedSlots: { customRender: "invoice" },
           align: "center",
