@@ -95,7 +95,7 @@
         </table>
       </div>
 
-      <div class="p-4">
+      <div class="p-4" v-if="canChangeOrder">
         <div class="flex flex-wrap">
           <a-form-item label="VEHICLE" class="flex-1 mr-6">
             <a-input

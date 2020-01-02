@@ -10,7 +10,7 @@ from app.user.models import User
 class OrderView(CreateSerializerMixin, ModelViewSet):
     serializer_class = OrderSerializer
     serializer_create_class = OrderCreateSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
 
     def get_queryset(self):

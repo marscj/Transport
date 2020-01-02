@@ -179,6 +179,15 @@ export default {
           
           this.localDataSource = this.showPagination ? r.results : r // 返回结果中的数组数据
           this.localLoading = false
+        }).catch(error => {
+          this.localLoading = false
+          this.$vs.notify({
+            title: "Error",
+            text: error.message,
+            iconPack: "feather",
+            icon: "icon-alert-circle",
+            color: "danger"
+          });
         })
       }
     },

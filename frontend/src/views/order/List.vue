@@ -13,13 +13,13 @@
           </a-form-item>
         </div>
         <div class="px-4">
-          <a-form-item label="START DATE">
-            <a-date-picker class="hover:border-teal-500 focus:border-teal-500"></a-date-picker>
+          <a-form-item label="CREATE DATE">
+            <a-range-picker class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
           </a-form-item>
         </div>
         <div class="px-4">
-          <a-form-item label="END DATE">
-            <a-date-picker class="hover:border-teal-500 focus:border-teal-500"></a-date-picker>
+          <a-form-item label="START DATE">
+            <a-range-picker class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
           </a-form-item>
         </div>
         <div class="px-4">
