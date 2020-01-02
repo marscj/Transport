@@ -33,11 +33,11 @@
       </validation-provider>
     </validation-observer>
 
-    <div class="flex flex-wrap justify-between my-5">
+    <!-- <div class="flex flex-wrap justify-between my-5">
       <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
       <router-link :to="{name: 'forgot-password'}">Forgot Password?</router-link>
-    </div>
-    <div class="flex flex-wrap justify-between mb-3">
+    </div> -->
+    <div class="flex flex-wrap justify-between py-5">
       <vs-button type="border" @click="registerUser">Register</vs-button>
       <vs-button :disabled="!validateForm" @click="login">Login</vs-button>
     </div>
@@ -48,8 +48,8 @@
 export default {
   data() {
     return {
-      email: "mjx_cj@163.com",
-      password: "admin123",
+      email: "",
+      password: "",
       checkbox_remember_me: false
     };
   },
