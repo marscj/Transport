@@ -6,28 +6,33 @@
         <nav class="hidden lg:flex items-center text-secondary ml-auto">
           <a href="#" class="px-6 py-3 font-bold uppercase border-b-2 border-primary">Home</a>
           <a href="#about-us" class="px-6 py-3 font-bold uppercase hover:text-secondary">About us</a>
-          <a href="#services" class="px-6 py-3 font-bold uppercase hover:text-primary">Services</a>
+          <a href="#contact-us" class="px-6 py-3 font-bold uppercase hover:text-primary">Contact us</a>
           <a href="#price" class="px-6 py-3 font-bold uppercase hover:text-primary">Price</a>
+          
+          <a v-if="user" class="px-6 py-3 uppercase text-white">
+            {{user.displayName}}
+          </a> 
           <a
+            v-else
             href="/login"
             class="px-6 py-3 font-bold uppercase bg-primary hover:text-white rounded"
             style="color:white;"
-          >Login</a>
+          >LOGIN</a>
         </nav>
       </div>
     </div>
   </header>
   <div class="relative pb-6" style="height:700px;">
-    <img src="@/assets/images/pages/home/bus-1.jpeg" class=" top-0 w-full h-full object-cover" />
-    <div class="container mx-auto relative ">
+    <img src="@/assets/images/pages/home/bus-1.jpeg" class="top-0 w-full h-full object-cover" />
+    <div class="container mx-auto relative">
       <div class="flex">
-       <div class="mr-auto">
+        <div class="mr-auto">
           <a
             href="/login"
             class="bg-primary px-6 md:px-8 py-3 md:py-4 text-lg md:text-xl text-white font-bold uppercase rounded hover:bg-primary-400"
             style="color:white;"
           >Rent Now</a>
-       </div>
+        </div>
       </div>
     </div>
   </div>
@@ -52,57 +57,31 @@
       </div>
     </div>
   </div>
-  <div id="services" class="relative">
-    <img
-      src="@/assets/images/pages/home/circle.svg"
-      class="absolute top-0 right-0 mt-64 hidden md:block"
-    />
+  <div id="contact-us" class="relative">
     <div class="container mx-auto px-6 py-32 relative">
       <h3 class="flex flex-col items-center text-4xl text-secondary font-bold">
-        Our Services
+        Contact us
         <span class="bg-primary h-1 w-56 block mt-4"></span>
       </h3>
-      <div
-        class="flex flex-col md:flex-row items-center mb-24 md:mb-16 xl:mb-8 mt-16 md:mt-0 md:mt-16 lg:mt-0"
-      >
-        <img src="@/assets/images/pages/home/service1.svg" class="md:w-1/3" />
-        <div class="md:ml-16 xl:ml-32">
-          <h4 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4">Social Media Marketing</h4>
-          <p
-            class="text-secondary-700 text-lg mb-4"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet est tellus, et consequat sem sodales id. Quisque molestie et mauris efficitur lacinia.</p>
-          <p
-            class="text-secondary-700 text-lg"
-          >Aliquam eget semper mi. Mauris magna risus, viverra in nulla id, placerat fermentum tellus. Aliquam non felis eu dui fermentum auctor. Aenean sed ante congue, facilisis ipsum eu, gravida lacus.</p>
-        </div>
-      </div>
+
       <div class="flex flex-col-reverse md:flex-row items-center mb-24 md:mb-16 xl:mb-8">
-        <div class="md:mr-16 xl:mr-32">
-          <h4
-            class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4"
-          >Search Engine Optimization</h4>
-          <p
-            class="text-secondary-700 text-lg mb-4"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet est tellus, et consequat sem sodales id. Quisque molestie et mauris efficitur lacinia.</p>
-          <p
-            class="text-secondary-700 text-lg"
-          >Aliquam eget semper mi. Mauris magna risus, viverra in nulla id, placerat fermentum tellus. Aliquam non felis eu dui fermentum auctor. Aenean sed ante congue, facilisis ipsum eu, gravida lacus.</p>
+        <div class="flex-1">
+          <pre class="text-gray-700">telephone:</pre>
+          <h4 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4 pt-1">04 320 3048</h4>
+          <pre class="text-gray-700 pt-4">mobile:</pre>
+          <h4 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4 pt-1">0551237084</h4>
         </div>
-        <img src="@/assets/images/pages/home/service2.svg" class="md:w-1/3" />
-      </div>
-      <div class="flex flex-col md:flex-row items-center">
-        <img src="@/assets/images/pages/home/service3.svg" class="md:w-1/3" />
-        <div class="md:ml-16 xl:ml-32">
-          <h4 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4">Increase your followers</h4>
-          <p
-            class="text-secondary-700 text-lg mb-4"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet est tellus, et consequat sem sodales id. Quisque molestie et mauris efficitur lacinia.</p>
-          <p
-            class="text-secondary-700 text-lg"
-          >Aliquam eget semper mi. Mauris magna risus, viverra in nulla id, placerat fermentum tellus. Aliquam non felis eu dui fermentum auctor. Aenean sed ante congue, facilisis ipsum eu, gravida lacus.</p>
-        </div>
+        <img src="@/assets/images/pages/home/service2.svg" class="pt-10" />
       </div>
     </div>
+  </div>
+
+  <div id="price" class="container mx-auto">
+    <h3 class="flex flex-col items-center text-4xl text-secondary font-bold">
+      Price
+      <span class="bg-primary h-1 w-56 block mt-4"></span>
+    </h3>
+    <price-table class="mt-10" :showSidebar="false" :showThead="false" :showID="false" />
   </div>
 
   <footer class="bg-blue-100">
@@ -116,5 +95,15 @@
 </template>
 
 <script>
-export default {};
+import PriceTable from "@/views/price/Table.vue";
+export default {
+  computed: {
+    user() {
+      return this.$store.getters.user
+    }
+  },
+  components: {
+    PriceTable
+  }
+};
 </script>
