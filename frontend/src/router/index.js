@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: defaultRoutePath })
     } else {
-      if (store.getters.groups.length === 0 && !isAlreadyAddRouter) {
+      if (store.getters.groups.length === 0 && !store.getters.has_info) {
         store.dispatch('getInfo').then(res => {
           store.dispatch('GenerateRoutes', res).then(() => {
             isAlreadyAddRouter = true

@@ -10,6 +10,7 @@ const auth = {
     photoURL: '',
     groups: [],
     is_superuser: false,
+    has_info: false,
   },
   mutations: {
     SET_ID: (state, id) => {
@@ -34,6 +35,10 @@ const auth = {
 
     SET_SUPERUSER: (state, is_superuser) => {
       state.is_superuser = is_superuser
+    },
+
+    SET_HAS_INFO: (state, info) => {
+      state.has_info = info
     }
   },
   actions: {
@@ -46,6 +51,7 @@ const auth = {
             if (result.token) {
               Vue.ls.set('accessToken', result.token)
               commit('SET_TOKEN', result.token)
+              commit('SET_HAS_INFO', false)
               resolve(res)
             } else {
               reject({
@@ -72,8 +78,9 @@ const auth = {
           .then(res => {
             const { result } = res;
             if (result.token) {
-              commit('SET_TOKEN', result.token)
               Vue.ls.set("accessToken", result.token)
+              commit('SET_TOKEN', result.token)
+              commit('SET_HAS_INFO', false)
             }
             resolve(res)
           })
@@ -92,7 +99,7 @@ const auth = {
             commit('SET_GROUPS', result.groups)
             commit('SET_NAME', result.username)
             commit('SET_SUPERUSER', result.is_superuser)
-            
+            commit('SET_HAS_INFO', true)
             resolve(res)
           })
           .catch(error => {
@@ -106,7 +113,7 @@ const auth = {
       commit('SET_GROUPS', [])
       commit('SET_NAME', '')
       commit('SET_SUPERUSER', false)
-      
+      commit('SET_HAS_INFO', false)
       Vue.ls.remove("accessToken")
       router.push('/login').catch(() => {})
     }
