@@ -21,7 +21,7 @@ class Order(models.Model):
 
     status = models.CharField(default=OrderStatus.New, choices=OrderStatus.choices, max_length=16)
 
-    create_at = models.DateTimeField(auto_now_add=True)
+    create_at = models.DateField(auto_now_add=True)
 
     change_at = models.DateTimeField(auto_now=True)
 

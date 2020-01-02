@@ -14,12 +14,12 @@
         </div>
         <div class="px-4">
           <a-form-item label="CREATE DATE">
-            <a-range-picker class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
+            <a-range-picker v-model="localQueryParam.create" class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="START DATE">
-            <a-range-picker class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
+            <a-range-picker v-model="localQueryParam.start" class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
           </a-form-item>
         </div>
         <div class="px-4">
@@ -326,7 +326,18 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getOrders(Object.assign(parameter, this.localQueryParam)).then(res => {
+        return getOrders(Object.assign(parameter, {
+          orderId: this.localQueryParam.orderId,
+          relatedId: this.localQueryParam.relatedId,
+          create_0: this.localQueryParam.create && this.localQueryParam.create[0] ?  this.localQueryParam.create[0].format('YYYY-MM-DD') : undefined,
+          create_1: this.localQueryParam.create && this.localQueryParam.create[1] ?  this.localQueryParam.create[1].format('YYYY-MM-DD') : undefined,
+          start_0: this.localQueryParam.start && this.localQueryParam.start[0] ?  this.localQueryParam.start[0].format('YYYY-MM-DD') : undefined,
+          start_1: this.localQueryParam.start && this.localQueryParam.start[1] ?  this.localQueryParam.start[1].format('YYYY-MM-DD') : undefined,
+          vehicle: this.localQueryParam.vehicle,
+          driver: this.localQueryParam.driver,
+          customer: this.localQueryParam.customer,
+          status: this.queryParam.status
+        })).then(res => {
           return res.result;
         });
       }
