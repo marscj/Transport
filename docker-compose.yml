@@ -2,7 +2,6 @@ version: '3'
 services:
 
   db:
-    container_name: postgres
     image: postgres
     hostname: db_base
     restart: always
@@ -20,7 +19,6 @@ services:
   #     - redisdata:/data
 
   nginx:
-    container_name: nginx
     build: 
       context: ./
       dockerfile: ./nginx/Dockerfile
@@ -36,7 +34,6 @@ services:
       - backend
 
   backend:
-      container_name: backend
       build: ./backend
       command: "gunicorn --chdir backend --bind :8000 backend.wsgi:application" 
       restart: always
