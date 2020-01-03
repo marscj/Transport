@@ -1,4 +1,5 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CompressionPlugin = require("compression-webpack-plugin")
 
 module.exports = {
   publicPath: '/',
@@ -19,6 +20,13 @@ module.exports = {
       'moment': 'moment',
       // 'vuesax': 'vuesax',
     },
+    plugins: [
+      new CompressionPlugin({
+        test: /\.js$|\.html$|\.css/,
+        threshold: 10240,
+        deleteOriginalAssets: false
+      })
+    ]
   },
   devServer: {
     port: 8001,

@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d209428"],{a7fb:function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("h4",[e._v("This is VerifyEmail Page.")])},i=[],l=t("2877"),s={},u=Object(l["a"])(s,a,i,!1,null,null,null);n["default"]=u.exports}}]);
-//# sourceMappingURL=chunk-2d209428.58de6781.js.map
