@@ -9,7 +9,7 @@
           <a href="#contact-us" class="px-6 py-3 font-bold uppercase hover:text-primary">Contact us</a>
           <a href="#price" class="px-6 py-3 font-bold uppercase hover:text-primary">Price</a>
           
-          <a v-if="user" class="px-6 py-3 uppercase text-white">
+          <a v-if="user.displayName" class="px-6 py-3 uppercase text-white">
             {{user.displayName}}
           </a> 
           <a

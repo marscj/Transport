@@ -7,7 +7,7 @@ from django.db.models import Count
 import django_filters
 from django_filters.fields import Lookup
 
-from middleware.permission import CustomModelPermissions
+from middleware.permission import CustomModelPermissions, CustomModelOrSafePermissions
 from .models import Itinerary, Category, Price, Vehicle
 from .serializers import ItinerarySerializer, CategorySerializer, PriceSerializer, VehicleSerializer, SeatSerializer
 
@@ -43,7 +43,7 @@ class CategoryView(ModelViewSet):
 
 class PriceView(ModelViewSet):
     serializer_class = PriceSerializer
-    permission_classes = [DjangoModelPermissions]
+    permission_classes = [CustomModelOrSafePermissions]
     queryset = Price.objects.order_by('category', 'itinerary')
 
     filterset_fields = ('category')

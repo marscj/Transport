@@ -12,6 +12,14 @@ class IsAuthenticatedAndReadOnly(BasePermission):
             request.user.is_authenticated
         )
 
+class CustomModelOrSafePermissions(BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        else:
+            return CustomModelPermissions.has_permission(request, view)
+
 class CustomModelPermissions(DjangoModelPermissions):
     
     perms_map = {
