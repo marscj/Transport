@@ -8,15 +8,15 @@ ALLOWED_HOSTS = ['ubangservice.com', '127.0.0.1']
 
 CORS_ORIGIN_ALLOW_ALL = False
 
-CACHEOPS_REDIS = "redis://redis:6379/0"
+# CACHEOPS_REDIS = "redis://redis:6379/0"
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'password123',
-        'HOST': 'db',
+        'PASSWORD': 'Z)<f[>sOXXcBJ>wi',
+        'HOST': 'db_base',
         'PORT': 5432,
     }
 }
