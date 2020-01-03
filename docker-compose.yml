@@ -3,7 +3,7 @@ services:
 
   db:
     image: postgres
-    hostname: db_base
+    hostname: db
     restart: always
     environment:
       POSTGRES_PASSWORD: Z)<f[>sOXXcBJ>wi
