@@ -4,6 +4,7 @@ djangorestframework_jwt==1.11.0
 Django==3.0
 django_filters==0.2.1
 djangorestframework==3.11.0
+rest_framework_extensions
 django-cors-headers
 psycopg2
 uwsgi
