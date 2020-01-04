@@ -64,7 +64,7 @@
 
           <validation-provider name="groups_id" rules v-slot="{ errors }">
             <a-form-item label="Group">
-              <v-select v-model="groups" :options="groupData" multiple label="name"></v-select>
+              <v-select v-model="groups" :options="groupData" multiple label="name" :disabled="!canChangeGroup"></v-select>
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
@@ -130,6 +130,9 @@ export default {
     },
     isEdit() {
       return Object.entries(this.data).length === 0;
+    },
+    canChangeGroup() {
+      return this.$auth("user.change_group") 
     }
   },
   data() {
