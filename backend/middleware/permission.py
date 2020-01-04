@@ -12,14 +12,6 @@ class IsAuthenticatedAndReadOnly(BasePermission):
             request.user.is_authenticated
         )
 
-class CustomModelOrSafePermissions(BasePermission):
-    
-    def has_permission(self, request, view):
-        if request.method in SAFE_METHODS:
-            return True
-        else:
-            return CustomModelPermissions.has_permission(request, view)
-
 class CustomModelPermissions(DjangoModelPermissions):
     
     perms_map = {
@@ -31,3 +23,11 @@ class CustomModelPermissions(DjangoModelPermissions):
         'PATCH': ['%(app_label)s.change_%(model_name)s'],
         'DELETE': ['%(app_label)s.delete_%(model_name)s'],
     }
+
+class CustomModelOrSafePermissions(DjangoModelPermissions):
+    
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        
+        return super().has_permission(request, view)
