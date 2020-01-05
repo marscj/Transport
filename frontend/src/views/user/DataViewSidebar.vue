@@ -60,7 +60,7 @@
 
           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
-          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full">Admin</vs-checkbox>
+          <vs-checkbox v-model="form.is_superuser" class="mt-5 w-full" disabled>Admin</vs-checkbox>
 
           <validation-provider name="groups_id" rules v-slot="{ errors }">
             <a-form-item label="Group">
