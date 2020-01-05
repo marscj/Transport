@@ -41,8 +41,11 @@ class OrderView(CreateSerializerMixin, ModelViewSet):
     def get_permissions(self):
         if self.action == 'create':
             self.permission_classes = [IsAuthenticated]
-        else: 
-            self.permission_classes = [IsAuthenticated, CustomModelPermissions]
+        else:
+            if self.request.user.is_authenticated and (self.request.user.role == User.Role.Customer or self.request.user.role == User.Role.Driver):
+                self.permission_classes = [IsAuthenticated]
+            else:
+                self.permission_classes = [IsAuthenticated, CustomModelPermissions]
 
         return super().get_permissions()
 

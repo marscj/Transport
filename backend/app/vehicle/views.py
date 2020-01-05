@@ -57,7 +57,7 @@ class PriceView(ModelViewSet):
         try:
             price = Price.objects.get(category__name=category, itinerary__id=itinerary)
         except Price.DoesNotExist:
-            return Http404
+            return Response('not found!', status=404)
 
         return Response({'price': price.price})
 
