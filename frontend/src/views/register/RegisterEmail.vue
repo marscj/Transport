@@ -14,7 +14,7 @@
             <span>{{ errors[0] }}</span>
           </validation-provider>
         </div>
-      </div> -->
+      </div>-->
 
       <validation-provider name="email" rules="email|required" v-slot="{ errors }">
         <vs-input
@@ -24,7 +24,19 @@
           label-placeholder="Email"
           placeholder="Email"
           v-model="email"
-          class="w-full mt-6"
+          class="w-full pt-6"
+        />
+        <span>{{ errors[0] }}</span>
+      </validation-provider>
+
+      <validation-provider name="phone" rules="required" v-slot="{ errors }">
+        <vs-input
+          data-vv-validate-on="blur"
+          name="phone"
+          label-placeholder="Phone"
+          placeholder="Phone"
+          v-model="phone"
+          class="w-full pt-6"
         />
         <span>{{ errors[0] }}</span>
       </validation-provider>
@@ -38,7 +50,7 @@
           label-placeholder="Password"
           placeholder="Password"
           v-model="password1"
-          class="w-full mt-6"
+          class="w-full pt-6"
         />
         <span>{{ errors[0] }}</span>
       </validation-provider>
@@ -52,7 +64,7 @@
           label-placeholder="Confirm Password"
           placeholder="Confirm Password"
           v-model="password2"
-          class="w-full mt-6"
+          class="w-full pt-6"
         />
         <span>{{ errors[0] }}</span>
       </validation-provider>
@@ -73,6 +85,7 @@ export default {
       email: "",
       password1: "",
       password2: "",
+      phone: "",
       isTermsConditionAccepted: true
     };
   },
@@ -81,7 +94,8 @@ export default {
       return (
         // this.first_name != "" &&
         // this.last_name != "" &&
-        this.email != ""  &&
+        this.email != "" &&
+        this.phone != "" &&
         this.password1 != "" &&
         this.password2 != "" &&
         this.isTermsConditionAccepted === true
@@ -94,20 +108,22 @@ export default {
     },
     register() {
       this.$vs.loading();
-      this.$refs.observer.reset()
-      
+      this.$refs.observer.reset();
+
       const payload = {
         // first_name: this.first_name,
         // last_name: this.last_name,
         email: this.email,
+        phone: this.phone,
         password1: this.password1,
         password2: this.password2,
         notify: this.$vs.notify
       };
-      
+
       this.$store
-        .dispatch("register", payload).then(() => {
-          this.$router.push({ name: 'order'})
+        .dispatch("register", payload)
+        .then(() => {
+          this.$router.push({ name: "order" });
         })
         .catch(error => {
           this.$vs.notify({
@@ -117,7 +133,7 @@ export default {
             icon: "icon-alert-circle",
             color: "danger"
           });
-          if(error.response) {
+          if (error.response) {
             this.$refs.observer.setErrors(error.response.data.result);
           }
         })

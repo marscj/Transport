@@ -104,6 +104,13 @@
             </validation-provider>
           </a-form-item>
 
+          <a-form-item label="PHONE" required>
+            <validation-provider name="phone" rules="required" v-slot="{ errors }">
+              <a-input v-model="userForm.phone"></a-input>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
           <a-form-item label="PASSWORD">
             <validation-provider name="password1" rules="required|max:16|min:8" v-slot="{ errors }">
               <a-input-password v-model="userForm.password1" />
@@ -116,6 +123,10 @@
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
+
+          <validation-provider name="non_field_errors" v-slot="{ errors }">
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
         </a-form>
       </validation-observer>
     </a-modal>
@@ -123,7 +134,8 @@
 </template>
 
 <script>
-import { getUser, createUser } from "@/http/requests/user/index.js";
+import { getUser } from "@/http/requests/user/index.js";
+import { register } from "@/http/requests/auth/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 import STable from "@/components/s-table";
 
@@ -246,9 +258,10 @@ export default {
       }
     },
     createUserData() {
-      createUser(this.userForm)
+      register(this.userForm)
         .then(() => {
           this.isShowNew = false;
+          this.$refs.table.refresh();
         })
         .catch(error => {
           if (error.response) {
