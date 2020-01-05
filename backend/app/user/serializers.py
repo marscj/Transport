@@ -1,7 +1,7 @@
 from rest_framework import serializers, exceptions
 
 from django.conf import settings
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import get_user_model, authenticate, password_validation
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm

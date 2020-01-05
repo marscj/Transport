@@ -16,6 +16,10 @@ export function createUser(data) {
   return axios.post("users/", data)
 }
 
+export function changePassword(pk, data) {
+  return axios.post("users/" + `${pk}/admin_change_password/`, data)
+}
+
 export function getGroup() {
   return axios.get("groups/")
 }

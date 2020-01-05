@@ -92,6 +92,15 @@
       <template slot="active" slot-scope="text, data">
         <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
       </template>
+
+      <template slot="action" slot-scope="text, data">
+        <feather-icon
+          icon="LockIcon"
+          svgClasses="w-5 h-5 hover:text-danger stroke-current"
+          class="ml-2"
+          @click.stop="openChangePassword(data.id)"
+        />
+      </template>
     </s-table>
 
     <a-modal v-model="isShowNew" title="CREATE USER" @ok="createUserData">
@@ -130,11 +139,28 @@
         </a-form>
       </validation-observer>
     </a-modal>
+
+    <a-modal v-model="isShowChange" title="CHANGE PASSWORD" @ok="changePasswordData">
+      <validation-observer ref="changePassword" v-slot="{ validate, dirty }">
+        <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-form-item label="PASSWORD">
+            <validation-provider name="password" rules="required|max:16|min:8" v-slot="{ errors }">
+              <a-input-password v-model="userForm.new_password" />
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <validation-provider name="non_field_errors" v-slot="{ errors }">
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
+        </a-form>
+      </validation-observer>
+    </a-modal>
   </vs-card>
 </template>
 
 <script>
-import { getUser } from "@/http/requests/user/index.js";
+import { getUser, changePassword } from "@/http/requests/user/index.js";
 import { register } from "@/http/requests/auth/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 import STable from "@/components/s-table";
@@ -165,6 +191,8 @@ export default {
       localQueryParam: Object.assign({}, this.queryParam),
       Role,
       isShowNew: false,
+      isShowChange: false,
+      changeUserId: undefined,
       userForm: {},
       columns: [
         {
@@ -223,6 +251,11 @@ export default {
           align: "center",
           width: 40,
           sorter: true
+        },
+        {
+          title: "ACTION",
+          scopedSlots: { customRender: "action" },
+          width: 40,
         }
       ],
       addNewDataSidebar: false,
@@ -268,7 +301,23 @@ export default {
             this.$refs.observer.setErrors(error.response.data.result);
           }
         });
-    }
+    },
+    openChangePassword(id) {
+      this.isShowChange = true;
+      this.userForm = {};
+      this.changeUserId = id;
+    },
+    changePasswordData() {
+      changePassword(this.changeUserId, this.userForm)
+        .then(() => {
+          this.isShowChange = false;
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.changePassword.setErrors(error.response.data.result);
+          }
+        });
+    },
   }
 };
 </script>
