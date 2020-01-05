@@ -63,6 +63,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
         instance.relatedId = validated_data.get('relatedId', instance.relatedId)
         instance.status = validated_data.get('status', instance.status)
+        instance.is_lock = validated_data.get('is_lock', instance.is_lock)
         instance.start_date = validated_data.get('start_date', instance.start_date)
         instance.category = validated_data.get('category', instance.category)
         instance.seats = validated_data.get('seats', instance.seats)
@@ -74,6 +75,9 @@ class OrderSerializer(serializers.ModelSerializer):
         instance.customer_id = validated_data.get('customer_id', instance.customer_id)
         instance.operator_id = validated_data.get('operator_id', instance.operator_id)
         instance.invoice_id = validated_data.get('invoice_id', instance.invoice_id)
+
+        if instance.status != Order.OrderStatus.New:
+            instance.is_lock = True
         
         if instance.operator_id is None and self.get_user().role == User.Role.Operator:
             instance.operator_id = self.get_user().id
