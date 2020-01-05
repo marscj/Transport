@@ -124,7 +124,7 @@
 
           <a-form-item label="STATUS" class="flex-1 mx-6">
             <a-select class="w-full" v-model="form.status" :disabled="!canChangeOrder">
-              <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
+              <a-select-option v-for="(data, index) in Status" :key="data" :value="data" :disabled="index > 2">{{data}}</a-select-option>
             </a-select>
           </a-form-item>
 
