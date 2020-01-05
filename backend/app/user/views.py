@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.models import Group, Permission
 
 from middleware.permission import IsAuthenticatedAndReadOnly, CustomModelPermissions
-from .serializers import UserDetailSerializer, GroupDetailSerializer, PermissionSerializer
+from .serializers import UserDetailSerializer, GroupDetailSerializer, PermissionSerializer, ChangePasswordSerializer
 from .models import User
 
 class UserFilter(django_filters.FilterSet):
@@ -33,6 +33,15 @@ class UserView(ModelViewSet):
     def info(self, request):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated, DjangoModelPermissions])
+    def admin_change_password(self, request, pk=None):
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid(raise_exception=True):
+            user = self.get_object()
+            user.set_password(serializer.data.get('new_password'))
+            user.save()
+            return Response({'result': 'ok'})
 
 class UserGroupView(ModelViewSet):
     serializer_class = GroupDetailSerializer

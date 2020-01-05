@@ -87,6 +87,21 @@ class UserSimpleSerializer(serializers.ModelSerializer):
             'id', 'username', 'phone'
         )
 
+class ChangePasswordSerializer(serializers.Serializer):
+
+    new_password = serializers.CharField(max_length=128)
+
+    def get_current_user(self):
+        return self.context['request'].user
+
+    def validate(self, data):
+        new_password = data.get('new_password', None)
+
+        if new_password is not None:
+            password_validation.validate_password(new_password)
+
+        return super().validate(data)
+
 class RegisterSerializer(serializers.Serializer):
     username = serializers.CharField(
         max_length=get_username_max_length(),
