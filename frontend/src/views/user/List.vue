@@ -94,7 +94,7 @@
       </template>
     </s-table>
 
-    <a-modal v-model="isShowNew" title="CREATE USER">
+    <a-modal v-model="isShowNew" title="CREATE USER" @ok="createUserData">
       <validation-observer ref="observer" v-slot="{ validate, dirty }">
         <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
           <a-form-item label="EMAIL" required>
@@ -105,12 +105,16 @@
           </a-form-item>
 
           <a-form-item label="PASSWORD">
-            <a-input-password v-model="password1" />
-            <span>{{ errors[0] }}</span>
+            <validation-provider name="password1" rules="required|max:16|min:8" v-slot="{ errors }">
+              <a-input-password v-model="userForm.password1" />
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
           <a-form-item label="PASSWORD">
-            <a-input-password v-model="password2" />
-            <span>{{ errors[0] }}</span>
+            <validation-provider name="password2" rules="required|max:16|min:8" v-slot="{ errors }">
+              <a-input-password v-model="userForm.password2" />
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
         </a-form>
       </validation-observer>
@@ -119,7 +123,7 @@
 </template>
 
 <script>
-import { getUser } from "@/http/requests/user/index.js";
+import { getUser, createUser } from "@/http/requests/user/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 import STable from "@/components/s-table";
 
@@ -222,8 +226,8 @@ export default {
   },
   methods: {
     addNewData() {
-      this.isShowNew = true
-      this.userForm = {}
+      this.isShowNew = true;
+      this.userForm = {};
     },
     editData(data) {
       if (this.selectModel) {
@@ -241,6 +245,17 @@ export default {
         this.$refs.table.refresh();
       }
     },
+    createUserData() {
+      createUser(this.userForm)
+        .then(() => {
+          this.isShowNew = false;
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        });
+    }
   }
 };
 </script>
