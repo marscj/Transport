@@ -161,9 +161,9 @@ REST_FRAMEWORK = {
 #     'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
 # }
 
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
-# }
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
+}
 
 AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",

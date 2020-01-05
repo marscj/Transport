@@ -10,21 +10,30 @@
       <div class="flex flex-wrap pt-4">
         <div class="px-4">
           <a-form-item label="USERNAME">
-            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.username"></a-input>
+            <a-input
+              class="hover:border-teal-500 focus:border-teal-500"
+              v-model="localQueryParam.username"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="EMAIL">
-            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.email"></a-input>
+            <a-input
+              class="hover:border-teal-500 focus:border-teal-500"
+              v-model="localQueryParam.email"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="COMPANY">
-            <a-input class="hover:border-teal-500 focus:border-teal-500" v-model="localQueryParam.company"></a-input>
+            <a-input
+              class="hover:border-teal-500 focus:border-teal-500"
+              v-model="localQueryParam.company"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
-          <a-form-item label="Role" >
+          <a-form-item label="Role">
             <a-select v-model="localQueryParam.role" class="w-64" allowClear>
               <a-select-option v-for="data in Role" :key="data" :value="data">{{data}}</a-select-option>
             </a-select>
@@ -84,6 +93,28 @@
         <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
       </template>
     </s-table>
+
+    <a-modal v-model="isShowNew" title="CREATE USER">
+      <validation-observer ref="observer" v-slot="{ validate, dirty }">
+        <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-form-item label="EMAIL" required>
+            <validation-provider name="email" rules="email|required" v-slot="{ errors }">
+              <a-input v-model="userForm.email"></a-input>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="PASSWORD">
+            <a-input-password v-model="password1" />
+            <span>{{ errors[0] }}</span>
+          </a-form-item>
+          <a-form-item label="PASSWORD">
+            <a-input-password v-model="password2" />
+            <span>{{ errors[0] }}</span>
+          </a-form-item>
+        </a-form>
+      </validation-observer>
+    </a-modal>
   </vs-card>
 </template>
 
@@ -107,9 +138,9 @@ export default {
     queryParam: {
       type: Object,
       default: () => {
-        return { 
+        return {
           is_active: true
-        }
+        };
       }
     }
   },
@@ -117,6 +148,8 @@ export default {
     return {
       localQueryParam: Object.assign({}, this.queryParam),
       Role,
+      isShowNew: false,
+      userForm: {},
       columns: [
         {
           title: "USERNAME",
@@ -179,16 +212,18 @@ export default {
       addNewDataSidebar: false,
       sidebarData: {},
       loadData: parameter => {
-        return getUser(Object.assign(parameter, this.localQueryParam)).then(res => {
-          return res.result;
-        });
+        return getUser(Object.assign(parameter, this.localQueryParam)).then(
+          res => {
+            return res.result;
+          }
+        );
       }
     };
   },
   methods: {
     addNewData() {
-      this.sidebarData = Object.assign({});
-      this.toggleDataSidebar(true);
+      this.isShowNew = true
+      this.userForm = {}
     },
     editData(data) {
       if (this.selectModel) {
@@ -198,14 +233,14 @@ export default {
           this.sidebarData = data;
           this.toggleDataSidebar(true);
         }
-      } 
+      }
     },
     toggleDataSidebar(val = false) {
       this.addNewDataSidebar = val;
       if (!val) {
         this.$refs.table.refresh();
       }
-    }
+    },
   }
 };
 </script>

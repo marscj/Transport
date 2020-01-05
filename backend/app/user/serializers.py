@@ -88,14 +88,13 @@ class UserSimpleSerializer(serializers.ModelSerializer):
         )
 
 class RegisterSerializer(serializers.Serializer):
-    first_name = serializers.CharField(max_length=30)
-    last_name = serializers.CharField(max_length=150)
     username = serializers.CharField(
         max_length=get_username_max_length(),
         min_length=allauth_settings.USERNAME_MIN_LENGTH,
         required=allauth_settings.USERNAME_REQUIRED
     )
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
+    phone = serializers.CharField(required=True, max_length=64)
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
@@ -107,8 +106,8 @@ class RegisterSerializer(serializers.Serializer):
         email = get_adapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL:
             if email and email_address_exists(email):
-                msg = _("A user is already registered with this e-mail address.")
-                raise serializers.ValidationError(msg)
+                raise serializers.ValidationError(
+                    _("A user is already registered with this e-mail address."))
         return email
 
     def validate_password1(self, password):
@@ -116,8 +115,7 @@ class RegisterSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            msg = _("The two password fields didn't match.")
-            raise serializers.ValidationError({'password2': msg})
+            raise serializers.ValidationError(_("The two password fields didn't match."))
         return data
 
     def custom_signup(self, request, user):
@@ -126,10 +124,8 @@ class RegisterSerializer(serializers.Serializer):
     def get_cleaned_data(self):
         return {
             'username': self.validated_data.get('username', ''),
-            'first_name': self.validated_data.get('first_name', ''),
-            'last_name': self.validated_data.get('last_name', ''),
             'password1': self.validated_data.get('password1', ''),
-            'email': self.validated_data.get('email', ''),
+            'email': self.validated_data.get('email', '')
         }
 
     def save(self, request):

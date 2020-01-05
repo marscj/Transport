@@ -38,6 +38,14 @@ class OrderView(CreateSerializerMixin, ModelViewSet):
         
         return Order.objects.all()
 
+    def get_permissions(self):
+        if self.action == 'create':
+            self.permission_classes = [IsAuthenticated]
+        else: 
+            self.permission_classes = [IsAuthenticated, CustomModelPermissions]
+
+        return super().get_permissions()
+
 class OrderItineraryView(ModelViewSet):
     serializer_class = OrderItinerarySerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
