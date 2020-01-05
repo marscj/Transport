@@ -135,20 +135,8 @@ class RegisterSerializer(serializers.Serializer):
     def save(self, request):
         adapter = get_adapter()
         user = adapter.new_user(request)
-        try:
-            group = Group.objects.get(name='Customer')
-            user.groups.add(group)
-        except Group.DoesNotExist:
-            pass
-
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
-        return user
-
-    def create(self, validated_data):
-        group = Group.objects.get(name='Customer')
-        user = User.objects.create(**validated_data)
-        user.add(user)
         return user
