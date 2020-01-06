@@ -183,6 +183,47 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/admin/invoice',
+    redirect: '/admin/invoices',
+    component: () => import('@/layouts/main/Main.vue'),
+    meta: {
+      header: 'Invoice',
+      i18n: 'Invoice',
+      permission: ['invoice'],
+    },
+    children: [{
+        path: '/admin/invoices',
+        name: 'invoices',
+        component: () => import('@/views/invoice/List.vue'),
+        meta: {
+          name: 'Invoice',
+          url: '/admin/invoices',
+          slug: 'users',
+          i18n: 'Invoice',
+          icon: 'CircleIcon',
+          permission: ['invoice'],
+          breadcrumb: [{
+              title: 'Invoice',
+              url: '/admin/invoices'
+            },
+            {
+              title: 'Invoices',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/invoices/:id',
+        name: 'invoice_detail',
+        component: () => import('@/views/invoice/Detail.vue'),
+        meta: {
+          isDisabled: true,
+        }
+      }
+    ]
+  },
+  {
     path: '/admin/source',
     redirect: '/admin/itineraryies',
     component: () => import('@/layouts/main/Main.vue'),

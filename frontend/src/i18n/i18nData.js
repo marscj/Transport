@@ -15,7 +15,8 @@ export default {
 	Category: 'Category',
 	Price: 'Price',
 	CreateOrder: 'CreateOrder',
-	OrderDetail: 'OrderDetail'
+	OrderDetail: 'OrderDetail',
+	Invoice: 'Invoice',
   },
   zh: {
 	Dashboard: '仪表盘',
@@ -32,6 +33,7 @@ export default {
 	Category: '类别管理',
 	Price: '价格管理',
 	CreateOrder: '创建订单',
-	OrderDetail: '订单详情'
+	OrderDetail: '订单详情',
+	Invoice: '发票管理'
   }
 }
