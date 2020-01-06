@@ -336,7 +336,7 @@ export default {
           vehicle: this.localQueryParam.vehicle,
           driver: this.localQueryParam.driver,
           customer: this.localQueryParam.customer,
-          status: this.queryParam.status
+          status: this.localQueryParam.status
         })).then(res => {
           return res.result;
         });

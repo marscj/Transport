@@ -58,11 +58,8 @@ export default {
       ],
       loadData: parameter => {
         return getInvoices(Object.assign(parameter, {
-          create_0: this.localQueryParam.create && this.localQueryParam.create[0] ?  this.localQueryParam.create[0].format('YYYY-MM-DD') : undefined,
-          create_1: this.localQueryParam.create && this.localQueryParam.create[1] ?  this.localQueryParam.create[1].format('YYYY-MM-DD') : undefined,
-          start_0: this.localQueryParam.start && this.localQueryParam.start[0] ?  this.localQueryParam.start[0].format('YYYY-MM-DD') : undefined,
-          start_1: this.localQueryParam.start && this.localQueryParam.start[1] ?  this.localQueryParam.start[1].format('YYYY-MM-DD') : undefined,
-          status: this.queryParam.status
+          month: this.localQueryParam.month,
+          status: this.localQueryParam.status
         })).then(res => {
           return res.result;
         });
