@@ -162,9 +162,9 @@
         ><pre class="text-gray-700">{{text.username}}</pre></router-link>
       </template>
 
-      <template slot="invoice" slot-scope="text, data">
+      <template slot="invoice" slot-scope="text">
         <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
+          :to="{name: 'invoice_detail', params: {id: text.id}}"
           v-if="text"
         ><pre class="text-gray-700">{{text.status}}</pre></router-link>
         <pre v-else class="text-gray-700">unknow</pre>        
