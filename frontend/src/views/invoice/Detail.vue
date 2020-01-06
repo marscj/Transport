@@ -1,8 +1,8 @@
 <template>
   <vs-card>
-    
+    <div class="flex flex-wrap pt-4"></div>
     <a-divider />
-    <div class="flex flex-wrap pt-4">
+    <div class="flex flex-wrap">
       <div class="px-4">
         <a-form-item label="CUSTOMER">
           <a-input
@@ -38,13 +38,43 @@
     </div>
 
     <s-table
-      class="p-4"
       ref="table"
       :rowKey="(record) => record.id"
       :columns="columns"
       :data="loadData"
+      :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
       size="middle"
     >
+      <template slot="orderId" slot-scope="text, data">
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+          <p class="text-gray-700">{{text}}</p>
+        </router-link>
+      </template>
+
+      <template slot="relatedId" slot-scope="text, data">
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+          <pre class="text-gray-700">{{text}}</pre>
+        </router-link>
+      </template>
+
+      <template slot="start_date" slot-scope="text, data">
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
+      </template>
+
+      <template slot="vehicle" slot-scope="text, data">
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+          v-if="text"
+        ><pre class="text-gray-700">{{text.license_plate}}</pre></router-link>
+      </template>
+
+      <template slot="category" slot-scope="text, data">
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+          v-if="text"
+        ><pre class="text-gray-700">{{text}}</pre></router-link>
+      </template>
+
       <template slot="o-itinerary" slot-scope="text, data">
         <router-link :to="{name: 'order_detail', params: {id: data.id}}">
           <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal">
@@ -98,8 +128,10 @@ export default {
   data() {
     return {
       localQueryParam: {
-        status: "Confirm"
+        status: "Confirm",
+        invoice: true
       },
+      selectedRowKeys: [],
       columns: [
         {
           title: "ORDERID",
@@ -127,9 +159,18 @@ export default {
         },
         {
           title: "VEHICLE",
-          dataIndex: "vehicle.license_plate",
+          dataIndex: "vehicle",
+          scopedSlots: { customRender: "vehicle" },
           align: "center",
           width: 110,
+          sorter: true
+        },
+        {
+          title: "CATEGORY",
+          dataIndex: "category",
+          scopedSlots: { customRender: "category" },
+          align: "center",
+          width: 200,
           sorter: true
         },
         {
@@ -168,6 +209,12 @@ export default {
         );
       }
     };
+  },
+  methods: {
+    onSelectChange(selectedRowKeys) {
+      console.log("selectedRowKeys changed: ", selectedRowKeys);
+      this.selectedRowKeys = selectedRowKeys;
+    }
   }
 };
 </script>
