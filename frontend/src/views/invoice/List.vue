@@ -69,7 +69,7 @@ export default {
   methods: {
     addNewData() {
       this.$router.push({
-        name: "invoice_detail"
+        name: "invoice_create"
       });
     }
   }

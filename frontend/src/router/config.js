@@ -225,7 +225,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: '/admin/invoice/create',
+        path: '/admin/invoices/create',
         name: 'invoice_create',
         component: () => import('@/views/invoice/Detail.vue'),
         props: {

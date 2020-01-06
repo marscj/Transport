@@ -1,5 +1,42 @@
 <template>
   <vs-card>
+    
+    <a-divider />
+    <div class="flex flex-wrap pt-4">
+      <div class="px-4">
+        <a-form-item label="CUSTOMER">
+          <a-input
+            v-model="localQueryParam.customer"
+            class="hover:border-teal-500 focus:border-teal-500"
+          ></a-input>
+        </a-form-item>
+      </div>
+      <div class="px-4">
+        <a-form-item label="START DATE">
+          <a-range-picker
+            v-model="localQueryParam.start"
+            class="hover:border-teal-500 focus:border-teal-500"
+          ></a-range-picker>
+        </a-form-item>
+      </div>
+
+      <div class="px-4">
+        <a-form-item label="STATUS">
+          <a-select class="w-48" v-model="localQueryParam.status" disabled>
+            <a-select-option key="1" value="Confirm">Confirm</a-select-option>
+          </a-select>
+        </a-form-item>
+      </div>
+      <div class="px-4">
+        <a-form-item>
+          <button
+            @click="()=>$refs.table.refresh()"
+            class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
+          >Search</button>
+        </a-form-item>
+      </div>
+    </div>
+
     <s-table
       class="p-4"
       ref="table"
@@ -18,9 +55,13 @@
         </router-link>
       </template>
 
-       <template slot="price" slot-scope="text, data">
+      <template slot="price" slot-scope="text, data">
         <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal text-pink-500">
+          <pre
+            v-for="pre in text"
+            :key="pre.id"
+            class="whitespace-no-wrap font-normal text-pink-500"
+          >
             <span>{{pre.price}}</span>
           </pre>
         </router-link>
@@ -28,7 +69,11 @@
 
       <template slot="payment" slot-scope="text, data">
         <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal text-pink-500">
+          <pre
+            v-for="pre in text"
+            :key="pre.id"
+            class="whitespace-no-wrap font-normal text-pink-500"
+          >
             <span>{{pre.payment}}</span>
           </pre>
         </router-link>
@@ -42,8 +87,6 @@ import { getOrders } from "@/http/requests/order";
 import STable from "@/components/s-table";
 import moment from "moment";
 
-const Status = ["New", "Confirm", "Cancel", "Complete", "Paid"];
-
 export default {
   props: {
     isEdit: Boolean,
@@ -54,8 +97,9 @@ export default {
   },
   data() {
     return {
-      Status,
-      localQueryParam: {},
+      localQueryParam: {
+        status: "Confirm"
+      },
       columns: [
         {
           title: "ORDERID",
@@ -77,6 +121,13 @@ export default {
           title: "STARTDATE",
           dataIndex: "start_date",
           scopedSlots: { customRender: "start_date" },
+          align: "center",
+          width: 110,
+          sorter: true
+        },
+        {
+          title: "VEHICLE",
+          dataIndex: "vehicle.license_plate",
           align: "center",
           width: 110,
           sorter: true
@@ -107,14 +158,6 @@ export default {
               ]
             }
           ]
-        },
-        {
-          title: "STATUS",
-          dataIndex: "status",
-          scopedSlots: { customRender: "status" },
-          align: "center",
-          width: 80,
-          sorter: true
         }
       ],
       loadData: parameter => {
