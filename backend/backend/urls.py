@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^api/', include('app.user.urls')),
     url(r'^api/', include('app.vehicle.urls')),
     url(r'^api/', include('app.order.urls')),
+     url(r'^api/', include('app.invoice.urls')),
 ]

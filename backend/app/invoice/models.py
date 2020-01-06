@@ -16,3 +16,5 @@ class Invoice(models.Model):
 
     end_date = models.DateField(blank=True, null=True)
 
+    remark = models.TextField(blank=True, null=True)
+
