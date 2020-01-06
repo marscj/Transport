@@ -14,7 +14,9 @@ class Invoice(models.Model):
 
     status = models.CharField(default=Status.Unpaid, choices=Status.choices, max_length=16, blank=True, null=True)
 
-    date = models.CharField(blank=True, null=True, max_length=64)
+    start_date = models.DateField(blank=True, null=True)
+
+    end_date = models.DateField(blank=True, null=True)
 
     remark = models.TextField(blank=True, null=True)
 

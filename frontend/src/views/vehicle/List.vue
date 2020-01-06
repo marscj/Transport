@@ -240,7 +240,7 @@ export default {
     },
     deleteData(id) {
       deleteVehicle(id).then(() => {
-        this.result()
+        this.refresh()
       });
     },
     refresh() {

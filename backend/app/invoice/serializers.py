@@ -3,10 +3,16 @@ from django.db import transaction
 
 from .models import Invoice
 from app.order.models import Order
+from app.user.serializers import UserSimpleSerializer
+from app.user.models import User
 
 class InvoiceSerlizer(serializers.ModelSerializer):
 
     order = serializers.PrimaryKeyRelatedField(required=False, allow_null=True, many=True, queryset=Order.objects.all())
+
+    customer = UserSimpleSerializer(read_only=True)
+
+    customer_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=User.objects.all())
  
     class Meta:
         model = Invoice
@@ -27,8 +33,12 @@ class InvoiceSerlizer(serializers.ModelSerializer):
     @transaction.atomic
     def update(self, instance, validated_data):
         instance.status = validated_data.get('status', instance.status)
-        instance.date = validated_data.get('date', instance.date)
+        instance.start_date = validated_data.get('start_date', instance.start_date)
+        instance.end_date = validated_data.get('end_date', instance.end_date)
         instance.remark = validated_data.get('remark', instance.remark)
+        instance.customer = validated_data.get('customer_id', instance.customer)
+
+        print(instance.start_date, '----')
 
         orders = validated_data.pop('order', None)
         
