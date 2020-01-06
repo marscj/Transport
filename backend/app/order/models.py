@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 
 from app.vehicle.models import Vehicle, Itinerary
 from app.user.models import User
@@ -56,6 +57,10 @@ class Order(models.Model):
         permissions = [
             ("change_lock", "Can change the lock"),
         ]
+
+    @property
+    def total(self):
+        return self.order_itinerary.aggregate(sum=Sum('payment'))['sum'] or 0.0
         
 class OrderItinerary(models.Model):
 

@@ -39,6 +39,9 @@
       :data="loadData"
       :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
       :showPagination="false"
+      :alert="{
+        show: true,
+      }"
     >
       <template slot="orderId" slot-scope="text, data">
         <router-link :to="{name: 'order_detail', params: {id: data.id}}">
@@ -103,14 +106,20 @@
           </pre>
         </router-link>
       </template>
+
+      <template slot="total" slot-scope="text, data">
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+          <pre> <span>{{text}}</span></pre>
+        </router-link>
+      </template>
     </s-table>
 
     <div class="flex flex-wrap">
-      <div class="p-4">
-        <a-button type="primary"  @click="createInvoiceData()">Create</a-button>
+      <div class="p-4" v-if="!isEdit">
+        <a-button type="primary" @click="createInvoiceData()">Create</a-button>
       </div>
-      <div class="p-4">
-        <a-button type="primary"  @click="updateInvoiceData()">Update</a-button>
+      <div class="p-4" v-else>
+        <a-button type="primary" @click="updateInvoiceData()">Update</a-button>
       </div>
     </div>
   </vs-card>
@@ -140,7 +149,7 @@ export default {
         status: "Unpaid"
       },
       localQueryParam: {
-        status: "Confirm",
+        status: "Confirm"
       },
       selectedRowKeys: [],
       columns: [
@@ -199,12 +208,21 @@ export default {
                   title: "PRICE(AED)",
                   dataIndex: "order_itinerary",
                   scopedSlots: { customRender: "price" },
+                  align: "center",
                   width: 100
                 },
                 {
                   title: "PAYMENT(AED)",
                   dataIndex: "order_itinerary",
                   scopedSlots: { customRender: "payment" },
+                  align: "center",
+                  width: 100
+                },
+                {
+                  title: "TOTAL(AED)",
+                  dataIndex: "total",
+                  scopedSlots: { customRender: "total" },
+                  align: "center",
                   width: 100
                 }
               ]
@@ -229,7 +247,9 @@ export default {
     };
   },
   mounted() {
-    this.getInvoiceData();
+    if (this.isEdit) {
+      this.getInvoiceData();
+    }
   },
   methods: {
     onSelectChange(selectedRowKeys) {
@@ -238,8 +258,8 @@ export default {
     getInvoiceData() {
       getInvoice(this.$route.params.id).then(res => {
         this.formData = res.result;
-        this.selectedRowKeys = this.formData.order
-      })
+        this.selectedRowKeys = this.formData.order;
+      });
     },
     createInvoiceData() {
       createInvoice({
@@ -248,7 +268,10 @@ export default {
         remark: this.formData.remark,
         order: this.selectedRowKeys
       }).then(res => {
-
+        this.$router.replace({
+          name: "invoice_detail",
+          params: { id: res.result.id }
+        });
       });
     },
     updateInvoiceData() {
@@ -257,9 +280,7 @@ export default {
         date: this.formData.date,
         remark: this.formData.remark,
         order: this.selectedRowKeys
-      }).then(res => {
-
-      });
+      }).then(res => {});
     }
   }
 };

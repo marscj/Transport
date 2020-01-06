@@ -72,7 +72,6 @@ export default {
     }
   }),
   watch: {
-
     'localPagination.current' (val) {
       this.pageURI && this.$router.push({
         ...this.$route,

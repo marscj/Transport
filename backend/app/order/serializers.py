@@ -54,7 +54,11 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = (
+            'id', 'orderId', 'relatedId', 'create_at', 'start_date', 'end_date', 'vehicle', 'vehicle_id', 
+            'status', 'is_lock', 'category', 'seats', 'passenger', 'remark', 'itinerary',
+            'driver', 'driver_id', 'operator', 'operator_id', 'customer', 'customer_id', 'invoice', 'invoice_id', 'order_itinerary', 'total'
+        )
 
     def get_user(self):
         return self.context['request'].user
