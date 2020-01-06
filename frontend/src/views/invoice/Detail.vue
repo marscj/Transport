@@ -38,7 +38,7 @@
       :columns="columns"
       :data="loadData"
       :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
-      size="middle"
+      :showPagination="false"
     >
       <template slot="orderId" slot-scope="text, data">
         <router-link :to="{name: 'order_detail', params: {id: data.id}}">
@@ -108,6 +108,9 @@
     <div class="flex flex-wrap">
       <div class="p-4">
         <a-button type="primary"  @click="createInvoiceData()">Create</a-button>
+      </div>
+      <div class="p-4">
+        <a-button type="primary"  @click="updateInvoiceData()">Update</a-button>
       </div>
     </div>
   </vs-card>
@@ -225,16 +228,35 @@ export default {
       }
     };
   },
+  mounted() {
+    this.getInvoiceData();
+  },
   methods: {
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys;
+    },
+    getInvoiceData() {
+      getInvoice(this.$route.params.id).then(res => {
+        this.formData = res.result;
+        this.selectedRowKeys = this.formData.order
+      })
     },
     createInvoiceData() {
       createInvoice({
         status: this.formData.status,
         date: this.formData.date,
         remark: this.formData.remark,
-        orderIds: this.selectedRowKeys
+        order: this.selectedRowKeys
+      }).then(res => {
+
+      });
+    },
+    updateInvoiceData() {
+      updateInvoice(this.$route.params.id, {
+        status: this.formData.status,
+        date: this.formData.date,
+        remark: this.formData.remark,
+        order: this.selectedRowKeys
       }).then(res => {
 
       });
