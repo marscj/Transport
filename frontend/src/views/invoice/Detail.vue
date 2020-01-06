@@ -1,44 +1,39 @@
 <template>
-  <vs-card>
-    <div class="flex flex-wrap pt-4"></div>
-    <a-divider />
-    <div class="flex flex-wrap">
-      <div class="px-4">
-        <a-form-item label="CUSTOMER">
-          <a-input
-            v-model="localQueryParam.customer"
-            class="hover:border-teal-500 focus:border-teal-500"
-          ></a-input>
-        </a-form-item>
+  <vs-card class="py-4">
+    <validation-observer ref="observer" v-slot="{ validate, dirty }">
+      <div class="flex flex-wrap">
+        <div class="flex-1 px-4">
+          <a-form-item label="Customer">
+            <a-input v-model="formData.customer"></a-input>
+          </a-form-item>
+        </div>
+        <div class="flex-1 px-4">
+          <a-form-item label="Date">
+            <a-range-picker v-model="formData.date"></a-range-picker>
+          </a-form-item>
+        </div>
+        <div class="flex-1 px-4">
+          <a-form-item label="Status">
+            <a-select v-model="formData.status" class="w-full">
+              <a-select-option key="1" value="Unpaid">Unpaid</a-select-option>
+              <a-select-option key="2" value="Paid">Paid</a-select-option>
+            </a-select>
+          </a-form-item>
+        </div>
+        <div class="flex-1 px-4">
+          <a-form-item label="Remark">
+            <a-textarea v-model="formData.remark" class="w-full"></a-textarea>
+          </a-form-item>
+        </div>
+        <validation-provider name="non_field_errors" v-slot="{ errors }">
+          <span>{{ errors[0] }}</span>
+        </validation-provider>
       </div>
-      <div class="px-4">
-        <a-form-item label="START DATE">
-          <a-range-picker
-            v-model="localQueryParam.start"
-            class="hover:border-teal-500 focus:border-teal-500"
-          ></a-range-picker>
-        </a-form-item>
-      </div>
-
-      <div class="px-4">
-        <a-form-item label="STATUS">
-          <a-select class="w-48" v-model="localQueryParam.status" disabled>
-            <a-select-option key="1" value="Confirm">Confirm</a-select-option>
-          </a-select>
-        </a-form-item>
-      </div>
-      <div class="px-4">
-        <a-form-item>
-          <button
-            @click="()=>$refs.table.refresh()"
-            class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
-          >Search</button>
-        </a-form-item>
-      </div>
-    </div>
+    </validation-observer>
 
     <s-table
       ref="table"
+      class="px-4"
       :rowKey="(record) => record.id"
       :columns="columns"
       :data="loadData"
@@ -58,21 +53,21 @@
       </template>
 
       <template slot="start_date" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+          <pre class="text-gray-700">{{text}}</pre>
+        </router-link>
       </template>
 
       <template slot="vehicle" slot-scope="text, data">
-        <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
-          v-if="text"
-        ><pre class="text-gray-700">{{text.license_plate}}</pre></router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">
+          <pre class="text-gray-700">{{text.license_plate}}</pre>
+        </router-link>
       </template>
 
       <template slot="category" slot-scope="text, data">
-        <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
-          v-if="text"
-        ><pre class="text-gray-700">{{text}}</pre></router-link>
+        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">
+          <pre class="text-gray-700">{{text}}</pre>
+        </router-link>
       </template>
 
       <template slot="o-itinerary" slot-scope="text, data">
@@ -127,6 +122,9 @@ export default {
   },
   data() {
     return {
+      formData: {
+        status: "Unpaid"
+      },
       localQueryParam: {
         status: "Confirm",
         invoice: true
@@ -199,7 +197,14 @@ export default {
               ]
             }
           ]
-        }
+        },
+        {
+          title: "CUSTOMER",
+          dataIndex: "customer.username",
+          align: "center",
+          width: 200,
+          sorter: true
+        },
       ],
       loadData: parameter => {
         return getOrders(Object.assign(parameter, this.localQueryParam)).then(
