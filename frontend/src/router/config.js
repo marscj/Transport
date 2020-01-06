@@ -217,6 +217,20 @@ export const asyncRouterMap = [
         path: '/admin/invoices/:id',
         name: 'invoice_detail',
         component: () => import('@/views/invoice/Detail.vue'),
+        props: {
+          isEdit: true,
+        },
+        meta: {
+          isDisabled: true,
+        }
+      },
+      {
+        path: '/admin/invoice/create',
+        name: 'invoice_create',
+        component: () => import('@/views/invoice/Detail.vue'),
+        props: {
+          isEdit: false
+        },
         meta: {
           isDisabled: true,
         }
