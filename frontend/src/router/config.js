@@ -198,7 +198,7 @@ export const asyncRouterMap = [
         meta: {
           name: 'Invoice',
           url: '/admin/invoices',
-          slug: 'users',
+          slug: 'invoices',
           i18n: 'Invoice',
           icon: 'CircleIcon',
           permission: ['invoice'],
