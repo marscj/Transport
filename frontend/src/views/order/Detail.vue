@@ -38,7 +38,9 @@
                 class="border px-4 py-3 text-center"
               >{{form.operator ? form.operator.username : ''}}</td>
               <td class="border px-4 py-3 text-center">
-                <a href="#" v-if="data">invoice</a>
+                <router-link :to="{name: 'invoice_detail', params: {id: form.invoice.id}}" v-if="form.invoice">
+                  <pre class="text-gray-700">{{form.invoice.status}}</pre>
+                </router-link>
                 <span v-else>unknow</span>
               </td>
             </tr>
@@ -124,7 +126,12 @@
 
           <a-form-item label="STATUS" class="flex-1 mx-6">
             <a-select class="w-full" v-model="form.status" :disabled="!canChangeOrder">
-              <a-select-option v-for="(data, index) in Status" :key="data" :value="data" :disabled="index > 2">{{data}}</a-select-option>
+              <a-select-option
+                v-for="(data, index) in Status"
+                :key="data"
+                :value="data"
+                :disabled="index > 2"
+              >{{data}}</a-select-option>
             </a-select>
           </a-form-item>
 
@@ -180,11 +187,7 @@
             </a-form-item>
             <a-form-item label="PAYMENT" required>
               <validation-provider name="payment" v-slot="{ errors }">
-                <a-input
-                  v-model="itinerary.payment"
-                  :disabled="!canEditPayment"
-                  addonAfter="AED"
-                ></a-input>
+                <a-input v-model="itinerary.payment" :disabled="!canEditPayment" addonAfter="AED"></a-input>
                 <span>{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
@@ -271,22 +274,28 @@ export default {
   },
   computed: {
     canChangeLock() {
-      return this.$auth("order.change_lock") 
+      return this.$auth("order.change_lock");
     },
     canChangeOrder() {
       return this.$auth("order.change_order") && !this.form.is_lock;
     },
     canDelItinerary() {
-      return this.$auth("orderitinerary.delete_orderitinerary") && !this.form.is_lock;
+      return (
+        this.$auth("orderitinerary.delete_orderitinerary") && !this.form.is_lock
+      );
     },
     canAddItinerary() {
-      return this.$auth('orderitinerary.add_orderitinerary') && !this.form.is_lock;
+      return (
+        this.$auth("orderitinerary.add_orderitinerary") && !this.form.is_lock
+      );
     },
     canChangeItinerary() {
-      return this.$auth("orderitinerary.change_orderitinerary") && !this.form.is_lock;
+      return (
+        this.$auth("orderitinerary.change_orderitinerary") && !this.form.is_lock
+      );
     },
     canEditPayment() {
-      return this.$auth('orderitinerary.edit_payment') && !this.form.is_lock;
+      return this.$auth("orderitinerary.edit_payment") && !this.form.is_lock;
     }
   },
   methods: {

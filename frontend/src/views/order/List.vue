@@ -162,9 +162,12 @@
         ><pre class="text-gray-700">{{text.username}}</pre></router-link>
       </template>
 
-      <template slot="invoice" slot-scope="text">
-        <a href="#" v-if="text">invoice</a>
-        <pre v-else class="text-gray-700">unknow</pre>
+      <template slot="invoice" slot-scope="text, data">
+        <router-link
+          :to="{name: 'order_detail', params: {id: data.id}}"
+          v-if="text"
+        ><pre class="text-gray-700">{{text.status}}</pre></router-link>
+        <pre v-else class="text-gray-700">unknow</pre>        
       </template>
     </s-table>
   </vs-card>
@@ -318,7 +321,7 @@ export default {
         },
         {
           title: "INVOICE",
-          dataIndex: "invoice_id",
+          dataIndex: "invoice",
           scopedSlots: { customRender: "invoice" },
           align: "center",
           width: 100,

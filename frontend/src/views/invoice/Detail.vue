@@ -104,11 +104,22 @@
         </router-link>
       </template>
     </s-table>
+
+    <div class="flex flex-wrap">
+      <div class="p-4">
+        <a-button type="primary"  @click="createInvoiceData()">Create</a-button>
+      </div>
+    </div>
   </vs-card>
 </template>
 
 <script>
 import { getOrders } from "@/http/requests/order";
+import {
+  getInvoice,
+  createInvoice,
+  updateInvoice
+} from "@/http/requests/invoice";
 import STable from "@/components/s-table";
 import moment from "moment";
 
@@ -127,7 +138,6 @@ export default {
       },
       localQueryParam: {
         status: "Confirm",
-        invoice: true
       },
       selectedRowKeys: [],
       columns: [
@@ -204,7 +214,7 @@ export default {
           align: "center",
           width: 200,
           sorter: true
-        },
+        }
       ],
       loadData: parameter => {
         return getOrders(Object.assign(parameter, this.localQueryParam)).then(
@@ -217,8 +227,17 @@ export default {
   },
   methods: {
     onSelectChange(selectedRowKeys) {
-      console.log("selectedRowKeys changed: ", selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys;
+    },
+    createInvoiceData() {
+      createInvoice({
+        status: this.formData.status,
+        date: this.formData.date,
+        remark: this.formData.remark,
+        orderIds: this.selectedRowKeys
+      }).then(res => {
+
+      });
     }
   }
 };

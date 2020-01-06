@@ -6,6 +6,7 @@ from .models import Order, OrderItinerary
 from app.user.models import User
 from app.user.serializers import UserSimpleSerializer
 from app.vehicle.serializers import VehicleSimpleSerializer, ItinerarySerializer
+from app.invoice.serializers import InvoiceSerlizer
 
 class OrderItinerarySerializer(serializers.ModelSerializer):
 
@@ -45,7 +46,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     customer_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
 
-    invoice = serializers.PrimaryKeyRelatedField(read_only=True)
+    invoice = InvoiceSerlizer(read_only=True)
 
     invoice_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
 
