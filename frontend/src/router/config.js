@@ -234,6 +234,24 @@ export const asyncRouterMap = [
         meta: {
           isDisabled: true,
         }
+      },
+    ]
+  },
+  {
+    path: '/admin/invoice',
+    name: 'invoice_preview',
+    component: () => import('@/layouts/full-page/FullPage.vue'),
+    meta: {
+      isDisabled: true,
+    },
+    children: [
+      {
+        path: '/admin/invoice/:id/preview',
+        name: 'invoice_preview',
+        component: () => import('@/views/invoice/Preview.vue'),
+        meta: {
+          isDisabled: true,
+        },
       }
     ]
   },

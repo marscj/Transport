@@ -209,15 +209,15 @@
                   <td class="border px-4 py-3 text-center" :key="index">{{_data.payment}}</td>
                 </tr>
                 <tr :key="data.id">
-                  <td class="border"> </td>
-                  <td class="border"> </td>
-                  <td class="border"> </td>
-                  <td class="border"> </td>
-                  <td class="border"> </td>
+                  <td class="border"></td>
+                  <td class="border"></td>
+                  <td class="border"></td>
+                  <td class="border"></td>
+                  <td class="border"></td>
                   <td class="border px-4 py-3 text-center">total: {{data.total}}</td>
                 </tr>
 
-                <div class="py-4" :key="data.id"/>
+                <div class="py-4" :key="data.id" />
               </template>
             </tbody>
           </table>
@@ -478,7 +478,10 @@ export default {
       });
     },
     exportPdf() {
-      print(document.querySelector('#pdfDom'))
+      this.$router.push({
+        name: "invoice_preview",
+        params: { id: this.formData.id }
+      });
     }
   }
 };

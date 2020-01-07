@@ -44,12 +44,13 @@
 // 导出页面为PDF格式
 import html2Canvas from 'html2canvas'
 import JsPDF from 'jspdf'
-export default{
-  install (Vue, options) {
+export default {
+  install(Vue, options) {
     Vue.prototype.getPdf = function () {
       let title = this.htmlTitle
       html2Canvas(document.querySelector('#pdfDom'), {
-        allowTaint: true
+        // allowTaint: true,
+        useCORS: true
       }).then(function (canvas) {
         let contentWidth = canvas.width
         let contentHeight = canvas.height
@@ -73,9 +74,7 @@ export default{
           }
         }
         PDF.save(title + '.pdf')
-      }
-      )
+      })
     }
   }
 }
-
