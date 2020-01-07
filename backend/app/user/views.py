@@ -12,6 +12,7 @@ from .serializers import UserDetailSerializer, GroupDetailSerializer, Permission
 from .models import User
 
 class UserFilter(django_filters.FilterSet):
+    id = django_filters.NumberFilter('id')
     role = django_filters.CharFilter('role')
     vehicle = django_filters.BooleanFilter('vehicle', lookup_expr='isnull')
     username = django_filters.CharFilter('username')

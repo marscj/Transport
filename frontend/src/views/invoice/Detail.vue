@@ -3,33 +3,45 @@
     <validation-observer ref="observer" v-slot="{ validate, dirty }">
       <div class="flex flex-wrap">
         <div class="flex-1 px-4">
-          <a-form-item label="Customer">
-            <a-select v-model="formData.customer" class="w-full" :disabled="isEdit">
-              <a-select-option
-                v-for="data in customerData"
-                :key="data.id"
-                :value="data"
-              >{{data.username}}</a-select-option>
-            </a-select>
-          </a-form-item>
+          <validation-provider name="customer_id" v-slot="{ errors }">
+            <a-form-item label="Customer">
+              <a-select v-model="formData.customer" class="w-full" :disabled="isEdit" allowClear>
+                <a-select-option
+                  v-for="data in customerData"
+                  :key="data.id"
+                  :value="data.id"
+                >{{data.username}}</a-select-option>
+              </a-select>
+            </a-form-item>
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
         </div>
         <div class="flex-1 px-4">
-          <a-form-item label="Date">
-            <a-range-picker v-model="selectDate" :disabled="isEdit"></a-range-picker>
-          </a-form-item>
+          <validation-provider name="start_date" v-slot="{ errors }">
+            <a-form-item label="Date">
+              <a-range-picker v-model="selectDate" :disabled="isEdit"></a-range-picker>
+            </a-form-item>
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
         </div>
         <div class="flex-1 px-4">
-          <a-form-item label="Status">
-            <a-select v-model="formData.status" class="w-full">
-              <a-select-option key="1" value="Unpaid">Unpaid</a-select-option>
-              <a-select-option key="2" value="Paid">Paid</a-select-option>
-            </a-select>
-          </a-form-item>
+          <validation-provider name="status" v-slot="{ errors }">
+            <a-form-item label="Status">
+              <a-select v-model="formData.status" class="w-full">
+                <a-select-option key="1" value="Unpaid">Unpaid</a-select-option>
+                <a-select-option key="2" value="Paid">Paid</a-select-option>
+              </a-select>
+            </a-form-item>
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
         </div>
         <div class="flex-1 px-4">
-          <a-form-item label="Remark">
-            <a-textarea v-model="formData.remark" class="w-full"></a-textarea>
-          </a-form-item>
+          <validation-provider name="remark" v-slot="{ errors }">
+            <a-form-item label="Remark">
+              <a-textarea v-model="formData.remark" class="w-full"></a-textarea>
+            </a-form-item>
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
         </div>
         <validation-provider name="non_field_errors" v-slot="{ errors }">
           <span>{{ errors[0] }}</span>
@@ -253,33 +265,31 @@ export default {
     };
   },
   mounted() {
-    console.log('1111')
     if (this.isEdit) {
-      console.log('22222')
       this.getInvoiceData();
     }
     this.getCustomerData();
   },
   watch: {
     selectDate(value) {
-      if (value && value[0] && value[1]) {
-        let start = moment(value[0]).format("YYYY-MM-DD");
-        let end = moment(value[1]).format("YYYY-MM-DD");
-        this.formData.start_date = start;
-        this.formData.end_date = end;
-        this.localQueryParam = Object.assign(this.localQueryParam, {
-          start_0: this.formData.start_date,
-          start_1: this.formData.end_date
-        });
-      }
+      let start = value[0] ? moment(value[0]).format("YYYY-MM-DD") : null;
+      let end = value[1] ? moment(value[1]).format("YYYY-MM-DD") : null;
+      this.formData.start_date = start;
+      this.formData.end_date = end;
+      this.localQueryParam = Object.assign(this.localQueryParam, {
+        start_0: this.formData.start_date,
+        start_1: this.formData.end_date
+      });
+      this.$refs.table.refresh();
     },
-    // 'localQueryParam': {
-    //   deep: true,
-    //   handler(oldValue, newValue){
-    //     console.log("111111");
-    //     this.$refs.table.refresh();
-    //   }
-    // }
+    "formData.customer"(val) {
+      this.localQueryParam.customer = val.username;
+      this.$refs.table.refresh();
+    },
+    "formData.status"(val) {
+      this.localQueryParam.status = val;
+      this.$refs.table.refresh();
+    }
   },
   methods: {
     getCustomerData() {
@@ -309,25 +319,52 @@ export default {
         start_date: this.formData.start_date,
         end_date: this.formData.end_date,
         remark: this.formData.remark,
-        customer_id: this.formData.customer ? this.formData.customer.id : null,
+        customer_id: this.formData.customer,
         order: this.selectedRowKeys
-      }).then(res => {
-        this.$router.replace({
-          name: "invoice_detail",
-          params: { id: res.result.id }
+      })
+        .then(res => {
+          this.$router.replace({
+            name: "invoice_detail",
+            params: { id: res.result.id }
+          });
+        })
+        .catch(error => {
+          this.$vs.notify({
+            title: "Error",
+            text: error.message,
+            iconPack: "feather",
+            icon: "icon-alert-circle",
+            color: "danger"
+          });
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         });
-      });
     },
     updateInvoiceData() {
-      console.log('3333')
       updateInvoice(this.$route.params.id, {
         status: this.formData.status,
         start_date: this.formData.start_date,
         end_date: this.formData.end_date,
         remark: this.formData.remark,
-        customer_id: this.formData.customer ? this.formData.customer.id : null,
+        customer_id: this.formData.customer,
         order: this.selectedRowKeys
-      }).then(res => {});
+      })
+        .then(res => {
+          this.formData = res.result;
+        })
+        .catch(error => {
+          this.$vs.notify({
+            title: "Error",
+            text: error.message,
+            iconPack: "feather",
+            icon: "icon-alert-circle",
+            color: "danger"
+          });
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        });
     }
   }
 };

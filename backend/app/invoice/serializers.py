@@ -12,7 +12,11 @@ class InvoiceSerlizer(serializers.ModelSerializer):
 
     customer = UserSimpleSerializer(read_only=True)
 
-    customer_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=User.objects.all())
+    customer_id = serializers.IntegerField(write_only=True)
+
+    start_date = serializers.DateField(required=True)
+
+    end_date = serializers.DateField(required=True)
  
     class Meta:
         model = Invoice
@@ -36,7 +40,7 @@ class InvoiceSerlizer(serializers.ModelSerializer):
         instance.start_date = validated_data.get('start_date', instance.start_date)
         instance.end_date = validated_data.get('end_date', instance.end_date)
         instance.remark = validated_data.get('remark', instance.remark)
-        instance.customer = validated_data.get('customer_id', instance.customer)
+        instance.customer_id = validated_data.get('customer_id', instance.customer_id)
 
         orders = validated_data.pop('order', None)
         
