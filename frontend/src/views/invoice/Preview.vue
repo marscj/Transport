@@ -15,7 +15,7 @@
       </div>
 
       <div class="mt-10">
-        <table class="table-auto w-full ">
+        <table class="table-auto w-full">
           <thead>
             <tr>
               <th class="w-40 text-center py-3">Start Date</th>
@@ -55,6 +55,9 @@
             </template>
           </tbody>
         </table>
+        <div class="flex items-end flex-col">
+          <pre>Total: {{total}}</pre>
+        </div>
       </div>
     </div>
   </div>
@@ -73,6 +76,11 @@ export default {
   },
   mounted() {
     this.getData();
+  },
+  computed: {
+    total() {
+      return this.$_.sum(this.selectedData.map(f => f.total));
+    }
   },
   methods: {
     getData() {
