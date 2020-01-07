@@ -38,8 +38,6 @@ class InvoiceSerlizer(serializers.ModelSerializer):
         instance.remark = validated_data.get('remark', instance.remark)
         instance.customer = validated_data.get('customer_id', instance.customer)
 
-        print(instance.start_date, '----')
-
         orders = validated_data.pop('order', None)
         
         if orders is not None:
