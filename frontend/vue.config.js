@@ -18,6 +18,8 @@ module.exports = {
       'ant-design-vue': 'antd',
       'lodash': '_',
       'moment': 'moment',
+      // 'html2canvas': 'html2Canvas',
+      // 'jspdf': 'JsPDF'
       // 'vuesax': 'vuesax',
     },
     plugins: [

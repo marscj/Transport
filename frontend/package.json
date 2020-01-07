@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.1",
+    "html2canvas": "^1.0.0-rc.5",
+    "jspdf": "^1.5.3",
     "material-icons": "^0.3.1",
     "prismjs": "^1.16.0",
     "vee-validate": "^3.0.11",

@@ -130,12 +130,7 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getInvoices(
-          Object.assign(parameter, {
-            month: this.localQueryParam.month,
-            status: this.localQueryParam.status
-          })
-        ).then(res => {
+        return getInvoices(Object.assign(parameter, this.localQueryParam)).then(res => {
           return res.result;
         });
       }

@@ -35,6 +35,11 @@ import store from './store/'
 // Directive
 import './utils/action'
 
+//pdf
+import htmlToPdf from '@/utils/htmlToPdf'
+Vue.use(htmlToPdf)
+
+
 import PermissionHelper from '@/utils/permission'
 Vue.use(PermissionHelper)
 

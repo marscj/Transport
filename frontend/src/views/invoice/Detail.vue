@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="pdfDom">
     <pre v-if="formData.invoiceId" class="py-4">ID: {{formData.invoiceId}}</pre>
     <vs-card class="py-4">
       <validation-observer ref="observer" v-slot="{ validate, dirty }">
@@ -158,7 +158,7 @@
         </div>
         
         <div class="p-4" v-if="isEdit">
-          <a-button type="primary" @click="download2PDF()">Exload</a-button>
+          <a-button type="primary" @click="getPdf()">Exload</a-button>
         </div>
       </div>
     </vs-card>
@@ -186,6 +186,7 @@ export default {
   },
   data() {
     return {
+      htmlTitle: '项目法律信息',
       formData: {
         status: "Unpaid"
       },
