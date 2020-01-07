@@ -91,6 +91,9 @@ export default {
         })
         .then(res => {
           this.selectedData = res.result;
+          this.$nextTick(() => {
+            window.print();
+          });
         });
     }
   }

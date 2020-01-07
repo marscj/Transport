@@ -103,6 +103,9 @@ export default {
     getOrderData() {
       return getOrder(this.$route.params.id).then(res => {
         this.form = res.result;
+        this.$nextTick(() => {
+          window.print();
+        }); 
       });
     }
   }
