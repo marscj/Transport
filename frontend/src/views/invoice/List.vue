@@ -15,7 +15,7 @@
       :columns="columns"
       :data="loadData"
     >
-      <template slot="id" slot-scope="text, data">
+      <template slot="invoiceId" slot-scope="text, data">
         <router-link :to="{name: 'invoice_detail', params: {id: data.id}}"><p class="text-gray-700">{{text}}</p></router-link>
       </template>
 
@@ -77,10 +77,10 @@ export default {
       columns: [
         {
           title: "ID",
-          dataIndex: "id",
-          scopedSlots: { customRender: "id" },
+          dataIndex: "invoiceId",
+          scopedSlots: { customRender: "invoiceId" },
           align: "center",
-          width: 80,
+          width: 200,
           sorter: true
         },
         {

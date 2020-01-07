@@ -8,6 +8,8 @@ class Invoice(models.Model):
         Unpaid = 'Unpaid'
         Paid = 'Paid'
 
+    invoiceId = models.CharField(blank=True, null=True, max_length=64)
+
     create_at = models.DateField(auto_now_add=True)
 
     change_at = models.DateTimeField(auto_now=True)

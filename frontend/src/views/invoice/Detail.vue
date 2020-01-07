@@ -1,143 +1,164 @@
 <template>
-  <vs-card class="py-4">
-    <validation-observer ref="observer" v-slot="{ validate, dirty }">
-      <div class="flex flex-wrap">
-        <div class="flex-1 px-4">
-          <validation-provider name="customer_id" v-slot="{ errors }">
-            <a-form-item label="Customer">
-              <a-select v-model="formData.customer" class="w-full" :disabled="isEdit" allowClear>
-                <a-select-option
-                  v-for="data in customerData"
-                  :key="data.id"
-                  :value="data.id"
-                >{{data.username}}</a-select-option>
-              </a-select>
-            </a-form-item>
+  <div>
+    <pre v-if="formData.invoiceId" class="py-4">ID: {{formData.invoiceId}}</pre>
+    <vs-card class="py-4">
+      <validation-observer ref="observer" v-slot="{ validate, dirty }">
+        <div class="flex flex-wrap">
+          <div class="flex-1 px-4">
+            <validation-provider name="customer_id" v-slot="{ errors }">
+              <a-form-item label="Customer">
+                <a-select
+                  v-model="formData.customer_id"
+                  class="w-full"
+                  :disabled="isEdit"
+                  allowClear
+                >
+                  <a-select-option
+                    v-for="data in customerData"
+                    :key="data.id"
+                    :value="data.id"
+                  >{{data.username}}</a-select-option>
+                </a-select>
+              </a-form-item>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="flex-1 px-4">
+            <validation-provider name="start_date" v-slot="{ errors }">
+              <a-form-item label="Date">
+                <a-range-picker v-model="selectDate" :disabled="isEdit"></a-range-picker>
+              </a-form-item>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="flex-1 px-4">
+            <validation-provider name="status" v-slot="{ errors }">
+              <a-form-item label="Status">
+                <a-select v-model="formData.status" class="w-full">
+                  <a-select-option key="1" value="Unpaid">Unpaid</a-select-option>
+                  <a-select-option key="2" value="Paid">Paid</a-select-option>
+                </a-select>
+              </a-form-item>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="flex-1 px-4">
+            <validation-provider name="remark" v-slot="{ errors }">
+              <a-form-item label="Remark">
+                <a-textarea v-model="formData.remark" class="w-full"></a-textarea>
+              </a-form-item>
+              <span>{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span>{{ errors[0] }}</span>
           </validation-provider>
         </div>
-        <div class="flex-1 px-4">
-          <validation-provider name="start_date" v-slot="{ errors }">
-            <a-form-item label="Date">
-              <a-range-picker v-model="selectDate" :disabled="isEdit"></a-range-picker>
-            </a-form-item>
-            <span>{{ errors[0] }}</span>
-          </validation-provider>
-        </div>
-        <div class="flex-1 px-4">
-          <validation-provider name="status" v-slot="{ errors }">
-            <a-form-item label="Status">
-              <a-select v-model="formData.status" class="w-full">
-                <a-select-option key="1" value="Unpaid">Unpaid</a-select-option>
-                <a-select-option key="2" value="Paid">Paid</a-select-option>
-              </a-select>
-            </a-form-item>
-            <span>{{ errors[0] }}</span>
-          </validation-provider>
-        </div>
-        <div class="flex-1 px-4">
-          <validation-provider name="remark" v-slot="{ errors }">
-            <a-form-item label="Remark">
-              <a-textarea v-model="formData.remark" class="w-full"></a-textarea>
-            </a-form-item>
-            <span>{{ errors[0] }}</span>
-          </validation-provider>
-        </div>
-        <validation-provider name="non_field_errors" v-slot="{ errors }">
-          <span>{{ errors[0] }}</span>
-        </validation-provider>
-      </div>
-    </validation-observer>
+      </validation-observer>
 
-    <s-table
-      ref="table"
-      class="px-4"
-      :rowKey="(record) => record.id"
-      :columns="columns"
-      :data="loadData"
-      :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
-      :showPagination="false"
-    >
-      <template slot="orderId" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <p class="text-gray-700">{{text}}</p>
-        </router-link>
-      </template>
+      <s-table
+        ref="table"
+        class="px-4"
+        :rowKey="(record) => record.id"
+        :columns="columns"
+        :data="loadData"
+        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        :showPagination="false"
+      >
+        <template slot="orderId" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+            <p class="text-gray-700">{{text}}</p>
+          </router-link>
+        </template>
 
-      <template slot="relatedId" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre class="text-gray-700">{{text}}</pre>
-        </router-link>
-      </template>
+        <template slot="relatedId" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+            <pre class="text-gray-700">{{text}}</pre>
+          </router-link>
+        </template>
 
-      <template slot="start_date" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre class="text-gray-700">{{text}}</pre>
-        </router-link>
-      </template>
+        <template slot="start_date" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+            <pre class="text-gray-700">{{text}}</pre>
+          </router-link>
+        </template>
 
-      <template slot="vehicle" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">
-          <pre class="text-gray-700">{{text.license_plate}}</pre>
-        </router-link>
-      </template>
+        <template slot="vehicle" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">
+            <pre class="text-gray-700">{{text.license_plate}}</pre>
+          </router-link>
+        </template>
 
-      <template slot="category" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">
-          <pre class="text-gray-700">{{text}}</pre>
-        </router-link>
-      </template>
+        <template slot="category" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">
+            <pre class="text-gray-700">{{text}}</pre>
+          </router-link>
+        </template>
 
-      <template slot="o-itinerary" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal">
+        <template slot="o-itinerary" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+            <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal">
             <span class="text-blue-500">{{pre.date | moment('MM-DD')}}</span>
             <span class="text-blue-500" v-if="pre.time">,{{pre.time.substring(0,5)}}</span>
             <span class="text-blue-500">,{{pre.itinerary.name}}</span>
           </pre>
-        </router-link>
-      </template>
+          </router-link>
+        </template>
 
-      <template slot="price" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre
-            v-for="pre in text"
-            :key="pre.id"
-            class="whitespace-no-wrap font-normal text-pink-500"
-          >
+        <template slot="price" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+            <pre
+              v-for="pre in text"
+              :key="pre.id"
+              class="whitespace-no-wrap font-normal text-pink-500"
+            >
             <span>{{pre.price}}</span>
           </pre>
-        </router-link>
-      </template>
+          </router-link>
+        </template>
 
-      <template slot="payment" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre
-            v-for="pre in text"
-            :key="pre.id"
-            class="whitespace-no-wrap font-normal text-pink-500"
-          >
+        <template slot="payment" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+            <pre
+              v-for="pre in text"
+              :key="pre.id"
+              class="whitespace-no-wrap font-normal text-pink-500"
+            >
             <span>{{pre.payment}}</span>
           </pre>
-        </router-link>
-      </template>
+          </router-link>
+        </template>
 
-      <template slot="total" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre> <span>{{text}}</span></pre>
-        </router-link>
-      </template>
-    </s-table>
+        <template slot="total" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}">
+            <pre> <span>{{text}}</span></pre>
+          </router-link>
+        </template>
 
-    <div class="flex flex-wrap">
-      <div class="p-4" v-if="!isEdit">
-        <a-button type="primary" @click="createInvoiceData()">Create</a-button>
+        <template slot="customer" slot-scope="text, data">
+          <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text">
+            <pre class="text-gray-700">{{text}}</pre>
+          </router-link>
+        </template>
+
+        <template slot="invoice" slot-scope="text">
+          <router-link :to="{name: 'invoice_detail', params: {id: text.id}}" v-if="text">
+            <pre class="text-gray-700">{{text.invoiceId}}</pre>
+          </router-link>
+          <pre v-else class="text-gray-700">unknow</pre>
+        </template>
+      </s-table>
+
+      <div class="flex flex-wrap">
+        <div class="p-4" v-if="!isEdit">
+          <a-button type="primary" @click="createInvoiceData()">Create</a-button>
+        </div>
+        <div class="p-4" v-else>
+          <a-button type="primary" @click="updateInvoiceData()">Update</a-button>
+        </div>
       </div>
-      <div class="p-4" v-else>
-        <a-button type="primary" @click="updateInvoiceData()">Update</a-button>
-      </div>
-    </div>
-  </vs-card>
+    </vs-card>
+  </div>
 </template>
 
 <script>
@@ -250,8 +271,17 @@ export default {
         {
           title: "CUSTOMER",
           dataIndex: "customer.username",
+          scopedSlots: { customRender: "customer" },
           align: "center",
-          width: 200,
+          width: 100,
+          sorter: true
+        },
+        {
+          title: "Invoice",
+          dataIndex: "invoice",
+          scopedSlots: { customRender: "invoice" },
+          align: "center",
+          width: 80,
           sorter: true
         }
       ],
@@ -306,6 +336,7 @@ export default {
         this.selectedRowKeys = this.formData.order;
         this.selectDate[0] = moment(this.formData.start_date);
         this.selectDate[1] = moment(this.formData.end_date);
+        this.formData.customer_id = this.formData.customer.id;
 
         this.localQueryParam = Object.assign(this.localQueryParam, {
           start_0: this.formData.start_date,
@@ -319,7 +350,7 @@ export default {
         start_date: this.formData.start_date,
         end_date: this.formData.end_date,
         remark: this.formData.remark,
-        customer_id: this.formData.customer,
+        customer_id: this.formData.customer_id,
         order: this.selectedRowKeys
       })
         .then(res => {
@@ -347,7 +378,7 @@ export default {
         start_date: this.formData.start_date,
         end_date: this.formData.end_date,
         remark: this.formData.remark,
-        customer_id: this.formData.customer,
+        customer_id: this.formData.customer_id,
         order: this.selectedRowKeys
       })
         .then(res => {
