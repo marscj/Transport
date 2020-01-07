@@ -19,6 +19,7 @@ class OrderFilter(django_filters.FilterSet):
     driver = django_filters.CharFilter('driver__username')
     customer = django_filters.CharFilter('customer__username')
     invoice = django_filters.BooleanFilter('invoice', lookup_expr='isnull')
+    invoice_id = django_filters.NumberFilter('invoice__id')
     status = django_filters.CharFilter('status')
 
 class OrderView(CreateSerializerMixin, ModelViewSet):
