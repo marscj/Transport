@@ -166,7 +166,7 @@
     </div>
 
     <div v-else>
-      <div id="pdfDom" class="p-10">
+      <div id="pdfDom" class="px-10">
         <img src="@/assets/images/title.jpg" class="w-2/3 h-full object-cover" />
 
         <div class="flex flex-row items-start text-2xl py-10">
@@ -224,7 +224,7 @@
         </div>
       </div>
       <div class="p-4" v-if="isEdit">
-        <a-button type="primary" @click="getPdf('法律顾问')">Exload</a-button>
+        <a-button type="primary" @click="exportPdf()">Export</a-button>
       </div>
       <div class="p-4" v-if="isEdit">
         <a-button type="primary" @click="preview = false">Back</a-button>
@@ -476,6 +476,9 @@ export default {
         this.selectedData = res.result;
         this.preview = true;
       });
+    },
+    exportPdf() {
+      print(document.querySelector('#pdfDom'))
     }
   }
 };
