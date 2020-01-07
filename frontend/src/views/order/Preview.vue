@@ -40,12 +40,9 @@
             <td class="border px-4 py-3 text-center">{{form.customer ? form.customer.username : ''}}</td>
             <td class="border px-4 py-3 text-center">{{form.operator ? form.operator.username : ''}}</td>
             <td class="border px-4 py-3 text-center">
-              <router-link
-                :to="{name: 'invoice_detail', params: {id: form.invoice.id}}"
-                v-if="form.invoice"
-              >
+              <div v-if="form.invoice">
                 <pre class="text-gray-700">{{form.invoice.status}}</pre>
-              </router-link>
+              </div>
               <span v-else>unknow</span>
             </td>
           </tr>
@@ -54,7 +51,7 @@
     </div>
 
     <div class="py-5">
-      <table class="table-fixed w-full">
+      <table class="table-auto w-full">
         <thead>
           <tr>
             <th class="w-40 text-center py-3">DATE</th>
@@ -62,7 +59,7 @@
             <th class="text-center py-3">ITINERARY</th>
             <th class="w-40 text-center py-3">PRICE</th>
             <th class="w-40 text-center py-3">PAYMENT</th>
-            <th class="w-40 text-center py-3" v-if="canDelItinerary">ACTION</th>
+            <th class="text-center py-3">SIGN</th>
           </tr>
         </thead>
         <tbody>
@@ -82,14 +79,7 @@
             <td class="border px-4 py-3 text-center">
               <a @click="openItinerary(data)">{{data.payment}}</a>
             </td>
-            <td class="border px-4 py-3 text-center" v-if="canDelItinerary">
-              <feather-icon
-                icon="TrashIcon"
-                svgClasses="w-5 h-5 hover:text-danger stroke-current"
-                class="ml-2"
-                @click.stop="openConfirm(data.id)"
-              />
-            </td>
+            <td class="border px-4 py-3 text-center"></td>
           </tr>
         </tbody>
       </table>
