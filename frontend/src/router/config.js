@@ -128,61 +128,6 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/admin/user',
-    redirect: '/admin/users',
-    component: () => import('@/layouts/main/Main.vue'),
-    meta: {
-      header: 'User',
-      i18n: 'User',
-      permission: ['user', 'group'],
-    },
-    children: [{
-        path: '/admin/users',
-        name: 'users',
-        component: () => import('@/views/user/List.vue'),
-        meta: {
-          name: 'User',
-          url: '/admin/users',
-          slug: 'users',
-          i18n: 'User',
-          icon: 'UserIcon',
-          permission: ['user'],
-          breadcrumb: [{
-              title: 'User',
-              url: '/admin/users'
-            },
-            {
-              title: 'Users',
-              active: true
-            }
-          ],
-        }
-      },
-      {
-        path: '/admin/groups',
-        name: 'groups',
-        component: () => import('@/views/group/Page.vue'),
-        meta: {
-          name: 'Group',
-          url: '/admin/groups',
-          slug: 'group',
-          i18n: 'Group',
-          icon: 'UsersIcon',
-          permission: ['group'],
-          breadcrumb: [{
-              title: 'User',
-              url: '/admin/groups'
-            },
-            {
-              title: 'Groups',
-              active: true
-            }
-          ],
-        }
-      },
-    ]
-  },
-  {
     path: '/admin/invoice',
     redirect: '/admin/invoices',
     component: () => import('@/layouts/main/Main.vue'),
@@ -238,21 +183,92 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/admin/invoice',
-    name: 'invoice_preview',
+    path: '/admin/preview/invoice',
     component: () => import('@/layouts/full-page/FullPage.vue'),
     meta: {
       isDisabled: true,
     },
     children: [
       {
-        path: '/admin/invoice/:id/preview',
+        path: '/admin/preview/invoice/:id',
         name: 'invoice_preview',
         component: () => import('@/views/invoice/Preview.vue'),
         meta: {
           isDisabled: true,
         },
       }
+    ]
+  },
+  {
+    path: '/admin/preview/order',
+    component: () => import('@/layouts/full-page/FullPage.vue'),
+    meta: {
+      isDisabled: true,
+    },
+    children: [
+      {
+        path: '/admin/preview/order/:id',
+        name: 'order_preview',
+        component: () => import('@/views/order/Preview.vue'),
+        meta: {
+          isDisabled: true,
+        },
+      }
+    ]
+  },
+  {
+    path: '/admin/user',
+    redirect: '/admin/users',
+    component: () => import('@/layouts/main/Main.vue'),
+    meta: {
+      header: 'User',
+      i18n: 'User',
+      permission: ['user', 'group'],
+    },
+    children: [{
+        path: '/admin/users',
+        name: 'users',
+        component: () => import('@/views/user/List.vue'),
+        meta: {
+          name: 'User',
+          url: '/admin/users',
+          slug: 'users',
+          i18n: 'User',
+          icon: 'UserIcon',
+          permission: ['user'],
+          breadcrumb: [{
+              title: 'User',
+              url: '/admin/users'
+            },
+            {
+              title: 'Users',
+              active: true
+            }
+          ],
+        }
+      },
+      {
+        path: '/admin/groups',
+        name: 'groups',
+        component: () => import('@/views/group/Page.vue'),
+        meta: {
+          name: 'Group',
+          url: '/admin/groups',
+          slug: 'group',
+          i18n: 'Group',
+          icon: 'UsersIcon',
+          permission: ['group'],
+          breadcrumb: [{
+              title: 'User',
+              url: '/admin/groups'
+            },
+            {
+              title: 'Groups',
+              active: true
+            }
+          ],
+        }
+      },
     ]
   },
   {
