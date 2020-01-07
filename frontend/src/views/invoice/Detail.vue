@@ -156,6 +156,10 @@
         <div class="p-4" v-else>
           <a-button type="primary" @click="updateInvoiceData()">Update</a-button>
         </div>
+        
+        <div class="p-4" v-if="isEdit">
+          <a-button type="primary" @click="download2PDF()">Exload</a-button>
+        </div>
       </div>
     </vs-card>
   </div>
