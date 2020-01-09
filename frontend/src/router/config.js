@@ -366,7 +366,29 @@ export const asyncRouterMap = [
               active: true
             }
           ],
-        }
+        },
+      },
+      {
+        path: '/admin/drivers',
+        name: 'drivers',
+        component: () => import('@/views/driver/List.vue'),
+        meta: {
+          name: 'Driver',
+          url: '/admin/drivers',
+          slug: 'driver',
+          i18n: 'Driver',
+          icon: 'CircleIcon',
+          permission: ['driver'],
+          breadcrumb: [{
+              title: 'Source',
+              url: '/admin/drivers'
+            },
+            {
+              title: 'Drivers',
+              active: true
+            }
+          ],
+        },
       },
     ]
   },
