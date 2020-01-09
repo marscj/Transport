@@ -6,6 +6,7 @@
       <div class="flex flex-row items-start text-2xl py-10">
         <div class="flex-1 flex-col items-start">
           <pre>Account: {{formData.customer ? formData.customer.username : ''}} </pre>
+          <pre v-if="formData.customer && formData.customer.company">Company: {{formData.customer.company}} </pre>
           <pre>Date: {{formData.start_date}} - {{formData.end_date}}</pre>
         </div>
         <div class="flex flex-col items-end">
@@ -15,40 +16,40 @@
       </div>
 
       <div class="mt-10">
-        <table class="table-auto w-full">
+        <table class="table-auto w-full text-black">
           <thead>
             <tr>
-              <th class="w-40 text-center py-3">Start Date</th>
-              <th class="w-40 text-center py-3">Itinerary</th>
-              <th class="w-40 text-center py-3">Vehicle</th>
-              <th class="w-40 text-center py-3">Category</th>
-              <th class="w-40 text-center py-3">RelatedId</th>
-              <th class="w-40 text-center py-3">Payment</th>
+              <th class="text-center py-1 w-40">Start Date</th>
+              <th class="text-center py-1">Itinerary</th>
+              <th class="text-center py-1">Vehicle</th>
+              <th class="text-center py-1">Category</th>
+              <th class="text-center py-1">RelatedId</th>
+              <th class="text-center py-1 w-32">Payment</th>
             </tr>
           </thead>
           <tbody>
             <template v-for="data in selectedData">
-              <tr v-for="(_data) in data.order_itinerary" :key="_data.id">
+              <tr v-for="(_data) in data.order_itinerary" :key="_data.id" class="text-sm whitespace-no-wrap">
                 <td
-                  class="border px-4 py-3 text-center"
+                  class="border border-black px-1 py-1 text-center"
                   :key="index"
                 >{{_data.date}} {{_data.time ? _data.time.substring(0,5): ''}}</td>
-                <td class="border px-4 py-3 text-center" :key="index">{{_data.itinerary.name}}</td>
+                <td class="border border-black px-1 py-1 text-center" :key="index">{{_data.itinerary.name}}</td>
                 <td
-                  class="border px-4 py-3 text-center"
+                  class="border border-black px-1 py-1 text-center"
                   :key="index"
                 >{{data.vehicle ? data.vehicle.license_plate : ''}}</td>
-                <td class="border px-4 py-3 text-center" :key="index">{{data.category}}</td>
-                <td class="border px-4 py-3 text-center" :key="index">{{data.relatedId}}</td>
-                <td class="border px-4 py-3 text-center" :key="index">{{_data.payment}}</td>
+                <td class="border border-black px-1 py-1 text-center" :key="index">{{data.category}}</td>
+                <td class="border border-black px-1 py-1 text-center" :key="index">{{data.relatedId}}</td>
+                <td class="border border-black px-1 py-1 text-center" :key="index">{{_data.payment}}</td>
               </tr>
               <tr :key="data.id">
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border px-4 py-3 text-center">total: {{data.total}}</td>
+                <td class="border border-black"></td>
+                <td class="border border-black"></td>
+                <td class="border border-black"></td>
+                <td class="border border-black"></td>
+                <td class="border border-black"></td>
+                <td class="border border-black px-1 py-1 text-center">total: {{data.total}}</td>
               </tr>
 
               <div class="py-4" :key="data.id" />
