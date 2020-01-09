@@ -16,7 +16,7 @@ class OrderFilter(django_filters.FilterSet):
     start_0 = django_filters.DateFilter('start_date', lookup_expr='gte')
     start_1 = django_filters.DateFilter('start_date', lookup_expr='lte')
     vehicle = django_filters.CharFilter('vehicle__license_plate')
-    driver = django_filters.CharFilter('driver__username')
+    driver = django_filters.CharFilter('driver__name')
     customer = django_filters.CharFilter('customer__username')
     invoice = django_filters.BooleanFilter('invoice', lookup_expr='isnull')
     invoice_id = django_filters.NumberFilter('invoice__id')

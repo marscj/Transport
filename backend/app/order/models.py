@@ -4,7 +4,7 @@ from django.db.models import Sum
 from app.vehicle.models import Vehicle, Itinerary
 from app.user.models import User
 from app.invoice.models import Invoice
-from app.vehicle.models import Vehicle
+from app.driver.models import Driver
 
 class Order(models.Model):
     
@@ -44,7 +44,7 @@ class Order(models.Model):
 
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
-    driver = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_driver', blank=True, null=True)
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order_customer', blank=True, null=True)
 

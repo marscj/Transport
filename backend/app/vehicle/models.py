@@ -1,6 +1,6 @@
 from django.db import models
 
-from app.user.models import User
+from app.driver.models import Driver
 
 class Itinerary(models.Model):
     
@@ -41,7 +41,7 @@ class Vehicle(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='vehicle', blank=True, null=True)
 
-    driver = models.OneToOneField(User, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
+    driver = models.OneToOneField(Driver, on_delete=models.SET_NULL, related_name='vehicle', blank=True, null=True)
 
     class Meta:
         db_table = 'vehicle'

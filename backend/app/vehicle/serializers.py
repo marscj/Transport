@@ -2,7 +2,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from .models import Itinerary, Category, Price, Vehicle
-from app.user.serializers import UserDetailSerializer
+from app.driver.serializers import DriverSerlizer
+
 
 class ItinerarySerializer(serializers.ModelSerializer):
 
@@ -30,7 +31,7 @@ class VehicleSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(required=False, read_only=True)
 
-    driver = UserDetailSerializer(required=False, read_only=True)
+    driver = DriverSerlizer(required=False, read_only=True)
 
     category_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
 

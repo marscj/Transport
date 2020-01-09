@@ -7,6 +7,7 @@ from app.user.models import User
 from app.user.serializers import UserSimpleSerializer
 from app.vehicle.serializers import VehicleSimpleSerializer, ItinerarySerializer
 from app.invoice.serializers import InvoiceSerlizer
+from app.driver.serializers import DriverSerlizer
 
 class OrderItinerarySerializer(serializers.ModelSerializer):
 
@@ -34,7 +35,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     vehicle_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
 
-    driver = UserSimpleSerializer(read_only=True)
+    driver = DriverSerlizer(read_only=True)
 
     driver_id = serializers.IntegerField(required=False, write_only=True, allow_null=True)
 

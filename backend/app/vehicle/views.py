@@ -5,7 +5,6 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, DjangoModelPermissions
 from django.db.models import Count
 import django_filters
-from django_filters.fields import Lookup
 
 from middleware.permission import CustomModelPermissions, CustomModelOrSafePermissions
 from .models import Itinerary, Category, Price, Vehicle
@@ -14,16 +13,13 @@ from .serializers import ItinerarySerializer, CategorySerializer, PriceSerialize
 class PriceFilter(django_filters.FilterSet):
     category = django_filters.NumberFilter('category__id')
 
-class CharInFilter(django_filters.BaseInFilter, django_filters.CharFilter):
-    pass
-
 class VehicleFilter(django_filters.FilterSet):
     license_plate = django_filters.CharFilter('license_plate')
     model = django_filters.CharFilter('model')
     seats = django_filters.NumberFilter('seats', lookup_expr=('gte'),)
     category = django_filters.CharFilter('category__id')
     category_name = django_filters.CharFilter('category__name')
-    driver = django_filters.CharFilter('driver__username')
+    driver = django_filters.CharFilter('driver__name')
     supplier = django_filters.CharFilter('supplier')
     is_active = django_filters.BooleanFilter('is_active')
     start_0 = django_filters.DateFilter('order__start_date', lookup_expr='gt', exclude=True)
