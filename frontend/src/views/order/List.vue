@@ -137,7 +137,7 @@
         <router-link
           :to="{name: 'order_detail', params: {id: data.id}}"
           v-if="text"
-        ><pre class="text-gray-700">{{text.username}}</pre></router-link>
+        ><pre class="text-gray-700">{{text.name}}</pre></router-link>
       </template>
 
       <template slot="driver_phone" slot-scope="text, data">

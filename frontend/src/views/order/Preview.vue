@@ -4,7 +4,7 @@
 
     <div class="flex flex-col items-start text-2xl py-10">
       <pre>Vehicle: {{form.vehicle ? form.vehicle.license_plate : ''}} </pre>
-      <pre>Driver: {{form.driver ? form.driver.username : ''}}</pre>
+      <pre>Driver: {{form.driver ? form.driver.name : ''}}</pre>
       <pre>Phone: {{form.driver ? form.driver.phone : ''}}</pre>
     </div>
 

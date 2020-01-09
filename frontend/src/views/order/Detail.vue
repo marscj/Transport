@@ -218,7 +218,6 @@
           :selectModel="true"
           @driver="onHandleDriver"
           :queryParam="{
-        role: 'Driver',
         start_0: this.form.start_date,
         start_1: this.form.end_date,
         end_0: this.form.start_date,
@@ -241,7 +240,7 @@ import {
 } from "@/http/requests/order";
 import { getVehicle, getItinerary, getPriceExa } from "@/http/requests/vehicle";
 import VehicleTable from "@/views/vehicle/List.vue";
-import DriverTable from "@/views/user/List.vue";
+import DriverTable from "@/views/driver/List.vue";
 import moment from "moment";
 
 const Status = ["New", "Confirm", "Cancel", "Complete", "Paid"];
@@ -313,7 +312,7 @@ export default {
         this.vehicle = this.form.vehicle
           ? this.form.vehicle.license_plate
           : null;
-        this.driver = this.form.driver ? this.form.driver.username : null;
+        this.driver = this.form.driver ? this.form.driver.name : null;
         this.phone = this.form.driver ? this.form.driver.phone : null;
       });
     },
@@ -348,7 +347,7 @@ export default {
       this.vehicle_table_show = false;
       if (data) {
         this.vehicle = data.license_plate;
-        this.driver = data.driver ? data.driver.username : null;
+        this.driver = data.driver ? data.driver.name : null;
         this.phone = data.driver ? data.driver.phone : null;
 
         this.form.vehicle_id = data.id;
@@ -371,7 +370,7 @@ export default {
       this.driver_table_show = false;
 
       if (data) {
-        this.driver = data.username;
+        this.driver = data.name;
         this.phone = data.phone;
 
         this.form.driver_id = data.id;
