@@ -85,7 +85,7 @@
       </template>
 
       <template slot="driver" slot-scope="text, data">
-        <a @click="editData(data)" v-if="text">{{ text.username }}</a>
+        <a @click="editData(data)" v-if="text">{{ text.name }}</a>
       </template>
 
       <template slot="supplier" slot-scope="text, data">

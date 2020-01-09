@@ -59,7 +59,7 @@
 
           <validation-provider name="driver_id" v-slot="{ errors }">
             <a-form-item label="Driver">
-              <v-select v-model="driver" :options="driverData" label="username"></v-select>
+              <v-select v-model="driver" :options="driverData" label="name"></v-select>
             </a-form-item>
             <span>{{ errors[0] }}</span>
           </validation-provider>
@@ -84,7 +84,7 @@
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import vSelect from "vue-select";
 
-import { getUser } from "@/http/requests/user/index.js";
+import { getDrivers } from "@/http/requests/driver/index.js";
 
 import {
   updateVehicle,
@@ -158,7 +158,7 @@ export default {
     };
   },
   mounted() {
-    this.getUserData();
+    this.getDriverData();
   },
   methods: {
     submit() {
@@ -200,8 +200,8 @@ export default {
           });
       }
     },
-    getUserData() {
-      getUser({role: 'Driver', vehicle: true}).then(res => {
+    getDriverData() {
+      getDrivers({vehicle: true}).then(res => {
         this.driverData = res.result;
       });
     }
