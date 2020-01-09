@@ -72,7 +72,7 @@ export default {
         {
           title: "ACTIVE",
           dataIndex: "is_active",
-          scopedSlots: { customRender: "is_active" }
+          scopedSlots: { customRender: "active" }
         },
         {
           title: "ACTION",

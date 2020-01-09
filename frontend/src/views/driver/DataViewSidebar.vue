@@ -18,7 +18,7 @@
     <VuePerfectScrollbar class="scroll-area--data-list-add-new" :settings="settings">
       <div class="p-6">
         <validation-observer ref="observer" v-slot="{ validate, dirty }">
-          <validation-provider name="name" rules="required|max:128|min:5" v-slot="{ errors }">
+          <validation-provider name="name" rules="required|max:64|min:5" v-slot="{ errors }">
             <a-form-item label="Name">
               <a-input
                 data-vv-validate-on="blur"
@@ -28,6 +28,19 @@
 
             <span>{{ errors[0] }}</span>
           </validation-provider>
+
+          <validation-provider name="phone" rules="required|max:128|min:10" v-slot="{ errors }">
+            <a-form-item label="phone">
+              <a-input
+                data-vv-validate-on="blur"
+                v-model="form.phone"
+              />
+            </a-form-item>
+
+            <span>{{ errors[0] }}</span>
+          </validation-provider>
+
+           <vs-checkbox v-model="form.is_active" class="mt-5 w-full">Active</vs-checkbox>
 
           <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span>{{ errors[0] }}</span>
@@ -46,9 +59,9 @@
 <script>
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import {
-  updateItinerary,
-  createItinerary
-} from "@/http/requests/vehicle/index.js";
+  updateDriver,
+  createDriver
+} from "@/http/requests/driver/index.js";
 
 export default {
   components: {
@@ -89,7 +102,9 @@ export default {
     return {
       form: {
         id: undefined,
-        name: ""
+        name: "",
+        phone: "",
+        is_active: true,
       },
       settings: {
         maxScrollbarLength: 60,
@@ -100,7 +115,7 @@ export default {
   methods: {
     submit() {
       if (this.isEdit) {
-        createItinerary(this.form)
+        createDriver(this.form)
           .then(() => {
             this.isSidebarActiveLocal = false;
           })
@@ -110,7 +125,7 @@ export default {
             }
           });
       } else {
-        updateItinerary(this.form.id, this.form)
+        updateDriver(this.form.id, this.form)
           .then(() => {
             this.isSidebarActiveLocal = false;
           })
