@@ -34,6 +34,6 @@ export default {
 	Price: '价格管理',
 	CreateOrder: '创建订单',
 	OrderDetail: '订单详情',
-	Invoice: '发票管理'
+	Invoice: '发票管理',
   }
 }
