@@ -52,7 +52,7 @@ export default {
     return {
       columns: [
         {
-          title: "Name",
+          title: "NAME",
           dataIndex: "name",
           scopedSlots: { customRender: "name" }
         },

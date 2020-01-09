@@ -61,17 +61,17 @@ export default {
     return {
       columns: [
         {
-          title: "Itinerary",
+          title: "ITINERARY",
           dataIndex: "itinerary",
           scopedSlots: { customRender: "itinerary" }
         },
         {
-          title: "Category",
+          title: "CATEGORY",
           dataIndex: "category",
           scopedSlots: { customRender: "category" }
         },
         {
-          title: "Price",
+          title: "PRICE",
           dataIndex: "price",
           scopedSlots: { customRender: "price" }
         },

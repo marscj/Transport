@@ -22,6 +22,14 @@
         <a @click="editData(data)" v-if="text">{{ text }}</a>
       </template>
 
+      <template slot="phone" slot-scope="text, data">
+        <a @click="editData(data)" v-if="text">{{ text }}</a>
+      </template>
+
+      <template slot="active" slot-scope="text">
+        <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
+      </template>
+
       <template slot="action" slot-scope="text, data">
         <feather-icon
           icon="TrashIcon"
@@ -36,9 +44,9 @@
 
 <script>
 import {
-  getItinerary,
-  deleteItinerary
-} from "@/http/requests/vehicle/index.js";
+  getDrivers,
+  deleteDriver
+} from "@/http/requests/driver/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 import STable from "@/components/s-table";
@@ -52,9 +60,19 @@ export default {
     return {
       columns: [
         {
-          title: "Name",
+          title: "NAME",
           dataIndex: "name",
           scopedSlots: { customRender: "name" }
+        },
+        {
+          title: "PHONE",
+          dataIndex: "phone",
+          scopedSlots: { customRender: "name" }
+        },
+        {
+          title: "ACTIVE",
+          dataIndex: "is_active",
+          scopedSlots: { customRender: "is_active" }
         },
         {
           title: "ACTION",
@@ -72,7 +90,7 @@ export default {
       addNewDataSidebar: false,
       sidebarData: {},
       loadData: parameter => {
-        return getItinerary(Object.assign(parameter, {})).then(res => {
+        return getDrivers(Object.assign(parameter, {})).then(res => {
           return res.result;
         });
       }
@@ -96,7 +114,7 @@ export default {
       }
     },
     deleteData(id) {
-      deleteItinerary(id).then(() => {
+      deleteDriver(id).then(() => {
         this.$refs.table.refresh();
       });
     },
