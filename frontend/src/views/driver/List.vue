@@ -6,8 +6,44 @@
       :data="sidebarData"
     />
 
-    <div class="p-4" v-action:add_itinerary>
-      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+    <div>
+      <div class="flex flex-wrap pt-4">
+        <div class="px-4">
+          <a-form-item label="NAME">
+            <a-input
+              class="hover:border-teal-500 focus:border-teal-500"
+              v-model="localQueryParam.name"
+            ></a-input>
+          </a-form-item>
+        </div>
+
+        <div class="px-4">
+          <a-form-item label="ACTIVE">
+            <vs-checkbox v-model="localQueryParam.is_active"></vs-checkbox>
+          </a-form-item>
+        </div>
+
+        <div class="px-4">
+          <a-form-item>
+            <button
+              @click="() => $refs.table.refresh()"
+              class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
+            >
+              Search
+            </button>
+          </a-form-item>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4" v-action:add_driver>
+      <vs-button
+        type="border"
+        icon-pack="feather"
+        icon="icon-plus"
+        @click="addNewData"
+        >Add New</vs-button
+      >
     </div>
 
     <s-table
@@ -16,7 +52,7 @@
       :columns="columns"
       :data="loadData"
       :showPagination="false"
-      :rowKey="(record) => record.id"
+      :rowKey="record => record.id"
     >
       <template slot="name" slot-scope="text, data">
         <a @click="editData(data)" v-if="text">{{ text }}</a>
@@ -27,7 +63,11 @@
       </template>
 
       <template slot="active" slot-scope="text">
-        <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
+        <a-checkbox
+          @click="editData(data)"
+          :checked="text"
+          disabled
+        ></a-checkbox>
       </template>
 
       <template slot="action" slot-scope="text, data">
@@ -43,10 +83,7 @@
 </template>
 
 <script>
-import {
-  getDrivers,
-  deleteDriver
-} from "@/http/requests/driver/index.js";
+import { getDrivers, deleteDriver } from "@/http/requests/driver/index.js";
 import DataViewSidebar from "./DataViewSidebar.vue";
 
 import STable from "@/components/s-table";
@@ -56,8 +93,19 @@ export default {
     DataViewSidebar,
     STable
   },
+  props: {
+    selectModel: {
+      type: Boolean,
+      default: false
+    },
+    queryParam: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
+      localQueryParam: Object.assign({}, this.queryParam),
       columns: [
         {
           title: "NAME",
@@ -80,7 +128,7 @@ export default {
         }
       ].filter(f => {
         if (f.title == "ACTION") {
-          if (this.$auth("itinerary.delete_itinerary")) {
+          if (this.$auth("driver.delete_driver")) {
             return f;
           }
         } else {
@@ -90,9 +138,11 @@ export default {
       addNewDataSidebar: false,
       sidebarData: {},
       loadData: parameter => {
-        return getDrivers(Object.assign(parameter, {})).then(res => {
-          return res.result;
-        });
+        return getDrivers(Object.assign(parameter, this.localQueryParam)).then(
+          res => {
+            return res.result;
+          }
+        );
       }
     };
   },
@@ -102,9 +152,13 @@ export default {
       this.toggleDataSidebar(true);
     },
     editData(data) {
-      if (this.$auth("itinerary.change_itinerary")) {
-        this.sidebarData = data;
-        this.toggleDataSidebar(true);
+      if (this.selectModel) {
+        this.$emit("driver", data);
+      } else {
+        if (this.$auth("driver.change_driver")) {
+          this.sidebarData = data;
+          this.toggleDataSidebar(true);
+        }
       }
     },
     toggleDataSidebar(val = false) {

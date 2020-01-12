@@ -1,10 +1,16 @@
 <template>
   <div>
-    <a-checkbox v-model="form.is_lock" class="pb-4" :disabled="!canChangeLock">Lock</a-checkbox>
-    <router-link :to="{name: 'order_preview', params: {id: form.id}}">
+    <a-checkbox v-model="form.is_lock" class="pb-4" :disabled="!canChangeLock"
+      >Lock</a-checkbox
+    >
+    <router-link :to="{ name: 'order_preview', params: { id: form.id } }">
       Preview
     </router-link>
-    <vs-card :style="form.is_lock || !canChangeOrder ? 'background-color:#f5f5f5;' : ''">
+    <vs-card
+      :style="
+        form.is_lock || !canChangeOrder ? 'background-color:#f5f5f5;' : ''
+      "
+    >
       <div class="p-4 border border-gray-300">
         <table class="table-auto w-full">
           <thead>
@@ -22,27 +28,37 @@
           </thead>
           <tbody>
             <tr>
-              <td class="border px-4 py-3 text-center">{{form.orderId}}</td>
-              <td class="border px-4 py-3 text-center">{{form.relatedId}}</td>
-              <td class="border px-4 py-3 text-center">{{form.create_at | moment('YYYY-MM-DD')}}</td>
-              <td class="border px-4 py-3 text-center">{{form.start_date}}</td>
-              <td class="border px-4 py-3 text-center">{{form.end_date}}</td>
-              <td class="border px-4 py-3">
-                <p>Category: {{form.category}}</p>
-                <p>Seats: {{form.seats}}</p>
-                <p>Passengers: {{form.passenger}}</p>
-                <p>Itinerary:</p>
-                <pre>{{form.itinerary}}</pre>
-              </td>
-              <td
-                class="border px-4 py-3 text-center"
-              >{{form.customer ? form.customer.username : ''}}</td>
-              <td
-                class="border px-4 py-3 text-center"
-              >{{form.operator ? form.operator.username : ''}}</td>
+              <td class="border px-4 py-3 text-center">{{ form.orderId }}</td>
+              <td class="border px-4 py-3 text-center">{{ form.relatedId }}</td>
               <td class="border px-4 py-3 text-center">
-                <router-link :to="{name: 'invoice_detail', params: {id: form.invoice.id}}" v-if="form.invoice">
-                  <pre class="text-gray-700">{{form.invoice.status}}</pre>
+                {{ form.create_at | moment("YYYY-MM-DD") }}
+              </td>
+              <td class="border px-4 py-3 text-center">
+                {{ form.start_date }}
+              </td>
+              <td class="border px-4 py-3 text-center">{{ form.end_date }}</td>
+              <td class="border px-4 py-3">
+                <p>Category: {{ form.category }}</p>
+                <p>Seats: {{ form.seats }}</p>
+                <p>Passengers: {{ form.passenger }}</p>
+                <p>Itinerary:</p>
+                <pre>{{ form.itinerary }}</pre>
+              </td>
+              <td class="border px-4 py-3 text-center">
+                {{ form.customer ? form.customer.username : "" }}
+              </td>
+              <td class="border px-4 py-3 text-center">
+                {{ form.operator ? form.operator.username : "" }}
+              </td>
+              <td class="border px-4 py-3 text-center">
+                <router-link
+                  :to="{
+                    name: 'invoice_detail',
+                    params: { id: form.invoice.id }
+                  }"
+                  v-if="form.invoice"
+                >
+                  <pre class="text-gray-700">{{ form.invoice.status }}</pre>
                 </router-link>
                 <span v-else>unknow</span>
               </td>
@@ -60,25 +76,29 @@
               <th class="text-center py-3">ITINERARY</th>
               <th class="w-40 text-center py-3">PRICE</th>
               <th class="w-40 text-center py-3">PAYMENT</th>
-              <th class="w-40 text-center py-3" v-if="canDelItinerary">ACTION</th>
+              <th class="w-40 text-center py-3" v-if="canDelItinerary">
+                ACTION
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="data in form.order_itinerary" :key="data.id">
               <td class="border px-4 py-3 text-center">
-                <a @click="openItinerary(data)">{{data.date}}</a>
+                <a @click="openItinerary(data)">{{ data.date }}</a>
               </td>
               <td class="border px-4 py-3 text-center">
-                <a @click="openItinerary(data)">{{data.time}}</a>
+                <a @click="openItinerary(data)">{{ data.time }}</a>
               </td>
               <td class="border px-4 py-3 text-center">
-                <a @click="openItinerary(data)">{{data.itinerary ? data.itinerary.name : ''}}</a>
+                <a @click="openItinerary(data)">{{
+                  data.itinerary ? data.itinerary.name : ""
+                }}</a>
               </td>
               <td class="border px-4 py-3 text-center">
-                <a @click="openItinerary(data)">{{data.price}}</a>
+                <a @click="openItinerary(data)">{{ data.price }}</a>
               </td>
               <td class="border px-4 py-3 text-center">
-                <a @click="openItinerary(data)">{{data.payment}}</a>
+                <a @click="openItinerary(data)">{{ data.payment }}</a>
               </td>
               <td class="border px-4 py-3 text-center" v-if="canDelItinerary">
                 <feather-icon
@@ -95,12 +115,14 @@
               v-if="canAddItinerary"
               @click="openItinerary()"
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded mt-4"
-            >ADD ITINERARY</button>
+            >
+              ADD ITINERARY
+            </button>
           </t-foot>
         </table>
       </div>
 
-      <div class="p-4" >
+      <div class="p-4">
         <div class="flex flex-wrap">
           <a-form-item label="VEHICLE" class="flex-1 mr-6">
             <a-input
@@ -115,7 +137,7 @@
           <a-form-item label="DRIVER" class="flex-1 mx-6">
             <a-input
               v-model="driver"
-              @click="driver_table_show=!driver_table_show"
+              @click="driver_table_show = !driver_table_show"
               @change="onDriverChange"
               :disabled="!canChangeOrder"
               readonly
@@ -128,18 +150,26 @@
           </a-form-item>
 
           <a-form-item label="STATUS" class="flex-1 mx-6">
-            <a-select class="w-full" v-model="form.status" :disabled="!canChangeOrder">
+            <a-select
+              class="w-full"
+              v-model="form.status"
+              :disabled="!canChangeOrder"
+            >
               <a-select-option
                 v-for="(data, index) in Status"
                 :key="data"
                 :value="data"
                 :disabled="index > 2"
-              >{{data}}</a-select-option>
+                >{{ data }}</a-select-option
+              >
             </a-select>
           </a-form-item>
 
           <a-form-item label="REMARK" class="w-1/3 mr-6">
-            <a-textarea v-model="form.remark" :disabled="!canChangeOrder"></a-textarea>
+            <a-textarea
+              v-model="form.remark"
+              :disabled="!canChangeOrder"
+            ></a-textarea>
           </a-form-item>
         </div>
 
@@ -147,7 +177,9 @@
           v-if="canChangeOrder"
           @click="updateOrderData"
           class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold py-2 px-3 rounded mt-4"
-        >Update</button>
+        >
+          Update
+        </button>
       </div>
 
       <a-modal
@@ -156,41 +188,67 @@
         :width="800"
         @ok="handleItinerary"
       >
-        <validation-observer ref="observer_itinerary" v-slot="{ validate, dirty }">
+        <validation-observer
+          ref="observer_itinerary"
+          v-slot="{ validate, dirty }"
+        >
           <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
             <a-form-item label="DATE" required>
-              <validation-provider name="date" rules="required" v-slot="{ errors }">
-                <a-date-picker v-model="itinerary.date" class="w-64"></a-date-picker>
+              <validation-provider
+                name="date"
+                rules="required"
+                v-slot="{ errors }"
+              >
+                <a-date-picker
+                  v-model="itinerary.date"
+                  class="w-64"
+                ></a-date-picker>
                 <span>{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
             <a-form-item label="TIME">
               <validation-provider name="time" v-slot="{ errors }">
-                <a-time-picker v-model="itinerary.time" format="HH:mm" class="w-64"></a-time-picker>
+                <a-time-picker
+                  v-model="itinerary.time"
+                  format="HH:mm"
+                  class="w-64"
+                ></a-time-picker>
                 <span>{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
             <a-form-item label="ITINERARY" required>
               <validation-provider name="itinerary_id" v-slot="{ errors }">
-                <a-select v-model="itinerary.itinerary" @change="onItineraryChange">
+                <a-select
+                  v-model="itinerary.itinerary"
+                  @change="onItineraryChange"
+                >
                   <a-select-option
                     v-for="data in itineraryData"
                     :key="data.id"
                     :value="data.id"
-                  >{{data.name}}</a-select-option>
+                    >{{ data.name }}</a-select-option
+                  >
                 </a-select>
                 <span>{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
             <a-form-item label="PRICE" required>
               <validation-provider name="price" v-slot="{ errors }">
-                <a-input v-model="itinerary.price" disabled addonAfter="AED"></a-input>
+                <a-input
+                  v-model="itinerary.price"
+                  disabled
+                  addonAfter="AED"
+                ></a-input>
                 <span>{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
             <a-form-item label="PAYMENT" required>
               <validation-provider name="payment" v-slot="{ errors }">
-                <a-input v-model="itinerary.payment" :disabled="!canEditPayment" addonAfter="AED"></a-input>
+                <a-input
+                  v-model="itinerary.payment"
+                  :disabled="!canEditPayment"
+                  addonAfter="AED"
+                ></a-input>
                 <span>{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
@@ -204,12 +262,12 @@
           :selectModel="true"
           @vehicle="onHandleVehicle"
           :queryParam="{
-        is_active: true,
-        start_0: this.form.start_date,
-        start_1: this.form.end_date,
-        end_0: this.form.start_date,
-        end_1: this.form.end_date,
-      }"
+            is_active: true,
+            start_0: this.form.start_date,
+            start_1: this.form.end_date,
+            end_0: this.form.start_date,
+            end_1: this.form.end_date
+          }"
         />
       </a-modal>
 
@@ -218,11 +276,12 @@
           :selectModel="true"
           @driver="onHandleDriver"
           :queryParam="{
-        start_0: this.form.start_date,
-        start_1: this.form.end_date,
-        end_0: this.form.start_date,
-        end_1: this.form.end_date,
-      }"
+            is_active: true,
+            start_0: this.form.start_date,
+            start_1: this.form.end_date,
+            end_0: this.form.start_date,
+            end_1: this.form.end_date
+          }"
         />
       </a-modal>
     </vs-card>
