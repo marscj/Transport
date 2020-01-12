@@ -35,23 +35,33 @@
         <div class="px-4">
           <a-form-item label="Role">
             <a-select v-model="localQueryParam.role" class="w-64" allowClear>
-              <a-select-option v-for="data in Role" :key="data" :value="data">{{data}}</a-select-option>
+              <a-select-option v-for="data in Role" :key="data" :value="data">{{
+                data
+              }}</a-select-option>
             </a-select>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item>
             <button
-              @click="()=>$refs.table.refresh()"
+              @click="() => $refs.table.refresh()"
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
-            >Search</button>
+            >
+              Search
+            </button>
           </a-form-item>
         </div>
       </div>
     </div>
 
     <div class="px-4" v-action:add_user v-if="!selectModel">
-      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+      <vs-button
+        type="border"
+        icon-pack="feather"
+        icon="icon-plus"
+        @click="addNewData"
+        >Add New</vs-button
+      >
     </div>
 
     <s-table
@@ -59,7 +69,7 @@
       class="p-4"
       :columns="columns"
       :data="loadData"
-      :rowKey="(record) => record.id"
+      :rowKey="record => record.id"
     >
       <template slot="username" slot-scope="text, data">
         <a @click="editData(data)" v-if="text">{{ text }}</a>
@@ -82,15 +92,28 @@
       </template>
 
       <template slot="group" slot-scope="text, data">
-        <a @click="editData(data)" v-if="text">{{ $_.join(text.map(f=> f.name), ', ') }}</a>
+        <a @click="editData(data)" v-if="text">{{
+          $_.join(
+            text.map(f => f.name),
+            ", "
+          )
+        }}</a>
       </template>
 
       <template slot="admin" slot-scope="text, data">
-        <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
+        <a-checkbox
+          @click="editData(data)"
+          :checked="text"
+          disabled
+        ></a-checkbox>
       </template>
 
       <template slot="active" slot-scope="text, data">
-        <a-checkbox @click="editData(data)" :checked="text" disabled></a-checkbox>
+        <a-checkbox
+          @click="editData(data)"
+          :checked="text"
+          disabled
+        ></a-checkbox>
       </template>
 
       <template slot="action" slot-scope="text, data">
@@ -107,27 +130,43 @@
       <validation-observer ref="observer" v-slot="{ validate, dirty }">
         <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
           <a-form-item label="EMAIL" required>
-            <validation-provider name="email" rules="email|required" v-slot="{ errors }">
+            <validation-provider
+              name="email"
+              rules="email|required"
+              v-slot="{ errors }"
+            >
               <a-input v-model="userForm.email"></a-input>
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
           <a-form-item label="PHONE" required>
-            <validation-provider name="phone" rules="required" v-slot="{ errors }">
+            <validation-provider
+              name="phone"
+              rules="required"
+              v-slot="{ errors }"
+            >
               <a-input v-model="userForm.phone"></a-input>
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
           <a-form-item label="PASSWORD">
-            <validation-provider name="password1" rules="required|max:16|min:8" v-slot="{ errors }">
+            <validation-provider
+              name="password1"
+              rules="required|max:16|min:8"
+              v-slot="{ errors }"
+            >
               <a-input-password v-model="userForm.password1" />
               <span>{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
           <a-form-item label="PASSWORD">
-            <validation-provider name="password2" rules="required|max:16|min:8" v-slot="{ errors }">
+            <validation-provider
+              name="password2"
+              rules="required|max:16|min:8"
+              v-slot="{ errors }"
+            >
               <a-input-password v-model="userForm.password2" />
               <span>{{ errors[0] }}</span>
             </validation-provider>
@@ -140,11 +179,19 @@
       </validation-observer>
     </a-modal>
 
-    <a-modal v-model="isShowChange" title="CHANGE PASSWORD" @ok="changePasswordData">
+    <a-modal
+      v-model="isShowChange"
+      title="CHANGE PASSWORD"
+      @ok="changePasswordData"
+    >
       <validation-observer ref="changePassword" v-slot="{ validate, dirty }">
         <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
           <a-form-item label="PASSWORD">
-            <validation-provider name="password" rules="required|max:16|min:8" v-slot="{ errors }">
+            <validation-provider
+              name="password"
+              rules="required|max:16|min:8"
+              v-slot="{ errors }"
+            >
               <a-input-password v-model="userForm.new_password" />
               <span>{{ errors[0] }}</span>
             </validation-provider>
@@ -255,7 +302,7 @@ export default {
         {
           title: "ACTION",
           scopedSlots: { customRender: "action" },
-          width: 40,
+          width: 40
         }
       ],
       addNewDataSidebar: false,
@@ -303,9 +350,11 @@ export default {
         });
     },
     openChangePassword(id) {
-      this.isShowChange = true;
-      this.userForm = {};
-      this.changeUserId = id;
+      if (this.$auth("user.change_user")) {
+        this.isShowChange = true;
+        this.userForm = {};
+        this.changeUserId = id;
+      }
     },
     changePasswordData() {
       changePassword(this.changeUserId, this.userForm)
@@ -317,7 +366,7 @@ export default {
             this.$refs.changePassword.setErrors(error.response.data.result);
           }
         });
-    },
+    }
   }
 };
 </script>
