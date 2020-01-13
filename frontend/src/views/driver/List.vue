@@ -12,7 +12,7 @@
           <a-form-item label="NAME">
             <a-input
               class="hover:border-teal-500 focus:border-teal-500"
-              v-model="localQueryParam.name"
+              v-model="localSearchParam.search"
             ></a-input>
           </a-form-item>
         </div>
@@ -106,6 +106,7 @@ export default {
   data() {
     return {
       localQueryParam: Object.assign({}, this.queryParam),
+      localSearchParam: {},
       columns: [
         {
           title: "NAME",
@@ -138,11 +139,11 @@ export default {
       addNewDataSidebar: false,
       sidebarData: {},
       loadData: parameter => {
-        return getDrivers(Object.assign(parameter, this.localQueryParam)).then(
-          res => {
-            return res.result;
-          }
-        );
+        return getDrivers(
+          Object.assign(parameter, this.localQueryParam, this.localSearchParam)
+        ).then(res => {
+          return res.result;
+        });
       }
     };
   },

@@ -24,6 +24,7 @@ class UserView(ModelViewSet):
     queryset = User.objects.all()
 
     filter_class = UserFilter
+    search_fields = ['username']
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated, DjangoModelPermissions])
     def info(self, request):

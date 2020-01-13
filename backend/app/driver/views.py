@@ -21,3 +21,4 @@ class DriverView(ModelViewSet):
     queryset = Driver.objects.all()
 
     filter_class = DriverFilter
+    search_fields = ['name']

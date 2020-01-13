@@ -12,7 +12,7 @@
           <a-form-item label="USERNAME">
             <a-input
               class="hover:border-teal-500 focus:border-teal-500"
-              v-model="localQueryParam.username"
+              v-model="localSearchParam.search"
             ></a-input>
           </a-form-item>
         </div>
@@ -236,6 +236,7 @@ export default {
   data() {
     return {
       localQueryParam: Object.assign({}, this.queryParam),
+      localSearchParam: {},
       Role,
       isShowNew: false,
       isShowChange: false,
@@ -308,11 +309,11 @@ export default {
       addNewDataSidebar: false,
       sidebarData: {},
       loadData: parameter => {
-        return getUser(Object.assign(parameter, this.localQueryParam)).then(
-          res => {
-            return res.result;
-          }
-        );
+        return getUser(
+          Object.assign(parameter, this.localQueryParam, this.localSearchParam)
+        ).then(res => {
+          return res.result;
+        });
       }
     };
   },
