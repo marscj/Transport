@@ -12,9 +12,6 @@ class Order(models.Model):
         New = 'New'
         Confirm = 'Confirm'
         Cancel = 'Cancel'
-        Complete = 'Complete',
-        Paid = 'Paid'
-
 
     orderId = models.CharField(blank=True, null=True, max_length=64)
 

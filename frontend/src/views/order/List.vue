@@ -4,95 +4,143 @@
       <div class="flex flex-wrap pt-4">
         <div class="px-4">
           <a-form-item label="ORDERID">
-            <a-input v-model="localQueryParam.orderId" class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input
+              v-model="localQueryParam.orderId"
+              class="hover:border-teal-500 focus:border-teal-500"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="RELATEDID">
-            <a-input v-model="localQueryParam.relatedId" class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input
+              v-model="localQueryParam.relatedId"
+              class="hover:border-teal-500 focus:border-teal-500"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="CREATE DATE">
-            <a-range-picker v-model="localQueryParam.create" class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
+            <a-range-picker
+              v-model="localQueryParam.create"
+              class="hover:border-teal-500 focus:border-teal-500"
+            ></a-range-picker>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="START DATE">
-            <a-range-picker v-model="localQueryParam.start" class="hover:border-teal-500 focus:border-teal-500"></a-range-picker>
+            <a-range-picker
+              v-model="localQueryParam.start"
+              class="hover:border-teal-500 focus:border-teal-500"
+            ></a-range-picker>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="VEHICLE">
-            <a-input v-model="localQueryParam.vehicle" class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input
+              v-model="localQueryParam.vehicle"
+              class="hover:border-teal-500 focus:border-teal-500"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="DRIVER">
-            <a-input v-model="localQueryParam.driver" class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input
+              v-model="localQueryParam.driver"
+              class="hover:border-teal-500 focus:border-teal-500"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4" v-if="!myOrder">
           <a-form-item label="CUSTOMER">
-            <a-input v-model="localQueryParam.customer" class="hover:border-teal-500 focus:border-teal-500"></a-input>
+            <a-input
+              v-model="localQueryParam.customer"
+              class="hover:border-teal-500 focus:border-teal-500"
+            ></a-input>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item label="STATUS">
-            <a-select class="w-48" v-model="localQueryParam.status" >
-              <a-select-option v-for="data in Status" :key="data" :value="data">{{data}}</a-select-option>
+            <a-select class="w-48" v-model="localQueryParam.status">
+              <a-select-option
+                v-for="data in Status"
+                :key="data"
+                :value="data"
+                >{{ data }}</a-select-option
+              >
             </a-select>
           </a-form-item>
         </div>
         <div class="px-4">
           <a-form-item>
             <button
-              @click="()=>$refs.table.refresh()"
+              @click="() => $refs.table.refresh()"
               class="bg-teal-500 hover:bg-teal-700 focus:outline-none text-white font-bold rounded px-6 my-10"
-            >Search</button>
+            >
+              Search
+            </button>
           </a-form-item>
         </div>
       </div>
     </div>
 
     <div class="px-4" v-if="myOrder">
-      <vs-button type="border" icon-pack="feather" icon="icon-plus" @click="addNewData">Add New</vs-button>
+      <vs-button
+        type="border"
+        icon-pack="feather"
+        icon="icon-plus"
+        @click="addNewData"
+        >Add New</vs-button
+      >
     </div>
 
     <s-table
       class="p-4"
       ref="table"
-      :rowKey="(record) => record.id"
+      :rowKey="record => record.id"
       :columns="columns"
       :data="loadData"
       size="middle"
       :scroll="{ x: '130%' }"
     >
       <template slot="orderId" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><p class="text-gray-700">{{text}}</p></router-link>
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }"
+          ><p class="text-gray-700">{{ text }}</p></router-link
+        >
       </template>
 
       <template slot="relatedId" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }"
+          ><pre class="text-gray-700">{{ text }}</pre></router-link
+        >
       </template>
 
       <template slot="create_date" slot-scope="text, data">
-        <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
-        ><pre class="text-gray-700">{{ text | moment('YYYY-MM-DD')}}</pre></router-link>
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }"
+          ><pre class="text-gray-700">{{
+            text | moment("YYYY-MM-DD")
+          }}</pre></router-link
+        >
       </template>
 
       <template slot="start_date" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }"
+          ><pre class="text-gray-700">{{ text }}</pre></router-link
+        >
       </template>
 
       <template slot="end_date" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }"
+          ><pre class="text-gray-700">{{ text }}</pre></router-link
+        >
       </template>
 
       <template slot="o-itinerary" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal">
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }">
+          <pre
+            v-for="pre in text"
+            :key="pre.id"
+            class="whitespace-no-wrap font-normal"
+          >
             <span class="text-blue-500">{{pre.date | moment('MM-DD')}}</span>
             <span class="text-blue-500" v-if="pre.time">,{{pre.time.substring(0,5)}}</span>
             <span class="text-blue-500">,{{pre.itinerary.name}}</span>
@@ -101,73 +149,94 @@
       </template>
 
       <template slot="price" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal text-pink-500">
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }">
+          <pre
+            v-for="pre in text"
+            :key="pre.id"
+            class="whitespace-no-wrap font-normal text-pink-500"
+          >
             <span>{{pre.price}}</span>
           </pre>
         </router-link>
       </template>
 
       <template slot="payment" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <pre v-for="pre in text" :key="pre.id" class="whitespace-no-wrap font-normal text-pink-500">
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }">
+          <pre
+            v-for="pre in text"
+            :key="pre.id"
+            class="whitespace-no-wrap font-normal text-pink-500"
+          >
             <span>{{pre.payment}}</span>
           </pre>
         </router-link>
       </template>
 
       <template slot="itinerary" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}">
-          <p>Category: {{text.category}}</p>
-          <p>Seats: {{text.seats}}</p>
-          <p>Passengers: {{text.passenger}}</p>
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }">
+          <p>Category: {{ text.category }}</p>
+          <p>Seats: {{ text.seats }}</p>
+          <p>Passengers: {{ text.passenger }}</p>
           <p>Itinerary:</p>
-          <pre>{{text.itinerary}}</pre>
+          <pre>{{ text.itinerary }}</pre>
         </router-link>
       </template>
 
       <template slot="vehicle" slot-scope="text, data">
         <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
+          :to="{ name: 'order_detail', params: { id: data.id } }"
           v-if="text"
-        ><pre class="text-gray-700">{{text.license_plate}}</pre></router-link>
+          ><pre class="text-gray-700">{{
+            text.license_plate
+          }}</pre></router-link
+        >
       </template>
 
       <template slot="driver" slot-scope="text, data">
         <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
+          :to="{ name: 'order_detail', params: { id: data.id } }"
           v-if="text"
-        ><pre class="text-gray-700">{{text.name}}</pre></router-link>
+          ><pre class="text-gray-700">{{ text.name }}</pre></router-link
+        >
       </template>
 
       <template slot="driver_phone" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}" v-if="text"><pre class="text-gray-700">{{text.phone}}</pre></router-link>
+        <router-link
+          :to="{ name: 'order_detail', params: { id: data.id } }"
+          v-if="text"
+          ><pre class="text-gray-700">{{ text.phone }}</pre></router-link
+        >
       </template>
 
       <template slot="status" slot-scope="text, data">
-        <router-link :to="{name: 'order_detail', params: {id: data.id}}"><pre class="text-gray-700">{{text}}</pre></router-link>
+        <router-link :to="{ name: 'order_detail', params: { id: data.id } }"
+          ><pre class="text-gray-700">{{ text }}</pre></router-link
+        >
       </template>
 
       <template slot="customer" slot-scope="text, data">
         <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
+          :to="{ name: 'order_detail', params: { id: data.id } }"
           v-if="text"
-        ><pre class="text-gray-700">{{text.username}}</pre></router-link>
+          ><pre class="text-gray-700">{{ text.username }}</pre></router-link
+        >
       </template>
 
       <template slot="operator" slot-scope="text, data">
         <router-link
-          :to="{name: 'order_detail', params: {id: data.id}}"
+          :to="{ name: 'order_detail', params: { id: data.id } }"
           v-if="text"
-        ><pre class="text-gray-700">{{text.username}}</pre></router-link>
+          ><pre class="text-gray-700">{{ text.username }}</pre></router-link
+        >
       </template>
 
       <template slot="invoice" slot-scope="text">
         <router-link
-          :to="{name: 'invoice_detail', params: {id: text.id}}"
+          :to="{ name: 'invoice_detail', params: { id: text.id } }"
           v-if="text"
-        ><pre class="text-gray-700">{{text.status}}</pre></router-link>
-        <pre v-else class="text-gray-700">unknow</pre>        
+          ><pre class="text-gray-700">{{ text.status }}</pre></router-link
+        >
+        <pre v-else class="text-gray-700">unknow</pre>
       </template>
     </s-table>
   </vs-card>
@@ -178,7 +247,7 @@ import { getOrders } from "@/http/requests/order";
 import STable from "@/components/s-table";
 import moment from "moment";
 
-const Status = ["New", "Confirm", "Cancel", "Complete", "Paid"];
+const Status = ["New", "Confirm", "Cancel"];
 
 export default {
   components: {
@@ -192,7 +261,7 @@ export default {
     queryParam: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       }
     }
   },
@@ -329,18 +398,32 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getOrders(Object.assign(parameter, {
-          orderId: this.localQueryParam.orderId,
-          relatedId: this.localQueryParam.relatedId,
-          create_0: this.localQueryParam.create && this.localQueryParam.create[0] ?  this.localQueryParam.create[0].format('YYYY-MM-DD') : undefined,
-          create_1: this.localQueryParam.create && this.localQueryParam.create[1] ?  this.localQueryParam.create[1].format('YYYY-MM-DD') : undefined,
-          start_0: this.localQueryParam.start && this.localQueryParam.start[0] ?  this.localQueryParam.start[0].format('YYYY-MM-DD') : undefined,
-          start_1: this.localQueryParam.start && this.localQueryParam.start[1] ?  this.localQueryParam.start[1].format('YYYY-MM-DD') : undefined,
-          vehicle: this.localQueryParam.vehicle,
-          driver: this.localQueryParam.driver,
-          customer: this.localQueryParam.customer,
-          status: this.localQueryParam.status
-        })).then(res => {
+        return getOrders(
+          Object.assign(parameter, {
+            orderId: this.localQueryParam.orderId,
+            relatedId: this.localQueryParam.relatedId,
+            create_0:
+              this.localQueryParam.create && this.localQueryParam.create[0]
+                ? this.localQueryParam.create[0].format("YYYY-MM-DD")
+                : undefined,
+            create_1:
+              this.localQueryParam.create && this.localQueryParam.create[1]
+                ? this.localQueryParam.create[1].format("YYYY-MM-DD")
+                : undefined,
+            start_0:
+              this.localQueryParam.start && this.localQueryParam.start[0]
+                ? this.localQueryParam.start[0].format("YYYY-MM-DD")
+                : undefined,
+            start_1:
+              this.localQueryParam.start && this.localQueryParam.start[1]
+                ? this.localQueryParam.start[1].format("YYYY-MM-DD")
+                : undefined,
+            vehicle: this.localQueryParam.vehicle,
+            driver: this.localQueryParam.driver,
+            customer: this.localQueryParam.customer,
+            status: this.localQueryParam.status
+          })
+        ).then(res => {
           return res.result;
         });
       }
@@ -355,4 +438,3 @@ export default {
   }
 };
 </script>
-

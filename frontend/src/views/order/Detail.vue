@@ -156,10 +156,9 @@
               :disabled="!canChangeOrder"
             >
               <a-select-option
-                v-for="(data, index) in Status"
+                v-for="data in Status"
                 :key="data"
                 :value="data"
-                :disabled="index > 2"
                 >{{ data }}</a-select-option
               >
             </a-select>
@@ -302,7 +301,7 @@ import VehicleTable from "@/views/vehicle/List.vue";
 import DriverTable from "@/views/driver/List.vue";
 import moment from "moment";
 
-const Status = ["New", "Confirm", "Cancel", "Complete", "Paid"];
+const Status = ["New", "Confirm", "Cancel"];
 
 export default {
   components: {
