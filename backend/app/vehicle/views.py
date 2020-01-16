@@ -22,10 +22,10 @@ class VehicleFilter(django_filters.FilterSet):
     driver = django_filters.CharFilter('driver__name')
     supplier = django_filters.CharFilter('supplier')
     is_active = django_filters.BooleanFilter('is_active')
-    start_0 = django_filters.DateFilter('order__start_date', lookup_expr='gt', exclude=True)
-    start_1 = django_filters.DateFilter('order__start_date', lookup_expr='lt', exclude=True)
-    end_0 = django_filters.DateFilter('order__end_date', lookup_expr='gt', exclude=True)
-    end_1 = django_filters.DateFilter('order__end_date', lookup_expr='lt', exclude=True)
+    # start_0 = django_filters.DateFilter('order__start_date', lookup_expr='gt', exclude=True)
+    # start_1 = django_filters.DateFilter('order__start_date', lookup_expr='lt')
+    # end_0 = django_filters.DateFilter('order__end_date', lookup_expr='gt', exclude=True)
+    # end_1 = django_filters.DateFilter('order__end_date', lookup_expr='lt')
 
 class ItineraryView(ModelViewSet):
     serializer_class = ItinerarySerializer
