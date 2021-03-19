@@ -3,7 +3,7 @@ django_allauth==0.40.0
 djangorestframework_jwt==1.11.0
 Django==3.0
 django_filters==0.2.1
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 drf-extensions
 django-rest-auth
 django-cors-headers
